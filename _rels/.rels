@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Type="http://schemas.microsoft.com/packaging/2010/07/manifest" Target="/FewBox.Service.Shipping.App.nuspec" Id="Rbb182420a86940c5" />
+  <Relationship Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="/package/services/metadata/core-properties/384c85fbda044905a0f01e8903a6d3ce.psmdcp" Id="Ree832004eba44249" />
+</Relationships>

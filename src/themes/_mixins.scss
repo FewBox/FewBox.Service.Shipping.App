@@ -1,0 +1,10 @@
+@mixin nowrap{
+    overflow: hidden ;
+    white-space: nowrap ;
+    text-overflow: ellipsis;
+}
+@mixin nowrap-tip{
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    outline: 0px solid transparent;
+}
