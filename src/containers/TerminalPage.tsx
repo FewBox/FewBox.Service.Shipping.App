@@ -27,6 +27,7 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   @autobind
   open() {
     console.log('Socket open.');
+    //this.socket.send('{"Width":80,"Height":24}');
   }
   @autobind
   close() {
