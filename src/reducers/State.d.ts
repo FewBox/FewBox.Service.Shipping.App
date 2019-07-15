@@ -11,25 +11,29 @@ export interface Paging<T> {
 }
 /** Root **/
 export interface Store {
-    signin: SignIn;
-    master: Master;
-    landing: Landing;
-    setting: Setting;
+    signin: SignInPage;
+    master: MasterPage;
+    landing: LandingPage;
+    setting: SettingPage;
+    shippingLane: ShippingLanePage;
 }
 /** UI **/
-export interface SignIn {
+export interface SignInPage {
     isUsernameAndPasswordValid: boolean;
 }
-export interface Master {
+export interface MasterPage {
     isMessageVisiable: boolean;
     message: Message;
     path?: string;
 }
-export interface Landing {
+export interface LandingPage {
     contributors: Contributor[];
 }
-export interface Setting {
+export interface SettingPage {
     lang: string;
+}
+export interface ShippingLanePage {
+    shippingLanes: ShippingLane[];
 }
 export const enum MessageType {
     Success,
@@ -50,4 +54,8 @@ export interface Contributor {
 }
 export interface Avatar {
     url: string
+}
+export interface ShippingLane { 
+    name: string;
+    isIstioInjected: boolean;
 }

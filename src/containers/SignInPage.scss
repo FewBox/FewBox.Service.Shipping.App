@@ -1,140 +1,16 @@
 @import '../themes/variables';
 
-.signIn{
-    .page-lock{
-        margin: 10px auto;
-        width: 450px;
-        .page-logo{
-            text-align: center;
-            margin-bottom: 10px;
-            .brand{
-                img{
-                    width: 80px;
-                }
-            }
-        }
-    }
-    .page-body{
-        width: 100%;
-        margin-top: 15px;
-        background-color: #ebec9d;
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-        -ms-border-radius: 7px;
-        -o-border-radius: 7px;
-        border-radius: 7px;
-        .lock-head{
-            display: block;
-            background-color: #e4bb07;
-            text-align: center;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            font-size: 22px;
-            font-weight: 400;
-            color: #4db3a5;
-            -webkit-border-radius: 7px 7px 0 0;
-            -moz-border-radius: 7px 7px 0 0;
-            -ms-border-radius: 7px 7px 0 0;
-            -o-border-radius: 7px 7px 0 0;
-            border-radius: 7px 7px 0 0;
-        }
-        .lock-body{
-            display: block;
-            margin: 35px;
-            overflow: hidden;
-            .pull-left{
-                float: left!important;
-            }
-            .lock-avatar-block{
-                img{
-                    width: 60px;
-                    border-radius: 30px;
-                }
-            }
-            .lock-form{
-                padding-left: 40px;
-                h4{
-                    margin-top: 0;
-                    color: #dbe2ea;
-                    font-size: 18px;
-                    font-weight: 400;
-                }
-                .form-group{
-                    margin-top: 20px;
-                    margin-bottom: 15px;
-                    .form-control{
-                        background-color: #bcbec0;
-                        border: none;
-                        width: 220px;
-                        height: 40px;
-                        color: #697687;
-                        outline: 0!important;
-                        box-shadow: none!important;
-                        padding: 6px 12px;
-                        font-size: 14px;
-                        line-height: 1.42857;
-                        display: block;
-                        border-radius: 6px;
-                    }
-                    .placeholder-no-fix{}
-                }
-                .form-actions{
-                    margin-top: 20px;
-                }
-                .btn{
-                    width: 244px;
-                    font-weight: 600;
-                    padding: 10px;
-                    line-height: 1.44;
-                    outline: 0!important;
-                    box-shadow: none!important;
-                    display: inline-block;
-                    margin-bottom: 0;
-                    text-align: center;
-                    vertical-align: middle;
-                    touch-action: manipulation;
-                    cursor: pointer;
-                    border: 1px solid transparent;
-                    white-space: nowrap;
-                    font-size: 14px;
-                    user-select: none;
-                    border-radius: 6px;
-                }
-                .red{
-                    color: #fff;
-                    background-color: #e7505a;
-                    border-color: #e7505a;
-                }
-                .uppercase{
-                    text-transform: uppercase!important;
-                }
-            }
-
-        }
-        .lock-bottom{
-            display: block;
-            background-color: #e4bb07;
-            text-align: center;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            -webkit-border-radius: 0 0 7px 7px;
-            -moz-border-radius: 0 0 7px 7px;
-            -ms-border-radius: 0 0 7px 7px;
-            -o-border-radius: 0 0 7px 7px;
-            border-radius: 0 0 7px 7px;
-            a{
-                font-size: 14px;
-                font-weight: 400;
-                color: #638cac;
-            }
-        }
-    }
-    .page-footer-custom{
+.signInPage{
+    height: 100vh;
+    background-image: url("/assets/images/container.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    .copyright{
+        position: fixed;
         text-align: center;
-        padding-top: 40px;
-        span{
-            font-size: 12px;
-            color: #638cac;
-        }
+        bottom: 0;
+        width: 100%;
+        opacity: 0.3;
+        color: #ffffff;
     }
 }

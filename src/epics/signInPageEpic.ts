@@ -12,7 +12,10 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
         mergeMap((action) => {
             //return AjaxObservable({ path: '/api/signin', method: 'POST', body: { username: action.value.username, password: action.value.password } }, store$);
             if(action.value.password == '401' || action.value.password == '403' || action.value.password == '500'){
-                return AjaxObservable({ path: '/status/'+action.value.password, method: 'POST', body: { username: action.value.username, password: action.value.password } }, (payload)=>{});
+                return AjaxObservable({ path: '/status/'+action.value.password, method: 'POST', body: { username: action.value.username, password: action.value.password } }, 
+                (payload)=>{
+                    return null;
+                });
             }
             else if(action.value.password=='200')
             {

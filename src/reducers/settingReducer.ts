@@ -1,9 +1,9 @@
 import ActionTypes from '../actions/ActionTypes';
 import { IPayloadAction } from '../actions/Action';
-import { Setting } from './State';
+import { SettingPage } from './State';
 
 const settingState = { lang: 'en-us' };
-export default (state: Setting = settingState, action: IPayloadAction<string>) => {
+export default (state: SettingPage = settingState, action: IPayloadAction<string>): SettingPage => {
     switch (action.type) {
         case ActionTypes.CHANGE_LANGUAGE:
             return { ...state, lang: action.payload };

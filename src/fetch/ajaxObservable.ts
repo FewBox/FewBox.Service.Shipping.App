@@ -21,7 +21,7 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting): AjaxRequest => {
     }
 };
 
-const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: any): Observable<any> => {
+const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload)=>{}): Observable<any> => {
     var options = initAjaxSetting(ajaxSetting);
     var handlePayload = handlePayload$;
     return ajax(options).pipe(

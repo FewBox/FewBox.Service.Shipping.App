@@ -1,9 +1,9 @@
 import ActionTypes from '../actions/ActionTypes';
-import { IPayloadAction, IAction } from '../actions/Action';
-import { Master, MessageType } from './State';
+import { IAction } from '../actions/Action';
+import { MasterPage, MessageType } from './State';
 
 const master = { isMessageVisiable: false, title: '', message: { type: MessageType.Loading, intlId: '' } };
-export default (state: Master = master, action: IAction<string> | IAction<boolean>) => {
+export default (state: MasterPage = master, action: IAction<string> | IAction<boolean>) => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
             return { ...state, isMessageVisiable: true, message: { type: MessageType.Loading, intlId: 'Message.Loading' } };
