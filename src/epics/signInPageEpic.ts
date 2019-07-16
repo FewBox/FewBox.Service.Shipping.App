@@ -1,10 +1,10 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
 import { of } from 'rxjs';
-import { mergeMap, map, switchMap, catchError } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { redirect, setValidStatus, empty } from '../actions';
+import { redirect, empty } from '../actions';
 
 const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,14 +19,8 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
             }
             else if(action.value.password=='200')
             {
-                return AjaxObservable({ path: '/base64/eyJpc1N1Y2Nlc3NmdWwiOnRydWUsImVycm9yQ29kZSI6IiIsImVycm9yTWVzc2FnZSI6IiIsInBheWxvYWQiOnsiaXNWYWxpZCI6dHJ1ZSwidG9rZW4iOiJCZWFyZXIge3Rva2VufSJ9fQ==', method: 'GET', body: { username: action.value.username, password: action.value.password } },
-                (payload: any) => {
-                    if (payload.isValid) {
-                        window.localStorage.setItem('token', payload.token);
-                        return redirect('/master/landing');
-                    }
-                    return setValidStatus(payload.isValid);
-                });
+                window.localStorage.setItem('token', '');
+                return of(redirect('/master/landing'));
             }
             else{
                 return of({ isValid:true, token:'Bearer {token}' });

@@ -1,10 +1,9 @@
 import * as _ from 'lodash';
-import { StateObservable } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { ajax, AjaxResponse, AjaxRequest } from 'rxjs/ajax';
 import { beginLoading, endLoading, showMessage, redirect } from '../actions';
 import { IAjaxSetting } from './Fetch';
-import { MessageType } from '../reducers/State';
+import { MessageType } from 'fewbox-react-components';
 import { HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
 import { map, catchError, retry, startWith, endWith } from 'rxjs/operators';
 

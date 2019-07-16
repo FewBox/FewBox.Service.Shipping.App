@@ -14,11 +14,11 @@
   "dependencies": {
     "antd": "^3.20.2",
     "core-decorators": "^0.20.0",
-    "fewbox-react-components": "^0.0.17",
+    "fewbox-react-components": "^0.0.20",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-intl": "^2.8.0",
+    "react-intl": "^2.9.0",
     "react-redux": "^7.0.2",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",

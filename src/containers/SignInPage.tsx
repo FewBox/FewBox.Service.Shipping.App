@@ -59,7 +59,7 @@ class SignIn extends React.Component<ISignInProps, any> {
                 <Row type="flex" justify="center" align="top">
                     <Form layout="inline" onSubmit={this.signIn}>
                         <Form.Item>
-                            <Avatar src="/assets/images/logo.png" />
+                            <Avatar size="large" src="/assets/images/logo-green.svg" />
                         </Form.Item>
                         <Form.Item validateStatus={userNameError ? 'error' : ''} help={userNameError || ''}>
                             {getFieldDecorator('userName', {
@@ -81,7 +81,7 @@ class SignIn extends React.Component<ISignInProps, any> {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
-                                <Checkbox>Remember me</Checkbox>
+                                <Checkbox><FormattedMessage id="SignIn.RememberMe" /></Checkbox>
                             )}
                             <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())}>
                                 <FormattedMessage id="SignIn.SignInButton" />

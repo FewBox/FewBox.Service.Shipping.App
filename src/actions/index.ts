@@ -70,3 +70,13 @@ export const closeShippingLane = (shippingLaneName): IAction<string> => ({
     type: ActionTypes.CLOSE_SHIPPINGLANE,
     value: shippingLaneName
 });
+
+export const enableIstio = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.ENABLE_ISTIO,
+    value: shippingLaneName
+});
+
+export const disableIstio = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.DISABLE_ISTIO,
+    value: shippingLaneName
+});

@@ -1,3 +1,5 @@
+import { MessageType } from 'fewbox-react-components';
+
 /** Common **/
 export interface List<T> {
     items: T[]
@@ -23,7 +25,9 @@ export interface SignInPage {
 }
 export interface MasterPage {
     isMessageVisiable: boolean;
-    message: Message;
+    messageType: MessageType;
+    messageContent?: string;
+    messageIntlId?: string;
     path?: string;
 }
 export interface LandingPage {
@@ -35,18 +39,7 @@ export interface SettingPage {
 export interface ShippingLanePage {
     shippingLanes: ShippingLane[];
 }
-export const enum MessageType {
-    Success,
-    Error,
-    Info,
-    Warning,
-    Loading
-}
-export interface Message {
-    type: MessageType;
-    intlId: string;
-    content?: string;
-}
+
 /** Biz **/
 export interface Contributor {
     name: string;
@@ -55,7 +48,7 @@ export interface Contributor {
 export interface Avatar {
     url: string
 }
-export interface ShippingLane { 
+export interface ShippingLane {
     name: string;
     isIstioInjected: boolean;
 }

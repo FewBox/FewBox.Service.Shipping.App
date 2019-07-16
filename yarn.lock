@@ -2027,9 +2027,9 @@ fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fewbox-react-components@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/fewbox-react-components/-/fewbox-react-components-0.0.17.tgz#9573b8aca8c9d45cc1e4c394e32aa1b2e7cca517"
+fewbox-react-components@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/fewbox-react-components/-/fewbox-react-components-0.0.20.tgz#5faebb17a2de98d3255d7e494c23bf5095012da7"
   dependencies:
     core-decorators "^0.20.0"
     fstream "^1.0.12"
@@ -5313,7 +5313,7 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-react-intl@^2.8.0:
+react-intl@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.9.0.tgz#c97c5d17d4718f1575fdbd5a769f96018a3b1843"
   dependencies:
