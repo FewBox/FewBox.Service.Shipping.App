@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Store } from '../reducers/State';
-import { MessageType, MessageBox } from 'fewbox-react-components';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, message } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
-import { Redirect } from 'fewbox-react-components';
+import { Redirect, MessageBox, MessageType } from 'fewbox-react-components';
 import { hideMessage, signOut, clearPath } from '../actions';
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -19,15 +18,14 @@ const ShippingLaneSvg = () => (<svg fill="#FFFFFF" x="0px" y="0px" viewBox="0 0 
 const ShippingLaneIcon = props => <Icon component={ShippingLaneSvg} {...props} />;
 
 export interface IMasterPageProps {
-    messageType: MessageType;
-    messageIntlId: string;
-    messageContent: string;
-    isMessageVisiable: boolean;
-    hideMessage: any;
     signOut: any;
     clearPath: any;
     redirectPath: string;
-    intl: any;
+    messageType: MessageType;
+    messageIntlId: string;
+    messageValues: any;
+    messageDuration: number;
+    messageIsVisible: boolean;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -50,26 +48,11 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 </Menu.Item>
             </Menu>
         );
-        let messageContent;
-        if(this.props.messageIntlId)
-        {
-            messageContent = this.props.intl.formatMessage({id: this.props.messageIntlId});
-        }
-        else
-        {
-            messageContent = this.props.messageContent;
-        }
+        console.log('Go:'+this.props.messageIsVisible+' '+this.props.messageType+' '+this.props.messageIntlId+' '+this.props.messageDuration);
         return (
             <div className="masterPage">
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
-                <MessageBox isShow={this.props.isMessageVisiable}
-                    content={messageContent}
-                    messageType={this.props.messageType}
-                    success={(content, duration, onClose) => { message.success(content, duration, onClose); }}
-                    error={(content, duration, onClose) => { message.error(content, duration, onClose); }}
-                    info={(content, duration, onClose) => { message.info(content, duration, onClose); }}
-                    warning={(content, duration, onClose) => { message.warning(content, duration, onClose); }}
-                    loading={(content, duration, onClose) => { message.loading(content, duration, onClose); }} />
+                <MessageBox isVisable={this.props.messageIsVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={()=>{}} />
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider
                         trigger={null}
@@ -129,10 +112,11 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
 }
 
 const mapStateToProps = ({ master }: Store) => ({
-    messageContent: master.messageContent,
     messageType: master.messageType,
     messageIntlId: master.messageIntlId,
-    isMessageVisiable: master.isMessageVisiable,
+    messageValues: master.messageValues,
+    messageDuration: master.messageDuration,
+    messageIsVisible: master.messageIsVisible,
     redirectPath: master.path
 })
 
@@ -142,4 +126,4 @@ const mapDispatchToProps = {
     clearPath
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));
+export default connect(mapStateToProps, mapDispatchToProps)(MasterPage);

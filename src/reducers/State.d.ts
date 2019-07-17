@@ -1,4 +1,4 @@
-import { MessageType } from 'fewbox-react-components';
+import { MessageType } from "fewbox-react-components";
 
 /** Common **/
 export interface List<T> {
@@ -24,10 +24,11 @@ export interface SignInPage {
     isUsernameAndPasswordValid: boolean;
 }
 export interface MasterPage {
-    isMessageVisiable: boolean;
     messageType: MessageType;
-    messageContent?: string;
-    messageIntlId?: string;
+    messageIntlId: string;
+    messageValues?: any;
+    messageDuration?: number;
+    messageIsVisible: boolean;
     path?: string;
 }
 export interface LandingPage {

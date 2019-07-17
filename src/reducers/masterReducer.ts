@@ -3,17 +3,18 @@ import { IAction } from '../actions/Action';
 import { MasterPage } from './State';
 import { MessageType } from 'fewbox-react-components';
 
-const master = { isMessageVisiable: false, messageType: MessageType.Loading };
+const master = { messageType: MessageType.Loading, messageIntlId: '', messageIsVisible: false };
 export default (state: MasterPage = master, action: IAction<any>): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
-            return { ...state, isMessageVisiable: true, messageType: MessageType.Loading, messageIntlId: 'Message.Loading' };
+            console.log('Begin Loading');
+            return { ...state, messageIsVisible: true, messageType: MessageType.Loading, messageIntlId: 'Message.Loading' };
         case ActionTypes.END_LOADING:
-            return { ...state, isMessageVisiable: false };
+            console.log('End Loading');
+            return { ...state, messageIsVisible: false };
         case ActionTypes.SHOW_MESSAGE:
-            return { ...state, isMessageVisiable: true, messageContent: action.value };
-        case ActionTypes.HIDE_MESSAGE:
-            return { ...state, isMessageVisiable: false };
+            console.log('Show Message');
+            return { ...state, messageIsVisible: true, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
         case ActionTypes.REDIRECT:
             return { ...state, path: action.value };
         case ActionTypes.CLEAR_PATH:

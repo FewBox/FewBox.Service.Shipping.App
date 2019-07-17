@@ -404,6 +404,63 @@ antd@^3.20.2:
     shallowequal "^1.1.0"
     warning "~4.0.3"
 
+antd@^3.20.3:
+  version "3.20.3"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.20.3.tgz#a9a8acad523933f5a0daeb5931d49b9aa1ce9e29"
+  dependencies:
+    "@ant-design/create-react-context" "^0.2.4"
+    "@ant-design/icons" "~2.1.1"
+    "@ant-design/icons-react" "~2.0.1"
+    "@types/react-slick" "^0.23.4"
+    array-tree-filter "^2.1.0"
+    babel-runtime "6.x"
+    classnames "~2.2.6"
+    copy-to-clipboard "^3.2.0"
+    css-animation "^1.5.0"
+    dom-closest "^0.2.0"
+    enquire.js "^2.1.6"
+    lodash "^4.17.11"
+    moment "^2.24.0"
+    omit.js "^1.0.2"
+    prop-types "^15.7.2"
+    raf "^3.4.1"
+    rc-animate "^2.8.3"
+    rc-calendar "~9.15.0"
+    rc-cascader "~0.17.4"
+    rc-checkbox "~2.1.6"
+    rc-collapse "~1.11.3"
+    rc-dialog "~7.4.0"
+    rc-drawer "~1.10.1"
+    rc-dropdown "~2.4.1"
+    rc-editor-mention "^1.1.13"
+    rc-form "^2.4.5"
+    rc-input-number "~4.4.5"
+    rc-mentions "~0.3.1"
+    rc-menu "~7.4.23"
+    rc-notification "~3.3.1"
+    rc-pagination "~1.20.1"
+    rc-progress "~2.5.0"
+    rc-rate "~2.5.0"
+    rc-select "~9.1.4"
+    rc-slider "~8.6.11"
+    rc-steps "~3.4.1"
+    rc-switch "~1.9.0"
+    rc-table "~6.6.0"
+    rc-tabs "~9.6.4"
+    rc-time-picker "~3.7.1"
+    rc-tooltip "~3.7.3"
+    rc-tree "~2.1.0"
+    rc-tree-select "~2.9.1"
+    rc-trigger "^2.6.2"
+    rc-upload "~2.6.7"
+    rc-util "^4.6.0"
+    react-lazy-load "^3.0.13"
+    react-lifecycles-compat "^3.0.4"
+    react-slick "~0.24.0"
+    resize-observer-polyfill "^1.5.1"
+    shallowequal "^1.1.0"
+    warning "~4.0.3"
+
 anymatch@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/anymatch/-/anymatch-2.0.0.tgz#bcb24b4f37934d9aa7ac17b4adaf89e7c76ef2eb"
@@ -2027,17 +2084,15 @@ fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fewbox-react-components@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/fewbox-react-components/-/fewbox-react-components-0.0.20.tgz#5faebb17a2de98d3255d7e494c23bf5095012da7"
+fewbox-react-components@^0.0.25:
+  version "0.0.25"
+  resolved "https://registry.yarnpkg.com/fewbox-react-components/-/fewbox-react-components-0.0.25.tgz#41c71b1e1e390cd11f39d0423f4055f8411e353b"
   dependencies:
-    core-decorators "^0.20.0"
-    fstream "^1.0.12"
-    lodash "^4.17.14"
-    lodash.template "^4.5.0"
+    antd "^3.20.3"
     react "^16.8.6"
     react-dom "^16.8.6"
-    react-router-dom "^5.0.0"
+    react-intl "^2.9.0"
+    react-router-dom "^5.0.1"
 
 figgy-pudding@^3.5.1:
   version "3.5.1"
@@ -3187,7 +3242,7 @@ lodash._getnative@^3.0.0:
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/lodash._getnative/-/lodash._getnative-3.9.1.tgz#570bc7dede46d61cdcde687d65d3eecbaa3aaff5"
 
-lodash._reinterpolate@^3.0.0, lodash._reinterpolate@~3.0.0:
+lodash._reinterpolate@~3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
 
@@ -3252,13 +3307,6 @@ lodash.template@^4.2.4:
   resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
   dependencies:
     lodash._reinterpolate "~3.0.0"
-    lodash.templatesettings "^4.0.0"
-
-lodash.template@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.5.0.tgz#f976195cf3f347d0d5f52483569fe8031ccce8ab"
-  dependencies:
-    lodash._reinterpolate "^3.0.0"
     lodash.templatesettings "^4.0.0"
 
 lodash.templatesettings@^4.0.0:
@@ -5355,7 +5403,7 @@ react-redux@^7.0.2:
     prop-types "^15.7.2"
     react-is "^16.8.6"
 
-react-router-dom@^5.0.0:
+react-router-dom@^5.0.0, react-router-dom@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.0.1.tgz#ee66f4a5d18b6089c361958e443489d6bab714be"
   dependencies:

@@ -1,18 +1,17 @@
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { ajax, AjaxResponse, AjaxRequest } from 'rxjs/ajax';
-import { beginLoading, endLoading, showMessage, redirect } from '../actions';
+import { beginLoading, endLoading, showMessage, redirect, empty } from '../actions';
 import { IAjaxSetting } from './Fetch';
-import { MessageType } from 'fewbox-react-components';
 import { HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
 import { map, catchError, retry, startWith, endWith } from 'rxjs/operators';
-
+import { MessageType } from 'fewbox-react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting): AjaxRequest => {
     return {
         url: _.template('<%= host %>:<%= port %><%= path %>')({ 'host': HOST, 'port': PORT, 'path': ajaxSetting.path }),
         body: ajaxSetting.body ? JSON.stringify(ajaxSetting.body) : undefined,
-        crossDomain: ajaxSetting.crossDomain? ajaxSetting.crossDomain : true,
+        crossDomain: ajaxSetting.crossDomain ? ajaxSetting.crossDomain : true,
         headers: { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') },
         method: String(ajaxSetting.method ? ajaxSetting.method : METHOD),
         responseType: ajaxSetting.responseType ? ajaxSetting.responseType : RESPONSETYPE,
@@ -20,23 +19,22 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting): AjaxRequest => {
     }
 };
 
-const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload)=>{}): Observable<any> => {
+const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload) => {}): Observable<any> => {
     var options = initAjaxSetting(ajaxSetting);
     var handlePayload = handlePayload$;
     return ajax(options).pipe(
         map((ajaxResponse: AjaxResponse) => {
             if (ajaxResponse.response.isSuccessful == false) {
-                return showMessage({ content: ajaxResponse.response.errorMessage, type: MessageType.Error });
+                return showMessage(MessageType.Error, 'Message.Error', ajaxResponse.response);
             }
             return handlePayload(ajaxResponse.response.payload);
         }),
         retry(3),
         catchError(error => {
-            if(error.status == 401||error.status == 403)
-            {
+            if (error.status == 401 || error.status == 403) {
                 return of(redirect('/signin'));
             }
-            return of(showMessage({ content: 'Network Exception', type: MessageType.Error }));
+            return of(showMessage(MessageType.Error, 'Message.Error', error));
         }),
         startWith(beginLoading()),
         endWith(endLoading())

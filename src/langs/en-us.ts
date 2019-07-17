@@ -7,6 +7,7 @@ export default {
     'Navigation.About': 'About',
     'Navigation.ShippingLane': 'Shipping Lane',
     'Message.Loading': 'Loading...',
+    'Message.Error': 'Error...',
     'Confirm.DeleteShippingLane': 'Are you sure to delete ShippingLane? It cannot be recovered!',
     'Layout.Copyright': 'Copyright FewBox (c) 2019',
     'Layout.SignOut': 'Sign Out',

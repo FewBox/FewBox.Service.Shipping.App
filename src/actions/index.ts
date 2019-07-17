@@ -1,5 +1,6 @@
 import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
+import { MessageType } from 'fewbox-react-components';
 
 // Common
 export const beginLoading = (): IEmptyAction => ({
@@ -8,14 +9,14 @@ export const beginLoading = (): IEmptyAction => ({
 export const endLoading = (): IEmptyAction => ({
     type: ActionTypes.END_LOADING
 });
-export const showMessage = (message): IAction<string> => ({
+export const showMessage = (messageType: MessageType, messageIntlId: string, messageValues: any): IAction<any> => ({
     type: ActionTypes.SHOW_MESSAGE,
-    value: message
+    value: { type: messageType, intlId: messageIntlId, values: messageValues }
 });
 export const hideMessage = (): IEmptyAction => ({
     type: ActionTypes.HIDE_MESSAGE
 });
-export const redirect = (path): IAction<string> => ({
+export const redirect = (path: string): IAction<string> => ({
     type: ActionTypes.REDIRECT,
     value: path
 });

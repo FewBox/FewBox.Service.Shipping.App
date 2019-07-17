@@ -11,5 +11,4 @@ const changeLanguageEric = (action$: ActionsObservable<any>) =>
         })
     );
 
-
 export default [changeLanguageEric];
