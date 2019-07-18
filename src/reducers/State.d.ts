@@ -29,6 +29,7 @@ export interface MasterPage {
     messageValues?: any;
     messageDuration?: number;
     messageIsVisible: boolean;
+    loadingIsVisible: boolean;
     path?: string;
 }
 export interface LandingPage {

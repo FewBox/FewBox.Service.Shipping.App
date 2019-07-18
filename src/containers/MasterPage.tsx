@@ -7,7 +7,7 @@ import { Store } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, message } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
-import { Redirect, MessageBox, MessageType } from 'fewbox-react-components';
+import { Redirect, MessageBox, MessageType, Loading } from 'fewbox-react-components';
 import { hideMessage, signOut, clearPath } from '../actions';
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -26,6 +26,8 @@ export interface IMasterPageProps {
     messageValues: any;
     messageDuration: number;
     messageIsVisible: boolean;
+    loadingIsVisible: boolean;
+    hideMessage: any;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -41,6 +43,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         });
     }
     public render() {
+        message.config({maxCount: 3});
         const menu = (
             <Menu>
                 <Menu.Item>
@@ -48,11 +51,11 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 </Menu.Item>
             </Menu>
         );
-        console.log('Go:'+this.props.messageIsVisible+' '+this.props.messageType+' '+this.props.messageIntlId+' '+this.props.messageDuration);
         return (
             <div className="masterPage">
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
-                <MessageBox isVisable={this.props.messageIsVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={()=>{}} />
+                <Loading isVisable={this.props.loadingIsVisible} onClose={()=>{}} intlId="Layout.Loading" />
+                <MessageBox isVisable={this.props.messageIsVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={()=>{this.props.hideMessage();}} />
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider
                         trigger={null}
@@ -117,6 +120,7 @@ const mapStateToProps = ({ master }: Store) => ({
     messageValues: master.messageValues,
     messageDuration: master.messageDuration,
     messageIsVisible: master.messageIsVisible,
+    loadingIsVisible: master.loadingIsVisible,
     redirectPath: master.path
 })
 

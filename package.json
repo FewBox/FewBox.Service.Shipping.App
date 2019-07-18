@@ -14,7 +14,7 @@
   "dependencies": {
     "antd": "^3.20.2",
     "core-decorators": "^0.20.0",
-    "fewbox-react-components": "^0.0.25",
+    "fewbox-react-components": "^0.0.27",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
