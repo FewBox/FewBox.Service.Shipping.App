@@ -25,7 +25,7 @@ const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload) => 
     return ajax(options).pipe(
         map((ajaxResponse: AjaxResponse) => {
             if (ajaxResponse.response.isSuccessful == false) {
-                return showMessage(MessageType.Error, 'Message.Error', ajaxResponse.response);
+                return showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: ajaxResponse.response.errorMessage });
             }
             return handlePayload(ajaxResponse.response.payload);
         }),
@@ -34,7 +34,7 @@ const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload) => 
             if (error.status == 401 || error.status == 403) {
                 return of(redirect('/signin'));
             }
-            return of(showMessage(MessageType.Error, 'Message.Error', error));
+            return of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.Message }));
         }),
         startWith(beginLoading()),
         endWith(endLoading())

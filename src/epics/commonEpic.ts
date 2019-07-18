@@ -1,4 +1,4 @@
-import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
+import { ActionsObservable, ofType } from 'redux-observable';
 import { map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { changeLanguage } from '../actions';

@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Card, Icon, Row, Col, Popconfirm, Badge, Switch } from 'antd';
-import { initShippingLanePage, closeShippingLane, enableIstio, disableIstio } from '../actions';
+import { Card, Icon, Row, Col, Popconfirm, Badge, Switch, Button, Layout, Form, Input } from 'antd';
+import { initShippingLanePage, closeShippingLane, enableIstio, disableIstio, startShippingLane } from '../actions';
 import { ShippingLane, Store } from '../reducers/State';
+import ShippingLaneStartor from '../components/ShippingLaneStartor';
+
 
 export interface IAboutPageProps {
     shippingLanes: ShippingLane[];
     initShippingLanePage: any;
+    startShippingLane: any;
     closeShippingLane: any;
     enableIstio: any;
     disableIstio: any;
@@ -35,6 +38,9 @@ class ShippingLanePage extends React.Component<IAboutPageProps, any> {
         })
         return (
             <div>
+                <Row>
+                    <ShippingLaneStartor />
+                </Row>
                 {shippingLanes}
             </div>
         );
@@ -47,6 +53,7 @@ const mapStateToProps = ({ shippingLane }: Store) => ({
 
 const mapDispatchToProps = {
     initShippingLanePage,
+    startShippingLane,
     closeShippingLane,
     enableIstio,
     disableIstio
