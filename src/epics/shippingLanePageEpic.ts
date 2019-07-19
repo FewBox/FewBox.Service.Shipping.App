@@ -3,7 +3,8 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShippingLanePage, initShippingLanePage } from '../actions';
+import { loadShippingLanePage, initShippingLanePage, addShippingLane, removeShippingLane, enableIstioStatus, disableIstioStatus } from '../actions';
+import { IAction } from '../actions/Action';
 
 const initShippingLaneEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,10 +20,10 @@ const initShippingLaneEpic = (action$: ActionsObservable<any>, store$: StateObse
 const startShippingLaneEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.START_SHIPPINGLANE),
-        mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglane', method: 'POST', body: action.value },
+        mergeMap((action: IAction<string>) => {
+            return AjaxObservable({ path: '/api/shippinglane', method: 'POST', body: { name: action.value.toLowerCase() } },
                 (payload) => {
-                    return loadShippingLanePage(payload);
+                    return addShippingLane(action.value.toLowerCase());
                 });
         })
     );
@@ -32,7 +33,7 @@ const closeShippingLaneEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglane/' + action.value, method: 'DELETE' },
                 (payload) => {
-                    return initShippingLanePage();
+                    return removeShippingLane(action.value);
                 });
         })
     );
@@ -40,9 +41,9 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
     action$.pipe(
         ofType(ActionTypes.ENABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglane/mergepatch/' + action.value, method: 'PATCH', body: {metadata: { labels: {"istio-injection": "enabled"} } } },
+            return AjaxObservable({ path: '/api/shippinglane/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } },
                 (payload) => {
-                    return initShippingLanePage();
+                    return enableIstioStatus(action.value);
                 });
         })
     );
@@ -50,9 +51,9 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
     action$.pipe(
         ofType(ActionTypes.DISABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglane/' + action.value, method: 'PATCH', body: [ { "path": "/metadata/labels", "op": "remove", "value": "istio-injection"}] },
+            return AjaxObservable({ path: '/api/shippinglane/' + action.value, method: 'PATCH', body: [{ "path": "/metadata/labels", "op": "remove", "value": "istio-injection" }] },
                 (payload) => {
-                    return initShippingLanePage();
+                    return disableIstioStatus(action.value);
                 });
         })
     );

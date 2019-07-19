@@ -62,13 +62,23 @@ export const loadShippingLanePage = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const startShippingLane = (shippingLane): IAction<string> => ({
+export const startShippingLane = (shippingLaneName): IAction<string> => ({
     type: ActionTypes.START_SHIPPINGLANE,
-    value: shippingLane
+    value: shippingLaneName
 });
 
 export const closeShippingLane = (shippingLaneName): IAction<string> => ({
     type: ActionTypes.CLOSE_SHIPPINGLANE,
+    value: shippingLaneName
+});
+
+export const addShippingLane = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.ADD_SHIPPINGLANE,
+    value: shippingLaneName
+});
+
+export const removeShippingLane = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.REMOVE_SHIPPINGLANE,
     value: shippingLaneName
 });
 
@@ -79,5 +89,15 @@ export const enableIstio = (shippingLaneName): IAction<string> => ({
 
 export const disableIstio = (shippingLaneName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIO,
+    value: shippingLaneName
+});
+
+export const enableIstioStatus = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.ENABLE_ISTIOSTATUS,
+    value: shippingLaneName
+});
+
+export const disableIstioStatus = (shippingLaneName): IAction<string> => ({
+    type: ActionTypes.DISABLE_ISTIOSTATUS,
     value: shippingLaneName
 });

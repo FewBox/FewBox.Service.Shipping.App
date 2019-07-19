@@ -84,6 +84,10 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     {
       terminalSimulator = <TerminalSimulator promptSymbol={this.state.promptSymbol} msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
     }
+    else
+    {
+      terminalSimulator = <TerminalSimulator promptSymbol='[x]' msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
+    }
     return (
       <div>
         {terminalSimulator}

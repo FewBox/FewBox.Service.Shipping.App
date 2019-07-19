@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Card, Icon, Row, Col, Popconfirm, Badge, Switch, Button, Layout, Form, Input } from 'antd';
+import { connect } from 'react-redux';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout } from 'antd';
 import { initShippingLanePage, closeShippingLane, enableIstio, disableIstio, startShippingLane } from '../actions';
 import { ShippingLane, Store } from '../reducers/State';
 import ShippingLaneStartor from '../components/ShippingLaneStartor';
@@ -9,11 +9,11 @@ import ShippingLaneStartor from '../components/ShippingLaneStartor';
 
 export interface IAboutPageProps {
     shippingLanes: ShippingLane[];
-    initShippingLanePage: any;
-    startShippingLane: any;
-    closeShippingLane: any;
-    enableIstio: any;
-    disableIstio: any;
+    initShippingLanePage: () => void;
+    startShippingLane: (name: string) => void;
+    closeShippingLane: (name: string) => void;
+    enableIstio: (name: string) => void;
+    disableIstio: (name: string) => void;
 }
 
 class ShippingLanePage extends React.Component<IAboutPageProps, any> {
@@ -21,27 +21,26 @@ class ShippingLanePage extends React.Component<IAboutPageProps, any> {
         this.props.initShippingLanePage();
     }
     render() {
-        let cols = [];
-        let shippingLaneCount = this.props.shippingLanes.length;
-        let shippingLanes = this.props.shippingLanes.map((item, index) => {
-            cols.push(<Col key={"ShippingLane" + index} span={8}><Card actions={[
-                <Popconfirm title={<FormattedMessage id="Confirm.DeleteShippingLane" />} onConfirm={() => { this.props.closeShippingLane(item.name); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                <Switch onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
-                <Icon type="ellipsis" />]}>
-                <Card.Meta title={item.name} description={item.name} />
-            </Card></Col>);
-            if (index % 3 === 2 || index === shippingLaneCount - 1) {
-                let value = <Row key={"ShippingLaneRow" + index} gutter={16}>{cols.map((item, index) => { return item; })}</Row>
-                cols = [];
-                return value;
-            }
-        })
+
         return (
             <div>
                 <Row>
-                    <ShippingLaneStartor />
+                    <ShippingLaneStartor start={this.props.startShippingLane} />
                 </Row>
-                {shippingLanes}
+                <Row>
+                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shippingLanes}
+                        renderItem={(item: ShippingLane) => (
+                            <List.Item>
+                                <Card actions={[
+                                    <Popconfirm title={<FormattedMessage id="Confirm.DeleteShippingLane" />} onConfirm={() => { this.props.closeShippingLane(item.name); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Switch onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
+                                    <Icon type="ellipsis" />]}>
+                                    <Card.Meta title={item.name} description={item.name} />
+                                </Card>
+                            </List.Item>
+                        )}
+                    />
+                </Row>
             </div>
         );
     }
