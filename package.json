@@ -16,6 +16,7 @@
     "core-decorators": "^0.20.0",
     "fewbox-react-components": "^0.0.27",
     "lodash": "^4.17.14",
+    "lodash.template": "^4.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",

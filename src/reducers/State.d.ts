@@ -53,4 +53,5 @@ export interface Avatar {
 export interface ShippingLane {
     name: string;
     isIstioInjected: boolean;
+    labels: string;
 }

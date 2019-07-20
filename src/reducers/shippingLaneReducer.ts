@@ -9,7 +9,7 @@ export default (state: ShippingLanePage = shippingLaneState, action: any): Shipp
         case ActionTypes.LOAD_SHIPPINGLANEPAGE:
             return { ...state, shippingLanes: action.payload };
         case ActionTypes.ADD_SHIPPINGLANE:
-            return { ...state, shippingLanes: [{ name: action.value, isIstioInjected: true }, ...state.shippingLanes] };
+            return { ...state, shippingLanes: [{ name: action.value, isIstioInjected: true, labels: '' }, ...state.shippingLanes] };
         case ActionTypes.REMOVE_SHIPPINGLANE:
             var shippingLanes = state.shippingLanes.filter((item, index) => {
                 if (item.name == action.value) {
