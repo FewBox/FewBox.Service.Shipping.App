@@ -4,7 +4,7 @@ import { switchMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadLandingPage } from '../actions';
+import { loadLanding } from '../actions';
 // Todo: Need to be removed
 import { landingPage } from '../jsons';
 
@@ -17,7 +17,7 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
         }),
         map((response: any) => {
             //return loadLandingPage(response.value.payload);
-            return loadLandingPage(response.contributors);
+            return loadLanding(response.contributors);
         })
     );
 

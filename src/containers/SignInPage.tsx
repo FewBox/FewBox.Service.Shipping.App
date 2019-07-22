@@ -102,9 +102,9 @@ class SignIn extends React.Component<ISignInProps, any> {
     }
 }
 
-const mapStateToProps = ({ signin, master }: Store) => ({
-    isUsernameAndPasswordValid: signin.isUsernameAndPasswordValid,
-    redirectPath: master.path
+const mapStateToProps = ({ signinPage, masterPage }: Store) => ({
+    isUsernameAndPasswordValid: signinPage.isUsernameAndPasswordValid,
+    redirectPath: masterPage.path
 })
 
 const mapDispatchToProps = {

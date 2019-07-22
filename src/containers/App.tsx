@@ -13,15 +13,15 @@ import { Store } from '../reducers/State';
 import "antd/dist/antd.less";
 
 export interface AppProps {
-  lang : string,
+  lang: string,
   searchKeyword: any
 }
 
 class App extends React.Component<AppProps, any> {
   public render() {
     return (
-        <IntlProvider locale={'en'} messages={langs(this.props.lang)}>
-        <Router>      
+      <IntlProvider locale={'en'} messages={langs(this.props.lang)}>
+        <Router>
           <div>
             <Switch>
               <Route exact path="/" component={SignInPage} />
@@ -31,16 +31,16 @@ class App extends React.Component<AppProps, any> {
             </Switch>
           </div>
         </Router>
-        </IntlProvider> 
+      </IntlProvider>
     );
   }
 }
 
-const mapStateToProps = ({setting}: Store) => ({
-    lang: setting.lang
-  });
-  
-  const mapDispatchToProps = {
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(App);
+const mapStateToProps = ({ settingPage }: Store) => ({
+  lang: settingPage.lang
+});
+
+const mapDispatchToProps = {
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -6,7 +6,7 @@ const shippingLaneState = {
 };
 export default (state: ShippingLanePage = shippingLaneState, action: any): ShippingLanePage => {
     switch (action.type) {
-        case ActionTypes.LOAD_SHIPPINGLANEPAGE:
+        case ActionTypes.LOAD_SHIPPINGLANE:
             return { ...state, shippingLanes: action.payload };
         case ActionTypes.ADD_SHIPPINGLANE:
             return { ...state, shippingLanes: [{ name: action.value, isIstioInjected: true, labels: '' }, ...state.shippingLanes] };

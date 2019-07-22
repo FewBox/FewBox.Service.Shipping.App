@@ -4,6 +4,7 @@ export default {
     'SignIn.RememberMe': 'Remember Me',
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
+    'Navigation.ContainerShip': 'Container Ship',
     'Navigation.About': 'About',
     'Navigation.ShippingLane': 'Shipping Lane',
     'Message.NetworkException': 'Network Exception: {errorMessage}',

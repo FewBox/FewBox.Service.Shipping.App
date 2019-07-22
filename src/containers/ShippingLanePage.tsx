@@ -7,7 +7,7 @@ import { ShippingLane, Store } from '../reducers/State';
 import ShippingLaneStartor from '../components/ShippingLaneStartor';
 
 
-export interface IAboutPageProps {
+export interface IShippingLanePageProps {
     shippingLanes: ShippingLane[];
     initShippingLanePage: () => void;
     startShippingLane: (name: string) => void;
@@ -16,7 +16,7 @@ export interface IAboutPageProps {
     disableIstio: (name: string) => void;
 }
 
-class ShippingLanePage extends React.Component<IAboutPageProps, any> {
+class ShippingLanePage extends React.Component<IShippingLanePageProps, any> {
     componentDidMount() {
         this.props.initShippingLanePage();
     }
@@ -48,8 +48,8 @@ class ShippingLanePage extends React.Component<IAboutPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ shippingLane }: Store) => ({
-    shippingLanes: shippingLane.shippingLanes
+const mapStateToProps = ({ shippingLanePage }: Store) => ({
+    shippingLanes: shippingLanePage.shippingLanes
 });
 
 const mapDispatchToProps = {

@@ -13,11 +13,12 @@ export interface Paging<T> {
 }
 /** Root **/
 export interface Store {
-    signin: SignInPage;
-    master: MasterPage;
-    landing: LandingPage;
-    setting: SettingPage;
-    shippingLane: ShippingLanePage;
+    signinPage: SignInPage;
+    masterPage: MasterPage;
+    landingPage: LandingPage;
+    settingPage: SettingPage;
+    shippingLanePage: ShippingLanePage;
+    containerShipPage: ContainerShipPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -41,6 +42,9 @@ export interface SettingPage {
 export interface ShippingLanePage {
     shippingLanes: ShippingLane[];
 }
+export interface ContainerShipPage{
+    containerShips: ContainerShip[];
+}
 
 /** Biz **/
 export interface Contributor {
@@ -54,4 +58,13 @@ export interface ShippingLane {
     name: string;
     isIstioInjected: boolean;
     labels: string;
+}
+export interface ContainerShip{
+    namespace: string;
+    name: string;
+    containers: Container[];
+    labels: string;
+}
+export interface Container{
+    name: string;
 }

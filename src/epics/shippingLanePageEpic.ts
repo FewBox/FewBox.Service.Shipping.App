@@ -3,16 +3,16 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShippingLanePage, initShippingLanePage, addShippingLane, removeShippingLane, enableIstioStatus, disableIstioStatus } from '../actions';
+import { loadShippingLane, initShippingLanePage, addShippingLane, removeShippingLane, enableIstioStatus, disableIstioStatus } from '../actions';
 import { IAction } from '../actions/Action';
 
-const initShippingLaneEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initShippingLanePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPPINGLANEPAGE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglane', method: 'GET', body: action.value },
                 (payload) => {
-                    return loadShippingLanePage(payload);
+                    return loadShippingLane(payload);
                 });
         })
     );
@@ -58,4 +58,4 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
         })
     );
 
-export default [initShippingLaneEpic, startShippingLaneEpic, closeShippingLaneEpic, enableIstioEpic, disableIstioEpic];
+export default [initShippingLanePageEpic, startShippingLaneEpic, closeShippingLaneEpic, enableIstioEpic, disableIstioEpic];

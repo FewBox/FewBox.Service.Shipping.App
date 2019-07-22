@@ -7,7 +7,7 @@ const landingState = {
 };
 export default (state: LandingPage = landingState, action: IPayloadAction<Contributor[]>): LandingPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_LANDINGPAGE:
+        case ActionTypes.LOAD_LANDING:
             return { ...state, contributors: action.payload };
         default:
             return state;

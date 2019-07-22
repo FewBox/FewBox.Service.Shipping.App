@@ -25,8 +25,8 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
   }
 }
 
-const mapStateToProps = ({ landing }: Store) => ({
-  contributors: landing.contributors
+const mapStateToProps = ({ landingPage }: Store) => ({
+  contributors: landingPage.contributors
 });
 
 const mapDispatchToProps = {

@@ -48,8 +48,8 @@ export const initLandingPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_LANDINGPAGE
 });
 
-export const loadLandingPage = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_LANDINGPAGE,
+export const loadLanding = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_LANDING,
     payload: payload
 });
 
@@ -57,8 +57,8 @@ export const initShippingLanePage = (): IEmptyAction => ({
     type: ActionTypes.INIT_SHIPPINGLANEPAGE
 });
 
-export const loadShippingLanePage = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_SHIPPINGLANEPAGE,
+export const loadShippingLane = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SHIPPINGLANE,
     payload: payload
 });
 
@@ -100,4 +100,13 @@ export const enableIstioStatus = (shippingLaneName): IAction<string> => ({
 export const disableIstioStatus = (shippingLaneName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIOSTATUS,
     value: shippingLaneName
+});
+
+export const initContainerShipPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CONTAINERSHIPPAGE
+});
+
+export const loadContainerShip = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CONTAINERSHIP,
+    payload: payload
 });
