@@ -53,53 +53,53 @@ export const loadLanding = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const initShippingLanePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SHIPPINGLANEPAGE
+export const initShippingLinePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SHIPPINGLINEPAGE
 });
 
-export const loadShippingLane = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_SHIPPINGLANE,
+export const loadShippingLine = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SHIPPINGLINE,
     payload: payload
 });
 
-export const startShippingLane = (shippingLaneName): IAction<string> => ({
-    type: ActionTypes.START_SHIPPINGLANE,
-    value: shippingLaneName
+export const startShippingLine = (shippingLineName): IAction<string> => ({
+    type: ActionTypes.START_SHIPPINGLINE,
+    value: shippingLineName
 });
 
-export const closeShippingLane = (shippingLaneName): IAction<string> => ({
-    type: ActionTypes.CLOSE_SHIPPINGLANE,
-    value: shippingLaneName
+export const closeShippingLine = (shippingLineName): IAction<string> => ({
+    type: ActionTypes.CLOSE_SHIPPINGLINE,
+    value: shippingLineName
 });
 
-export const addShippingLane = (shippingLaneName): IAction<string> => ({
-    type: ActionTypes.ADD_SHIPPINGLANE,
-    value: shippingLaneName
+export const addShippingLine = (shippingLineName): IAction<string> => ({
+    type: ActionTypes.ADD_SHIPPINGLINE,
+    value: shippingLineName
 });
 
-export const removeShippingLane = (shippingLaneName): IAction<string> => ({
-    type: ActionTypes.REMOVE_SHIPPINGLANE,
-    value: shippingLaneName
+export const removeShippingLine = (shippingLineName): IAction<string> => ({
+    type: ActionTypes.REMOVE_SHIPPINGLINE,
+    value: shippingLineName
 });
 
-export const enableIstio = (shippingLaneName): IAction<string> => ({
+export const enableIstio = (shippingLineName): IAction<string> => ({
     type: ActionTypes.ENABLE_ISTIO,
-    value: shippingLaneName
+    value: shippingLineName
 });
 
-export const disableIstio = (shippingLaneName): IAction<string> => ({
+export const disableIstio = (shippingLineName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIO,
-    value: shippingLaneName
+    value: shippingLineName
 });
 
-export const enableIstioStatus = (shippingLaneName): IAction<string> => ({
+export const enableIstioStatus = (shippingLineName): IAction<string> => ({
     type: ActionTypes.ENABLE_ISTIOSTATUS,
-    value: shippingLaneName
+    value: shippingLineName
 });
 
-export const disableIstioStatus = (shippingLaneName): IAction<string> => ({
+export const disableIstioStatus = (shippingLineName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIOSTATUS,
-    value: shippingLaneName
+    value: shippingLineName
 });
 
 export const initContainerShipPage = (): IEmptyAction => ({

@@ -17,7 +17,7 @@ export interface Store {
     masterPage: MasterPage;
     landingPage: LandingPage;
     settingPage: SettingPage;
-    shippingLanePage: ShippingLanePage;
+    shippingLinePage: ShippingLinePage;
     containerShipPage: ContainerShipPage;
 }
 /** UI **/
@@ -39,8 +39,8 @@ export interface LandingPage {
 export interface SettingPage {
     lang: string;
 }
-export interface ShippingLanePage {
-    shippingLanes: ShippingLane[];
+export interface ShippingLinePage {
+    shippingLines: ShippingLine[];
 }
 export interface ContainerShipPage{
     containerShips: ContainerShip[];
@@ -54,16 +54,16 @@ export interface Contributor {
 export interface Avatar {
     url: string
 }
-export interface ShippingLane {
+export interface ShippingLine {
     name: string;
     isIstioInjected: boolean;
-    labels: string;
+    description: string;
 }
 export interface ContainerShip{
-    namespace: string;
+    shippingLine: string;
     name: string;
     containers: Container[];
-    labels: string;
+    description: string;
 }
 export interface Container{
     name: string;

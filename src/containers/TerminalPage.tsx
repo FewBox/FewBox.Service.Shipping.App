@@ -1,10 +1,17 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import { autobind } from 'core-decorators';
 import TerminalSimulator from '../components/TerminalSimulator';
+import { Row, PageHeader } from 'antd';
+import { Link } from 'react-router-dom';
+import { redirect } from '../actions';
+import { Store } from 'redux';
 
 export interface ITerminalPageProps {
   match: any;
+  redirect: (path: string) => void;
 }
 
 class TerminalPage extends React.Component<ITerminalPageProps, any> {
@@ -26,10 +33,10 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   }
   socket: any;
   componentDidMount() {
-    
+
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.promptSymbol===null) {
+    if (this.state.promptSymbol === null) {
       return true;
     }
     else {
@@ -59,6 +66,12 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
           if (index != 0 && messageSegment != '' && !_.endsWith(messageSegment, '# ')) {
             console.log(messageSegment);
           }
+          else
+          {
+            if (_.endsWith(messageSegments[1], '# ')) {
+              this.setState({ promptSymbol: _.trim(messageSegments[1]) });
+            }
+          }
         });
       }
       else {
@@ -80,20 +93,27 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   }
   render() {
     let terminalSimulator;
-    if(this.state.promptSymbol)
-    {
+    if (this.state.promptSymbol) {
       terminalSimulator = <TerminalSimulator promptSymbol={this.state.promptSymbol} msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
-    }
-    else
-    {
-      terminalSimulator = <TerminalSimulator promptSymbol='[x]' msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
     }
     return (
       <div>
-        {terminalSimulator}
+        <Row>
+          <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Layout.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
+        </Row>
+        <Row>
+          {terminalSimulator}
+        </Row>
       </div>
     );
   }
 }
 
-export default TerminalPage;
+const mapStateToProps = ({ }: Store) => ({
+})
+
+const mapDispatchToProps = {
+  redirect
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TerminalPage);

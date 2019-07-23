@@ -12,7 +12,10 @@ export default class TerminalSimulator extends React.Component<ITerminalSimulato
   public render() {
     return (
       <div>
-        <Terminal msg={this.props.msg} watchConsoleLogging={true} hideTopBar={true} showActions={false}
+        <Terminal color='green'
+          backgroundColor='black'
+          barColor='black'
+          style={{ fontWeight: "bold", fontSize: "1em" }} msg={this.props.msg} watchConsoleLogging={true} hideTopBar={true} showActions={false}
           promptSymbol={this.props.promptSymbol} commandPassThrough={(cmd, print) => this.props.executeCommand(cmd, print)}
         />
       </div>

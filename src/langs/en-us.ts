@@ -6,14 +6,15 @@ export default {
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
     'Navigation.About': 'About',
-    'Navigation.ShippingLane': 'Shipping Lane',
+    'Navigation.ShippingLine': 'Shipping Line',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.BusinessException': 'Business Exception: {errorMessage}',
-    'Confirm.DeleteShippingLane': 'Are you sure to delete ShippingLane? It cannot be recovered!',
+    'Confirm.DeleteShippingiane': 'Are you sure to delete Shipping Line? It cannot be recovered!',
     'Layout.Copyright': 'Copyright FewBox (c) 2019',
     'Layout.SignOut': 'Sign Out',
     'Layout.About': 'About',
     'Layout.OK': 'OK',
     'Layout.Cancel': 'Cancel',
-    'Layout.Loading': 'Loading...'
+    'Layout.Loading': 'Loading...',
+    'Layout.Back': 'Back',
 }

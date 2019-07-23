@@ -29,15 +29,15 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Dropdown.Button overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <Menu.Item key={'contianer' + container}>
-                                                <Link to={_.template('/master/terminal/<%= host %>/<%= port %>/<%= namespace %>/<%= pod %>/<%= container %>')({ 'host': HOST, 'port': PORT, 'pod': item.name, 'namespace': item.namespace, 'container': container })}>{container}</Link>
+                                                <Link to={_.template('/master/terminal/<%= host %>/<%= port %>/<%= namespace %>/<%= pod %>/<%= container %>')({ 'host': HOST, 'port': PORT, 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
                                             </Menu.Item>
                                         })}
                                     </Menu>} icon={<Icon type="code" />}>
                                         <FormattedMessage id="Navigation.Terminal" />
                                     </Dropdown.Button>
                                 ]}>
-                                    <Tooltip placement="topLeft" title={item.labels}>
-                                        <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={item.labels} />
+                                    <Tooltip placement="topLeft" title={item.description}>
+                                        <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={item.description} />
                                     </Tooltip>
                                 </Card>
                             </List.Item>
