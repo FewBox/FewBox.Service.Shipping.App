@@ -9,7 +9,7 @@ export default (state: ShippingLinePage = shippingLineState, action: any): Shipp
         case ActionTypes.LOAD_SHIPPINGLINE:
             return { ...state, shippingLines: action.payload };
         case ActionTypes.ADD_SHIPPINGLINE:
-            return { ...state, shippingLines: [{ name: action.value, isIstioInjected: true, description: '' }, ...state.shippingLines] };
+            return { ...state, shippingLines: [{ name: action.value, isIstioInjected: true, description: '', condition:'N/A' }, ...state.shippingLines] };
         case ActionTypes.REMOVE_SHIPPINGLINE:
             var shippingLines = state.shippingLines.filter((item, index) => {
                 if (item.name == action.value) {

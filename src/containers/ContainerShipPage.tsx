@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown } from 'antd';
+import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm } from 'antd';
 import { initContainerShipPage } from '../actions';
 import { Store, ContainerShip } from '../reducers/State';
 import { Link } from 'react-router-dom';
@@ -26,19 +26,19 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                         renderItem={(item: ContainerShip) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Dropdown.Button overlay={<Menu>
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <Menu.Item key={'contianer' + container}>
                                                 <Link to={_.template('/master/terminal/<%= host %>/<%= port %>/<%= namespace %>/<%= pod %>/<%= container %>')({ 'host': HOST, 'port': PORT, 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
                                             </Menu.Item>
                                         })}
-                                    </Menu>} icon={<Icon type="code" />}>
-                                        <FormattedMessage id="Navigation.Terminal" />
-                                    </Dropdown.Button>
+                                    </Menu>}>
+                                        <Icon type="code" />
+                                    </Dropdown>,
+                                    <Icon type="ellipsis" />
                                 ]}>
-                                    <Tooltip placement="topLeft" title={item.description}>
-                                        <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={item.description} />
-                                    </Tooltip>
+                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Running' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />
                                 </Card>
                             </List.Item>
                         )}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
 import { initShippingLinePage, closeShippingLine, enableIstio, disableIstio, startShippingLine } from '../actions';
 import { ShippingLine, Store } from '../reducers/State';
 import ShippingLineStartor from '../components/ShippingLineStartor';
@@ -32,12 +32,10 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                         renderItem={(item: ShippingLine) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.DeleteShippingLine" />} onConfirm={() => { this.props.closeShippingLine(item.name); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.closeShippingLine(item.name); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Switch onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
                                     <Icon type="ellipsis" />]}>
-                                    <Tooltip placement="topLeft" title={item.description}>
-                                        <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={item.description} />
-                                    </Tooltip>
+                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Active' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />
                                 </Card>
                             </List.Item>
                         )}

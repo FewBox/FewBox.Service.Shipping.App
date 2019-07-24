@@ -110,3 +110,12 @@ export const loadContainerShip = (payload): IPayloadAction<any> => ({
     type: ActionTypes.LOAD_CONTAINERSHIP,
     payload: payload
 });
+
+export const initShipyardPage = (): IEmptyAction =>({
+    type: ActionTypes.INIT_SHIPYARDPAGE
+});
+
+export const loadShipyard = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SHIPYARD,
+    payload: payload
+});

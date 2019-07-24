@@ -19,6 +19,7 @@ export interface Store {
     settingPage: SettingPage;
     shippingLinePage: ShippingLinePage;
     containerShipPage: ContainerShipPage;
+    shipyardPage: ShipyardPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -38,12 +39,16 @@ export interface LandingPage {
 }
 export interface SettingPage {
     lang: string;
+    isFewBoxDelivery: boolean;
 }
 export interface ShippingLinePage {
     shippingLines: ShippingLine[];
 }
 export interface ContainerShipPage{
     containerShips: ContainerShip[];
+}
+export interface ShipyardPage{
+    shipyards: Shipyard[];
 }
 
 /** Biz **/
@@ -58,13 +63,20 @@ export interface ShippingLine {
     name: string;
     isIstioInjected: boolean;
     description: string;
+    condition: string;
 }
 export interface ContainerShip{
     shippingLine: string;
     name: string;
     containers: Container[];
     description: string;
+    condition: string;
 }
 export interface Container{
     name: string;
+}
+export interface Shipyard{
+    name: string;
+    description: string;
+    quantity: number;
 }
