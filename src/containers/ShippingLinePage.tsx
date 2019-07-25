@@ -25,7 +25,7 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
         return (
             <div>
                 <Row>
-                    <ShippingLineFounder start={this.props.startShippingLine} />
+                    <ShippingLineFounder start={this.props.startShippingLine} reload={this.props.initShippingLinePage} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shippingLines}

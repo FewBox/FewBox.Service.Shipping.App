@@ -5,7 +5,8 @@ const ShippingLineSvg = () => (<svg fill="#000000" x="0px" y="0px" viewBox="0 0 
 const ShippingLineIcon = props => <Icon component={ShippingLineSvg} {...props} />;
 
 export interface IShippingLineFounderProps {
-    start: any;
+    start: (string) => void;
+    reload: () => void;
     form: any;
 }
 
@@ -35,6 +36,7 @@ class ShippingLineFounder extends React.PureComponent<IShippingLineFounderProps>
                     <Col span={6}>
                         <Form.Item>
                             <Button type="primary" shape="circle" icon="plus" htmlType="submit" />
+                            <Button type="primary" shape="circle" icon="reload" onClick={this.props.reload} />
                         </Form.Item>
                     </Col>
                 </Row>
