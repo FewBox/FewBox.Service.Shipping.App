@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
 import { initShippingLinePage, closeShippingLine, enableIstio, disableIstio, startShippingLine } from '../actions';
 import { ShippingLine, Store } from '../reducers/State';
-import ShippingLineStartor from '../components/ShippingLineStartor';
+import ShippingLineFounder from '../components/ShippingLineFounder';
 
 
 export interface IShippingLinePageProps {
@@ -25,7 +25,7 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
         return (
             <div>
                 <Row>
-                    <ShippingLineStartor start={this.props.startShippingLine} />
+                    <ShippingLineFounder start={this.props.startShippingLine} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shippingLines}

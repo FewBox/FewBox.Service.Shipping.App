@@ -3,17 +3,45 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShippingLine, initShippingLinePage, addShippingLine, removeShippingLine, enableIstioStatus, disableIstioStatus } from '../actions';
+import { loadShippingLine, enableIstioStatus, disableIstioStatus, initShippingLinePage } from '../actions';
 import { IAction } from '../actions/Action';
+import { of } from 'rxjs';
 
 const initShippingLinePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPPINGLINEPAGE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline', method: 'GET', body: action.value },
-                (payload) => {
-                    return loadShippingLine(payload);
-                });
+            if (store$.value.settingPage.isFewBoxDelivery) {
+                return AjaxObservable({ path: '/api/shippingline/fewbox', method: 'GET' },
+                    (payload) => {
+                        return loadShippingLine(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                    (payload) => {
+                        return loadShippingLine(payload);
+                    });
+            }
+        })
+    );
+
+const switchShippingLinePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
+        mergeMap((action: IAction<boolean>) => {
+            if (action.value) {
+                return AjaxObservable({ path: '/api/shippingline/fewbox', method: 'GET' },
+                    (payload) => {
+                        return loadShippingLine(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                    (payload) => {
+                        return loadShippingLine(payload);
+                    });
+            }
         })
     );
 
@@ -23,8 +51,11 @@ const startShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action: IAction<string>) => {
             return AjaxObservable({ path: '/api/shippingline', method: 'POST', body: { name: action.value.toLowerCase() } },
                 (payload) => {
-                    return addShippingLine(action.value.toLowerCase());
+                    return of(action.value.toLowerCase());
                 });
+        }),
+        map((response)=>{
+            return initShippingLinePage();
         })
     );
 const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -33,8 +64,11 @@ const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippingline/' + action.value, method: 'DELETE' },
                 (payload) => {
-                    return removeShippingLine(action.value);
+                    return of(action.value);
                 });
+        }),
+        map((response)=>{
+            return initShippingLinePage();
         })
     );
 const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -45,6 +79,9 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
                 (payload) => {
                     return enableIstioStatus(action.value);
                 });
+        }),
+        map((response)=>{
+            return initShippingLinePage();
         })
     );
 const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -55,7 +92,10 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
                 (payload) => {
                     return disableIstioStatus(action.value);
                 });
+        }),
+        map((response)=>{
+            return initShippingLinePage();
         })
     );
 
-export default [initShippingLinePageEpic, startShippingLineEpic, closeShippingLineEpic, enableIstioEpic, disableIstioEpic];
+export default [initShippingLinePageEpic, switchShippingLinePageEpic, startShippingLineEpic, closeShippingLineEpic, enableIstioEpic, disableIstioEpic];

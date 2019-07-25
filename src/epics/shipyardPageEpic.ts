@@ -1,19 +1,61 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShipyard } from '../actions';
+import { loadShipyard, initShipyardPage } from '../actions';
+import { of } from 'rxjs';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPYARDPAGE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyard', method: 'GET', body: action.value },
-                (payload) => {
-                    return loadShipyard(payload);
-                });
+            if (store$.value.settingPage.isFewBoxDelivery) {
+                return AjaxObservable({ path: '/api/shipyard/fewbox', method: 'GET' },
+                    (payload) => {
+                        return loadShipyard(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/shipyard', method: 'GET' },
+                    (payload) => {
+                        return loadShipyard(payload);
+                    });
+            }
         })
     );
 
-export default [initShipyardEpic];
+const switchShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
+        mergeMap((action) => {
+            if (store$.value.settingPage.isFewBoxDelivery) {
+                return AjaxObservable({ path: '/api/shipyard/fewbox', method: 'GET' },
+                    (payload) => {
+                        return loadShipyard(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/shipyard', method: 'GET' },
+                    (payload) => {
+                        return loadShipyard(payload);
+                    });
+            }
+        })
+    );
+
+const buildContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.BUILD_CONTAINERSHIP),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shipyard', method: 'POST', body: action.value },
+                    (payload) => {
+                        return of(payload);
+                    });
+        }),
+        map((response)=>{
+            return initShipyardPage();
+        })
+    );
+
+export default [initShipyardEpic, switchShipyardEpic, buildContainerShipEpic];

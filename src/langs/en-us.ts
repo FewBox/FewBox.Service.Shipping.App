@@ -18,4 +18,6 @@ export default {
     'Layout.Cancel': 'Cancel',
     'Layout.Loading': 'Loading...',
     'Layout.Back': 'Back',
+    'Layout.Brand': 'FewBox',
+    'Layout.All': 'All'
 }

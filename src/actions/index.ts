@@ -72,16 +72,6 @@ export const closeShippingLine = (shippingLineName): IAction<string> => ({
     value: shippingLineName
 });
 
-export const addShippingLine = (shippingLineName): IAction<string> => ({
-    type: ActionTypes.ADD_SHIPPINGLINE,
-    value: shippingLineName
-});
-
-export const removeShippingLine = (shippingLineName): IAction<string> => ({
-    type: ActionTypes.REMOVE_SHIPPINGLINE,
-    value: shippingLineName
-});
-
 export const enableIstio = (shippingLineName): IAction<string> => ({
     type: ActionTypes.ENABLE_ISTIO,
     value: shippingLineName
@@ -111,11 +101,21 @@ export const loadContainerShip = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const initShipyardPage = (): IEmptyAction =>({
+export const initShipyardPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_SHIPYARDPAGE
 });
 
 export const loadShipyard = (payload): IPayloadAction<any> => ({
     type: ActionTypes.LOAD_SHIPYARD,
     payload: payload
+});
+
+export const switchFewBoxDelivery = (isFewBox): IAction<boolean> => ({
+    type: ActionTypes.SWITCH_FEWBOXDELIVERY,
+    value: isFewBox
+});
+
+export const buildContainerShip = (order): IAction<any> =>({
+    type: ActionTypes.BUILD_CONTAINERSHIP,
+    value: order
 });
