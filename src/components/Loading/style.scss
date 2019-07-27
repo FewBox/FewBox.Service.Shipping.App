@@ -1,0 +1,36 @@
+@import '../../themes/variables';
+
+.loading{
+    width: 100%;
+    position: fixed;
+    top: 200px;
+    .icon{
+        background-image: url('/assets/images/drip.svg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 48px;
+        height: 49px;
+        margin: 0px auto;
+        animation: drip 1s linear infinite;
+    }
+    @keyframes drip {
+        0%{
+            transform: rotate(0deg);
+        }
+        25%{
+            transform: rotate(10deg);
+        }
+        50%{
+            transform: rotate(0deg);
+        }
+        75%{
+            transform: rotate(-10deg);
+        }
+        100%{
+            transform: rotate(0deg);
+        }
+    }
+}
+.no-loading{
+    display: none;
+}

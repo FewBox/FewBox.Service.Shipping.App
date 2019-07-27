@@ -7,7 +7,8 @@ import { Store } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
-import { Redirect, MessageBox, MessageType, Loading } from 'fewbox-react-components';
+import { Redirect, MessageBox, MessageType } from 'fewbox-react-components';
+import Loading from '../components/Loading';
 import { hideMessage, signOut, clearPath, switchFewBoxDelivery } from '../actions';
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -60,7 +61,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         return (
             <div className="masterPage">
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
-                <Loading isVisable={this.props.loadingIsVisible} onClose={() => { }} intlId="Layout.Loading" />
+                <Loading isVisable={this.props.loadingIsVisible} />
                 <MessageBox isVisable={this.props.messageIsVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider
