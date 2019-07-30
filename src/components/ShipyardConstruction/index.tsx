@@ -5,7 +5,7 @@ const ShipyardLineSvg = () => (<svg fill="#000000" x="0px" y="0px" viewBox="0 0 
 const ShipyardLineIcon = props => <Icon component={ShipyardLineSvg} {...props} />;
 
 export interface IShipyardBuilderProps {
-    build: any;
+    construct: any;
     form: any;
 }
 
@@ -23,10 +23,11 @@ class ShipyardBuilder extends React.PureComponent<IShipyardBuilderProps> {
                 else {
                     slots = [{ number: values.slots }];
                 }
-                this.props.build({
+                this.props.construct({
                     shippingLine: values.shippingLine,
                     name: values.name,
-                    number: values.number,
+                    numbering: values.numbering,
+                    quantity: values.quantity,
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
                     slots: slots
@@ -59,11 +60,11 @@ class ShipyardBuilder extends React.PureComponent<IShipyardBuilderProps> {
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('number', {
-                                rules: [{ required: true, message: 'Please input number!' }],
+                            {getFieldDecorator('numbering', {
+                                rules: [{ required: true, message: 'Please input numbering!' }],
                                 initialValue: 'v1'
                             })(
-                                <Input prefix={<ShipyardLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Number" />
+                                <Input prefix={<ShipyardLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                             )}
                         </Form.Item>
                     </Col>

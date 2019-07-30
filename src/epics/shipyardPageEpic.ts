@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadShipyard, initShipyardPage } from '../actions';
-import { of } from 'rxjs';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -44,18 +43,26 @@ const switchShipyardEpic = (action$: ActionsObservable<any>, store$: StateObserv
         })
     );
 
-const buildContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.BUILD_CONTAINERSHIP),
+        ofType(ActionTypes.CONSTRUCT_CONTAINERSHIP),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shipyard', method: 'POST', body: action.value },
-                    (payload) => {
-                        return of(payload);
-                    });
-        }),
-        map((response)=>{
-            return initShipyardPage();
+                (payload) => {
+                    return initShipyardPage();
+                });
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, buildContainerShipEpic];
+const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SCRAP_CONTAINERSHIP),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shipyard/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
+                (payload) => {
+                    return initShipyardPage();
+                });
+        })
+    );
+
+export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scrapContainerShipEpic];

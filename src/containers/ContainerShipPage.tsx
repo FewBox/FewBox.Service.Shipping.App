@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm } from 'antd';
-import { initContainerShipPage } from '../actions';
+import { initContainerShipPage, sinkContainerShip } from '../actions';
 import { Store, ContainerShip } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import { HOST, PORT } from '../config';
@@ -12,6 +12,7 @@ import { HOST, PORT } from '../config';
 export interface IContainerShipPageProps {
     containerShips: ContainerShip[];
     initContainerShipPage: () => void;
+    sinkContainerShip: (any) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
@@ -26,7 +27,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                         renderItem={(item: ContainerShip) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <Menu.Item key={'contianer' + container}>
@@ -54,7 +55,8 @@ const mapStateToProps = ({ containerShipPage }: Store) => ({
 });
 
 const mapDispatchToProps = {
-    initContainerShipPage
+    initContainerShipPage,
+    sinkContainerShip
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);

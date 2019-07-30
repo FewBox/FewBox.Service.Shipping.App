@@ -115,7 +115,17 @@ export const switchFewBoxDelivery = (isFewBox): IAction<boolean> => ({
     value: isFewBox
 });
 
-export const buildContainerShip = (order): IAction<any> =>({
-    type: ActionTypes.BUILD_CONTAINERSHIP,
-    value: order
+export const constructContainerShip = (designBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
+    value: designBill
+});
+
+export const scrapContainerShip = (demolitionBill): IAction<any> => ({
+    type: ActionTypes.SCRAP_CONTAINERSHIP,
+    value: demolitionBill
+});
+
+export const sinkContainerShip = (artificialReefBill): IAction<any> => ({
+    type: ActionTypes.SINK_CONTAINERSHIP,
+    value: artificialReefBill
 });

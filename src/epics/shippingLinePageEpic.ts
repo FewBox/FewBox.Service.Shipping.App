@@ -5,7 +5,6 @@ import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadShippingLine, enableIstioStatus, disableIstioStatus, initShippingLinePage } from '../actions';
 import { IAction } from '../actions/Action';
-import { of } from 'rxjs';
 
 const initShippingLinePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -51,11 +50,8 @@ const startShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action: IAction<string>) => {
             return AjaxObservable({ path: '/api/shippingline', method: 'POST', body: { name: action.value.toLowerCase() } },
                 (payload) => {
-                    return of(action.value.toLowerCase());
+                    return initShippingLinePage();
                 });
-        }),
-        map((response)=>{
-            return initShippingLinePage();
         })
     );
 const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -64,11 +60,8 @@ const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippingline/' + action.value, method: 'DELETE' },
                 (payload) => {
-                    return of(action.value);
+                    return initShippingLinePage();
                 });
-        }),
-        map((response)=>{
-            return initShippingLinePage();
         })
     );
 const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -79,22 +72,16 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
                 (payload) => {
                     return enableIstioStatus(action.value);
                 });
-        }),
-        map((response)=>{
-            return initShippingLinePage();
         })
     );
 const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DISABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline/' + action.value, method: 'PATCH', body: [{ "path": "/metadata/labels", "op": "remove", "value": "istio-injection" }] },
+            return AjaxObservable({ path: '/api/shippingline/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } },
                 (payload) => {
                     return disableIstioStatus(action.value);
                 });
-        }),
-        map((response)=>{
-            return initShippingLinePage();
         })
     );
 

@@ -76,6 +76,7 @@ export interface Container{
     name: string;
 }
 export interface Shipyard{
+    shippingLine: string;
     name: string;
     description: string;
     quantity: number;

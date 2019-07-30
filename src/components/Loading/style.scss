@@ -1,6 +1,7 @@
 @import '../../themes/variables';
 
 .loading{
+    z-index: 9999;
     width: 100%;
     position: fixed;
     top: 200px;

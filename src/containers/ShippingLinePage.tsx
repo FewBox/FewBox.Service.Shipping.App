@@ -21,7 +21,6 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
         this.props.initShippingLinePage();
     }
     render() {
-
         return (
             <div>
                 <Row>

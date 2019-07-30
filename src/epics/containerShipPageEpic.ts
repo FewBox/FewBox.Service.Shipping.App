@@ -3,7 +3,7 @@ import { mergeMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadContainerShip } from '../actions';
+import { loadContainerShip, initContainerShipPage } from '../actions';
 
 const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -42,5 +42,16 @@ const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateO
             }
         })
     );
+const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SINK_CONTAINERSHIP),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/containership/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
+                (payload) => {
+                    return initContainerShipPage();
+                });
+        })
+    );
 
-export default [initContainerShipEpic, switchContainerShipEpic];
+
+export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic];
