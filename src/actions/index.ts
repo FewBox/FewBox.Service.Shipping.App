@@ -129,3 +129,33 @@ export const sinkContainerShip = (artificialReefBill): IAction<any> => ({
     type: ActionTypes.SINK_CONTAINERSHIP,
     value: artificialReefBill
 });
+
+export const initFleetPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_FLEETPAGE
+});
+
+export const loadFleet = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_FLEET,
+    payload: payload
+});
+
+export const setupFleet = (setupBill): IAction<any> => ({
+    type: ActionTypes.SETUP_FLEET,
+    value: setupBill
+});
+
+export const dissolveFleet = (dissolveBill): IAction<string> => ({
+    type: ActionTypes.DISSOLVE_FLEET,
+    value: dissolveBill
+});
+
+/* UI */
+export const addOwnershipItemComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_OWNERSHIPITEMCOMPONENT,
+    value: index
+});
+
+export const removeOwnershipItemComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_OWNERSHIPITEMCOMPONENT,
+    value: index
+});

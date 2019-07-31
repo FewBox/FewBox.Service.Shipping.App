@@ -6,6 +6,7 @@ export default {
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
     'Navigation.Shipyard': 'Shipyard',
+    'Navigation.Fleet': 'Fleet',
     'Navigation.About': 'About',
     'Navigation.ShippingLine': 'Shipping Line',
     'Message.NetworkException': 'Network Exception: {errorMessage}',

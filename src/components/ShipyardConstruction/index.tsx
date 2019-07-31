@@ -127,4 +127,4 @@ class ShipyardBuilder extends React.PureComponent<IShipyardBuilderProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'shipyard_build' })(ShipyardBuilder));
+export default connect()(Form.create({ name: 'shipyard_construction' })(ShipyardBuilder));

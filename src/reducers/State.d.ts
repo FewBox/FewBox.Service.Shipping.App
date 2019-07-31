@@ -20,6 +20,7 @@ export interface Store {
     shippingLinePage: ShippingLinePage;
     containerShipPage: ContainerShipPage;
     shipyardPage: ShipyardPage;
+    fleetPage: FleetPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -44,10 +45,14 @@ export interface SettingPage {
 export interface ShippingLinePage {
     shippingLines: ShippingLine[];
 }
-export interface ContainerShipPage{
+export interface FleetPage {
+    fleets: Fleet[];
+    ownerShipItemComponents: OwnerShipItemComponent[]
+}
+export interface ContainerShipPage {
     containerShips: ContainerShip[];
 }
-export interface ShipyardPage{
+export interface ShipyardPage {
     shipyards: Shipyard[];
 }
 
@@ -65,19 +70,27 @@ export interface ShippingLine {
     description: string;
     condition: string;
 }
-export interface ContainerShip{
+export interface ContainerShip {
     shippingLine: string;
     name: string;
     containers: Container[];
     description: string;
     condition: string;
 }
-export interface Container{
+export interface Container {
     name: string;
 }
-export interface Shipyard{
+export interface Shipyard {
     shippingLine: string;
     name: string;
     description: string;
     quantity: number;
+}
+export interface Fleet {
+    shippingLine: string;
+    name: string;
+}
+/** UI **/
+export interface OwnerShipItemComponent {
+    name: string;
 }
