@@ -54,6 +54,7 @@ export interface ContainerShipPage {
 }
 export interface ShipyardPage {
     shipyards: Shipyard[];
+    shippingLines: ShippingLine[];
 }
 
 /** Biz **/

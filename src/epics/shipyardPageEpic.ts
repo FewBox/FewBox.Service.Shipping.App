@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShipyard, initShipyardPage } from '../actions';
+import { loadShipyard, initShipyardPage, fillShippingLineDropdownList } from '../actions';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -65,4 +65,15 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scrapContainerShipEpic];
+const initComponentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                (payload) => {
+                    return fillShippingLineDropdownList(payload);
+                });
+        })
+    );
+
+export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scrapContainerShipEpic, initComponentEpic];

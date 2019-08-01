@@ -159,3 +159,12 @@ export const removeOwnershipItemComponent = (index): IAction<number> => ({
     type: ActionTypes.REMOVE_OWNERSHIPITEMCOMPONENT,
     value: index
 });
+
+export const initShippingLineDropdownList = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST
+});
+
+export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
+    payload: payload
+});

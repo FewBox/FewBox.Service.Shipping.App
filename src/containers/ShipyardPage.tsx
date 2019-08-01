@@ -3,26 +3,29 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber } from 'antd';
-import { initShipyardPage, constructContainerShip, scrapContainerShip } from '../actions';
-import { Store, Shipyard } from '../reducers/State';
+import { initShipyardPage, constructContainerShip, scrapContainerShip, initShippingLineDropdownList } from '../actions';
+import { Store, Shipyard, ShippingLine } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
 
 export interface IShipyardPageProps {
     shipyards: Shipyard[];
+    shippingLines: ShippingLine[];
     initShipyardPage: () => void;
+    initShippingLineDropdownList: () => void;
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
 }
 
 class ShipyardPage extends React.Component<IShipyardPageProps, any> {
     componentDidMount() {
+        this.props.initShippingLineDropdownList();
         this.props.initShipyardPage();
     }
     render() {
         return (
             <div>
                 <Row>
-                    <ShipyardConstruction construct={this.props.constructContainerShip} />
+                    <ShipyardConstruction construct={this.props.constructContainerShip} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shipyards}
@@ -44,10 +47,12 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
 }
 
 const mapStateToProps = ({ shipyardPage }: Store) => ({
-    shipyards: shipyardPage.shipyards
+    shipyards: shipyardPage.shipyards,
+    shippingLines: shipyardPage.shippingLines
 });
 
 const mapDispatchToProps = {
+    initShippingLineDropdownList,
     initShipyardPage,
     constructContainerShip,
     scrapContainerShip

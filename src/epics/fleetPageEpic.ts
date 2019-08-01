@@ -27,7 +27,6 @@ const setupFleetPageEpic = (action$: ActionsObservable<any>, store$: StateObserv
     action$.pipe(
         ofType(ActionTypes.SETUP_FLEET),
         mergeMap((action) => {
-            debugger;
             return AjaxObservable({ path: '/api/fleet', method: 'POST', body: action.value },
                 (payload) => {
                     return initFleetPage();
