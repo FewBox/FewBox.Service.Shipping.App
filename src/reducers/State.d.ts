@@ -1,4 +1,4 @@
-import { MessageType } from "fewbox-react-components";
+import { MessageType } from "@fewbox/react-components";
 
 /** Common **/
 export interface List<T> {
@@ -34,6 +34,7 @@ export interface MasterPage {
     messageIsVisible: boolean;
     loadingIsVisible: boolean;
     path?: string;
+    shippingLines: ShippingLine[];
 }
 export interface LandingPage {
     contributors: Contributor[];
@@ -54,7 +55,6 @@ export interface ContainerShipPage {
 }
 export interface ShipyardPage {
     shipyards: Shipyard[];
-    shippingLines: ShippingLine[];
 }
 
 /** Biz **/

@@ -1,6 +1,6 @@
 import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
-import { MessageType } from 'fewbox-react-components';
+import { MessageType } from '@fewbox/react-components';
 
 // Common
 export const beginLoading = (): IEmptyAction => ({

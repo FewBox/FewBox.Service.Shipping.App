@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Alert, Row, Col, Input, Button, Form, Icon, Checkbox, Avatar } from 'antd';
 import { autobind } from 'core-decorators';
-import { Redirect } from 'fewbox-react-components';
+import { Redirect } from '@fewbox/react-components';
 import { Store } from '../reducers/State';
 import { signIn, clearPath } from '../actions';
 import './SignInPage.scss';

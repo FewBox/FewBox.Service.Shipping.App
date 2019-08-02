@@ -2,14 +2,16 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
-import { initFleetPage, dissolveFleet, setupFleet, addOwnershipItemComponent, removeOwnershipItemComponent } from '../actions';
-import { Fleet, Store, OwnerShipItemComponent } from '../reducers/State';
+import { initFleetPage, dissolveFleet, setupFleet, addOwnershipItemComponent, removeOwnershipItemComponent, initShippingLineDropdownList } from '../actions';
+import { Fleet, Store, OwnerShipItemComponent, ShippingLine } from '../reducers/State';
 import FleetSetup from '../components/FleetSetup';
 
 
 export interface IFleetPageProps {
     ownerShipItemComponents: OwnerShipItemComponent[];
+    shippingLines: ShippingLine[];
     addOwnershipItemComponent: () => void;
+    initShippingLineDropdownList: () => void;
     removeOwnershipItemComponent: (number)=>void;
     fleets: Fleet[];
     initFleetPage: () => void;
@@ -19,6 +21,7 @@ export interface IFleetPageProps {
 
 class FleetPage extends React.Component<IFleetPageProps, any> {
     componentDidMount() {
+        this.props.initShippingLineDropdownList();
         this.props.initFleetPage();
     }
     render() {
@@ -26,7 +29,8 @@ class FleetPage extends React.Component<IFleetPageProps, any> {
             <div>
                 <Row>
                     <FleetSetup setup={this.props.setupFleet} reload={this.props.initFleetPage} ownerShipItemComponents={this.props.ownerShipItemComponents}
-                    addOwnershipItemComponent={this.props.addOwnershipItemComponent} removeOwnershipItemComponent={this.props.removeOwnershipItemComponent} />
+                    addOwnershipItemComponent={this.props.addOwnershipItemComponent} removeOwnershipItemComponent={this.props.removeOwnershipItemComponent}
+                    shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.fleets}
@@ -47,9 +51,10 @@ class FleetPage extends React.Component<IFleetPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ fleetPage }: Store) => ({
+const mapStateToProps = ({ fleetPage, masterPage }: Store) => ({
     fleets: fleetPage.fleets,
-    ownerShipItemComponents: fleetPage.ownerShipItemComponents
+    ownerShipItemComponents: fleetPage.ownerShipItemComponents,
+    shippingLines: masterPage.shippingLines
 });
 
 const mapDispatchToProps = {
@@ -57,7 +62,8 @@ const mapDispatchToProps = {
     setupFleet,
     dissolveFleet,
     addOwnershipItemComponent,
-    removeOwnershipItemComponent
+    removeOwnershipItemComponent,
+    initShippingLineDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FleetPage);

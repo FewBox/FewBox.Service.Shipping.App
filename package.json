@@ -12,9 +12,9 @@
   "author": "",
   "license": "SEE LICENSE IN https://raw.githubusercontent.com/FewBox/FewBox.Service.Shipping.App/master/LICENSE",
   "dependencies": {
+    "@fewbox/react-components": "^0.0.1",
     "antd": "^3.20.2",
     "core-decorators": "^0.20.0",
-    "fewbox-react-components": "^0.0.27",
     "lodash": "^4.17.14",
     "lodash.template": "^4.5.0",
     "react": "^16.8.6",
@@ -30,6 +30,7 @@
     "terminal-in-react": "^4.3.1"
   },
   "devDependencies": {
+    "@fewbox/antd-theme": "^0.0.1",
     "@types/node": "^11.13.5",
     "@types/react": "^16.8.14",
     "@types/react-router": "^4.4.5",

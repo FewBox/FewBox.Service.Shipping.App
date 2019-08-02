@@ -46,9 +46,9 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ shipyardPage }: Store) => ({
+const mapStateToProps = ({ shipyardPage, masterPage }: Store) => ({
     shipyards: shipyardPage.shipyards,
-    shippingLines: shipyardPage.shippingLines
+    shippingLines: masterPage.shippingLines
 });
 
 const mapDispatchToProps = {

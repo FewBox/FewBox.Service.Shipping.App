@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const common = require('./webpack.common.js');
+const theme = require('@fewbox/antd-theme');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -32,7 +33,7 @@ module.exports = merge(common, {
                     {
                         loader: 'less-loader',
                         options: {
-                            "modifyVars": { "primary-color": "#1DA57A", 'border-radius-base': '2px' },
+                            "modifyVars": theme,
                             javascriptEnabled: true
                         }
                     }],

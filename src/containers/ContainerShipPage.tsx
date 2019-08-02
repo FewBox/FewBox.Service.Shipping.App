@@ -7,6 +7,7 @@ import { initContainerShipPage, sinkContainerShip } from '../actions';
 import { Store, ContainerShip } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import { HOST, PORT } from '../config';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 
 export interface IContainerShipPageProps {
@@ -37,7 +38,22 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     </Menu>}>
                                         <Icon type="code" />
                                     </Dropdown>,
-                                    <Icon type="ellipsis" />
+                                    <Dropdown overlay={<Menu>
+                                        <Menu.ItemGroup title='Normal'>
+                                            <Menu.Item>
+                                                Go to Shipping Line
+                                            </Menu.Item>
+                                        </Menu.ItemGroup>
+                                        <Menu.ItemGroup title='Advanced'>
+                                            <Menu.Item>
+                                                Detail >
+                                            </Menu.Item>
+                                        </Menu.ItemGroup>
+                                    </Menu>}>
+                                        <a className="ant-dropdown-link" href="#">
+                                            <Icon type="ellipsis" />
+                                        </a>
+                                    </Dropdown>
                                 ]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Running' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />
                                 </Card>

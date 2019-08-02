@@ -69,10 +69,18 @@ const initComponentEpic = (action$: ActionsObservable<any>, store$: StateObserva
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
-                (payload) => {
-                    return fillShippingLineDropdownList(payload);
-                });
+            if (store$.value.settingPage.isFewBoxDelivery) {
+                return AjaxObservable({ path: '/api/shippingline/fewbox', method: 'GET' },
+                    (payload) => {
+                        return fillShippingLineDropdownList(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                    (payload) => {
+                        return fillShippingLineDropdownList(payload);
+                    });
+            }
         })
     );
 

@@ -5,7 +5,7 @@ import { beginLoading, endLoading, showMessage, redirect, empty } from '../actio
 import { IAjaxSetting } from './Fetch';
 import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
 import { map, catchError, retry, startWith, endWith } from 'rxjs/operators';
-import { MessageType } from 'fewbox-react-components';
+import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting): AjaxRequest => {
     return {

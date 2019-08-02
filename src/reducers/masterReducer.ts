@@ -1,10 +1,9 @@
 import ActionTypes from '../actions/ActionTypes';
-import { IAction } from '../actions/Action';
 import { MasterPage } from './State';
-import { MessageType } from 'fewbox-react-components';
+import { MessageType } from '@fewbox/react-components';
 
-const master = { messageType: MessageType.Info, messageIntlId: '', messageIsVisible: false, loadingIsVisible: false };
-export default (state: MasterPage = master, action: IAction<any>): MasterPage => {
+const master = { messageType: MessageType.Info, messageIntlId: '', messageIsVisible: false, loadingIsVisible: false, shippingLines: [] };
+export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
             return { ...state, loadingIsVisible: true };
@@ -18,6 +17,8 @@ export default (state: MasterPage = master, action: IAction<any>): MasterPage =>
             return { ...state, path: action.value };
         case ActionTypes.CLEAR_PATH:
             return { ...state, path: undefined };
+        case ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST:
+            return { ...state, shippingLines: action.payload };
         default:
             return state;
     }
