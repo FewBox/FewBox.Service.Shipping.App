@@ -8,8 +8,9 @@ import shippingLinePage from './shippingLineReducer';
 import containerShipPage from './containerShipReducer';
 import shipyardPage from './shipyardReducer';
 import fleetPage from './fleetReducer';
+import customPage from './customReducer';
 
-const appReducer = combineReducers({ masterPage, signinPage, landingPage, settingPage, shippingLinePage, containerShipPage, shipyardPage, fleetPage, routing });
+const appReducer = combineReducers({ masterPage, signinPage, landingPage, settingPage, shippingLinePage, containerShipPage, shipyardPage, fleetPage, customPage, routing });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {
         state = undefined;

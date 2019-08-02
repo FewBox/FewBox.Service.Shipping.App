@@ -9,6 +9,7 @@ export default {
     'Navigation.Fleet': 'Fleet',
     'Navigation.About': 'About',
     'Navigation.ShippingLine': 'Shipping Line',
+    'Navigation.Custom': 'Custom',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.BusinessException': 'Business Exception: {errorMessage}',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',

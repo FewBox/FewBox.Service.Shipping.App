@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber } from 'antd';
-import { initShipyardPage, constructContainerShip, scrapContainerShip, initShippingLineDropdownList } from '../actions';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList } from '../actions';
 import { Store, Shipyard, ShippingLine } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
 
@@ -12,6 +12,7 @@ export interface IShipyardPageProps {
     shippingLines: ShippingLine[];
     initShipyardPage: () => void;
     initShippingLineDropdownList: () => void;
+    scaleContainerShipQuantity: (any) => void;
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
 }
@@ -33,7 +34,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { }} />,
+                                    <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color="blue">{item.shippingLine}</Tag><Tag color="blue">{item.quantity}</Tag></Tooltip>} />
                                 </Card>
@@ -55,6 +56,7 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     initShipyardPage,
     constructContainerShip,
+    scaleContainerShipQuantity,
     scrapContainerShip
 };
 

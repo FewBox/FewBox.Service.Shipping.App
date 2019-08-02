@@ -23,6 +23,24 @@ const initFleetPageEpic = (action$: ActionsObservable<any>, store$: StateObserva
             }
         })
     );
+const switchFleetEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
+        mergeMap((action) => {
+            if (store$.value.settingPage.isFewBoxDelivery) {
+                return AjaxObservable({ path: '/api/fleet/fewbox', method: 'GET' },
+                    (payload) => {
+                        return loadFleet(payload);
+                    });
+            }
+            else {
+                return AjaxObservable({ path: '/api/fleet', method: 'GET' },
+                    (payload) => {
+                        return loadFleet(payload);
+                    });
+            }
+        })
+    );
 const setupFleetPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SETUP_FLEET),
@@ -33,5 +51,15 @@ const setupFleetPageEpic = (action$: ActionsObservable<any>, store$: StateObserv
                 });
         })
     );
+const dissolveFleetPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.DISSOLVE_FLEET),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/fleet/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
+                (payload) => {
+                    return initFleetPage();
+                });
+        })
+    );
 
-export default [initFleetPageEpic, setupFleetPageEpic];
+export default [initFleetPageEpic, setupFleetPageEpic, switchFleetEpic, dissolveFleetPageEpic];

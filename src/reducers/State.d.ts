@@ -21,6 +21,7 @@ export interface Store {
     containerShipPage: ContainerShipPage;
     shipyardPage: ShipyardPage;
     fleetPage: FleetPage;
+    customPage: CustomPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -56,6 +57,9 @@ export interface ContainerShipPage {
 export interface ShipyardPage {
     shipyards: Shipyard[];
 }
+export interface CustomPage{
+    customs: Custom[];
+}
 
 /** Biz **/
 export interface Contributor {
@@ -88,6 +92,10 @@ export interface Shipyard {
     quantity: number;
 }
 export interface Fleet {
+    shippingLine: string;
+    name: string;
+}
+export interface Custom{
     shippingLine: string;
     name: string;
 }

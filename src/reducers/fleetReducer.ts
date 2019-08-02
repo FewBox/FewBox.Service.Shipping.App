@@ -7,7 +7,7 @@ const fleetState = {
 };
 export default (state: FleetPage = fleetState, action: any): FleetPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_SHIPPINGLINE:
+        case ActionTypes.LOAD_FLEET:
             return { ...state, fleets: action.payload };
         case ActionTypes.ADD_OWNERSHIPITEMCOMPONENT:
             let ownerShipItemComponents = [...state.ownerShipItemComponents, { name: 'ownership' + action.value }];

@@ -130,6 +130,11 @@ export const sinkContainerShip = (artificialReefBill): IAction<any> => ({
     value: artificialReefBill
 });
 
+export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
+    type: ActionTypes.SCALE_CONTAINERSHIPQUANTITY,
+    value: renewBill
+});
+
 export const initFleetPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_FLEETPAGE
 });
@@ -147,6 +152,15 @@ export const setupFleet = (setupBill): IAction<any> => ({
 export const dissolveFleet = (dissolveBill): IAction<string> => ({
     type: ActionTypes.DISSOLVE_FLEET,
     value: dissolveBill
+});
+
+export const initCustomPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CUSTOMPAGE
+});
+
+export const loadCustom = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CUSTOM,
+    payload: payload
 });
 
 /* UI */

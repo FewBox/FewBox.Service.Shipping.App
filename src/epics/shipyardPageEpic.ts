@@ -54,6 +54,17 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
+const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SCALE_CONTAINERSHIPQUANTITY),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shipyard/mergepatch/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } },
+                (payload) => {
+                    return initShipyardPage();
+                });
+        })
+    );
+
 const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SCRAP_CONTAINERSHIP),
@@ -84,4 +95,4 @@ const initComponentEpic = (action$: ActionsObservable<any>, store$: StateObserva
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scrapContainerShipEpic, initComponentEpic];
+export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initComponentEpic];

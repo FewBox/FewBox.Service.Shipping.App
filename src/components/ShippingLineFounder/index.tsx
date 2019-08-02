@@ -36,7 +36,7 @@ class ShippingLineFounder extends React.PureComponent<IShippingLineFounderProps>
                     <Col span={6}>
                         <Form.Item>
                             <Button type="primary" shape="circle" icon="plus" htmlType="submit" />
-                            <Button type="primary" shape="circle" icon="reload" onClick={this.props.reload} />
+                            <Button type="primary" shape="circle" icon="reload" style={{ marginLeft: 8 }} onClick={this.props.reload} />
                         </Form.Item>
                     </Col>
                 </Row>
