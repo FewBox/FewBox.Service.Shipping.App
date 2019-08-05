@@ -6,7 +6,7 @@ export default {
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
     'Navigation.Shipyard': 'Shipyard',
-    'Navigation.Fleet': 'Fleet',
+    'Navigation.Dock': 'Dock',
     'Navigation.About': 'About',
     'Navigation.ShippingLine': 'Shipping Line',
     'Navigation.Custom': 'Custom',

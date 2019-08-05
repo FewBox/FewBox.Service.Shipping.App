@@ -24,7 +24,7 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
             </Button>
           </Col>
           <Col span={6}>
-            <Statistic title="Fleets (Service)" value={32} />
+            <Statistic title="Docks (Service)" value={32} />
             <Button style={{ marginTop: 16 }} type="primary">
               Go
             </Button>

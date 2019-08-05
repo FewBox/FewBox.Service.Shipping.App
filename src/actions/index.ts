@@ -135,23 +135,23 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
-export const initFleetPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_FLEETPAGE
+export const initDockPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_DOCKPAGE
 });
 
-export const loadFleet = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_FLEET,
+export const loadDock = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_DOCK,
     payload: payload
 });
 
-export const setupFleet = (setupBill): IAction<any> => ({
-    type: ActionTypes.SETUP_FLEET,
-    value: setupBill
+export const buildDock = (buildBill): IAction<any> => ({
+    type: ActionTypes.BUILD_DOCK,
+    value: buildBill
 });
 
-export const dissolveFleet = (dissolveBill): IAction<string> => ({
-    type: ActionTypes.DISSOLVE_FLEET,
-    value: dissolveBill
+export const demolishDock = (demolishBill): IAction<string> => ({
+    type: ActionTypes.DEMOLISH_DOCK,
+    value: demolishBill
 });
 
 export const initCustomPage = (): IEmptyAction => ({
@@ -164,13 +164,13 @@ export const loadCustom = (payload): IPayloadAction<any> => ({
 });
 
 /* UI */
-export const addOwnershipItemComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_OWNERSHIPITEMCOMPONENT,
+export const addMooringComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_MOORINGCOMPONENT,
     value: index
 });
 
-export const removeOwnershipItemComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_OWNERSHIPITEMCOMPONENT,
+export const removeMooringComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_MOORINGCOMPONENT,
     value: index
 });
 
