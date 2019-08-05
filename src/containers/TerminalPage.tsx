@@ -5,9 +5,9 @@ import * as _ from 'lodash';
 import { autobind } from 'core-decorators';
 import TerminalSimulator from '../components/TerminalSimulator';
 import { Row, PageHeader } from 'antd';
-import { Link } from 'react-router-dom';
 import { redirect } from '../actions';
 import { Store } from 'redux';
+import { HOST, PORT } from '../config';
 
 export interface ITerminalPageProps {
   match: any;
@@ -20,8 +20,8 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     this.state = { promptSymbol: null };
     var websocketUrlCompiled = _.template('wss://${host}:${port}/terminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=/bin/bash&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
     var websocketUrl = websocketUrlCompiled({
-      'host': this.props.match.params.host,
-      'port': this.props.match.params.port,
+      'host': HOST,
+      'port': PORT,
       'namespace': this.props.match.params.namespace,
       'pod': this.props.match.params.pod,
       'container': this.props.match.params.container

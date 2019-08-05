@@ -2,13 +2,10 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm } from 'antd';
+import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
 import { initContainerShipPage, sinkContainerShip } from '../actions';
 import { Store, ContainerShip } from '../reducers/State';
 import { Link } from 'react-router-dom';
-import { HOST, PORT } from '../config';
-import SubMenu from 'antd/lib/menu/SubMenu';
-
 
 export interface IContainerShipPageProps {
     containerShips: ContainerShip[];
@@ -32,21 +29,23 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <Menu.Item key={'contianer' + container}>
-                                                <Link to={_.template('/master/terminal/<%= host %>/<%= port %>/<%= namespace %>/<%= pod %>/<%= container %>')({ 'host': HOST, 'port': PORT, 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
+                                                <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
                                             </Menu.Item>
                                         })}
                                     </Menu>}>
                                         <Icon type="code" />
                                     </Dropdown>,
                                     <Dropdown overlay={<Menu>
+                                        <Menu.ItemGroup title='Log'>
+                                            {item.containers.map((container, index) => {
+                                                return <Menu.Item key={'contianer' + container}>
+                                                    <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
+                                                </Menu.Item>
+                                            })}
+                                        </Menu.ItemGroup>
                                         <Menu.ItemGroup title='Normal'>
                                             <Menu.Item>
-                                                Go to Shipping Line
-                                            </Menu.Item>
-                                        </Menu.ItemGroup>
-                                        <Menu.ItemGroup title='Advanced'>
-                                            <Menu.Item>
-                                                Detail >
+                                                <Button icon="more">Detail</Button>
                                             </Menu.Item>
                                         </Menu.ItemGroup>
                                     </Menu>}>

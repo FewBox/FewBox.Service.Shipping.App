@@ -163,6 +163,16 @@ export const loadCustom = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
+export const initLogBook = (identification): IAction<any> => ({
+    type: ActionTypes.INIT_LOGBOOK,
+    value: identification
+});
+
+export const loadLogBook = (logBook): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_LOGBOOK,
+    payload: logBook
+});
+
 /* UI */
 export const addMooringComponent = (index): IAction<number> => ({
     type: ActionTypes.ADD_MOORINGCOMPONENT,

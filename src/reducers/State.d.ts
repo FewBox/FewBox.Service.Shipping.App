@@ -22,6 +22,7 @@ export interface Store {
     shipyardPage: ShipyardPage;
     dockPage: DockPage;
     customPage: CustomPage;
+    logBookPage: LogBookPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -59,6 +60,9 @@ export interface ShipyardPage {
 }
 export interface CustomPage{
     customs: Custom[];
+}
+export interface LogBookPage{
+    logBook: LogBook;
 }
 
 /** Biz **/
@@ -98,6 +102,10 @@ export interface Dock {
 export interface Custom{
     shippingLine: string;
     name: string;
+}
+export interface LogBook{
+    status: string;
+    content: string;
 }
 /** UI **/
 export interface MooringComponent {

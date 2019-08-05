@@ -6,6 +6,8 @@ import containerShipPageEpic from './containerShipPageEpic';
 import shipyardPageEpic from './shipyardPageEpic';
 import dockPageEpic from './dockPageEpic';
 import customPageEpic from './customPageEpic';
+import logBookPageEpic from './logBookPageEpic';
 import commonEpic from './commonEpic';
 
-export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...shippingLinePageEpic, ...containerShipPageEpic, ...shipyardPageEpic, ...dockPageEpic, ...customPageEpic);
+export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...shippingLinePageEpic, ...containerShipPageEpic, ...shipyardPageEpic,
+    ...dockPageEpic, ...customPageEpic, ...logBookPageEpic);
