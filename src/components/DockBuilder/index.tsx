@@ -28,9 +28,9 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let moorings = Object.keys(values).filter((k) => { return k.startsWith('mooring-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('mooring-name'.length);
-                    return { name: values[k], number: values['mooring-number' + elementIndex] };
+                let moorings = Object.keys(values).filter((k) => { return k.startsWith('mooring-pile'); }).map((k, index) => {
+                    let elementIndex = k.substr('mooring-pile'.length);
+                    return { name: values[k], buoy: values['mooring-buoy' + elementIndex] };
                 });
                 this.props.build({ shippingLine: values.shippingLine, name: values.name, moorings: moorings });
             }
@@ -42,19 +42,19 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
             return <Row gutter={16} key={item.name + index}>
                 <Col span={6}>
                     <Form.Item>
-                        {getFieldDecorator('mooring-name' + index, {
-                            rules: [{ required: true, message: 'Please input name!' }],
+                        {getFieldDecorator('mooring-pile' + index, {
+                            rules: [{ required: true, message: 'Please input pile!' }],
                         })(
-                            <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                            <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pile" />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
                     <Form.Item >
-                        {getFieldDecorator('mooring-number' + index, {
-                            rules: [{ required: true, message: 'Please input number!' }],
+                        {getFieldDecorator('mooring-buoy' + index, {
+                            rules: [{ required: true, message: 'Please input buoy!' }],
                         })(
-                            <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Number" />
+                            <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Buoy" />
                         )}
                     </Form.Item>
                 </Col>

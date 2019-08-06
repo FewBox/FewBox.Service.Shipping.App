@@ -17,14 +17,14 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let slots;
-                if (typeof (values.slots) == 'object') {
-                    slots = values.slots.map((item, index) => {
+                let lockingRods;
+                if (typeof (values.lockingRods) == 'object') {
+                    lockingRods = values.lockingRods.map((item, index) => {
                         return { number: item };
                     });
                 }
                 else {
-                    slots = [{ number: values.slots }];
+                    lockingRods = [{ number: values.lockingRods }];
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
@@ -33,7 +33,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     quantity: values.quantity,
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
-                    slots: slots
+                    lockingRods: lockingRods
                 });
             }
         });
@@ -102,11 +102,11 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('slots', {
-                                rules: [{ required: true, message: 'Please input slots!' }],
+                            {getFieldDecorator('lockingRods', {
+                                rules: [{ required: true, message: 'Please input lockingRods!' }],
                                 initialValue: '80'
                             })(
-                                <Select mode="tags" style={{ width: '100%' }} placeholder="Slots">
+                                <Select mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
                                     <Select.Option value="80">80</Select.Option>
                                     <Select.Option value="443">443</Select.Option>
                                 </Select>
