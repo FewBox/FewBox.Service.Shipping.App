@@ -52,6 +52,16 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
                 });
         })
     );
+const buildContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.BUILD_CONTAINERSHIP),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/containership', method: 'POST', body: action.value },
+                (payload) => {
+                    return initContainerShipPage();
+                });
+        })
+    );
 
 
-export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic];
+export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, buildContainerShipEpic];

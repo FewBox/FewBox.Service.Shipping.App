@@ -135,6 +135,12 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
+export const buildContianerShip= (buildBill): IAction<any> => ({
+    type: ActionTypes.BUILD_CONTAINERSHIP,
+    value: buildBill
+});
+
+
 export const initDockPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_DOCKPAGE
 });

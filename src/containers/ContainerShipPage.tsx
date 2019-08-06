@@ -3,23 +3,31 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
-import { initContainerShipPage, sinkContainerShip } from '../actions';
-import { Store, ContainerShip } from '../reducers/State';
+import { initContainerShipPage, sinkContainerShip, buildContianerShip, initShippingLineDropdownList } from '../actions';
+import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
+import ShipBuilding from '../components/ShipBuilding';
 
 export interface IContainerShipPageProps {
+    shippingLines: ShippingLine[];
     containerShips: ContainerShip[];
+    initShippingLineDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
+    buildContianerShip: (any) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
     componentDidMount() {
+        this.props.initShippingLineDropdownList();
         this.props.initContainerShipPage();
     }
     render() {
         return (
             <div>
+                <Row>
+                    <ShipBuilding construct={this.props.buildContianerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
+                </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.containerShips}
                         renderItem={(item: ContainerShip) => (
@@ -54,7 +62,11 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         </a>
                                     </Dropdown>
                                 ]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Running' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />
+                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={<Tooltip placement="topLeft" title={item.name}>{item.name}</Tooltip>} />
+                                    <Tag color={item.condition == 'Running' ? 'green' : 'red'}>{item.condition}</Tag>
+                                    <p>{item.fleetName}</p>
+                                    <p>{item.fleetAddress}</p>
+                                    <p>{item.address}</p>
                                 </Card>
                             </List.Item>
                         )}
@@ -65,13 +77,16 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ containerShipPage }: Store) => ({
-    containerShips: containerShipPage.containerShips
+const mapStateToProps = ({ containerShipPage, masterPage }: Store) => ({
+    containerShips: containerShipPage.containerShips,
+    shippingLines: masterPage.shippingLines
 });
 
 const mapDispatchToProps = {
+    initShippingLineDropdownList,
     initContainerShipPage,
-    sinkContainerShip
+    sinkContainerShip,
+    buildContianerShip
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);

@@ -85,6 +85,9 @@ export interface ContainerShip {
     containers: Container[];
     description: string;
     condition: string;
+    fleetName: string;
+    fleetAddress: string;
+    address: string;
 }
 export interface Container {
     name: string;
@@ -94,6 +97,7 @@ export interface Shipyard {
     name: string;
     description: string;
     quantity: number;
+    cargos: string[];
 }
 export interface Dock {
     shippingLine: string;
@@ -104,7 +108,6 @@ export interface Custom{
     name: string;
 }
 export interface LogBook{
-    status: string;
     content: string;
 }
 /** UI **/

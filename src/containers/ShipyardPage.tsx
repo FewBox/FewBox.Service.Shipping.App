@@ -26,7 +26,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
         return (
             <div>
                 <Row>
-                    <ShipyardConstruction construct={this.props.constructContainerShip} shippingLines={this.props.shippingLines} />
+                    <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shipyards}
@@ -36,7 +36,9 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color="blue">{item.shippingLine}</Tag><Tag color="blue">{item.quantity}</Tag></Tooltip>} />
+                                    <div><Tag color="blue">{item.shippingLine}</Tag>{item.cargos.map((cargo, index) => {
+                                        return <p>{cargo}</p>
+                                    })}</div>
                                 </Card>
                             </List.Item>
                         )}
