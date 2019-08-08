@@ -3,18 +3,9 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { MooringComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import ShippingLineSvg from '../../../assets/images/container.svg';
-const ShippingLineIcon = props => <Icon component={ShippingLineSvg} {...props} />;
-import PileSvg from '../../../assets/images/container.svg';
-const PileIcon = props => <Icon component={PileSvg} {...props} />;
-import BuoySvg from '../../../assets/images/container.svg';
-const BuoyIcon = props => <Icon component={BuoySvg} {...props} />;
-import PendantSvg from '../../../assets/images/container.svg';
-const PendantIcon = props => <Icon component={PendantSvg} {...props} />;
-import DockSvg from '../../../assets/images/container.svg';
-const DockIcon = props => <Icon component={DockSvg} {...props} />;
+import { PileIcon, BuoyIcon, PendantIcon } from '../Icon';
 
-export interface IDockBuilderProps {
+export interface ICustomConstructionProps {
     mooringComponents: MooringComponent[];
     shippingLines: ShippingLine[];
     addMooringComponent: (number) => void;
@@ -24,7 +15,7 @@ export interface IDockBuilderProps {
     form: any;
 }
 
-class DockBuilder extends React.PureComponent<IDockBuilderProps> {
+class CustomConstruction extends React.PureComponent<ICustomConstructionProps> {
     @autobind
     addMooring() {
         this.props.addMooringComponent(this.props.mooringComponents.length + 1);
@@ -93,7 +84,7 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
                             {getFieldDecorator('shippingLine', {
                                 rules: [{ required: true, message: 'Please input Shipping Line!' }],
                             })(
-                                <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                <Select showSearch placeholder="Shipping Line" optionFilterProp="children">
                                     {this.props.shippingLines.map((item, index) => {
                                         return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
                                     })}
@@ -106,7 +97,7 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
-                                <Input prefix={<DockIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -130,4 +121,4 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'dock_build' })(DockBuilder));
+export default connect()(Form.create({ name: 'dock_build' })(CustomConstruction));

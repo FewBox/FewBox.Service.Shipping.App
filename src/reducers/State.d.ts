@@ -102,6 +102,7 @@ export interface Shipyard {
 export interface Dock {
     shippingLine: string;
     name: string;
+    containerShipSpec: string;
 }
 export interface Custom{
     shippingLine: string;
