@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { MooringComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { PileIcon, BuoyIcon, PendantIcon } from '../Icon';
+import { PileIcon, BuoyIcon, MooringPendantIcon, CustomIcon } from '../Icon';
 
 export interface ICustomConstructionProps {
     mooringComponents: MooringComponent[];
@@ -67,7 +67,7 @@ class CustomConstruction extends React.PureComponent<ICustomConstructionProps> {
                         {getFieldDecorator('mooring-pendant' + index, {
                             rules: [{ required: true, message: 'Please input pendant!' }],
                         })(
-                            <Input prefix={<PendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pendant" />
+                            <Input prefix={<MooringPendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pendant" />
                         )}
                     </Form.Item>
                 </Col>
@@ -97,7 +97,7 @@ class CustomConstruction extends React.PureComponent<ICustomConstructionProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
-                                <Input prefix={<DockSetupIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<CustomIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>

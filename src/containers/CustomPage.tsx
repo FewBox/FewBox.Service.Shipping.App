@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
 import { initCustomPage } from '../actions';
 import { Custom, Store } from '../reducers/State';
+import CustomConstruction from '../components/CustomConstruction';
 
 
 export interface ICustomPageProps {
@@ -19,6 +20,7 @@ class CustomPage extends React.Component<ICustomPageProps, any> {
         return (
             <div>
                 <Row>
+                    <CustomConstruction />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.customs}

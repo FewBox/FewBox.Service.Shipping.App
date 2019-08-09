@@ -3,16 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { MooringComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import ShippingLineSvg from '../../../assets/images/container.svg';
-const ShippingLineIcon = props => <Icon component={ShippingLineSvg} {...props} />;
-import PileSvg from '../../../assets/images/container.svg';
-const PileIcon = props => <Icon component={PileSvg} {...props} />;
-import BuoySvg from '../../../assets/images/container.svg';
-const BuoyIcon = props => <Icon component={BuoySvg} {...props} />;
-import PendantSvg from '../../../assets/images/container.svg';
-const PendantIcon = props => <Icon component={PendantSvg} {...props} />;
-import DockSvg from '../../../assets/images/container.svg';
-const DockIcon = props => <Icon component={DockSvg} {...props} />;
+import { ShippingLineIcon, DockIcon, PileIcon, BuoyIcon, MooringPendantIcon } from '../Icon';
 
 export interface IDockBuilderProps {
     mooringComponents: MooringComponent[];
@@ -76,7 +67,7 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
                         {getFieldDecorator('mooring-pendant' + index, {
                             rules: [{ required: true, message: 'Please input pendant!' }],
                         })(
-                            <Input prefix={<PendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pendant" />
+                            <Input prefix={<MooringPendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pendant" />
                         )}
                     </Form.Item>
                 </Col>
