@@ -1,6 +1,6 @@
 {
   "name": "shipping-app",
-  "version": "0.0.1",
+  "version": "v1.7.0",
   "description": "fewbox web app.",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,8 @@
     "redux": "^4.0.1",
     "redux-observable": "^1.1.0",
     "rxjs": "^6.4.0",
-    "terminal-in-react": "^4.3.1"
+    "terminal-in-react": "^4.3.1",
+    "yarn": "^1.17.3"
   },
   "devDependencies": {
     "@fewbox/antd-theme": "^0.0.1",
