@@ -37,7 +37,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" />]}>
                                     <div><Tag color="blue">{item.shippingLine}</Tag>{item.cargos.map((cargo, index) => {
-                                        return <p>{cargo}</p>
+                                        return <p key={'cargo' + index}>{cargo}</p>
                                     })}</div>
                                 </Card>
                             </List.Item>

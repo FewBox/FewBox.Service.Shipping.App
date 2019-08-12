@@ -16,11 +16,11 @@ const TerminalPage = lazy(() => import('./TerminalPage'));
 const ShippingLinePage = lazy(() => import('./ShippingLinePage'));
 const ContainerShipPage = lazy(() => import('./ContainerShipPage'));
 const ShipyardPage = lazy(() => import('./ShipyardPage'));
-const DockPage = lazy(() => import('./DockPage'));
-const CustomPage = lazy(() => import('./CustomPage'));
+const ContainerTerminalPage = lazy(() => import('./ContainerTerminalPage'));
+const CustomsPage = lazy(() => import('./CustomsPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 import './MasterPage.scss';
-import { ShippingLineIcon, DockIcon, ShipyardIcon, ContainerShipIcon, CustomIcon } from '../components/Icon';
+import { ShippingLineIcon, ContainerTerminalIcon, ShipyardIcon, ContainerShipIcon, CustomsIcon } from '../components/Icon';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -78,8 +78,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.ShippingLine" /></Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Link to='/master/dock'><DockIcon />
-                                    <FormattedMessage id="Navigation.Dock" /></Link>
+                                <Link to='/master/containerterminal'><ContainerTerminalIcon />
+                                    <FormattedMessage id="Navigation.ContainerTerminal" /></Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Link to='/master/shipyard'><ShipyardIcon />
@@ -90,8 +90,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.ContainerShip" /></Link>
                             </Menu.Item>
                             <Menu.Item key="6">
-                                <Link to='/master/custom'><CustomIcon />
-                                    <FormattedMessage id="Navigation.Custom" /></Link>
+                                <Link to='/master/customs'><CustomsIcon />
+                                    <FormattedMessage id="Navigation.Customs" /></Link>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <Link to='/master/about'><Icon type="info-circle" />
@@ -117,8 +117,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/shippingline" render={props => <ShippingLinePage {...props} />} />
                                     <Route path="/master/containership" render={props => <ContainerShipPage {...props} />} />
                                     <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
-                                    <Route path="/master/dock" render={props => <DockPage {...props} />} />
-                                    <Route path="/master/custom" render={props => <CustomPage {...props} />} />
+                                    <Route path="/master/containerterminal" render={props => <ContainerTerminalPage {...props} />} />
+                                    <Route path="/master/customs" render={props => <CustomsPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:host/:port/:namespace/:pod/:container" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />

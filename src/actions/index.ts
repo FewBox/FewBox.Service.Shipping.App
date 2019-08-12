@@ -135,37 +135,37 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
-export const buildContianerShip= (buildBill): IAction<any> => ({
+export const buildContianerShip = (buildBill): IAction<any> => ({
     type: ActionTypes.BUILD_CONTAINERSHIP,
     value: buildBill
 });
 
 
-export const initDockPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_DOCKPAGE
+export const initContainerTerminalPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CONTAINERTERMINALPAGE
 });
 
-export const loadDock = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_DOCK,
+export const loadContainerTerminal = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CONTAINERTERMINAL,
     payload: payload
 });
 
-export const buildDock = (buildBill): IAction<any> => ({
-    type: ActionTypes.BUILD_DOCK,
+export const buildContainerTerminal = (buildBill): IAction<any> => ({
+    type: ActionTypes.BUILD_CONTAINERTERMINAL,
     value: buildBill
 });
 
-export const demolishDock = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_DOCK,
+export const demolishContainerTerminal = (demolishBill): IAction<string> => ({
+    type: ActionTypes.DEMOLISH_CONTAINERTERMINAL,
     value: demolishBill
 });
 
-export const initCustomPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CUSTOMPAGE
+export const initCustomsPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CUSTOMSPAGE
 });
 
-export const loadCustom = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CUSTOM,
+export const loadCustoms = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CUSTOMS,
     payload: payload
 });
 
@@ -180,13 +180,13 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
 });
 
 /* UI */
-export const addMooringComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_MOORINGCOMPONENT,
+export const addBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_BERTHCOMPONENT,
     value: index
 });
 
-export const removeMooringComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_MOORINGCOMPONENT,
+export const removeBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_BERTHCOMPONENT,
     value: index
 });
 

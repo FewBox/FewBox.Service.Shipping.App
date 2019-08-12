@@ -2,29 +2,32 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
-import { initCustomPage } from '../actions';
-import { Custom, Store } from '../reducers/State';
-import CustomConstruction from '../components/CustomConstruction';
+import { initCustomsPage, initShippingLineDropdownList } from '../actions';
+import { Customs, Store, ShippingLine } from '../reducers/State';
+import CustomsConstruction from '../components/CustomsConstruction';
 
 
-export interface ICustomPageProps {
-    customs: Custom[];
-    initCustomPage: ()=>void;
+export interface ICustomsPageProps {
+    shippingLines: ShippingLine[];
+    customs: Customs[];
+    initCustomsPage: ()=>void;
+    initShippingLineDropdownList: () => void;
 }
 
-class CustomPage extends React.Component<ICustomPageProps, any> {
+class CustomsPage extends React.Component<ICustomsPageProps, any> {
     componentDidMount() {
-        this.props.initCustomPage();
+        this.props.initCustomsPage();
+        this.props.initShippingLineDropdownList();
     }
     render() {
         return (
             <div>
                 <Row>
-                    <CustomConstruction />
+                    <CustomsConstruction shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.customs}
-                        renderItem={(item: Custom) => (
+                        renderItem={(item: Customs) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
@@ -41,12 +44,14 @@ class CustomPage extends React.Component<ICustomPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ customPage }: Store) => ({
-    customs: customPage.customs
+const mapStateToProps = ({ customsPage, masterPage }: Store) => ({
+    customs: customsPage.customs,
+    shippingLines: masterPage.shippingLines
 });
 
 const mapDispatchToProps = {
-    initCustomPage
+    initCustomsPage,
+    initShippingLineDropdownList
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomsPage);

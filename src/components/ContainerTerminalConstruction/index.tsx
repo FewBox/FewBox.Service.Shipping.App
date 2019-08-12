@@ -1,78 +1,78 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { MooringComponent, ShippingLine } from '../../reducers/State';
+import { BerthComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, DockIcon, PileIcon, BuoyIcon, MooringPendantIcon } from '../Icon';
+import { ShippingLineIcon, ContainerTerminalIcon, PileIcon, BuoyIcon, MooringPendantIcon } from '../Icon';
 
-export interface IDockBuilderProps {
-    mooringComponents: MooringComponent[];
+export interface IContainerTerminalConstructionProps {
+    berthComponents: BerthComponent[];
     shippingLines: ShippingLine[];
-    addMooringComponent: (number) => void;
-    removeMooringComponent: (number) => void;
+    addBerthComponent: (number) => void;
+    removeBerthComponent: (number) => void;
     build: (string) => void;
     reload: () => void;
     form: any;
 }
 
-class DockBuilder extends React.PureComponent<IDockBuilderProps> {
+class ContainerTerminalConstruction extends React.PureComponent<IContainerTerminalConstructionProps> {
     @autobind
-    addMooring() {
-        this.props.addMooringComponent(this.props.mooringComponents.length + 1);
+    addBerth() {
+        this.props.addBerthComponent(this.props.berthComponents.length + 1);
     }
-    removeMooring(index) {
-        this.props.removeMooringComponent(index);
+    removeBerth(index) {
+        this.props.removeBerthComponent(index);
     }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let moorings = Object.keys(values).filter((k) => { return k.startsWith('mooring-pile'); }).map((k, index) => {
-                    let elementIndex = k.substr('mooring-pile'.length);
-                    return { name: values[k], buoy: values['mooring-buoy' + elementIndex], pendant: values['mooring-pendant' + elementIndex] };
+                let berths = Object.keys(values).filter((k) => { return k.startsWith('berth-name'); }).map((k, index) => {
+                    let elementIndex = k.substr('berth-name'.length);
+                    return { name: values[k], buoy: values['berth-buoy' + elementIndex], pendant: values['berth-pendant' + elementIndex] };
                 });
-                this.props.build({ shippingLine: values.shippingLine, name: values.name, moorings: moorings });
+                this.props.build({ shippingLine: values.shippingLine, name: values.name, berths: berths });
             }
         });
     };
     getRemoveComponent(index, lastIndex) {
         if (index == lastIndex) {
-            return <Button icon="minus" onClick={() => { this.removeMooring(index); }} />;
+            return <Button icon="minus" onClick={() => { this.removeBerth(index); }} />;
         }
     }
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        var mooringComponents = this.props.mooringComponents.map((item, index) => {
+        var berthComponents = this.props.berthComponents.map((item, index) => {
             return <Row gutter={16} key={item.name + index}>
                 <Col span={6}>
                     <Form.Item>
-                        {getFieldDecorator('mooring-pile' + index, {
-                            rules: [{ required: true, message: 'Please input pile!' }],
+                        {getFieldDecorator('berth-name' + index, {
+                            rules: [{ required: true, message: 'Please input berth!' }],
                         })(
-                            <Input prefix={<PileIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pile" />
+                            <Input prefix={<PileIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
                     <Form.Item >
-                        {getFieldDecorator('mooring-buoy' + index, {
-                            rules: [{ required: true, message: 'Please input buoy!' }],
+                        {getFieldDecorator('berth-crane' + index, {
+                            rules: [{ required: true, message: 'Please input crane!' }],
                         })(
-                            <Input prefix={<BuoyIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Buoy" />
+                            <Input prefix={<BuoyIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
                     <Form.Item >
-                        {getFieldDecorator('mooring-pendant' + index, {
-                            rules: [{ required: true, message: 'Please input pendant!' }],
+                        {getFieldDecorator('berth-cellguide' + index, {
+                            rules: [{ required: true, message: 'Please input cell guide!' }],
                         })(
-                            <Input prefix={<MooringPendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Pendant" />
+                            <Input prefix={<MooringPendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
-                    {this.getRemoveComponent(index, this.props.mooringComponents.length - 1)}
+                    {this.getRemoveComponent(index, this.props.berthComponents.length - 1)}
                 </Col>
             </Row>
         });
@@ -97,15 +97,15 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
-                                <Input prefix={<DockIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<ContainerTerminalIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
                 </Row>
-                {mooringComponents}
+                {berthComponents}
                 <Row gutter={16}>
                     <Col span={24}>
-                        <Button icon="plus" onClick={this.addMooring} />
+                        <Button icon="plus" onClick={this.addBerth} />
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -121,4 +121,4 @@ class DockBuilder extends React.PureComponent<IDockBuilderProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'dock_build' })(DockBuilder));
+export default connect()(Form.create({ name: 'containerterminal_construct' })(ContainerTerminalConstruction));

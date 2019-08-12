@@ -1,12 +1,12 @@
 import ActionTypes from '../actions/ActionTypes';
-import { CustomPage } from './State';
+import { CustomsPage } from './State';
 
 const customState = {
     customs: []
 };
-export default (state: CustomPage = customState, action: any): CustomPage => {
+export default (state: CustomsPage = customState, action: any): CustomsPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_CUSTOM:
+        case ActionTypes.LOAD_CUSTOMS:
             return { ...state, customs: action.payload };
         default:
             return state;

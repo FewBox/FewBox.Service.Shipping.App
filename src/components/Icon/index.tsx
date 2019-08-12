@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Icon } from 'antd';
 import ShippingLineSvg from '../../../assets/images/shippingline.svg';
-import DockSvg from '../../../assets/images/dock.svg';
+import ContainerTerminalSvg from '../../../assets/images/container-terminal.svg';
 import ShipyardSvg from '../../../assets/images/shipyard.svg';
 import ContainerShipSvg from '../../../assets/images/containership.svg';
-import CustomSvg from '../../../assets/images/custom.svg';
+import CustomsSvg from '../../../assets/images/customs.svg';
 import PileSvg from '../../../assets/images/pile.svg';
 import BuoySvg from '../../../assets/images/buoy.svg';
 import MooringPendantSvg from '../../../assets/images/mooringpendant.svg';
@@ -14,10 +14,10 @@ import LockingRodSvg from '../../../assets/images/container.svg';
 import CargoPackagePolicySvg from '../../../assets/images/container.svg';
 
 export const ShippingLineIcon = props => <Icon component={ShippingLineSvg} {...props} />;
-export const DockIcon = props => <Icon component={DockSvg} {...props} />;
+export const ContainerTerminalIcon = props => <Icon component={ContainerTerminalSvg} {...props} />;
 export const ShipyardIcon = props => <Icon component={ShipyardSvg} {...props} />;
 export const ContainerShipIcon = props => <Icon component={ContainerShipSvg} {...props} />;
-export const CustomIcon = props => <Icon component={CustomSvg} {...props} />;
+export const CustomsIcon = props => <Icon component={CustomsSvg} {...props} />;
 export const PileIcon = props => <Icon component={PileSvg} {...props} />;
 export const BuoyIcon = props => <Icon component={BuoySvg} {...props} />;
 export const MooringPendantIcon = props => <Icon component={MooringPendantSvg} {...props} />;
