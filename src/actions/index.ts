@@ -135,9 +135,9 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
-export const buildContianerShip = (buildBill): IAction<any> => ({
-    type: ActionTypes.BUILD_CONTAINERSHIP,
-    value: buildBill
+export const constructContianerShip = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
+    value: constructBill
 });
 
 
@@ -150,13 +150,13 @@ export const loadContainerTerminal = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const buildContainerTerminal = (buildBill): IAction<any> => ({
-    type: ActionTypes.BUILD_CONTAINERTERMINAL,
-    value: buildBill
+export const constructContainerTerminal = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_CONTAINERTERMINAL,
+    value: constructBill
 });
 
 export const demolishContainerTerminal = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_CONTAINERTERMINAL,
+    type: ActionTypes.CONSTRUCT_CONTAINERTERMINAL,
     value: demolishBill
 });
 
@@ -187,6 +187,15 @@ export const addBerthComponent = (index): IAction<number> => ({
 
 export const removeBerthComponent = (index): IAction<number> => ({
     type: ActionTypes.REMOVE_BERTHCOMPONENT,
+    value: index
+});
+export const addCustomsBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_CUSTOMSBERTHCOMPONENT,
+    value: index
+});
+
+export const removeCustomsBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_CUSTOMSBERTHCOMPONENT,
     value: index
 });
 

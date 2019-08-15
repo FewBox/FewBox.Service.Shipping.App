@@ -99,7 +99,7 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     return (
       <div>
         <Row>
-          <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Layout.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
+          <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Label.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
         </Row>
         <Row>
           {terminalSimulator}

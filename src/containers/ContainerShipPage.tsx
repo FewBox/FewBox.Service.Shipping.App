@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
-import { initContainerShipPage, sinkContainerShip, buildContianerShip, initShippingLineDropdownList } from '../actions';
+import { initContainerShipPage, sinkContainerShip, constructContianerShip, initShippingLineDropdownList } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
@@ -14,7 +14,7 @@ export interface IContainerShipPageProps {
     initShippingLineDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
-    buildContianerShip: (any) => void;
+    constructContianerShip: (any) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
@@ -26,14 +26,14 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
         return (
             <div>
                 <Row>
-                    <ShipBuilding construct={this.props.buildContianerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
+                    <ShipBuilding construct={this.props.constructContianerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.containerShips}
                         renderItem={(item: ContainerShip) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <Menu.Item key={'contianer' + container}>
@@ -86,7 +86,7 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     initContainerShipPage,
     sinkContainerShip,
-    buildContianerShip
+    constructContianerShip
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);

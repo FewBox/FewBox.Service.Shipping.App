@@ -41,9 +41,9 @@ const switchContainerTerminalEpic = (action$: ActionsObservable<any>, store$: St
             }
         })
     );
-const buildContainerTerminalPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const constructContainerTerminalPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.BUILD_CONTAINERTERMINAL),
+        ofType(ActionTypes.CONSTRUCT_CONTAINERTERMINAL),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/containerterminal', method: 'POST', body: action.value },
                 (payload) => {
@@ -53,7 +53,7 @@ const buildContainerTerminalPageEpic = (action$: ActionsObservable<any>, store$:
     );
 const demolishContainerTerminalPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.DEMOLISH_CONTAINERTERMINAL),
+        ofType(ActionTypes.CONSTRUCT_CONTAINERTERMINAL),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/containerterminal/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
                 (payload) => {
@@ -62,4 +62,4 @@ const demolishContainerTerminalPageEpic = (action$: ActionsObservable<any>, stor
         })
     );
 
-export default [initContainerTerminalPageEpic, buildContainerTerminalPageEpic, switchContainerTerminalEpic, demolishContainerTerminalPageEpic];
+export default [initContainerTerminalPageEpic, constructContainerTerminalPageEpic, switchContainerTerminalEpic, demolishContainerTerminalPageEpic];

@@ -9,7 +9,6 @@ class AboutPage extends React.Component<IAboutPageProps, any> {
   render() {
     return (
       <div>
-          <Button type="primary"><FormattedMessage id="Layout.About" /></Button>
       </div>
     );
   }

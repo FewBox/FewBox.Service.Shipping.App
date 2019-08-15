@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { BerthComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, ContainerTerminalIcon, PileIcon, BuoyIcon, MooringPendantIcon } from '../Icon';
+import { ShippingLineIcon, ContainerTerminalIcon, BerthIcon, CraneIcon, CellGuideIcon,  } from '../Icon';
 
 export interface IContainerTerminalConstructionProps {
     berthComponents: BerthComponent[];
     shippingLines: ShippingLine[];
     addBerthComponent: (number) => void;
     removeBerthComponent: (number) => void;
-    build: (string) => void;
+    construct: (string) => void;
     reload: () => void;
     form: any;
 }
@@ -31,7 +31,7 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                     let elementIndex = k.substr('berth-name'.length);
                     return { name: values[k], buoy: values['berth-buoy' + elementIndex], pendant: values['berth-pendant' + elementIndex] };
                 });
-                this.props.build({ shippingLine: values.shippingLine, name: values.name, berths: berths });
+                this.props.construct({ shippingLine: values.shippingLine, name: values.name, berths: berths });
             }
         });
     };
@@ -49,7 +49,7 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                         {getFieldDecorator('berth-name' + index, {
                             rules: [{ required: true, message: 'Please input berth!' }],
                         })(
-                            <Input prefix={<PileIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                            <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
                         )}
                     </Form.Item>
                 </Col>
@@ -58,7 +58,7 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                         {getFieldDecorator('berth-crane' + index, {
                             rules: [{ required: true, message: 'Please input crane!' }],
                         })(
-                            <Input prefix={<BuoyIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                            <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
                         )}
                     </Form.Item>
                 </Col>
@@ -67,12 +67,14 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                         {getFieldDecorator('berth-cellguide' + index, {
                             rules: [{ required: true, message: 'Please input cell guide!' }],
                         })(
-                            <Input prefix={<MooringPendantIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
+                            <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
-                    {this.getRemoveComponent(index, this.props.berthComponents.length - 1)}
+                    <Form.Item>
+                        {this.getRemoveComponent(index, this.props.berthComponents.length - 1)}
+                    </Form.Item>
                 </Col>
             </Row>
         });

@@ -50,7 +50,7 @@ export interface ShippingLinePage {
 }
 export interface ContainerTerminalPage {
     containerTerminals: ContainerTerminal[];
-    berthComponents: BerthComponent[]
+    berthComponents: BerthComponent[];
 }
 export interface ContainerShipPage {
     containerShips: ContainerShip[];
@@ -60,6 +60,7 @@ export interface ShipyardPage {
 }
 export interface CustomsPage{
     customs: Customs[];
+    berthComponents: BerthComponent[];
 }
 export interface LogBookPage{
     logBook: LogBook;

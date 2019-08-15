@@ -52,7 +52,7 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
                 });
         })
     );
-const buildContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.BUILD_CONTAINERSHIP),
         mergeMap((action) => {
@@ -64,4 +64,4 @@ const buildContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
     );
 
 
-export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, buildContainerShipEpic];
+export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, constructContainerShipEpic];
