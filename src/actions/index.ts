@@ -169,6 +169,16 @@ export const loadCustoms = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
+export const constructCustoms = (bluePrint): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_CUSTOMS,
+    value: bluePrint
+});
+
+export const demolishCustoms = (bluePrint): IAction<any> => ({
+    type: ActionTypes.DEMOLISH_CUSTOMS,
+    value: bluePrint
+});
+
 export const initLogBook = (identification): IAction<any> => ({
     type: ActionTypes.INIT_LOGBOOK,
     value: identification
@@ -189,13 +199,13 @@ export const removeBerthComponent = (index): IAction<number> => ({
     type: ActionTypes.REMOVE_BERTHCOMPONENT,
     value: index
 });
-export const addCustomsBerthComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_CUSTOMSBERTHCOMPONENT,
+export const addChannelComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_CHANNELCOMPONENT,
     value: index
 });
 
-export const removeCustomsBerthComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_CUSTOMSBERTHCOMPONENT,
+export const removeChannelComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_CHANNELCOMPONENT,
     value: index
 });
 

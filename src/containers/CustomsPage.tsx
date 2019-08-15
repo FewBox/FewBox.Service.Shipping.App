@@ -2,19 +2,20 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
-import { initCustomsPage, initShippingLineDropdownList, addCustomsBerthComponent, removeCustomsBerthComponent } from '../actions';
-import { Customs, Store, ShippingLine, BerthComponent } from '../reducers/State';
+import { initCustomsPage, initShippingLineDropdownList, addChannelComponent, removeChannelComponent, constructCustoms } from '../actions';
+import { Customs, Store, ShippingLine, ChannelComponent } from '../reducers/State';
 import CustomsConstruction from '../components/CustomsConstruction';
 
 
 export interface ICustomsPageProps {
-    berthComponents: BerthComponent[];
+    channelComponents: ChannelComponent[];
     shippingLines: ShippingLine[];
     customs: Customs[];
     initCustomsPage: () => void;
     initShippingLineDropdownList: () => void;
-    addCustomsBerthComponent: () => void;
-    removeCustomsBerthComponent: (number) => void;
+    addChannelComponent: () => void;
+    removeChannelComponent: (number) => void;
+    constructCustoms(any): void;
 }
 
 class CustomsPage extends React.Component<ICustomsPageProps, any> {
@@ -26,8 +27,8 @@ class CustomsPage extends React.Component<ICustomsPageProps, any> {
         return (
             <div>
                 <Row>
-                    <CustomsConstruction shippingLines={this.props.shippingLines} berthComponents={this.props.berthComponents} specs={[{ name: "http", value: "HTTP" }, { name: "https", value: "HTTPS" }, { name: "grpc", value: "GRPC" }, { name: "http2", value: "HTTP2" }, { name: "mongo", value: "MONGO" }, { name: "tcp", value: "TCP" }, { name: "tls", value: "TLS" }]}
-                        reload={this.props.initCustomsPage} addBerthComponent={this.props.addCustomsBerthComponent} removeBerthComponent={this.props.removeCustomsBerthComponent} />
+                    <CustomsConstruction shippingLines={this.props.shippingLines} channelComponents={this.props.channelComponents} specs={[{ name: "http", value: "HTTP" }, { name: "https", value: "HTTPS" }, { name: "grpc", value: "GRPC" }, { name: "http2", value: "HTTP2" }, { name: "mongo", value: "MONGO" }, { name: "tcp", value: "TCP" }, { name: "tls", value: "TLS" }]}
+                        reload={this.props.initCustomsPage} addChannelComponent={this.props.addChannelComponent} removeChannelComponent={this.props.removeChannelComponent} construct={this.props.constructCustoms} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.customs}
@@ -51,14 +52,15 @@ class CustomsPage extends React.Component<ICustomsPageProps, any> {
 const mapStateToProps = ({ customsPage, masterPage }: Store) => ({
     customs: customsPage.customs,
     shippingLines: masterPage.shippingLines,
-    berthComponents: customsPage.berthComponents,
+    channelComponents: customsPage.channelComponents,
 });
 
 const mapDispatchToProps = {
     initCustomsPage,
     initShippingLineDropdownList,
-    addCustomsBerthComponent,
-    removeCustomsBerthComponent
+    addChannelComponent,
+    removeChannelComponent,
+    constructCustoms
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomsPage);

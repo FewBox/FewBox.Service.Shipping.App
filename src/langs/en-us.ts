@@ -11,6 +11,7 @@ export default {
     'Message.UsernameOrPasswordIsNotValid': 'The username or password is not valid!',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.BusinessException': 'Business Exception: {errorMessage}',
+    'Message.GateRequired':'Please input gate!',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',
@@ -29,5 +30,6 @@ export default {
     'Label.CellGuide': 'CellGuide',
     'Label.Numbering': 'Numbering',
     'Label.Cargo': 'Cargo',
-    'Label.Spec': 'Spec'
+    'Label.Spec': 'Spec',
+    'Label.Gate': 'Gate'
 }

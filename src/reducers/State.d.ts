@@ -60,7 +60,7 @@ export interface ShipyardPage {
 }
 export interface CustomsPage{
     customs: Customs[];
-    berthComponents: BerthComponent[];
+    channelComponents: ChannelComponent[];
 }
 export interface LogBookPage{
     logBook: LogBook;
@@ -114,5 +114,8 @@ export interface LogBook{
 }
 /** UI **/
 export interface BerthComponent {
+    name: string;
+}
+export interface ChannelComponent {
     name: string;
 }

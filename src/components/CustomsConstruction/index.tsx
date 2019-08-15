@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { BerthComponent, ShippingLine } from '../../reducers/State';
+import { ShippingLine, ChannelComponent } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, CustomsIcon, BerthIcon, CraneIcon } from '../Icon';
+import { ShippingLineIcon, CustomsIcon, WarehouseIcon, GateIcon, NumberingIcon } from '../Icon';
 
 export interface Spec {
     name: string;
@@ -11,71 +12,74 @@ export interface Spec {
 }
 
 export interface ICustomsConstructionProps {
-    berthComponents: BerthComponent[];
+    channelComponents: ChannelComponent[];
     shippingLines: ShippingLine[];
     specs: Spec[];
-    addBerthComponent: (number) => void;
-    removeBerthComponent: (number) => void;
+    addChannelComponent: (number) => void;
+    removeChannelComponent: (number) => void;
     construct: (string) => void;
     reload: () => void;
     form: any;
+    intl: any;
 }
 
 class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps> {
     @autobind
-    addBerth() {
-        this.props.addBerthComponent(this.props.berthComponents.length + 1);
+    addChannel() {
+        this.props.addChannelComponent(this.props.channelComponents.length + 1);
     }
-    removeBerth(index) {
-        this.props.removeBerthComponent(index);
+    removeChannel(index) {
+        this.props.removeChannelComponent(index);
     }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let berths = Object.keys(values).filter((k) => { return k.startsWith('berth-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('berth-name'.length);
-                    return { name: values[k], buoy: values['berth-buoy' + elementIndex], pendant: values['berth-pendant' + elementIndex] };
+                let channels = Object.keys(values).filter((k) => { return k.startsWith('gate-name'); }).map((k, index) => {
+                    let elementIndex = k.substr('gate-name'.length);
+                    let warehouses = values['warehouses' + elementIndex];
+                    return { name: values[k], gate: { name: values['gate-name' + elementIndex], numbering: values['gate-numbering' + elementIndex], specification: values['gate-specification' + elementIndex] }, warehouses: warehouses };
                 });
-                this.props.construct({ shippingLine: values.shippingLine, name: values.name, berths: berths });
+                this.props.construct({ shippingLine: values.shippingLine, name: values.name, channels: channels });
             }
         });
     };
     getRemoveComponent(index, lastIndex) {
         if (index == lastIndex) {
-            return <Button icon="minus" onClick={() => { this.removeBerth(index); }} />;
+            return <Button icon="minus" onClick={() => { this.removeChannel(index); }} />;
         }
     }
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        var berthComponents = this.props.berthComponents.map((item, index) => {
+        var channelComponents = this.props.channelComponents.map((item, index) => {
             return <Row gutter={16} key={item.name + index}>
                 <Col span={6}>
                     <Form.Item>
-                        {getFieldDecorator('berth-name' + index, {
-                            rules: [{ required: true, message: 'Please input berth!' }],
+                        {getFieldDecorator('gate-name' + index, {
+                            rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
                         })(
-                            <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                            <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gate' })} />
                         )}
                     </Form.Item>
                 </Col>
                 <Col span={6}>
                     <Form.Item >
-                        {getFieldDecorator('berth-crane' + index, {
-                            rules: [{ required: true, message: 'Please input crane!' }],
+                        {getFieldDecorator('gate-numbering' + index, {
+                            rules: [{ required: true, message: 'Please input numbering!' }],
                         })(
-                            <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                            <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                         )}
                     </Form.Item>
                 </Col>
-                <Col span={6}>
+                <Col span={3}>
                     <Form.Item>
-                        {getFieldDecorator('berth-spec', {
-                            rules: [{ required: true, message: 'Please input Spec!' }],
+                        {getFieldDecorator('gate-specification' + index, {
+                            rules: [{ required: true, message: 'Please input Specification!' }],
+                            initialValue: 'http'
                         })(
-                            <Select showSearch placeholder="Spec" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                            <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                 {this.props.specs.map((item, index) => {
-                                    return <Select.Option key={'spec' + index} value={item.value}>{item.name}</Select.Option>
+                                    return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
                                 })}
                             </Select>
                         )}
@@ -83,7 +87,19 @@ class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps>
                 </Col>
                 <Col span={6}>
                     <Form.Item>
-                        {this.getRemoveComponent(index, this.props.berthComponents.length - 1)}
+                        {getFieldDecorator('warehouses' + index, {
+                            rules: [{ required: true, message: 'Please input warehouses!' }],
+                            initialValue: '*'
+                        })(
+                            <Select suffixIcon={<WarehouseIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
+                                <Select.Option value="80">*</Select.Option>
+                            </Select>
+                        )}
+                    </Form.Item>
+                </Col>
+                <Col span={3}>
+                    <Form.Item>
+                        {this.getRemoveComponent(index, this.props.channelComponents.length - 1)}
                     </Form.Item>
                 </Col>
             </Row>
@@ -114,10 +130,10 @@ class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps>
                         </Form.Item>
                     </Col>
                 </Row>
-                {berthComponents}
+                {channelComponents}
                 <Row gutter={16}>
                     <Col span={24}>
-                        <Button icon="plus" onClick={this.addBerth} />
+                        <Button icon="plus" onClick={this.addChannel} />
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -133,4 +149,4 @@ class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps>
     }
 }
 
-export default connect()(Form.create({ name: 'customs_construct' })(CustomsConstruction));
+export default connect()(Form.create({ name: 'customs_construct' })(injectIntl(CustomsConstruction)));

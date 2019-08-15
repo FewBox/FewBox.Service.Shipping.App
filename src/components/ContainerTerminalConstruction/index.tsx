@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { BerthComponent, ShippingLine } from '../../reducers/State';
@@ -47,7 +48,7 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                 <Col span={6}>
                     <Form.Item>
                         {getFieldDecorator('berth-name' + index, {
-                            rules: [{ required: true, message: 'Please input berth!' }],
+                            rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
                         })(
                             <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
                         )}

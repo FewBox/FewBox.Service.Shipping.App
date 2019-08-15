@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadCustoms } from '../actions';
+import { loadCustoms, initCustomsPage } from '../actions';
 
 const initCustomPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -41,5 +41,25 @@ const switchCustomEpic = (action$: ActionsObservable<any>, store$: StateObservab
             }
         })
     );
+const constructCustomsPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.CONSTRUCT_CUSTOMS),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/customs', method: 'POST', body: action.value },
+                (payload) => {
+                    return initCustomsPage();
+                });
+        })
+    );
+const demolishCustomsPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.DEMOLISH_CUSTOMS),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/customs/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
+                (payload) => {
+                    return initCustomsPage();
+                });
+        })
+    );
 
-export default [initCustomPageEpic, switchCustomEpic];
+export default [initCustomPageEpic, switchCustomEpic, constructCustomsPageEpic, demolishCustomsPageEpic];
