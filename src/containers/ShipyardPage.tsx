@@ -33,11 +33,11 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                         renderItem={(item: Shipyard) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" />]}>
                                     <div><Tag color="blue">{item.shippingLine}</Tag>{item.cargos.map((cargo, index) => {
-                                        return <p>{cargo}</p>
+                                        return <p key={'cargo' + index}>{cargo}</p>
                                     })}</div>
                                 </Card>
                             </List.Item>

@@ -31,7 +31,7 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                         renderItem={(item: ShippingLine) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.closeShippingLine(item.name); }} okText={<FormattedMessage id="Layout.OK" />} cancelText={<FormattedMessage id="Layout.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.closeShippingLine(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Switch onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Active' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />

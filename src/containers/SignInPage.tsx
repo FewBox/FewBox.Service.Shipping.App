@@ -47,7 +47,7 @@ class SignIn extends React.Component<ISignInProps, any> {
     public render() {
         let erorrMessageControl;
         if (!this.props.isUsernameAndPasswordValid) {
-            erorrMessageControl = <Alert message={<FormattedMessage id="SignIn.IsNotValid" />} type="error" />;
+            erorrMessageControl = <Alert message={<FormattedMessage id="Message.UsernameOrPasswordIsNotValid" />} type="error" />;
         }
         const {
             getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
@@ -81,10 +81,10 @@ class SignIn extends React.Component<ISignInProps, any> {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
-                                <Checkbox><FormattedMessage id="SignIn.RememberMe" /></Checkbox>
+                                <Checkbox><FormattedMessage id="Label.RememberMe" /></Checkbox>
                             )}
                             <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())}>
-                                <FormattedMessage id="SignIn.SignInButton" />
+                                <FormattedMessage id="Label.SignIn" />
                             </Button>
                         </Form.Item>
                     </Form>
@@ -93,7 +93,7 @@ class SignIn extends React.Component<ISignInProps, any> {
                 </Row>
                 <Row>
                     <div className="copyright">
-                        <FormattedMessage id="Layout.Copyright" />
+                        <FormattedMessage id="Label.Copyright" />
                     </div>
                 </Row>
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />

@@ -16,11 +16,11 @@ const TerminalPage = lazy(() => import('./TerminalPage'));
 const ShippingLinePage = lazy(() => import('./ShippingLinePage'));
 const ContainerShipPage = lazy(() => import('./ContainerShipPage'));
 const ShipyardPage = lazy(() => import('./ShipyardPage'));
-const DockPage = lazy(() => import('./DockPage'));
-const CustomPage = lazy(() => import('./CustomPage'));
+const QuayAreaPage = lazy(() => import('./QuayAreaPage'));
+const GateAreaPage = lazy(() => import('./GateAreaPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 import './MasterPage.scss';
-import { ShippingLineIcon, DockIcon, ShipyardIcon, ContainerShipIcon, CustomIcon } from '../components/Icon';
+import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon } from '../components/Icon';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -54,7 +54,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <Link to="/" onClick={this.props.signOut} ><FormattedMessage id="Layout.SignOut" /></Link>
+                    <Link to="/" onClick={this.props.signOut} ><FormattedMessage id="Label.SignOut" /></Link>
                 </Menu.Item>
             </Menu>
         );
@@ -70,7 +70,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                         </div>
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1">
-                                <Link to='/master/landing'><Icon type="home" />
+                                <Link to='/master/landing'><LandingIcon />
                                     <FormattedMessage id="Navigation.Landing" /></Link>
                             </Menu.Item>
                             <Menu.Item key="2">
@@ -78,8 +78,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.ShippingLine" /></Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Link to='/master/dock'><DockIcon />
-                                    <FormattedMessage id="Navigation.Dock" /></Link>
+                                <Link to='/master/quayarea'><QuayAreaIcon />
+                                    <FormattedMessage id="Navigation.QuayArea" /></Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Link to='/master/shipyard'><ShipyardIcon />
@@ -90,8 +90,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.ContainerShip" /></Link>
                             </Menu.Item>
                             <Menu.Item key="6">
-                                <Link to='/master/custom'><CustomIcon />
-                                    <FormattedMessage id="Navigation.Custom" /></Link>
+                                <Link to='/master/gatearea'><GateAreaIcon />
+                                    <FormattedMessage id="Navigation.GateArea" /></Link>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <Link to='/master/about'><Icon type="info-circle" />
@@ -102,7 +102,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     <Layout>
                         <Header style={{ background: '#fff', padding: 0 }}>
                             <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
-                            <ANTD_Switch checkedChildren={<FormattedMessage id='Layout.Brand' />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Layout.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxOcean(isFewBox); }} />
+                            <ANTD_Switch checkedChildren={<FormattedMessage id='Label.Brand' />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxOcean(isFewBox); }} />
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" href="#" style={{ float: 'right', marginRight: '20px' }}>
                                     <Avatar icon="user" style={{ marginRight: '5px' }} />
@@ -117,15 +117,15 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/shippingline" render={props => <ShippingLinePage {...props} />} />
                                     <Route path="/master/containership" render={props => <ContainerShipPage {...props} />} />
                                     <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
-                                    <Route path="/master/dock" render={props => <DockPage {...props} />} />
-                                    <Route path="/master/custom" render={props => <CustomPage {...props} />} />
+                                    <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />
+                                    <Route path="/master/gatearea" render={props => <GateAreaPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:host/:port/:namespace/:pod/:container" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />
                                 </Switch>
                             </Suspense>
                         </Content>
-                        <Footer><FormattedMessage id="Layout.Copyright" /></Footer>
+                        <Footer><FormattedMessage id="Label.Copyright" /></Footer>
                     </Layout>
                 </Layout>
             </div>

@@ -135,38 +135,48 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
-export const buildContianerShip= (buildBill): IAction<any> => ({
-    type: ActionTypes.BUILD_CONTAINERSHIP,
-    value: buildBill
+export const constructContianerShip = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
+    value: constructBill
 });
 
 
-export const initDockPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_DOCKPAGE
+export const initQuayAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_QUAYAREAPAGE
 });
 
-export const loadDock = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_DOCK,
+export const loadQuayArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_QUAYAREA,
     payload: payload
 });
 
-export const buildDock = (buildBill): IAction<any> => ({
-    type: ActionTypes.BUILD_DOCK,
-    value: buildBill
+export const constructQuayArea = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_QUAYAREA,
+    value: constructBill
 });
 
-export const demolishDock = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_DOCK,
+export const demolishQuayArea = (demolishBill): IAction<string> => ({
+    type: ActionTypes.CONSTRUCT_QUAYAREA,
     value: demolishBill
 });
 
-export const initCustomPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CUSTOMPAGE
+export const initGateAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_GATEAREAPAGE
 });
 
-export const loadCustom = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CUSTOM,
+export const loadGateArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_GATEAREA,
     payload: payload
+});
+
+export const constructGateArea = (bluePrint): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_GATEAREA,
+    value: bluePrint
+});
+
+export const demolishGateArea = (bluePrint): IAction<any> => ({
+    type: ActionTypes.DEMOLISH_GATEAREA,
+    value: bluePrint
 });
 
 export const initLogBook = (identification): IAction<any> => ({
@@ -180,13 +190,22 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
 });
 
 /* UI */
-export const addMooringComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_MOORINGCOMPONENT,
+export const addBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_BERTHCOMPONENT,
     value: index
 });
 
-export const removeMooringComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_MOORINGCOMPONENT,
+export const removeBerthComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_BERTHCOMPONENT,
+    value: index
+});
+export const addChannelComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_CHANNELCOMPONENT,
+    value: index
+});
+
+export const removeChannelComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_CHANNELCOMPONENT,
     value: index
 });
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber } from 'antd';
 import { ShippingLine } from '../../reducers/State';
-import { ShippingLineIcon, ShipyardIcon, NumberingIcon, CargoIcon, LockingRodIcon, CargoPackagePolicyIcon } from '../Icon';
+import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon } from '../Icon';
 
 export interface IShipyardConstructionProps {
     shippingLines: ShippingLine[];
@@ -79,7 +79,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             {getFieldDecorator('cargo', {
                                 rules: [{ required: true, message: 'Please input cargo!' }],
                             })(
-                                <Input prefix={<CargoIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
                             )}
                         </Form.Item>
                     </Col>
@@ -105,7 +105,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                                 rules: [{ required: true, message: 'Please input lockingRods!' }],
                                 initialValue: '80'
                             })(
-                                <Select suffixIcon={<LockingRodIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
+                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
                                     <Select.Option value="80">80</Select.Option>
                                     <Select.Option value="443">443</Select.Option>
                                 </Select>
