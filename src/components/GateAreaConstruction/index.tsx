@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { ShippingLine, ChannelComponent } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, CustomsIcon, WarehouseIcon, GateIcon, NumberingIcon } from '../Icon';
+import { ShippingLineIcon, GateAreaIcon, WarehouseIcon, GateIcon, NumberingIcon } from '../Icon';
 
 export interface Spec {
     name: string;
     value: string;
 }
 
-export interface ICustomsConstructionProps {
+export interface IGateAreaConstructionProps {
     channelComponents: ChannelComponent[];
     shippingLines: ShippingLine[];
     specs: Spec[];
@@ -23,7 +23,7 @@ export interface ICustomsConstructionProps {
     intl: any;
 }
 
-class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps> {
+class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProps> {
     @autobind
     addChannel() {
         this.props.addChannelComponent(this.props.channelComponents.length + 1);
@@ -125,7 +125,7 @@ class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps>
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
-                                <Input prefix={<CustomsIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<GateAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -149,4 +149,4 @@ class CustomsConstruction extends React.PureComponent<ICustomsConstructionProps>
     }
 }
 
-export default connect()(Form.create({ name: 'customs_construct' })(injectIntl(CustomsConstruction)));
+export default connect()(Form.create({ name: 'gatearea_construct' })(injectIntl(GateAreaConstruction)));

@@ -141,41 +141,41 @@ export const constructContianerShip = (constructBill): IAction<any> => ({
 });
 
 
-export const initContainerTerminalPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CONTAINERTERMINALPAGE
+export const initQuayAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_QUAYAREAPAGE
 });
 
-export const loadContainerTerminal = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CONTAINERTERMINAL,
+export const loadQuayArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_QUAYAREA,
     payload: payload
 });
 
-export const constructContainerTerminal = (constructBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_CONTAINERTERMINAL,
+export const constructQuayArea = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_QUAYAREA,
     value: constructBill
 });
 
-export const demolishContainerTerminal = (demolishBill): IAction<string> => ({
-    type: ActionTypes.CONSTRUCT_CONTAINERTERMINAL,
+export const demolishQuayArea = (demolishBill): IAction<string> => ({
+    type: ActionTypes.CONSTRUCT_QUAYAREA,
     value: demolishBill
 });
 
-export const initCustomsPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CUSTOMSPAGE
+export const initGateAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_GATEAREAPAGE
 });
 
-export const loadCustoms = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CUSTOMS,
+export const loadGateArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_GATEAREA,
     payload: payload
 });
 
-export const constructCustoms = (bluePrint): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_CUSTOMS,
+export const constructGateArea = (bluePrint): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_GATEAREA,
     value: bluePrint
 });
 
-export const demolishCustoms = (bluePrint): IAction<any> => ({
-    type: ActionTypes.DEMOLISH_CUSTOMS,
+export const demolishGateArea = (bluePrint): IAction<any> => ({
+    type: ActionTypes.DEMOLISH_GATEAREA,
     value: bluePrint
 });
 

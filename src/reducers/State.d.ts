@@ -20,8 +20,8 @@ export interface Store {
     shippingLinePage: ShippingLinePage;
     containerShipPage: ContainerShipPage;
     shipyardPage: ShipyardPage;
-    containerTerminalPage: ContainerTerminalPage;
-    customsPage: CustomsPage;
+    quayAreaPage: QuayAreaPage;
+    gateAreaPage: GateAreaPage;
     logBookPage: LogBookPage;
 }
 /** UI **/
@@ -48,8 +48,8 @@ export interface SettingPage {
 export interface ShippingLinePage {
     shippingLines: ShippingLine[];
 }
-export interface ContainerTerminalPage {
-    containerTerminals: ContainerTerminal[];
+export interface QuayAreaPage {
+    quayAreas: QuayArea[];
     berthComponents: BerthComponent[];
 }
 export interface ContainerShipPage {
@@ -58,8 +58,8 @@ export interface ContainerShipPage {
 export interface ShipyardPage {
     shipyards: Shipyard[];
 }
-export interface CustomsPage{
-    customs: Customs[];
+export interface GateAreaPage{
+    gateAreas: GateArea[];
     channelComponents: ChannelComponent[];
 }
 export interface LogBookPage{
@@ -100,12 +100,12 @@ export interface Shipyard {
     quantity: number;
     cargos: string[];
 }
-export interface ContainerTerminal {
+export interface QuayArea {
     shippingLine: string;
     name: string;
     containerShipSpec: string;
 }
-export interface Customs{
+export interface GateArea{
     shippingLine: string;
     name: string;
 }

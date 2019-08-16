@@ -1,14 +1,14 @@
 import ActionTypes from '../actions/ActionTypes';
-import { ContainerTerminalPage } from './State';
+import { QuayAreaPage } from './State';
 
-const containerTerminalState = {
-    containerTerminals: [],
+const quaryAreaState = {
+    quayAreas: [],
     berthComponents: []
 };
-export default (state: ContainerTerminalPage = containerTerminalState, action: any): ContainerTerminalPage => {
+export default (state: QuayAreaPage = quaryAreaState, action: any): QuayAreaPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_CONTAINERTERMINAL:
-            return { ...state, containerTerminals: action.payload };
+        case ActionTypes.LOAD_QUAYAREA:
+            return { ...state, quayAreas: action.payload };
         case ActionTypes.ADD_BERTHCOMPONENT:
             let berthComponents = [...state.berthComponents, { name: 'berth' + action.value }];
             return { ...state, berthComponents: berthComponents };

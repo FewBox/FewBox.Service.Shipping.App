@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Icon } from 'antd';
 import ShippingLineSvg from '../../../assets/images/shippingline.svg';
-import ContainerTerminalSvg from '../../../assets/images/container-terminal.svg';
+import QuayAreaSvg from '../../../assets/images/quayarea.svg';
 import ShipyardSvg from '../../../assets/images/shipyard.svg';
 import ContainerShipSvg from '../../../assets/images/containership.svg';
-import CustomsSvg from '../../../assets/images/customs.svg';
+import GateAreaSvg from '../../../assets/images/gatearea.svg';
 import CargoPackagePolicySvg from '../../../assets/images/container.svg';
 import LandingSvg from '../../../assets/images/landing.svg';
 import BerthSvg from '../../../assets/images/berth.svg';
@@ -19,10 +19,10 @@ import WarehouseSvg from '../../../assets/images/logo.svg';
 
 const fontSize = { fontSize: '20px' };
 export const ShippingLineIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
-export const ContainerTerminalIcon = props => <Icon style={fontSize} component={ContainerTerminalSvg} {...props} />;
+export const QuayAreaIcon = props => <Icon style={fontSize} component={QuayAreaSvg} {...props} />;
 export const ShipyardIcon = props => <Icon style={fontSize} component={ShipyardSvg} {...props} />;
 export const ContainerShipIcon = props => <Icon style={fontSize} component={ContainerShipSvg} {...props} />;
-export const CustomsIcon = props => <Icon style={fontSize} component={CustomsSvg} {...props} />;
+export const GateAreaIcon = props => <Icon style={fontSize} component={GateAreaSvg} {...props} />;
 export const CargoPackagePolicyIcon = props => <Icon style={fontSize} component={CargoPackagePolicySvg} {...props} />;
 export const LandingIcon = props => <Icon style={fontSize} component={LandingSvg} {...props} />;
 export const BerthIcon = props => <Icon style={fontSize} component={BerthSvg} {...props} />;

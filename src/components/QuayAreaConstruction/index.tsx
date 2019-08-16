@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { BerthComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, ContainerTerminalIcon, BerthIcon, CraneIcon, CellGuideIcon,  } from '../Icon';
+import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon,  } from '../Icon';
 
-export interface IContainerTerminalConstructionProps {
+export interface IQuayAreaConstructionProps {
     berthComponents: BerthComponent[];
     shippingLines: ShippingLine[];
     addBerthComponent: (number) => void;
@@ -16,7 +16,7 @@ export interface IContainerTerminalConstructionProps {
     form: any;
 }
 
-class ContainerTerminalConstruction extends React.PureComponent<IContainerTerminalConstructionProps> {
+class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProps> {
     @autobind
     addBerth() {
         this.props.addBerthComponent(this.props.berthComponents.length + 1);
@@ -100,7 +100,7 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
-                                <Input prefix={<ContainerTerminalIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<QuayAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -124,4 +124,4 @@ class ContainerTerminalConstruction extends React.PureComponent<IContainerTermin
     }
 }
 
-export default connect()(Form.create({ name: 'containerterminal_construct' })(ContainerTerminalConstruction));
+export default connect()(Form.create({ name: 'quayarea_construct' })(QuayAreaConstruction));

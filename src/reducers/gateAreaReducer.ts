@@ -1,14 +1,14 @@
 import ActionTypes from '../actions/ActionTypes';
-import { CustomsPage } from './State';
+import { GateAreaPage } from './State';
 
-const customState = {
-    customs: [],
+const gateAreaState = {
+    gateAreas: [],
     channelComponents: []
 };
-export default (state: CustomsPage = customState, action: any): CustomsPage => {
+export default (state: GateAreaPage = gateAreaState, action: any): GateAreaPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_CUSTOMS:
-            return { ...state, customs: action.payload };
+        case ActionTypes.LOAD_GATEAREA:
+            return { ...state, gateAreas: action.payload };
             case ActionTypes.ADD_CHANNELCOMPONENT:
                 let channelComponents = [...state.channelComponents, { name: 'channel' + action.value }];
                 return { ...state, channelComponents: channelComponents };
