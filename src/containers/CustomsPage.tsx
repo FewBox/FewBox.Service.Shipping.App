@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
-import { initCustomsPage, initShippingLineDropdownList, addChannelComponent, removeChannelComponent, constructCustoms } from '../actions';
+import { initCustomsPage, initShippingLineDropdownList, addChannelComponent, removeChannelComponent, constructCustoms, demolishCustoms } from '../actions';
 import { Customs, Store, ShippingLine, ChannelComponent } from '../reducers/State';
 import CustomsConstruction from '../components/CustomsConstruction';
 
@@ -15,7 +15,8 @@ export interface ICustomsPageProps {
     initShippingLineDropdownList: () => void;
     addChannelComponent: () => void;
     removeChannelComponent: (number) => void;
-    constructCustoms(any): void;
+    constructCustoms: (any) => void;
+    demolishCustoms: (any) => void;
 }
 
 class CustomsPage extends React.Component<ICustomsPageProps, any> {
@@ -35,7 +36,7 @@ class CustomsPage extends React.Component<ICustomsPageProps, any> {
                         renderItem={(item: Customs) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishCustoms({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.shippingLine}></Tooltip>} />
@@ -60,7 +61,8 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     addChannelComponent,
     removeChannelComponent,
-    constructCustoms
+    constructCustoms,
+    demolishCustoms
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomsPage);
