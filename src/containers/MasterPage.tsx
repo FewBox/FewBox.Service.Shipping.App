@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Store } from '../reducers/State';
-import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message } from 'antd';
+import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
@@ -30,8 +30,9 @@ export interface IMasterPageProps {
     messageIntlId: string;
     messageValues: any;
     messageDuration: number;
-    messageIsVisible: boolean;
-    loadingIsVisible: boolean;
+    isMessageVisible: boolean;
+    isLoadingVisible: boolean;
+    isDrawerVisible: boolean;
     isFewBoxDelivery: boolean;
     hideMessage: () => void;
     switchFewBoxOcean: (boolean) => void;
@@ -61,8 +62,13 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         return (
             <div className="masterPage">
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
-                <Loading isVisable={this.props.loadingIsVisible} />
-                <MessageBox isVisable={this.props.messageIsVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
+                <Loading isVisable={this.props.isLoadingVisible} />
+                <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
+                <Drawer title="Basic Drawer" placement="right" closable={false} visible={this.props.isDrawerVisible}>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Drawer>
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                         <div className='logo'>
@@ -138,8 +144,9 @@ const mapStateToProps = ({ masterPage, settingPage }: Store) => ({
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
     messageDuration: masterPage.messageDuration,
-    messageIsVisible: masterPage.messageIsVisible,
-    loadingIsVisible: masterPage.loadingIsVisible,
+    isMessageVisible: masterPage.isMessageVisible,
+    isLoadingVisible: masterPage.isLoadingVisible,
+    isDrawerVisible: masterPage.isDrawerVisible,
     redirectPath: masterPage.path,
     isFewBoxDelivery: settingPage.isFewBoxDelivery
 })

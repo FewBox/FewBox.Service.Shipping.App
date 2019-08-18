@@ -2,17 +2,21 @@ import ActionTypes from '../actions/ActionTypes';
 import { MasterPage } from './State';
 import { MessageType } from '@fewbox/react-components';
 
-const master = { messageType: MessageType.Info, messageIntlId: '', messageIsVisible: false, loadingIsVisible: false, shippingLines: [] };
+const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, shippingLines: [] };
 export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
-            return { ...state, loadingIsVisible: true };
+            return { ...state, isLoadingVisible: true };
         case ActionTypes.END_LOADING:
-            return { ...state, loadingIsVisible: false };
+            return { ...state, isLoadingVisible: false };
         case ActionTypes.SHOW_MESSAGE:
-            return { ...state, messageIsVisible: true, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
+            return { ...state, isMessageVisible: true, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
         case ActionTypes.HIDE_MESSAGE:
-            return { ...state, messageIsVisible: false };
+            return { ...state, isMessageVisible: false };
+        case ActionTypes.SHOW_DRAWER:
+            return { ...state, isDrawerVisible: true };
+        case ActionTypes.HIDE_DRAWER:
+            return { ...state, isDrawerVisible: false };
         case ActionTypes.REDIRECT:
             return { ...state, path: action.value };
         case ActionTypes.CLEAR_PATH:

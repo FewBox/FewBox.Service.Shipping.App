@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructContianerShip, initShippingLineDropdownList } from '../actions';
+import { initContainerShipPage, sinkContainerShip, constructContianerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
@@ -11,6 +11,7 @@ import ShipBuilding from '../components/ShipBuilding';
 export interface IContainerShipPageProps {
     shippingLines: ShippingLine[];
     containerShips: ContainerShip[];
+    showDrawer: () => void;
     initShippingLineDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
@@ -86,7 +87,8 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     initContainerShipPage,
     sinkContainerShip,
-    constructContianerShip
+    constructContianerShip,
+    showDrawer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);

@@ -34,7 +34,7 @@ const ajaxObservable = (ajaxSetting: IAjaxSetting, handlePayload$: (payload) => 
             if (error.status == 401 || error.status == 403) {
                 return of(redirect('/signin'));
             }
-            return of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.Message }));
+            return of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.message }));
         }),
         startWith(beginLoading()),
         endWith(endLoading())

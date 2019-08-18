@@ -3,19 +3,6 @@ import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
 
 // Common
-export const beginLoading = (): IEmptyAction => ({
-    type: ActionTypes.BEGIN_LOADING
-});
-export const endLoading = (): IEmptyAction => ({
-    type: ActionTypes.END_LOADING
-});
-export const showMessage = (messageType: MessageType, messageIntlId: string, messageValues: any): IAction<any> => ({
-    type: ActionTypes.SHOW_MESSAGE,
-    value: { type: messageType, intlId: messageIntlId, values: messageValues }
-});
-export const hideMessage = (): IEmptyAction => ({
-    type: ActionTypes.HIDE_MESSAGE
-});
 export const redirect = (path: string): IAction<string> => ({
     type: ActionTypes.REDIRECT,
     value: path
@@ -190,6 +177,25 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
 });
 
 /* UI */
+export const beginLoading = (): IEmptyAction => ({
+    type: ActionTypes.BEGIN_LOADING
+});
+export const endLoading = (): IEmptyAction => ({
+    type: ActionTypes.END_LOADING
+});
+export const showMessage = (messageType: MessageType, messageIntlId: string, messageValues: any): IAction<any> => ({
+    type: ActionTypes.SHOW_MESSAGE,
+    value: { type: messageType, intlId: messageIntlId, values: messageValues }
+});
+export const hideMessage = (): IEmptyAction => ({
+    type: ActionTypes.HIDE_MESSAGE
+});
+export const showDrawer = (): IEmptyAction => ({
+    type: ActionTypes.SHOW_DRAWER
+});
+export const hideDrawer = (): IEmptyAction => ({
+    type: ActionTypes.HIDE_DRAWER
+});
 export const addBerthComponent = (index): IAction<number> => ({
     type: ActionTypes.ADD_BERTHCOMPONENT,
     value: index

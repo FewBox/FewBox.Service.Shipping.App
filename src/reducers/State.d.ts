@@ -33,8 +33,9 @@ export interface MasterPage {
     messageIntlId: string;
     messageValues?: any;
     messageDuration?: number;
-    messageIsVisible: boolean;
-    loadingIsVisible: boolean;
+    isMessageVisible: boolean;
+    isLoadingVisible: boolean;
+    isDrawerVisible: boolean;
     path?: string;
     shippingLines: ShippingLine[];
 }
