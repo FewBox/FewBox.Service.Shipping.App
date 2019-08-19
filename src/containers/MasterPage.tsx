@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Store } from '../reducers/State';
-import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer } from 'antd';
+import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
 import { hideMessage, signOut, clearPath, switchFewBoxDelivery } from '../actions';
+const CountryPage = lazy(() => import('./CountryPage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
 const TerminalPage = lazy(() => import('./TerminalPage'));
@@ -20,7 +21,7 @@ const QuayAreaPage = lazy(() => import('./QuayAreaPage'));
 const GateAreaPage = lazy(() => import('./GateAreaPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 import './MasterPage.scss';
-import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon } from '../components/Icon';
+import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon } from '../components/Icon';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -80,26 +81,30 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.Landing" /></Link>
                             </Menu.Item>
                             <Menu.Item key="2">
+                                <Link to='/master/country'><CountryIcon />
+                                    <FormattedMessage id="Navigation.Country" /></Link>
+                            </Menu.Item>
+                            <Menu.Item key="3">
                                 <Link to='/master/shippingline'><ShippingLineIcon />
                                     <FormattedMessage id="Navigation.ShippingLine" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="3">
+                            <Menu.Item key="4">
                                 <Link to='/master/quayarea'><QuayAreaIcon />
                                     <FormattedMessage id="Navigation.QuayArea" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="4">
+                            <Menu.Item key="5">
                                 <Link to='/master/shipyard'><ShipyardIcon />
                                     <FormattedMessage id="Navigation.Shipyard" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="5">
+                            <Menu.Item key="6">
                                 <Link to='/master/containership'><ContainerShipIcon />
                                     <FormattedMessage id="Navigation.ContainerShip" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="6">
+                            <Menu.Item key="7">
                                 <Link to='/master/gatearea'><GateAreaIcon />
                                     <FormattedMessage id="Navigation.GateArea" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="7">
+                            <Menu.Item key="8">
                                 <Link to='/master/about'><Icon type="info-circle" />
                                     <FormattedMessage id="Navigation.About" /></Link>
                             </Menu.Item>
@@ -120,6 +125,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Suspense fallback={<Skeleton active />}>
                                 <Switch>
                                     <Route path="/master/landing" render={props => <LandingPage {...props} />} />
+                                    <Route path="/master/country" render={props => <CountryPage {...props} />} />
                                     <Route path="/master/shippingline" render={props => <ShippingLinePage {...props} />} />
                                     <Route path="/master/containership" render={props => <ContainerShipPage {...props} />} />
                                     <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
@@ -128,6 +134,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:host/:port/:namespace/:pod/:container" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />
+                                    <Route component={() => <Result status='error' icon={<ReefIcon />} title={<FormattedMessage id="Message.404" />} subTitle={<FormattedMessage id="Message.404Caption" />} />} />
                                 </Switch>
                             </Suspense>
                         </Content>

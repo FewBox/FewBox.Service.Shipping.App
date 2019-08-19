@@ -17,6 +17,7 @@ export interface Store {
     masterPage: MasterPage;
     landingPage: LandingPage;
     settingPage: SettingPage;
+    countryPage: CountryPage;
     shippingLinePage: ShippingLinePage;
     containerShipPage: ContainerShipPage;
     shipyardPage: ShipyardPage;
@@ -46,6 +47,9 @@ export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
 }
+export interface CountryPage{
+    countries: Country[];
+}
 export interface ShippingLinePage {
     shippingLines: ShippingLine[];
 }
@@ -74,6 +78,10 @@ export interface Contributor {
 }
 export interface Avatar {
     url: string
+}
+export interface Country{
+    shippingLine: string;
+    name: string;
 }
 export interface ShippingLine {
     name: string;

@@ -1,17 +1,20 @@
 export default {
-    
+
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
     'Navigation.Shipyard': 'Shipyard',
     'Navigation.QuayArea': 'Quay Area',
     'Navigation.About': 'About',
+    'Navigation.Country': 'Country',
     'Navigation.ShippingLine': 'Shipping Line',
     'Navigation.GateArea': 'Gate Area',
     'Message.UsernameOrPasswordIsNotValid': 'The username or password is not valid!',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.BusinessException': 'Business Exception: {errorMessage}',
-    'Message.GateRequired':'Please input gate!',
+    'Message.GateRequired': 'Please input gate!',
+    'Message.404': '404',
+    'Message.404Caption': 'Sinking Ship! The page you visited does not exist.',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',

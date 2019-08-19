@@ -11,13 +11,13 @@ const initShippingLinePageEpic = (action$: ActionsObservable<any>, store$: State
         ofType(ActionTypes.INIT_SHIPPINGLINEPAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/shippingline/fewbox', method: 'GET' },
+                return AjaxObservable({ path: '/api/shippinglines/fewbox', method: 'GET' },
                     (payload) => {
                         return loadShippingLine(payload);
                     });
             }
             else {
-                return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                return AjaxObservable({ path: '/api/shippinglines', method: 'GET' },
                     (payload) => {
                         return loadShippingLine(payload);
                     });
@@ -30,13 +30,13 @@ const switchShippingLinePageEpic = (action$: ActionsObservable<any>, store$: Sta
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action: IAction<boolean>) => {
             if (action.value) {
-                return AjaxObservable({ path: '/api/shippingline/fewbox', method: 'GET' },
+                return AjaxObservable({ path: '/api/shippinglines/fewbox', method: 'GET' },
                     (payload) => {
                         return loadShippingLine(payload);
                     });
             }
             else {
-                return AjaxObservable({ path: '/api/shippingline', method: 'GET' },
+                return AjaxObservable({ path: '/api/shippinglines', method: 'GET' },
                     (payload) => {
                         return loadShippingLine(payload);
                     });
@@ -48,7 +48,7 @@ const startShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
     action$.pipe(
         ofType(ActionTypes.START_SHIPPINGLINE),
         mergeMap((action: IAction<string>) => {
-            return AjaxObservable({ path: '/api/shippingline', method: 'POST', body: { name: action.value.toLowerCase() } },
+            return AjaxObservable({ path: '/api/shippinglines', method: 'POST', body: { name: action.value.toLowerCase() } },
                 (payload) => {
                     return initShippingLinePage();
                 });
@@ -58,7 +58,7 @@ const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
     action$.pipe(
         ofType(ActionTypes.CLOSE_SHIPPINGLINE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline/' + action.value, method: 'DELETE' },
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value, method: 'DELETE' },
                 (payload) => {
                     return initShippingLinePage();
                 });
@@ -68,7 +68,7 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
     action$.pipe(
         ofType(ActionTypes.ENABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } },
+            return AjaxObservable({ path: '/api/shippinglines/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } },
                 (payload) => {
                     return enableIstioStatus(action.value);
                 });
@@ -78,7 +78,7 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
     action$.pipe(
         ofType(ActionTypes.DISABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippingline/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } },
+            return AjaxObservable({ path: '/api/shippinglines/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } },
                 (payload) => {
                     return disableIstioStatus(action.value);
                 });

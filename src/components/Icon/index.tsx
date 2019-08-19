@@ -16,6 +16,8 @@ import NumberingSvg from '../../../assets/images/numbering.svg';
 import GateSvg from '../../../assets/images/logo.svg';
 import SpecificationSvg from '../../../assets/images/logo.svg';
 import WarehouseSvg from '../../../assets/images/logo.svg';
+import CountrySvg from '../../../assets/images/country.svg';
+import ReefSvg from '../../../assets/images/reef.svg';
 
 const fontSize = { fontSize: '20px' };
 export const ShippingLineIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
@@ -34,3 +36,5 @@ export const NumberingIcon = props => <Icon style={fontSize} component={Numberin
 export const GateIcon = props => <Icon style={fontSize} component={GateSvg} {...props} />;
 export const SpecificationIcon = props => <Icon style={fontSize} component={SpecificationSvg} {...props} />;
 export const WarehouseIcon = props => <Icon style={fontSize} component={WarehouseSvg} {...props} />;
+export const CountryIcon = props => <Icon style={fontSize} component={CountrySvg} {...props} />;
+export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;

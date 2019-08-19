@@ -50,9 +50,9 @@ const mapStateToProps = ({ shippingLinePage }: Store) => ({
 });
 
 const mapDispatchToProps = {
-    initShippingLinePage: initShippingLinePage,
-    startShippingLine: startShippingLine,
-    closeShippingLine: closeShippingLine,
+    initShippingLinePage,
+    startShippingLine,
+    closeShippingLine,
     enableIstio,
     disableIstio
 };

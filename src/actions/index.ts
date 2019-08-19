@@ -176,6 +176,16 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
     payload: logBook
 });
 
+export const initCountryPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_COUNTRYPAGE
+});
+
+export const loadCountry = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_COUNTRY,
+    payload: payload
+});
+
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING

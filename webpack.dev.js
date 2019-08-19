@@ -30,7 +30,7 @@ module.exports = merge(common, {
                     {
                         loader: 'less-loader',
                         options: {
-                            "modifyVars": { "primary-color": "#1DA57A", 'border-radius-base': '2px' },
+                            'modifyVars': { 'primary-color': '#1DA57A', 'layout-header-background': '#147465' }, // #1DA57A #147465 #CAFFF7 #96FFEF #FFFFFF
                             javascriptEnabled: true
                         }
                     }]
