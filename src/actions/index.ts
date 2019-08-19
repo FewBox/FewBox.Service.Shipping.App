@@ -107,6 +107,11 @@ export const constructContainerShip = (designBill): IAction<any> => ({
     value: designBill
 });
 
+export const constructTemporaryContainerShip = (designBill): IAction<any> => ({
+    type: ActionTypes.BUILD_TEMPORARYCONTAINERSHIP,
+    value: designBill
+});
+
 export const scrapContainerShip = (demolitionBill): IAction<any> => ({
     type: ActionTypes.SCRAP_CONTAINERSHIP,
     value: demolitionBill
@@ -121,12 +126,6 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     type: ActionTypes.SCALE_CONTAINERSHIPQUANTITY,
     value: renewBill
 });
-
-export const constructContianerShip = (constructBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
-    value: constructBill
-});
-
 
 export const initQuayAreaPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_QUAYAREAPAGE

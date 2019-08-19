@@ -132,7 +132,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />
                                     <Route path="/master/gatearea" render={props => <GateAreaPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
-                                    <Route path="/master/terminal/:host/:port/:namespace/:pod/:container" render={props => <TerminalPage {...props} />} />
+                                    <Route path="/master/terminal/:namespace/:pod/:container" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />
                                     <Route component={() => <Result status='error' icon={<ReefIcon />} title={<FormattedMessage id="Message.404" />} subTitle={<FormattedMessage id="Message.404Caption" />} />} />
                                 </Switch>

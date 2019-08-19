@@ -54,7 +54,7 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
     );
 const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.BUILD_CONTAINERSHIP),
+        ofType(ActionTypes.BUILD_TEMPORARYCONTAINERSHIP),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/containerships', method: 'POST', body: action.value },
                 (payload) => {

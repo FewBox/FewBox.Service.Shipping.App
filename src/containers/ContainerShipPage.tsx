@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructContianerShip, initShippingLineDropdownList, showDrawer } from '../actions';
+import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
@@ -15,7 +15,7 @@ export interface IContainerShipPageProps {
     initShippingLineDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
-    constructContianerShip: (any) => void;
+    constructTemporaryContainerShip: (any) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
@@ -27,7 +27,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
         return (
             <div>
                 <Row>
-                    <ShipBuilding construct={this.props.constructContianerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
+                    <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.containerShips}
@@ -87,7 +87,7 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     initContainerShipPage,
     sinkContainerShip,
-    constructContianerShip,
+    constructTemporaryContainerShip,
     showDrawer
 };
 

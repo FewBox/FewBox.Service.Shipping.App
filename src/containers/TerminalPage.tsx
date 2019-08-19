@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import { autobind } from 'core-decorators';
 import TerminalSimulator from '../components/TerminalSimulator';
-import { Row, PageHeader } from 'antd';
+import { Row, PageHeader, Result } from 'antd';
 import { redirect } from '../actions';
 import { Store } from 'redux';
 import { HOST, PORT } from '../config';
+import { CrashIcon } from '../components/Icon';
 
 export interface ITerminalPageProps {
   match: any;
@@ -48,7 +49,7 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     console.log('Terminal open.');
   }
   @autobind
-  close() {
+  close(e) {
     console.log('Terminal close.');
   }
   @autobind
@@ -66,8 +67,7 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
           if (index != 0 && messageSegment != '' && !_.endsWith(messageSegment, '# ')) {
             console.log(messageSegment);
           }
-          else
-          {
+          else {
             if (_.endsWith(messageSegments[1], '# ')) {
               this.setState({ promptSymbol: _.trim(messageSegments[1]) });
             }
@@ -95,6 +95,9 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     let terminalSimulator;
     if (this.state.promptSymbol) {
       terminalSimulator = <TerminalSimulator promptSymbol={this.state.promptSymbol} msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
+    }
+    else{
+      terminalSimulator = <Result status='error' icon={<CrashIcon />} title={<FormattedMessage id="Message.Crush" />} subTitle={<FormattedMessage id="Message.CrushCaption" />} />
     }
     return (
       <div>

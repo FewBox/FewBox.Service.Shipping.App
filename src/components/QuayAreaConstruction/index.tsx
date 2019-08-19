@@ -30,7 +30,7 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
             if (!err) {
                 let berths = Object.keys(values).filter((k) => { return k.startsWith('berth-name'); }).map((k, index) => {
                     let elementIndex = k.substr('berth-name'.length);
-                    return { name: values[k], buoy: values['berth-buoy' + elementIndex], pendant: values['berth-pendant' + elementIndex] };
+                    return { name: values[k], crane: values['berth-crane' + elementIndex], cellguide: values['berth-cellguide' + elementIndex] };
                 });
                 this.props.construct({ shippingLine: values.shippingLine, name: values.name, berths: berths });
             }

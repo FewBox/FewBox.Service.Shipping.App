@@ -15,6 +15,8 @@ export default {
     'Message.GateRequired': 'Please input gate!',
     'Message.404': '404',
     'Message.404Caption': 'Sinking Ship! The page you visited does not exist.',
+    'Message.Crush': 'Crush',
+    'Message.CrushCaption': 'The terminal can not connect the pod!',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',

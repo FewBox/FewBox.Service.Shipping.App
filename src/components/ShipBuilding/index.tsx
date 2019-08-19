@@ -17,14 +17,14 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let lockingRods;
-                if (typeof (values.lockingRods) == 'object') {
-                    lockingRods = values.lockingRods.map((item, index) => {
+                let doors;
+                if (typeof (values.doors) == 'object') {
+                    doors = values.doors.map((item, index) => {
                         return { number: item };
                     });
                 }
                 else {
-                    lockingRods = [{ number: values.lockingRods }];
+                    doors = [{ number: values.doors }];
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
@@ -33,7 +33,7 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     quantity: values.quantity,
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
-                    lockingRods: lockingRods
+                    doors: doors
                 });
             }
         });
@@ -69,7 +69,7 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                         <Form.Item>
                             {getFieldDecorator('numbering', {
                                 rules: [{ required: true, message: 'Please input numbering!' }],
-                                initialValue: 'v1'
+                                initialValue: 'latest'
                             })(
                                 <Input prefix={<ShipyardLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                             )}
@@ -102,8 +102,8 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('lockingRods', {
-                                rules: [{ required: true, message: 'Please input lockingRods!' }],
+                            {getFieldDecorator('doors', {
+                                rules: [{ required: false, message: 'Please input doors!' }],
                                 initialValue: '80'
                             })(
                                 <Select mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
