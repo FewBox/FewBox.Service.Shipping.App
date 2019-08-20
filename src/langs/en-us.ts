@@ -36,5 +36,7 @@ export default {
     'Label.Numbering': 'Numbering',
     'Label.Cargo': 'Cargo',
     'Label.Spec': 'Spec',
-    'Label.Gate': 'Gate'
+    'Label.Gate': 'Gate',
+    'Label.Bash': 'bash',
+    'Label.Sh': 'sh'
 }

@@ -7,6 +7,7 @@ import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerSh
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 export interface IContainerShipPageProps {
     shippingLines: ShippingLine[];
@@ -37,9 +38,14 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
-                                            return <Menu.Item key={'contianer' + container}>
-                                                <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
-                                            </Menu.Item>
+                                            return <SubMenu key={'contianer' + index} title={container}>
+                                                <Menu.Item>
+                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
+                                                </Menu.Item>
+                                                <Menu.Item>
+                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('bin/sh') })}>{<FormattedMessage id="Label.Sh" />}</Link>
+                                                </Menu.Item>
+                                            </SubMenu>
                                         })}
                                     </Menu>}>
                                         <Icon type="code" />
@@ -47,9 +53,11 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Dropdown overlay={<Menu>
                                         <Menu.ItemGroup title='Log'>
                                             {item.containers.map((container, index) => {
-                                                return <Menu.Item key={'contianer' + container}>
-                                                    <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
-                                                </Menu.Item>
+                                                return <Menu.ItemGroup key={'contianer' + index} title={container}>
+                                                    <Menu.Item>
+                                                        <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
+                                                    </Menu.Item>
+                                                </Menu.ItemGroup>
                                             })}
                                         </Menu.ItemGroup>
                                         <Menu.ItemGroup title='Normal'>

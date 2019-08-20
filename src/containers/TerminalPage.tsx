@@ -18,14 +18,15 @@ export interface ITerminalPageProps {
 class TerminalPage extends React.Component<ITerminalPageProps, any> {
   constructor(props) {
     super(props);
-    this.state = { promptSymbol: null };
-    var websocketUrlCompiled = _.template('wss://${host}:${port}/terminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=/bin/bash&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
+    this.state = { promptSymbol: '#' };
+    var websocketUrlCompiled = _.template('wss://${host}:${port}/terminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=${command}&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
     var websocketUrl = websocketUrlCompiled({
       'host': HOST,
       'port': PORT,
       'namespace': this.props.match.params.namespace,
       'pod': this.props.match.params.pod,
-      'container': this.props.match.params.container
+      'container': this.props.match.params.container,
+      'command': atob(this.props.match.params.command)
     });
     this.socket = new WebSocket(websocketUrl);
     this.socket.onmessage = this.handleMessage;
@@ -33,52 +34,43 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     this.socket.onopen = this.open;
   }
   socket: any;
-  componentDidMount() {
-
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.promptSymbol === null) {
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
   @autobind
   open() {
     console.log('Terminal open.');
   }
   @autobind
   close(e) {
+    this.setState({ isConnected: false });
     console.log('Terminal close.');
+  }
+  getParsedMessageData(message) {
+    let data = _.replace(message, new RegExp('\\[1;34m', 'g'), '');
+    data = _.replace(data, new RegExp('\\[1;32m', 'g'), '');
+    data = _.replace(data, new RegExp('\\[m', 'g'), '');
+    let messageSegments = _.split(data, '\r\n');
+    this.setState({ promptSymbol: messageSegments[messageSegments.length - 1] });
+    if (messageSegments.length >= 3) {
+      return messageSegments.filter((messageSegment, index) => index != 0 && index != messageSegments.length - 1).map((messageSegment) => {
+        return messageSegment;
+      }).join('\r\n');
+    }
+    else if (messageSegments.pop().indexOf('# ') == -1) {
+      return data;
+    }
+    else {
+      return '';
+    }
   }
   @autobind
   handleMessage(message) {
-    if (typeof (message.data) === 'string' && message.data != '') {
-      var messageSegments = _.split(message.data, '\r\n');
-      if (messageSegments.length === 1) {
-        if (_.endsWith(messageSegments[0], '# ')) {
-          this.setState({ promptSymbol: _.trim(messageSegments[0]) });
-        }
-        else { }
-      }
-      else if (messageSegments.length > 1) {
-        messageSegments.map((messageSegment, index) => {
-          if (index != 0 && messageSegment != '' && !_.endsWith(messageSegment, '# ')) {
-            console.log(messageSegment);
-          }
-          else {
-            if (_.endsWith(messageSegments[1], '# ')) {
-              this.setState({ promptSymbol: _.trim(messageSegments[1]) });
-            }
-          }
-        });
-      }
-      else {
-        console.log('Not implement');
+    if (typeof (message.data) === 'string') {
+      let parsedData = this.getParsedMessageData(message.data);
+      if (parsedData != '') {
+        console.log(parsedData);
       }
     }
-    else if (typeof (message.data) === 'object') {
+    else {
+      console.log('Unknow type.');
       console.log(message.data);
     }
   }
@@ -91,21 +83,18 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
     this.socket.send(message);
     //print('Hi');
   }
+  @autobind
+  stop(){
+    this.socket.send('[ctrl+c]');
+  }
   render() {
-    let terminalSimulator;
-    if (this.state.promptSymbol) {
-      terminalSimulator = <TerminalSimulator promptSymbol={this.state.promptSymbol} msg='Wellcome to FewBox' executeCommand={this.executeCommand} />;
-    }
-    else{
-      terminalSimulator = <Result status='error' icon={<CrashIcon />} title={<FormattedMessage id="Message.Crush" />} subTitle={<FormattedMessage id="Message.CrushCaption" />} />
-    }
     return (
       <div>
         <Row>
           <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Label.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
         </Row>
         <Row>
-          {terminalSimulator}
+          <TerminalSimulator stop={this.stop} promptSymbol={this.state.promptSymbol} msg='Wellcome to FewBox' executeCommand={this.executeCommand} />
         </Row>
       </div>
     );
