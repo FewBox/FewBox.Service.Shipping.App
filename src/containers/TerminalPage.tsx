@@ -46,6 +46,7 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   getParsedMessageData(message) {
     let data = _.replace(message, new RegExp('\\[1;34m', 'g'), '');
     data = _.replace(data, new RegExp('\\[1;32m', 'g'), '');
+    data = _.replace(data, new RegExp('\\[0;0m', 'g'), '');
     data = _.replace(data, new RegExp('\\[m', 'g'), '');
     let messageSegments = _.split(data, '\r\n');
     this.setState({ promptSymbol: messageSegments[messageSegments.length - 1] });
