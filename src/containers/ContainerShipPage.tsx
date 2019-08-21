@@ -38,7 +38,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Dropdown disabled={item.condition != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
-                                            return <SubMenu key={'contianer' + index} title={container}>
+                                            return <SubMenu key={'contianer-shell' + index} title={container}>
                                                 <Menu.Item>
                                                     <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
                                                 </Menu.Item>
@@ -51,20 +51,18 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         <Icon type="code" />
                                     </Dropdown>,
                                     <Dropdown overlay={<Menu>
-                                        <Menu.ItemGroup title='Log'>
+                                        <SubMenu title='Log'>
                                             {item.containers.map((container, index) => {
-                                                return <Menu.ItemGroup key={'contianer' + index} title={container}>
-                                                    <Menu.Item>
-                                                        <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
-                                                    </Menu.Item>
-                                                </Menu.ItemGroup>
+                                                return <Menu.Item key={'contianer-log' + index}>
+                                                    <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container })}>{container}</Link>
+                                                </Menu.Item>
                                             })}
-                                        </Menu.ItemGroup>
-                                        <Menu.ItemGroup title='Normal'>
+                                        </SubMenu>
+                                        <SubMenu title='Normal'>
                                             <Menu.Item>
                                                 <Button icon="more">Detail</Button>
                                             </Menu.Item>
-                                        </Menu.ItemGroup>
+                                        </SubMenu>
                                     </Menu>}>
                                         <a className="ant-dropdown-link" href="#">
                                             <Icon type="ellipsis" />

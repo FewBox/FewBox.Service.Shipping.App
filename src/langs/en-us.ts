@@ -24,7 +24,7 @@ export default {
     'Label.Loading': 'Loading...',
     'Label.Back': 'Back',
     'Label.All': 'All',
-    'Label.Copyright': 'Copyright FewBox (c) 2019',
+    'Label.Copyright': 'Design & Deliver App Service by ❤ - ©FewBox 2019',
     'Label.SignIn': 'SignIn',
     'Label.SignOut': 'Sign Out',
     'Label.RememberMe': 'Remember Me',
