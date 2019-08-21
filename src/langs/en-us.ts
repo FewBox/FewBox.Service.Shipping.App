@@ -38,5 +38,8 @@ export default {
     'Label.Spec': 'Spec',
     'Label.Gate': 'Gate',
     'Label.Bash': 'bash',
-    'Label.Sh': 'sh'
+    'Label.Sh': 'sh',
+    'Label.Status': 'Status',
+    'Label.Age': 'Age',
+    'Label.Search': 'Search',
 }

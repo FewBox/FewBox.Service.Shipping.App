@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Badge } from 'antd';
 import { initShippingLinePage, closeShippingLine, enableIstio, disableIstio, startShippingLine } from '../actions';
 import { ShippingLine, Store } from '../reducers/State';
 import ShippingLineFounder from '../components/ShippingLineFounder';
+import { IstioIcon } from '../components/Icon';
+import Search from 'antd/lib/input/Search';
 
 
 export interface IShippingLinePageProps {
@@ -14,6 +16,7 @@ export interface IShippingLinePageProps {
     closeShippingLine: (name: string) => void;
     enableIstio: (name: string) => void;
     disableIstio: (name: string) => void;
+    intl: any;
 }
 
 class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
@@ -23,6 +26,11 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
     render() {
         return (
             <div>
+                {
+                //<Row>
+                    //<Search placeholder={this.props.intl.formatMessage({ id: 'Label.Search' })} onSearch={value => console.log(value)} />
+                //</Row>
+                }
                 <Row>
                     <ShippingLineFounder start={this.props.startShippingLine} reload={this.props.initShippingLinePage} />
                 </Row>
@@ -32,9 +40,12 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.closeShippingLine(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Switch onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
+                                    <Switch checkedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.description}><Tag color={item.condition == 'Active' ? 'green' : 'red'}>{item.condition}</Tag></Tooltip>} />
+                                    <Descriptions title={item.name} size='small' column={1} bordered>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'read'} text={item.status} /></Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                    </Descriptions>
                                 </Card>
                             </List.Item>
                         )}
@@ -57,4 +68,4 @@ const mapDispatchToProps = {
     disableIstio
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShippingLinePage);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(ShippingLinePage));

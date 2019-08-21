@@ -87,7 +87,8 @@ export interface ShippingLine {
     name: string;
     isIstioInjected: boolean;
     description: string;
-    condition: string;
+    status: string;
+    age: string;
 }
 export interface ContainerShip {
     shippingLine: string;

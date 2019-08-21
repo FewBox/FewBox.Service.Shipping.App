@@ -21,7 +21,7 @@ const QuayAreaPage = lazy(() => import('./QuayAreaPage'));
 const GateAreaPage = lazy(() => import('./GateAreaPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 import './MasterPage.scss';
-import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon } from '../components/Icon';
+import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon } from '../components/Icon';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -113,7 +113,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     <Layout>
                         <Header style={{ background: '#fff', padding: 0 }}>
                             <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
-                            <ANTD_Switch checkedChildren={<FormattedMessage id='Label.Brand' />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxOcean(isFewBox); }} />
+                            <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxOcean(isFewBox); }} />
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" href="#" style={{ float: 'right', marginRight: '20px' }}>
                                     <Avatar icon="user" style={{ marginRight: '5px' }} />
