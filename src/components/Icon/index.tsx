@@ -15,12 +15,14 @@ import DoorSvg from '../../../assets/images/door.svg';
 import NumberingSvg from '../../../assets/images/numbering.svg';
 import GateSvg from '../../../assets/images/brand.svg';
 import SpecificationSvg from '../../../assets/images/brand.svg';
-import WarehouseSvg from '../../../assets/images/brand.svg';
+import WarehouseSvg from '../../../assets/images/warehouse.svg';
 import CountrySvg from '../../../assets/images/country.svg';
 import ReefSvg from '../../../assets/images/reef.svg';
 import CrashSvg from '../../../assets/images/crash.svg';
 import IstioSvg from '../../../assets/images/istio.svg';
 import BrandSvg from '../../../assets/images/brand.svg';
+import CargoSvg from '../../../assets/images/cargo.svg';
+import SleepSvg from '../../../assets/images/sleep.svg';
 
 const fontSize = { fontSize: '20px' };
 export const ShippingLineIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
@@ -42,5 +44,8 @@ export const WarehouseIcon = props => <Icon style={fontSize} component={Warehous
 export const CountryIcon = props => <Icon style={fontSize} component={CountrySvg} {...props} />;
 export const IstioIcon = props => <Icon style={fontSize} component={IstioSvg} {...props} />;
 export const BrandIcon = props => <Icon style={fontSize} component={BrandSvg} {...props} />;
+export const CargoIcon = props => <Icon style={fontSize} component={CargoSvg} {...props} />;
+export const SleepIcon = props => <Icon style={fontSize} component={SleepSvg} {...props} />;
+// None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;

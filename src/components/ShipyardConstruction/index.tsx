@@ -23,7 +23,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     });
                 }
                 else {
-                    doors = [{ clip: values.doors }];
+                    doors = [{ leaf: values.doors }];
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
@@ -89,7 +89,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                         <Form.Item>
                             {getFieldDecorator('cargoPackagePolicy', {
                                 rules: [{ required: true, message: 'Please input cargo package policy!' }],
-                                initialValue: '1'
+                                initialValue: '0'
                             })(
                                 <Select suffixIcon={<CargoPackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                     <Select.Option value="0">IfNotPresent</Select.Option>

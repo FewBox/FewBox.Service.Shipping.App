@@ -40,10 +40,10 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         {item.containers.map((container, index) => {
                                             return <SubMenu key={'contianer-shell' + index} title={container}>
                                                 <Menu.Item>
-                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
+                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('/bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
-                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('bin/sh') })}>{<FormattedMessage id="Label.Sh" />}</Link>
+                                                    <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.shippingLine, 'container': container, 'command': btoa('/bin/sh') })}>{<FormattedMessage id="Label.Sh" />}</Link>
                                                 </Menu.Item>
                                             </SubMenu>
                                         })}
