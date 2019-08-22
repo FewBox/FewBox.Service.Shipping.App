@@ -42,4 +42,16 @@ export default {
     'Label.Status': 'Status',
     'Label.Age': 'Age',
     'Label.Search': 'Search',
+    'Label.Horsepower': 'Horsepower',
+    'Label.Displacement': 'Displacement',
+    'Label.Cube': 'Cube',
+    'Label.Tonnage': 'Tonnage',
+    'Label.ContainerShipPositionZone': 'ContainerShip Position Zone',
+    'Label.Position': 'Position',
+    'Label.Alias': 'Alias',
+    'Label.Government': 'Government',
+    'Label.Constitution': 'Constitution',
+    'Label.Industry': 'Industry',
+    'Label.Transportation': 'Transportation',
+    'Label.Cargos': 'Cargos'
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse } from 'antd';
 import { initCountryPage } from '../actions';
 import { Store, Country } from '../reducers/State';
 
@@ -25,7 +25,34 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
                                     <Icon type="help" />,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={item.shippingLine} />
+                                    <Descriptions title={item.name} size='small' column={1} bordered layout="vertical">
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Horsepower" />}>{item.allocatableHorsepower}/{item.horsepower}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Displacement" />}>{item.allocatableDisplacement}/{item.displacement}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Cube" />}>{item.allocatableCube}/{item.cube}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Tonnage" />}>{item.tonnage}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipPositionZone" />}>{item.containerShipPositionZone}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Alias" />}>{item.alias}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Government" />}>{item.government}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Constitution" />}>{item.constitution}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Industry" />}>{item.industry}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Transportation" />}>{item.transportation}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Cargos" />}>
+                                            <Collapse bordered={false}>
+                                                <Collapse.Panel header='' key='1'>
+                                                    {item.cargos.map((cargo, index) => {
+                                                        return <p key={'cargo' + index}>
+                                                            {cargo.names.map((name, index) => {
+                                                                return <div key={'name' + index}>{name}</div>
+                                                            })}
+                                                            {cargo.size}
+                                                        </p>
+                                                    })}
+                                                </Collapse.Panel>
+                                            </Collapse>
+                                        </Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                    </Descriptions>
                                 </Card>
                             </List.Item>
                         )}

@@ -80,8 +80,28 @@ export interface Avatar {
     url: string
 }
 export interface Country{
-    shippingLine: string;
     name: string;
+    horsepower: string;
+    displacement: string;
+    cube: string;
+    tonnage: string;
+    allocatableHorsepower: string;
+    allocatableDisplacement: string;
+    allocatableCube: string;
+    allocatableTonnage: string;
+    containerShipPositionZone: string;
+    position: string;
+    alias: string;
+    government: string;
+    constitution: string;
+    industry: string;
+    transportation: string;
+    cargos: Cargo[];
+    age: string;
+}
+export interface Cargo{
+    names: string[];
+    size: string;
 }
 export interface ShippingLine {
     name: string;
