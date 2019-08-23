@@ -47,7 +47,7 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
     action$.pipe(
         ofType(ActionTypes.CONSTRUCT_CONTAINERSHIP),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards', method: 'POST', body: action.value },
+            return AjaxObservable({ path: '/api/shipyards/oncontainer', method: 'POST', body: action.value },
                 (payload) => {
                     return initShipyardPage();
                 });
