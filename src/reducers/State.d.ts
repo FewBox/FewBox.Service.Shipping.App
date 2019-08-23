@@ -134,6 +134,10 @@ export interface QuayArea {
     shippingLine: string;
     name: string;
     containerShipSpec: string;
+    position: string;
+    type: string;
+    mooringBitt: string;
+    age: string;
 }
 export interface GateArea{
     shippingLine: string;

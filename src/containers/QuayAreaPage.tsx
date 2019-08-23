@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions } from 'antd';
 import { initQuayAreaPage, demolishQuayArea, constructQuayArea, addBerthComponent, removeBerthComponent, initShippingLineDropdownList } from '../actions';
 import { QuayArea, Store, BerthComponent, ShippingLine } from '../reducers/State';
 import QuayAreaConstruction from '../components/QuayAreaConstruction';
@@ -41,8 +41,14 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} />
-                                    <p>{item.shippingLine}</p>
-                                    <p>{item.containerShipSpec}</p>
+                                    <Descriptions size='small' column={1} bordered>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipSpec" />}>{item.containerShipSpec}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.MooringBitt" />}>{item.mooringBitt}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                    </Descriptions>
                                 </Card>
                             </List.Item>
                         )}

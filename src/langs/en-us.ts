@@ -53,5 +53,10 @@ export default {
     'Label.Constitution': 'Constitution',
     'Label.Industry': 'Industry',
     'Label.Transportation': 'Transportation',
-    'Label.Cargos': 'Cargos'
+    'Label.Cargos': 'Cargos',
+    'Label.Telescope': 'Telescope',
+    'Label.Compass': 'Compass',
+    'Label.ContainerShipSpec': 'Ship Spec',
+    'Label.Type': 'Type',
+    'Label.MooringBitt': 'Bitt'
 }
