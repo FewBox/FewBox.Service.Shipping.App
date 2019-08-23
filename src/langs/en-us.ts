@@ -58,5 +58,8 @@ export default {
     'Label.Compass': 'Compass',
     'Label.ContainerShipSpec': 'Ship Spec',
     'Label.Type': 'Type',
-    'Label.MooringBitt': 'Bitt'
+    'Label.MooringBitt': 'Bitt',
+    'Label.BerthItem': 'Berth {index}',
+    'Label.CargoItem': 'Cargo {index}',
+    'Label.Quantity': 'Quantity'
 }

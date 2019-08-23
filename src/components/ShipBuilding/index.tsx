@@ -1,8 +1,9 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { ShippingLine } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, ShippingLineIcon } from '../Icon';
+import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, ShippingLineIcon, DoorIcon } from '../Icon';
 
 export interface IShipBuildingProps {
     shippingLines: ShippingLine[];
@@ -19,11 +20,13 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                 let doors;
                 if (typeof (values.doors) == 'object') {
                     doors = values.doors.map((item, index) => {
-                        return { number: item };
+                        let door = _.split(item, '|');
+                        return { name: door[0], leaf: door[1] };
                     });
                 }
                 else {
-                    doors = [{ leaf: values.doors }];
+                    let door = _.split(values.doors, '|');
+                    doors = [{ name: door[0], leaf: door[1] }];
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
@@ -104,12 +107,12 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('doors', {
-                                rules: [{ required: false, message: 'Please input doors!' }],
-                                initialValue: '80'
+                                rules: [{ required: true, message: 'Please input doors!' }],
+                                initialValue: 'http|80'
                             })(
-                                <Select mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
-                                    <Select.Option value="80">80</Select.Option>
-                                    <Select.Option value="443">443</Select.Option>
+                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
+                                    <Select.Option value="http|80">http|80</Select.Option>
+                                    <Select.Option value="https|443">https|443</Select.Option>
                                 </Select>
                             )}
                         </Form.Item>

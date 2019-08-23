@@ -129,6 +129,7 @@ export interface Shipyard {
     description: string;
     quantity: number;
     cargos: string[];
+    age: string;
 }
 export interface QuayArea {
     shippingLine: string;
@@ -137,7 +138,13 @@ export interface QuayArea {
     position: string;
     type: string;
     mooringBitt: string;
+    berthes: Berth[];
     age: string;
+}
+export interface Berth{
+    name: string;
+    crane: string;
+    cellGuide: string;
 }
 export interface GateArea{
     shippingLine: string;

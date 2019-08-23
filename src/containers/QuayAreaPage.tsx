@@ -47,6 +47,9 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                                         <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.MooringBitt" />}>{item.mooringBitt}</Descriptions.Item>
+                                        {item.berthes.map((berth, index) => {
+                                            return <Descriptions.Item label={<FormattedMessage id="Label.BerthItem" values={{ index: index + 1 }} />}>{berth.name} : {berth.crane}=>{berth.cellGuide}</Descriptions.Item>
+                                        })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>
                                 </Card>

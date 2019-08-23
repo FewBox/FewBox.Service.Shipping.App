@@ -43,7 +43,7 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                                     <Switch checkedChildren={<IstioIcon />} unCheckedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
                                     <Icon type="ellipsis" />]}>
                                     <Descriptions title={item.name} size='small' column={1} bordered>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'read'} text={item.status} /></Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>
                                 </Card>
