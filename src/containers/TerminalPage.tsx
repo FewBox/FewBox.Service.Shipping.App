@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import * as _ from 'lodash';
 import { autobind } from 'core-decorators';
-import TerminalSimulator from '../components/TerminalSimulator';
 import { Row, PageHeader, Result } from 'antd';
 import { redirect } from '../actions';
 import { Store } from 'redux';

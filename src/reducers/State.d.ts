@@ -116,9 +116,10 @@ export interface ContainerShip {
     containers: Container[];
     description: string;
     condition: string;
-    fleetName: string;
-    fleetAddress: string;
-    address: string;
+    country: string;
+    countryPosition: string;
+    position: string;
+    age: string;
 }
 export interface Container {
     name: string;

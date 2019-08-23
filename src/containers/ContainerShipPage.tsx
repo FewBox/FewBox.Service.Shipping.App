@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button } from 'antd';
+import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions } from 'antd';
 import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
@@ -69,11 +69,17 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         </a>
                                     </Dropdown>
                                 ]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={<Tooltip placement="topLeft" title={item.name}>{item.name}</Tooltip>} />
-                                    <Tag color={item.condition == 'Running' ? 'green' : 'red'}>{item.condition}</Tag>
-                                    <p>{item.fleetName}</p>
-                                    <p>{item.fleetAddress}</p>
-                                    <p>{item.address}</p>
+                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} />
+                                    <Descriptions size='small' column={1} bordered>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Country" />}>{item.country}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.CountryPosition" />}>{item.countryPosition}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
+                                        {item.containers.map((container, index) => {
+                                            return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{container}</Descriptions.Item>
+                                        })}
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                    </Descriptions>
                                 </Card>
                             </List.Item>
                         )}

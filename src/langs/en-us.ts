@@ -61,5 +61,7 @@ export default {
     'Label.MooringBitt': 'Bitt',
     'Label.BerthItem': 'Berth {index}',
     'Label.CargoItem': 'Cargo {index}',
-    'Label.Quantity': 'Quantity'
+    'Label.Quantity': 'Quantity',
+    'Label.Country': 'Country',
+    'Label.CountryPosition': 'Country Position'
 }

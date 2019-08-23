@@ -41,7 +41,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                         <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Quantity" />}>{item.quantity}</Descriptions.Item>
                                         {item.cargos.map((cargo, index) => {
-                                            return <Descriptions.Item label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{cargo}</Descriptions.Item>
+                                            return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{cargo}</Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>
