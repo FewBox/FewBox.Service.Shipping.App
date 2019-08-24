@@ -49,9 +49,9 @@ export const loadShippingLine = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const startShippingLine = (shippingLineName): IAction<string> => ({
+export const startShippingLine = (shippingLine): IAction<any> => ({
     type: ActionTypes.START_SHIPPINGLINE,
-    value: shippingLineName
+    value: shippingLine
 });
 
 export const closeShippingLine = (shippingLineName): IAction<string> => ({
@@ -193,6 +193,15 @@ export const loadCaptain = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
+export const trainCaptain = (captain): IAction<any> => ({
+    type: ActionTypes.TRAIN_CAPTAIN,
+    value: captain
+});
+
+export const fireCaptain = (dismission): IAction<any> => ({
+    type: ActionTypes.FIRE_CAPTAIN,
+    value: dismission
+});
 
 /* UI */
 export const beginLoading = (): IEmptyAction => ({

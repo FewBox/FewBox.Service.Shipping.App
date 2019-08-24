@@ -47,8 +47,8 @@ const switchShippingLinePageEpic = (action$: ActionsObservable<any>, store$: Sta
 const startShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.START_SHIPPINGLINE),
-        mergeMap((action: IAction<string>) => {
-            return AjaxObservable({ path: '/api/shippinglines', method: 'POST', body: { name: action.value.toLowerCase() } },
+        mergeMap((action: IAction<any>) => {
+            return AjaxObservable({ path: '/api/shippinglines', method: 'POST', body: action.value },
                 (payload) => {
                     return initShippingLinePage();
                 });

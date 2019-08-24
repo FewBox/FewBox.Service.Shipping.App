@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadCaptain } from '../actions';
+import { initCaptainPage, loadCaptain } from '../actions';
 
 const initCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -21,6 +21,28 @@ const initCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObser
                         return loadCaptain(payload);
                     });
             }
+        })
+    );
+
+const trainCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.TRAIN_CAPTAIN),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/captains', method: 'POST', body: action.value },
+                    (payload) => {
+                        return initCaptainPage();
+                    });
+        })
+    );
+
+const fireCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.FIRE_CAPTAIN),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/captains/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' },
+                    (payload) => {
+                        return initCaptainPage();
+                    });
         })
     );
 
@@ -43,4 +65,4 @@ const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateO
         })
     );
 
-export default [initCaptainPageEpic, switchContainerShipEpic];
+export default [initCaptainPageEpic, trainCaptainPageEpic, fireCaptainPageEpic, switchContainerShipEpic];
