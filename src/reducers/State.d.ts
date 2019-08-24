@@ -24,6 +24,7 @@ export interface Store {
     quayAreaPage: QuayAreaPage;
     gateAreaPage: GateAreaPage;
     logBookPage: LogBookPage;
+    captainPage: CaptainPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -70,6 +71,9 @@ export interface GateAreaPage{
 export interface LogBookPage{
     logBook: LogBook;
 }
+export interface CaptainPage{
+    captains: Captain[];
+}
 
 /** Biz **/
 export interface Contributor {
@@ -115,7 +119,7 @@ export interface ContainerShip {
     name: string;
     containers: Container[];
     description: string;
-    condition: string;
+    status: string;
     country: string;
     countryPosition: string;
     position: string;
@@ -153,6 +157,15 @@ export interface GateArea{
 }
 export interface LogBook{
     content: string;
+}
+export interface Captain{
+    shippingLine: string;
+    name: string;
+    credentials: Credential[];
+    age: string;
+}
+export interface Credential{
+    name: string;
 }
 /** UI **/
 export interface BerthComponent {

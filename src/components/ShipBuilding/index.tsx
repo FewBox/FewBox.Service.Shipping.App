@@ -107,7 +107,6 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('doors', {
-                                rules: [{ required: true, message: 'Please input doors!' }],
                                 initialValue: 'http|80'
                             })(
                                 <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">

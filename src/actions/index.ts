@@ -184,6 +184,15 @@ export const loadCountry = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
+export const initCaptainPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CAPTAINPAGE
+});
+
+export const loadCaptain = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CAPTAIN,
+    payload: payload
+});
+
 
 /* UI */
 export const beginLoading = (): IEmptyAction => ({

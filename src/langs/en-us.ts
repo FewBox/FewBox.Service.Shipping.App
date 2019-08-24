@@ -4,6 +4,7 @@ export default {
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
     'Navigation.Shipyard': 'Shipyard',
+    'Navigation.Captain': 'Captain',
     'Navigation.QuayArea': 'Quay Area',
     'Navigation.About': 'About',
     'Navigation.Country': 'Country',
@@ -63,5 +64,6 @@ export default {
     'Label.CargoItem': 'Cargo {index}',
     'Label.Quantity': 'Quantity',
     'Label.Country': 'Country',
-    'Label.CountryPosition': 'Country Position'
+    'Label.CountryPosition': 'Country Position',
+    'Label.CredentialItem': 'Credential {index}'
 }
