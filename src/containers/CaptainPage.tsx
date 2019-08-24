@@ -34,14 +34,15 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.fireCaptain({ shippingLine: item.shippingLine, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} />
-                                    <Descriptions size='small' column={1} bordered>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                        {item.credentials.map((credential, index) => {
-                                            return <Descriptions.Item key={'credential' + index} label={<FormattedMessage id="Label.CredentialItem" values={{ index: index + 1 }} />}>{credential.name}</Descriptions.Item>
-                                        })}
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                    </Descriptions>
+                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
+                                        <Descriptions size='small' column={1} bordered>
+                                            <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                            {item.credentials.map((credential, index) => {
+                                                return <Descriptions.Item key={'credential' + index} label={<FormattedMessage id="Label.CredentialItem" values={{ index: index + 1 }} />}>{credential.name}</Descriptions.Item>
+                                            })}
+                                            <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                        </Descriptions>
+                                    } />
                                 </Card>
                             </List.Item>
                         )}

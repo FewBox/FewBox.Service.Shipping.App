@@ -21,6 +21,7 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
     addBerth() {
         this.props.addBerthComponent(this.props.berthComponents.length + 1);
     }
+    @autobind
     removeBerth(index) {
         this.props.removeBerthComponent(index);
     }

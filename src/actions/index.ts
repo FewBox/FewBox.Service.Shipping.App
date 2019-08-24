@@ -203,6 +203,25 @@ export const fireCaptain = (dismission): IAction<any> => ({
     value: dismission
 });
 
+export const initCredentialPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_CREDENTIALPAGE
+});
+
+export const loadCredential = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_CREDENTIAL,
+    payload: payload
+});
+
+export const issueCredential = (captain): IAction<any> => ({
+    type: ActionTypes.ISSUE_CREDENTIAL,
+    value: captain
+});
+
+export const revokeCredential = (dismission): IAction<any> => ({
+    type: ActionTypes.REVOKE_CREDENTIAL,
+    value: dismission
+});
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING
@@ -249,4 +268,14 @@ export const initShippingLineDropdownList = (): IEmptyAction => ({
 export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
     payload: payload
+});
+
+export const addStampComponent = (index): IAction<number> => ({
+    type: ActionTypes.ADD_STAMPCOMPONENT,
+    value: index
+});
+
+export const removeStampComponent = (index): IAction<number> => ({
+    type: ActionTypes.REMOVE_STAMPCOMPONENT,
+    value: index
 });

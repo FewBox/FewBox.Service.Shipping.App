@@ -24,7 +24,7 @@ const initCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         })
     );
 
-const trainCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const trainCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.TRAIN_CAPTAIN),
         mergeMap((action) => {
@@ -35,7 +35,7 @@ const trainCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObse
         })
     );
 
-const fireCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const fireCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.FIRE_CAPTAIN),
         mergeMap((action) => {
@@ -46,7 +46,7 @@ const fireCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         })
     );
 
-const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
@@ -65,4 +65,4 @@ const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateO
         })
     );
 
-export default [initCaptainPageEpic, trainCaptainPageEpic, fireCaptainPageEpic, switchContainerShipEpic];
+export default [initCaptainPageEpic, trainCaptainEpic, fireCaptainEpic, switchCaptainEpic];

@@ -25,6 +25,7 @@ export interface Store {
     gateAreaPage: GateAreaPage;
     logBookPage: LogBookPage;
     captainPage: CaptainPage;
+    credentialPage: CredentialPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -73,6 +74,10 @@ export interface LogBookPage{
 }
 export interface CaptainPage{
     captains: Captain[];
+}
+export interface CredentialPage{
+    credentials: Credential[];
+    stampComponents: StampComponent[];
 }
 
 /** Biz **/
@@ -165,12 +170,19 @@ export interface Captain{
     age: string;
 }
 export interface Credential{
+    shippingLine: string;
     name: string;
+    type: string;
+    stamps: any[];
+    age: string;
 }
 /** UI **/
 export interface BerthComponent {
     name: string;
 }
 export interface ChannelComponent {
+    name: string;
+}
+export interface StampComponent {
     name: string;
 }

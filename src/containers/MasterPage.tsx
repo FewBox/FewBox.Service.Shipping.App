@@ -21,8 +21,9 @@ const QuayAreaPage = lazy(() => import('./QuayAreaPage'));
 const GateAreaPage = lazy(() => import('./GateAreaPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 const CaptainPage = lazy(() => import('./CaptainPage'));
+const CredentialPage = lazy(() => import('./CredentialPage'));
 import './MasterPage.scss';
-import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon } from '../components/Icon';
+import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -94,22 +95,26 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.Captain" /></Link>
                             </Menu.Item>
                             <Menu.Item key="5">
+                                <Link to='/master/credential'><CredentialIcon />
+                                    <FormattedMessage id="Navigation.Credential" /></Link>
+                            </Menu.Item>
+                            <Menu.Item key="6">
                                 <Link to='/master/quayarea'><QuayAreaIcon />
                                     <FormattedMessage id="Navigation.QuayArea" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="6">
+                            <Menu.Item key="7">
                                 <Link to='/master/shipyard'><ShipyardIcon />
                                     <FormattedMessage id="Navigation.Shipyard" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="7">
+                            <Menu.Item key="8">
                                 <Link to='/master/containership'><ContainerShipIcon />
                                     <FormattedMessage id="Navigation.ContainerShip" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="8">
+                            <Menu.Item key="9">
                                 <Link to='/master/gatearea'><GateAreaIcon />
                                     <FormattedMessage id="Navigation.GateArea" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="9">
+                            <Menu.Item key="10">
                                 <Link to='/master/about'><Icon type="info-circle" />
                                     <FormattedMessage id="Navigation.About" /></Link>
                             </Menu.Item>
@@ -133,6 +138,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/country" render={props => <CountryPage {...props} />} />
                                     <Route path="/master/shippingline" render={props => <ShippingLinePage {...props} />} />
                                     <Route path="/master/captain" render={props => <CaptainPage {...props} />} />
+                                    <Route path="/master/credential" render={props => <CredentialPage {...props} />} />
                                     <Route path="/master/containership" render={props => <ContainerShipPage {...props} />} />
                                     <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
                                     <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />

@@ -24,6 +24,7 @@ import BrandSvg from '../../../assets/images/brand.svg';
 import CargoSvg from '../../../assets/images/cargo.svg';
 import SleepSvg from '../../../assets/images/sleep.svg';
 import CaptainSvg from '../../../assets/images/captain.svg';
+import CredentialSvg from '../../../assets/images/credential.svg';
 
 const fontSize = { fontSize: '20px' };
 export const ShippingLineIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
@@ -48,6 +49,7 @@ export const BrandIcon = props => <Icon style={fontSize} component={BrandSvg} {.
 export const CargoIcon = props => <Icon style={fontSize} component={CargoSvg} {...props} />;
 export const SleepIcon = props => <Icon style={fontSize} component={SleepSvg} {...props} />;
 export const CaptainIcon = props => <Icon style={fontSize} component={CaptainSvg} {...props} />;
+export const CredentialIcon = props => <Icon style={fontSize} component={CredentialSvg} {...props} />;
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;
