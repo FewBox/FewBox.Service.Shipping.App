@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber } from 'antd';
 import { ShippingLine } from '../../reducers/State';
-import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon } from '../Icon';
+import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon } from '../Icon';
 
 export interface IShipyardConstructionProps {
     shippingLines: ShippingLine[];
@@ -31,6 +31,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 this.props.construct({
                     shippingLine: values.shippingLine,
                     name: values.name,
+                    captain: values.captain,
                     numbering: values.numbering,
                     quantity: values.quantity,
                     cargo: values.cargo,
@@ -90,15 +91,10 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('cargoPackagePolicy', {
-                                rules: [{ required: true, message: 'Please input cargo package policy!' }],
-                                initialValue: '0'
+                            {getFieldDecorator('captain', {
+                                rules: [{ required: true, message: 'Please input captain!' }],
                             })(
-                                <Select suffixIcon={<CargoPackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    <Select.Option value="0">IfNotPresent</Select.Option>
-                                    <Select.Option value="1">Always</Select.Option>
-                                    <Select.Option value="2">Never</Select.Option>
-                                </Select>
+                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Captain" />
                             )}
                         </Form.Item>
                     </Col>
@@ -115,13 +111,27 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={3}>
                         <Form.Item>
                             {getFieldDecorator('quantity', {
                                 rules: [{ required: true, message: 'Please input quantity!' }],
                                 initialValue: '2'
                             })(
                                 <InputNumber min={1} max={10} />
+                            )}
+                        </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                        <Form.Item>
+                            {getFieldDecorator('cargoPackagePolicy', {
+                                rules: [{ required: true, message: 'Please input cargo package policy!' }],
+                                initialValue: '0'
+                            })(
+                                <Select suffixIcon={<CargoPackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select.Option value="0">IfNotPresent</Select.Option>
+                                    <Select.Option value="1">Always</Select.Option>
+                                    <Select.Option value="2">Never</Select.Option>
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>

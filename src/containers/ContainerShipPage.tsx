@@ -73,11 +73,15 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                     <Descriptions size='small' column={1} bordered>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Country" />}>{item.country}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.CountryPosition" />}>{item.countryPosition}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
                                         {item.containers.map((container, index) => {
                                             return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{container}</Descriptions.Item>
+                                        })}
+                                        {item.manifests.map((manifest, index) => {
+                                            return <Descriptions.Item key={'manifest' + index} label={<FormattedMessage id="Label.ManifestItem" values={{ index: index + 1 }} />}>{manifest}</Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>

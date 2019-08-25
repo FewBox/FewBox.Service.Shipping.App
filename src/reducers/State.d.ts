@@ -122,7 +122,9 @@ export interface ShippingLine {
 export interface ContainerShip {
     shippingLine: string;
     name: string;
-    containers: Container[];
+    captain: string;
+    containers: string[];
+    manifests: string[];
     description: string;
     status: string;
     country: string;
@@ -130,12 +132,10 @@ export interface ContainerShip {
     position: string;
     age: string;
 }
-export interface Container {
-    name: string;
-}
 export interface Shipyard {
     shippingLine: string;
     name: string;
+    captain: string;
     description: string;
     quantity: number;
     cargos: string[];

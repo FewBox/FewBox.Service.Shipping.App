@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { ShippingLine } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, ShippingLineIcon, DoorIcon } from '../Icon';
+import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, ShippingLineIcon, DoorIcon, CaptainIcon } from '../Icon';
 
 export interface IShipBuildingProps {
     shippingLines: ShippingLine[];
@@ -30,6 +30,7 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
+                    captain: values.captain,
                     name: values.name,
                     numbering: values.numbering,
                     quantity: values.quantity,
@@ -92,15 +93,10 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('cargoPackagePolicy', {
-                                rules: [{ required: true, message: 'Please input cargo package policy!' }],
-                                initialValue: '1'
+                            {getFieldDecorator('captain', {
+                                rules: [{ required: true, message: 'Please input captain!' }],
                             })(
-                                <Select>
-                                    <Select.Option value="1">IfNotPresent</Select.Option>
-                                    <Select.Option value="2">Always</Select.Option>
-                                    <Select.Option value="3">Never</Select.Option>
-                                </Select>
+                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Captain" />
                             )}
                         </Form.Item>
                     </Col>
@@ -128,15 +124,25 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     </Col>
                     <Col span={3}>
                         <Form.Item>
-                            {getFieldDecorator('isSleepInfinity', {
-                                initialValue: false
+                            {getFieldDecorator('cargoPackagePolicy', {
+                                rules: [{ required: true, message: 'Please input cargo package policy!' }],
+                                initialValue: '1'
                             })(
-                                <Switch checkedChildren={<SleepIcon />} unCheckedChildren={<SleepIcon />} />
+                                <Select>
+                                    <Select.Option value="1">IfNotPresent</Select.Option>
+                                    <Select.Option value="2">Always</Select.Option>
+                                    <Select.Option value="3">Never</Select.Option>
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>
                     <Col span={3}>
                         <Form.Item>
+                            {getFieldDecorator('isSleepInfinity', {
+                                initialValue: false
+                            })(
+                                <Switch checkedChildren={<SleepIcon />} unCheckedChildren={<SleepIcon />} />
+                            )}
                             {getFieldDecorator('isIstioInjected', {
                                 initialValue: true
                             })(

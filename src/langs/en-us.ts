@@ -67,5 +67,7 @@ export default {
     'Label.Country': 'Country',
     'Label.CountryPosition': 'Country Position',
     'Label.CredentialItem': 'Credential {index}',
-    'Label.StampItem': 'Stamp {key}'
+    'Label.ManifestItem': 'Manifest {index}',
+    'Label.StampItem': 'Stamp {key}',
+    'Label.Captain': 'Captain'
 }
