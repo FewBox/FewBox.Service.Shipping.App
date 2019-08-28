@@ -27,7 +27,7 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
                     <CaptainTraining train={this.props.trainCaptain} reload={this.props.initCaptainPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.captains}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.captains}
                         renderItem={(item: Captain) => (
                             <List.Item>
                                 <Card actions={[

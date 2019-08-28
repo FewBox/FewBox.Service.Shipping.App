@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { Form, Input, Button, Icon, Select, Row, Col, InputNumber } from 'antd';
+import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { ShippingLine } from '../../reducers/State';
-import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon } from '../Icon';
+import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon, BrandIcon } from '../Icon';
+import TextArea from 'antd/lib/input/TextArea';
+import DynamicFieldList from '../DynamicFieldList';
 
 export interface IShipyardConstructionProps {
     shippingLines: ShippingLine[];
@@ -17,17 +20,18 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let doors;
-                if (typeof (values.doors) == 'object') {
-                    doors = values.doors.map((item, index) => {
-                        let door = _.split(item, '|');
-                        return { name: door[0], leaf: door[1] };
-                    });
-                }
-                else {
-                    let door = _.split(values.doors, '|');
-                    doors = [{ name: door[0], leaf: door[1] }];
-                }
+                let doors = values.doorNames.map((doorName, index) => {
+                    return { name: doorName, leaf: values.doorLeafs[index] };
+                });
+                let manifests = Object.keys(values).filter((k) => { return k.startsWith('manifest-name'); }).map((k, index) => {
+                    let elementIndex = k.substr('manifest-name'.length);
+                    let volume = JSON.parse(values['manifest' + elementIndex]);
+                    return { ...volume, name: values['manifest-name' + elementIndex] };
+                });
+                let manifestDefinitions = Object.keys(values).filter((k) => { return k.startsWith('manifest-definition-name'); }).map((k, index) => {
+                    let elementIndex = k.substr('manifest-definition-name'.length);
+                    return { name: values['manifest-definition-name' + elementIndex], summary: values['manifest-definition-summary' + elementIndex], item: values['manifest-definition-item' + elementIndex], isWaterMarked: values['manifest-definition-isWaterMarked' + elementIndex] };
+                });
                 this.props.construct({
                     shippingLine: values.shippingLine,
                     name: values.name,
@@ -36,7 +40,9 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     quantity: values.quantity,
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
-                    doors: doors
+                    doors: doors,
+                    //manifests: manifests,
+                    //manifestDefinitions: manifestDefinitions
                 });
             }
         });
@@ -98,19 +104,6 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
-                        <Form.Item>
-                            {getFieldDecorator('doors', {
-                                rules: [{ required: true, message: 'Please input doors!' }],
-                                initialValue: 'http|80'
-                            })(
-                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
-                                    <Select.Option value="http|80">http|80</Select.Option>
-                                    <Select.Option value="https|443">https|443</Select.Option>
-                                </Select>
-                            )}
-                        </Form.Item>
-                    </Col>
                     <Col span={3}>
                         <Form.Item>
                             {getFieldDecorator('quantity', {
@@ -135,6 +128,72 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>
+                </Row>
+                <DynamicFieldList keys='door' itemComponents={(k) =>
+                    [<Col span={3} key={1}>
+                        <Form.Item>
+                            {getFieldDecorator(`doorNames[${k}]`, {
+                                rules: [{ required: true, message: 'Please input door name!' }],
+                                initialValue: 'http'
+                            })(
+                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Door Name">
+                                    <Select.Option value="http">http</Select.Option>
+                                    <Select.Option value="https">https</Select.Option>
+                                </Select>
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={2}>
+                        <Form.Item>
+                            {getFieldDecorator(`doorLeafs[${k}]`, {
+                                rules: [{ required: true, message: 'Please input leaf!' }],
+                                initialValue: 80
+                            })(
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Leaf" />
+                            )}
+                        </Form.Item>
+                    </Col>]
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddDoor" />} />
+                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                    [<Col span={3} key={1}>
+                        <Form.Item>
+                            {getFieldDecorator(`manifestCredentialNames[${k}]`, {
+                                rules: [{ required: true, message: 'Please input name!' }]
+                            })(
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={2}>
+                        <Form.Item>
+                            {getFieldDecorator(`manifestCredentialTerms[${k}]`, {
+                                rules: [{ required: true, message: 'Please input term!' }]
+                            })(
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Term" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={3}>
+                        <Form.Item>
+                            {getFieldDecorator(`manifestCredentialSubterms[${k}]`, {
+                                rules: [{ required: true, message: 'Please input subterm!' }]
+                            })(
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="SubTerm" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={4}>
+                        <Form.Item>
+                            {getFieldDecorator(`manifest-credential-iswatermarkeds[${k}]`, {
+                                rules: [{ required: true, message: 'Please input name!' }],
+                                initialValue: true
+                            })(
+                                <Switch checkedChildren={<BrandIcon />} unCheckedChildren={<BrandIcon />} />
+                            )}
+                        </Form.Item>
+                    </Col>]
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddCredential" />} />
+                <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
                             <Button type="primary" shape="circle" icon="plus" htmlType="submit" />

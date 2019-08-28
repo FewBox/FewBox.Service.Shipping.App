@@ -69,5 +69,7 @@ export default {
     'Label.CredentialItem': 'Credential {index}',
     'Label.ManifestItem': 'Manifest {index}',
     'Label.StampItem': 'Stamp {key}',
-    'Label.Captain': 'Captain'
+    'Label.Captain': 'Captain',
+    'Label.AddCredential': 'Add Credential',
+    'Label.AddDoor': 'Add Door'
 }

@@ -29,7 +29,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                     <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shipyards}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
                         renderItem={(item: Shipyard) => (
                             <List.Item>
                                 <Card actions={[
@@ -38,6 +38,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} />
                                     <Descriptions size='small' column={1} bordered>
+                                        <Descriptions.Item label={<FormattedMessage id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Quantity" />}>{item.quantity}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>

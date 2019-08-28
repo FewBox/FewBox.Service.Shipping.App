@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge } from 'antd';
+import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover } from 'antd';
 import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                     <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.containerShips}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
                         renderItem={(item: ContainerShip) => (
                             <List.Item>
                                 <Card actions={[
@@ -81,7 +81,11 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                             return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{container}</Descriptions.Item>
                                         })}
                                         {item.manifests.map((manifest, index) => {
-                                            return <Descriptions.Item key={'manifest' + index} label={<FormattedMessage id="Label.ManifestItem" values={{ index: index + 1 }} />}>{manifest}</Descriptions.Item>
+                                            return <Descriptions.Item key={'manifest' + index} label={<FormattedMessage id="Label.ManifestItem" values={{ index: index + 1 }} />}>
+                                                <Popover title={manifest.name} trigger="click" content={JSON.stringify(manifest)}>
+                                                    <Button type="primary" icon='eye'></Button>
+                                                </Popover>
+                                            </Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>

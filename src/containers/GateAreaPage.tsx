@@ -32,7 +32,7 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
                         reload={this.props.initGateAreaPage} addChannelComponent={this.props.addChannelComponent} removeChannelComponent={this.props.removeChannelComponent} construct={this.props.constructGateArea} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.gateAreas}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateAreas}
                         renderItem={(item: GateArea) => (
                             <List.Item>
                                 <Card actions={[

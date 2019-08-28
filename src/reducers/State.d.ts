@@ -49,7 +49,7 @@ export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
 }
-export interface CountryPage{
+export interface CountryPage {
     countries: Country[];
 }
 export interface ShippingLinePage {
@@ -65,17 +65,17 @@ export interface ContainerShipPage {
 export interface ShipyardPage {
     shipyards: Shipyard[];
 }
-export interface GateAreaPage{
+export interface GateAreaPage {
     gateAreas: GateArea[];
     channelComponents: ChannelComponent[];
 }
-export interface LogBookPage{
+export interface LogBookPage {
     logBook: LogBook;
 }
-export interface CaptainPage{
+export interface CaptainPage {
     captains: Captain[];
 }
-export interface CredentialPage{
+export interface CredentialPage {
     credentials: Credential[];
     stampComponents: StampComponent[];
 }
@@ -88,7 +88,7 @@ export interface Contributor {
 export interface Avatar {
     url: string
 }
-export interface Country{
+export interface Country {
     name: string;
     horsepower: string;
     displacement: string;
@@ -108,7 +108,7 @@ export interface Country{
     cargos: Cargo[];
     age: string;
 }
-export interface Cargo{
+export interface Cargo {
     names: string[];
     size: string;
 }
@@ -124,7 +124,7 @@ export interface ContainerShip {
     name: string;
     captain: string;
     containers: string[];
-    manifests: string[];
+    manifests: any[];
     description: string;
     status: string;
     country: string;
@@ -135,6 +135,7 @@ export interface ContainerShip {
 export interface Shipyard {
     shippingLine: string;
     name: string;
+    numbering: string;
     captain: string;
     description: string;
     quantity: number;
@@ -151,25 +152,25 @@ export interface QuayArea {
     berthes: Berth[];
     age: string;
 }
-export interface Berth{
+export interface Berth {
     name: string;
     crane: string;
     cellGuide: string;
 }
-export interface GateArea{
+export interface GateArea {
     shippingLine: string;
     name: string;
 }
-export interface LogBook{
+export interface LogBook {
     content: string;
 }
-export interface Captain{
+export interface Captain {
     shippingLine: string;
     name: string;
     credentials: Credential[];
     age: string;
 }
-export interface Credential{
+export interface Credential {
     shippingLine: string;
     name: string;
     type: string;

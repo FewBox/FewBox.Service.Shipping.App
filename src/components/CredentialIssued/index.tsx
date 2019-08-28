@@ -42,7 +42,6 @@ class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
                     stampsJson += _.template('"<%= key %>":"<%= content %>",')({ key: values[k], content: btoa(values['stamp-content' + elementIndex]) });
                 });
                 stampsJson = _.template('{<%= children %>}')({ children: _.trimEnd(stampsJson, ',') });
-                console.log(stampsJson);
                 let stamps;
                 if (stampsJson !== '') {
                     stamps = JSON.parse(stampsJson);

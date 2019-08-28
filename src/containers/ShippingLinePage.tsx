@@ -35,7 +35,7 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                     <ShippingLineFounder start={this.props.startShippingLine} reload={this.props.initShippingLinePage} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shippingLines}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shippingLines}
                         renderItem={(item: ShippingLine) => (
                             <List.Item>
                                 <Card actions={[

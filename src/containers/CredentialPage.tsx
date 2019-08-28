@@ -31,7 +31,7 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
                         addStampComponent={this.props.addStampComponent} removeStampComponent={this.props.removeStampComponent} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.credentials}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.credentials}
                         renderItem={(item: Credential) => (
                             <List.Item>
                                 <Card actions={[

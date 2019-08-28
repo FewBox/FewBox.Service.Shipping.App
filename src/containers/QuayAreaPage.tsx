@@ -33,7 +33,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                         shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
-                    <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.quayAreas}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.quayAreas}
                         renderItem={(item: QuayArea) => (
                             <List.Item>
                                 <Card actions={[
