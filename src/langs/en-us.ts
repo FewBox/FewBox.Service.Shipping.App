@@ -71,5 +71,6 @@ export default {
     'Label.StampItem': 'Stamp {key}',
     'Label.Captain': 'Captain',
     'Label.AddCredential': 'Add Credential',
-    'Label.AddDoor': 'Add Door'
+    'Label.AddDoor': 'Add Door',
+    'Label.ManifestDefinition': 'Manifest Definition {index}'
 }

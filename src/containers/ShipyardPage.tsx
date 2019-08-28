@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions } from 'antd';
+import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button } from 'antd';
 import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList } from '../actions';
 import { Store, Shipyard, ShippingLine } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
@@ -44,6 +44,21 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                         <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>
                                         {item.cargos.map((cargo, index) => {
                                             return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{cargo}</Descriptions.Item>
+                                        })}
+                                        {item.manifests.map((manifest, index) => {
+                                            return <Descriptions.Item key={'manifest' + index} label={<FormattedMessage id="Label.ManifestItem" values={{ index: index + 1 }} />}>
+                                                <Popover title={manifest.name} trigger="click" content={JSON.stringify(manifest)}>
+                                                    <Button type="primary" icon='eye'></Button>
+                                                </Popover>
+                                            </Descriptions.Item>
+                                        })}
+                                        {item.manifestDefinitions.map((manifestDefinition, index) => {
+                                            return <Descriptions.Item key={'manifestDefinition' + index} label={<FormattedMessage id="Label.ManifestDefinition" values={{ index: index + 1 }} />}>
+                                                <p>{manifestDefinition.name}</p>
+                                                <p>{manifestDefinition.term}</p>
+                                                <p>{manifestDefinition.subTerm}</p>
+                                                <p>{manifestDefinition.isWaterMarked?<Icon type="edit" theme="twoTone" twoToneColor="red" />:<Icon type="edit" theme="twoTone" twoToneColor="green" />}</p>
+                                            </Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>

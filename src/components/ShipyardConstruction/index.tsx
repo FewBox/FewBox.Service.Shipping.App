@@ -20,18 +20,19 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let doors = values.doorNames.map((doorName, index) => {
+                let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
                     return { name: doorName, leaf: values.doorLeafs[index] };
-                });
-                let manifests = Object.keys(values).filter((k) => { return k.startsWith('manifest-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('manifest-name'.length);
-                    let volume = JSON.parse(values['manifest' + elementIndex]);
-                    return { ...volume, name: values['manifest-name' + elementIndex] };
-                });
-                let manifestDefinitions = Object.keys(values).filter((k) => { return k.startsWith('manifest-definition-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('manifest-definition-name'.length);
-                    return { name: values['manifest-definition-name' + elementIndex], summary: values['manifest-definition-summary' + elementIndex], item: values['manifest-definition-item' + elementIndex], isWaterMarked: values['manifest-definition-isWaterMarked' + elementIndex] };
-                });
+                }) : null;
+                let manifestCredentials = values.manifestNames?values.manifestNames.map((manifestName, index) => {
+                    return { name: manifestName, secret: { secretName: values.manifestCredentialNames[index] } };
+                }):null;
+                let manifestCredentialDefinitions = values.manifestNames?values.manifestNames.map((manifestName, index) => {
+                    return { name: manifestName, term: values.manifestCredentialTerms[index], 
+                        subTerm: values.manifestCredentialSubTerms?values.manifestCredentialSubTerms[index]:null,
+                        isWaterMarked: values.manifestCredentialIsWaterMarkeds[index] };
+                }):null;
+                let manifests = manifestCredentials;
+                let manifestDefinitions = manifestCredentialDefinitions;
                 this.props.construct({
                     shippingLine: values.shippingLine,
                     name: values.name,
@@ -41,8 +42,8 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
                     doors: doors,
-                    //manifests: manifests,
-                    //manifestDefinitions: manifestDefinitions
+                    manifests: manifests,
+                    manifestDefinitions: manifestDefinitions
                 });
             }
         });
@@ -157,7 +158,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 <DynamicFieldList keys='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialNames[${k}]`, {
+                            {getFieldDecorator(`manifestNames[${k}]`, {
                                 rules: [{ required: true, message: 'Please input name!' }]
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
@@ -166,6 +167,15 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>,
                     <Col span={3} key={2}>
                         <Form.Item>
+                            {getFieldDecorator(`manifestCredentialNames[${k}]`, {
+                                rules: [{ required: true, message: 'Please input credential name!' }]
+                            })(
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Credential Name" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={3}>
+                        <Form.Item>
                             {getFieldDecorator(`manifestCredentialTerms[${k}]`, {
                                 rules: [{ required: true, message: 'Please input term!' }]
                             })(
@@ -173,18 +183,17 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={3}>
+                    <Col span={3} key={4}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialSubterms[${k}]`, {
-                                rules: [{ required: true, message: 'Please input subterm!' }]
+                            {getFieldDecorator(`manifestCredentialSubTerms[${k}]`, {
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="SubTerm" />
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={4}>
+                    <Col span={3} key={5}>
                         <Form.Item>
-                            {getFieldDecorator(`manifest-credential-iswatermarkeds[${k}]`, {
+                            {getFieldDecorator(`manifestCredentialIsWaterMarkeds[${k}]`, {
                                 rules: [{ required: true, message: 'Please input name!' }],
                                 initialValue: true
                             })(

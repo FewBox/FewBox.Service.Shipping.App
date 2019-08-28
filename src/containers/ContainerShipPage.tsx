@@ -87,6 +87,14 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                                 </Popover>
                                             </Descriptions.Item>
                                         })}
+                                        {item.manifestDefinitions.map((manifestDefinition, index) => {
+                                            return <Descriptions.Item key={'manifestDefinition' + index} label={<FormattedMessage id="Label.ManifestDefinition" values={{ index: index + 1 }} />}>
+                                                <p>{manifestDefinition.name}</p>
+                                                <p>{manifestDefinition.term}</p>
+                                                <p>{manifestDefinition.subTerm}</p>
+                                                <p>{manifestDefinition.isWaterMarked}</p>
+                                            </Descriptions.Item>
+                                        })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>
                                 </Card>
