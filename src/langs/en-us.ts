@@ -67,10 +67,10 @@ export default {
     'Label.Country': 'Country',
     'Label.CountryPosition': 'Country Position',
     'Label.CredentialItem': 'Credential {index}',
-    'Label.ManifestItem': 'Manifest {index}',
+    'Label.DocumentItem': 'Document {index}',
     'Label.StampItem': 'Stamp {key}',
     'Label.Captain': 'Captain',
     'Label.AddCredential': 'Add Credential',
     'Label.AddDoor': 'Add Door',
-    'Label.ManifestDefinition': 'Manifest Definition {index}'
+    'Label.DocumentDefinition': 'Dcument Definition {index}'
 }

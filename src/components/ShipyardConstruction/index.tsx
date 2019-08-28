@@ -23,16 +23,16 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
                     return { name: doorName, leaf: values.doorLeafs[index] };
                 }) : null;
-                let manifestCredentials = values.manifestNames?values.manifestNames.map((manifestName, index) => {
-                    return { name: manifestName, secret: { secretName: values.manifestCredentialNames[index] } };
+                let documentCredentials = values.documentNames?values.documentNames.map((documentName, index) => {
+                    return { name: documentName, secret: { secretName: values.documentCredentialNames[index] } };
                 }):null;
-                let manifestCredentialDefinitions = values.manifestNames?values.manifestNames.map((manifestName, index) => {
-                    return { name: manifestName, term: values.manifestCredentialTerms[index], 
-                        subTerm: values.manifestCredentialSubTerms?values.manifestCredentialSubTerms[index]:null,
-                        isWaterMarked: values.manifestCredentialIsWaterMarkeds[index] };
+                let documentCredentialDefinitions = values.documentNames?values.documentNames.map((documentName, index) => {
+                    return { name: documentName, term: values.documentCredentialTerms[index], 
+                        subTerm: values.documentCredentialSubTerms?values.documentCredentialSubTerms[index]:null,
+                        isWaterMarked: values.documentCredentialIsWaterMarkeds[index] };
                 }):null;
-                let manifests = manifestCredentials;
-                let manifestDefinitions = manifestCredentialDefinitions;
+                let documents = documentCredentials;
+                let documentDefinitions = documentCredentialDefinitions;
                 this.props.construct({
                     shippingLine: values.shippingLine,
                     name: values.name,
@@ -42,8 +42,8 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
                     doors: doors,
-                    manifests: manifests,
-                    manifestDefinitions: manifestDefinitions
+                    documents: documents,
+                    documentDefinitions: documentDefinitions
                 });
             }
         });
@@ -158,7 +158,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 <DynamicFieldList keys='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestNames[${k}]`, {
+                            {getFieldDecorator(`documentNames[${k}]`, {
                                 rules: [{ required: true, message: 'Please input name!' }]
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
@@ -167,7 +167,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>,
                     <Col span={3} key={2}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialNames[${k}]`, {
+                            {getFieldDecorator(`documentCredentialNames[${k}]`, {
                                 rules: [{ required: true, message: 'Please input credential name!' }]
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Credential Name" />
@@ -176,7 +176,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>,
                     <Col span={3} key={3}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialTerms[${k}]`, {
+                            {getFieldDecorator(`documentCredentialTerms[${k}]`, {
                                 rules: [{ required: true, message: 'Please input term!' }]
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Term" />
@@ -185,7 +185,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>,
                     <Col span={3} key={4}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialSubTerms[${k}]`, {
+                            {getFieldDecorator(`documentCredentialSubTerms[${k}]`, {
                             })(
                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="SubTerm" />
                             )}
@@ -193,7 +193,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     </Col>,
                     <Col span={3} key={5}>
                         <Form.Item>
-                            {getFieldDecorator(`manifestCredentialIsWaterMarkeds[${k}]`, {
+                            {getFieldDecorator(`documentCredentialIsWaterMarkeds[${k}]`, {
                                 rules: [{ required: true, message: 'Please input name!' }],
                                 initialValue: true
                             })(

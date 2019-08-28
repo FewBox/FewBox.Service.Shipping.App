@@ -124,8 +124,8 @@ export interface ContainerShip {
     name: string;
     captain: string;
     containers: string[];
-    manifests: any[];
-    manifestDefinitions: ManifestDefinition[];
+    documents: any[];
+    documentDefinitions: DocumentDefinition[];
     description: string;
     status: string;
     country: string;
@@ -141,8 +141,8 @@ export interface Shipyard {
     description: string;
     quantity: number;
     cargos: string[];
-    manifests: any[];
-    manifestDefinitions: ManifestDefinition[];
+    documents: any[];
+    documentDefinitions: DocumentDefinition[];
     age: string;
 }
 export interface QuayArea {
@@ -180,7 +180,7 @@ export interface Credential {
     stamps: any[];
     age: string;
 }
-export interface ManifestDefinition{
+export interface DocumentDefinition{
     name: string;
     term: string;
     subTerm: string;

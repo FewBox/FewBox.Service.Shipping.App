@@ -45,19 +45,19 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                         {item.cargos.map((cargo, index) => {
                                             return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{cargo}</Descriptions.Item>
                                         })}
-                                        {item.manifests.map((manifest, index) => {
-                                            return <Descriptions.Item key={'manifest' + index} label={<FormattedMessage id="Label.ManifestItem" values={{ index: index + 1 }} />}>
-                                                <Popover title={manifest.name} trigger="click" content={JSON.stringify(manifest)}>
+                                        {item.documents.map((document, index) => {
+                                            return <Descriptions.Item key={'document' + index} label={<FormattedMessage id="Label.DocumentItem" values={{ index: index + 1 }} />}>
+                                                <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                     <Button type="primary" icon='eye'></Button>
                                                 </Popover>
                                             </Descriptions.Item>
                                         })}
-                                        {item.manifestDefinitions.map((manifestDefinition, index) => {
-                                            return <Descriptions.Item key={'manifestDefinition' + index} label={<FormattedMessage id="Label.ManifestDefinition" values={{ index: index + 1 }} />}>
-                                                <p>{manifestDefinition.name}</p>
-                                                <p>{manifestDefinition.term}</p>
-                                                <p>{manifestDefinition.subTerm}</p>
-                                                <p>{manifestDefinition.isWaterMarked?<Icon type="edit" theme="twoTone" twoToneColor="red" />:<Icon type="edit" theme="twoTone" twoToneColor="green" />}</p>
+                                        {item.documentDefinitions.map((documentDefinition, index) => {
+                                            return <Descriptions.Item key={'documentDefinition' + index} label={<FormattedMessage id="Label.DocumentDefinition" values={{ index: index + 1 }} />}>
+                                                <p>{documentDefinition.name}</p>
+                                                <p>{documentDefinition.term}</p>
+                                                <p>{documentDefinition.subTerm}</p>
+                                                <p>{documentDefinition.isWaterMarked?<Icon type="edit" theme="twoTone" twoToneColor="red" />:<Icon type="edit" theme="twoTone" twoToneColor="green" />}</p>
                                             </Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
