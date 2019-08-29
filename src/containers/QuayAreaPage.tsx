@@ -2,18 +2,15 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions } from 'antd';
-import { initQuayAreaPage, demolishQuayArea, constructQuayArea, addBerthComponent, removeBerthComponent, initShippingLineDropdownList } from '../actions';
-import { QuayArea, Store, BerthComponent, ShippingLine } from '../reducers/State';
+import { initQuayAreaPage, demolishQuayArea, constructQuayArea, initShippingLineDropdownList } from '../actions';
+import { QuayArea, Store, ShippingLine } from '../reducers/State';
 import QuayAreaConstruction from '../components/QuayAreaConstruction';
 import { Specification } from '../jsons';
 
 
 export interface IQuayAreaPageProps {
-    berthComponents: BerthComponent[];
     shippingLines: ShippingLine[];
-    addBerthComponent: () => void;
     initShippingLineDropdownList: () => void;
-    removeBerthComponent: (number) => void;
     quayAreas: QuayArea[];
     initQuayAreaPage: () => void;
     constructQuayArea: (any) => void;
@@ -29,10 +26,8 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
         return (
             <div>
                 <Row>
-                    <QuayAreaConstruction construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage} berthComponents={this.props.berthComponents}
-                        specs={Specification}
-                        addBerthComponent={this.props.addBerthComponent} removeBerthComponent={this.props.removeBerthComponent}
-                        shippingLines={this.props.shippingLines} />
+                    <QuayAreaConstruction construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage}
+                        specs={Specification} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.quayAreas}
@@ -66,7 +61,6 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
 
 const mapStateToProps = ({ quayAreaPage, masterPage }: Store) => ({
     quayAreas: quayAreaPage.quayAreas,
-    berthComponents: quayAreaPage.berthComponents,
     shippingLines: masterPage.shippingLines
 });
 
@@ -74,8 +68,6 @@ const mapDispatchToProps = {
     initQuayAreaPage,
     constructQuayArea,
     demolishQuayArea,
-    addBerthComponent,
-    removeBerthComponent,
     initShippingLineDropdownList
 };
 

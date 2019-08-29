@@ -242,25 +242,6 @@ export const showDrawer = (): IEmptyAction => ({
 export const hideDrawer = (): IEmptyAction => ({
     type: ActionTypes.HIDE_DRAWER
 });
-export const addBerthComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_BERTHCOMPONENT,
-    value: index
-});
-
-export const removeBerthComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_BERTHCOMPONENT,
-    value: index
-});
-export const addChannelComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_CHANNELCOMPONENT,
-    value: index
-});
-
-export const removeChannelComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_CHANNELCOMPONENT,
-    value: index
-});
-
 export const initShippingLineDropdownList = (): IEmptyAction => ({
     type: ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST
 });

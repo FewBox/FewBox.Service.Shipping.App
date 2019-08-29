@@ -57,7 +57,6 @@ export interface ShippingLinePage {
 }
 export interface QuayAreaPage {
     quayAreas: QuayArea[];
-    berthComponents: BerthComponent[];
 }
 export interface ContainerShipPage {
     containerShips: ContainerShip[];
@@ -67,7 +66,6 @@ export interface ShipyardPage {
 }
 export interface GateAreaPage {
     gateAreas: GateArea[];
-    channelComponents: ChannelComponent[];
 }
 export interface LogBookPage {
     logBook: LogBook;
@@ -184,11 +182,4 @@ export interface DocumentDefinition{
     term: string;
     subTerm: string;
     isWaterMarked: boolean;
-}
-/** UI **/
-export interface BerthComponent {
-    name: string;
-}
-export interface ChannelComponent {
-    name: string;
 }

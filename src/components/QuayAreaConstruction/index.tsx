@@ -2,32 +2,21 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { BerthComponent, ShippingLine } from '../../reducers/State';
+import { ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
 import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import { Spec } from '../GateAreaConstruction';
 
 export interface IQuayAreaConstructionProps {
-    berthComponents: BerthComponent[];
     specs: Spec[];
     shippingLines: ShippingLine[];
-    addBerthComponent: (number) => void;
-    removeBerthComponent: (number) => void;
     construct: (string) => void;
     reload: () => void;
     form: any;
 }
 
 class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProps> {
-    @autobind
-    addBerth() {
-        this.props.addBerthComponent(this.props.berthComponents.length + 1);
-    }
-    @autobind
-    removeBerth(index) {
-        this.props.removeBerthComponent(index);
-    }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -43,11 +32,6 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
             }
         });
     };
-    getRemoveComponent(index, lastIndex) {
-        if (index == lastIndex) {
-            return <Button icon="minus" onClick={() => { this.removeBerth(index); }} />;
-        }
-    }
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         return (

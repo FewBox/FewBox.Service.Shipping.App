@@ -2,19 +2,17 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
-import { initGateAreaPage, initShippingLineDropdownList, addChannelComponent, removeChannelComponent, constructGateArea, demolishGateArea } from '../actions';
-import { GateArea, Store, ShippingLine, ChannelComponent } from '../reducers/State';
+import { initGateAreaPage, initShippingLineDropdownList, constructGateArea, demolishGateArea } from '../actions';
+import { GateArea, Store, ShippingLine } from '../reducers/State';
 import GateAreaConstruction from '../components/GateAreaConstruction';
+import { Specification } from '../jsons';
 
 
 export interface IGateAreaPageProps {
-    channelComponents: ChannelComponent[];
     shippingLines: ShippingLine[];
     gateAreas: GateArea[];
     initGateAreaPage: () => void;
     initShippingLineDropdownList: () => void;
-    addChannelComponent: () => void;
-    removeChannelComponent: (number) => void;
     constructGateArea: (any) => void;
     demolishGateArea: (any) => void;
 }
@@ -28,8 +26,8 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
         return (
             <div>
                 <Row>
-                    <GateAreaConstruction shippingLines={this.props.shippingLines} channelComponents={this.props.channelComponents} specs={[{ name: "http", value: "HTTP" }, { name: "https", value: "HTTPS" }, { name: "grpc", value: "GRPC" }, { name: "http2", value: "HTTP2" }, { name: "mongo", value: "MONGO" }, { name: "tcp", value: "TCP" }, { name: "tls", value: "TLS" }]}
-                        reload={this.props.initGateAreaPage} addChannelComponent={this.props.addChannelComponent} removeChannelComponent={this.props.removeChannelComponent} construct={this.props.constructGateArea} />
+                    <GateAreaConstruction shippingLines={this.props.shippingLines} specs={Specification}
+                        reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateAreas}
@@ -52,15 +50,12 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
 
 const mapStateToProps = ({ gateAreaPage, masterPage }: Store) => ({
     gateAreas: gateAreaPage.gateAreas,
-    shippingLines: masterPage.shippingLines,
-    channelComponents: gateAreaPage.channelComponents,
+    shippingLines: masterPage.shippingLines
 });
 
 const mapDispatchToProps = {
     initGateAreaPage,
     initShippingLineDropdownList,
-    addChannelComponent,
-    removeChannelComponent,
     constructGateArea,
     demolishGateArea
 };
