@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { BerthComponent, ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon,  } from '../Icon';
+import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, } from '../Icon';
+import DynamicFieldList from '../DynamicFieldList';
+import { Spec } from '../GateAreaConstruction';
 
 export interface IQuayAreaConstructionProps {
     berthComponents: BerthComponent[];
+    specs: Spec[];
     shippingLines: ShippingLine[];
     addBerthComponent: (number) => void;
     removeBerthComponent: (number) => void;
@@ -29,11 +32,14 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let berths = Object.keys(values).filter((k) => { return k.startsWith('berth-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('berth-name'.length);
-                    return { name: values[k], crane: values['berth-crane' + elementIndex], cellguide: values['berth-cellguide' + elementIndex] };
-                });
-                this.props.construct({ shippingLine: values.shippingLine, name: values.name, berths: berths });
+                let berths = values.berthNames ? values.berthNames.map((berthName, index) => {
+                    let cellGuide = parseInt(values.berthCellGuides[index]);
+                    if (isNaN(cellGuide)) {
+                        cellGuide = values.berthCellGuides[index];
+                    }
+                    return { name: berthName, crane: values.berthCranes[index], cellGuide: cellGuide };
+                }) : null;
+                this.props.construct({ shippingLine: values.shippingLine, name: values.name, specificationType: values.specificationType, berths: berths });
             }
         });
     };
@@ -44,42 +50,6 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
     }
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        var berthComponents = this.props.berthComponents.map((item, index) => {
-            return <Row gutter={16} key={item.name + index}>
-                <Col span={6}>
-                    <Form.Item>
-                        {getFieldDecorator('berth-name' + index, {
-                            rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
-                        })(
-                            <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
-                        )}
-                    </Form.Item>
-                </Col>
-                <Col span={6}>
-                    <Form.Item >
-                        {getFieldDecorator('berth-crane' + index, {
-                            rules: [{ required: true, message: 'Please input crane!' }],
-                        })(
-                            <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
-                        )}
-                    </Form.Item>
-                </Col>
-                <Col span={6}>
-                    <Form.Item >
-                        {getFieldDecorator('berth-cellguide' + index, {
-                            rules: [{ required: true, message: 'Please input cell guide!' }],
-                        })(
-                            <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
-                        )}
-                    </Form.Item>
-                </Col>
-                <Col span={6}>
-                    <Form.Item>
-                        {this.getRemoveComponent(index, this.props.berthComponents.length - 1)}
-                    </Form.Item>
-                </Col>
-            </Row>
-        });
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row gutter={16}>
@@ -105,13 +75,50 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                             )}
                         </Form.Item>
                     </Col>
-                </Row>
-                {berthComponents}
-                <Row gutter={16}>
-                    <Col span={24}>
-                        <Button icon="plus" onClick={this.addBerth} />
+                    <Col span={3}>
+                        <Form.Item>
+                            {getFieldDecorator('specificationType', {
+                                rules: [{ required: true, message: 'Please input Specification!' }],
+                                initialValue: 'http'
+                            })(
+                                <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    {this.props.specs.map((item, index) => {
+                                        return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
+                                    })}
+                                </Select>
+                            )}
+                        </Form.Item>
                     </Col>
                 </Row>
+                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                    [<Col span={3} key={1}>
+                        <Form.Item>
+                            {getFieldDecorator(`berthNames[${k}]`, {
+                                rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
+                            })(
+                                <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={2}>
+                        <Form.Item >
+                            {getFieldDecorator(`berthCranes[${k}]`, {
+                                rules: [{ required: true, message: 'Please input crane!' }],
+                            })(
+                                <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={3}>
+                        <Form.Item >
+                            {getFieldDecorator(`berthCellGuides[${k}]`, {
+                                rules: [{ required: true, message: 'Please input cell guide!' }],
+                            })(
+                                <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
+                            )}
+                        </Form.Item>
+                    </Col>]
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddQuayArea" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

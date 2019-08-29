@@ -72,5 +72,6 @@ export default {
     'Label.Captain': 'Captain',
     'Label.AddCredential': 'Add Credential',
     'Label.AddDoor': 'Add Door',
-    'Label.DocumentDefinition': 'Dcument Definition {index}'
+    'Label.DocumentDefinition': 'Dcument Definition {index}',
+    'Label.AddQuayArea': 'Add QuayArea'
 }

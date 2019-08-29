@@ -5,6 +5,7 @@ import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, D
 import { initQuayAreaPage, demolishQuayArea, constructQuayArea, addBerthComponent, removeBerthComponent, initShippingLineDropdownList } from '../actions';
 import { QuayArea, Store, BerthComponent, ShippingLine } from '../reducers/State';
 import QuayAreaConstruction from '../components/QuayAreaConstruction';
+import { Specification } from '../jsons';
 
 
 export interface IQuayAreaPageProps {
@@ -29,6 +30,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
             <div>
                 <Row>
                     <QuayAreaConstruction construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage} berthComponents={this.props.berthComponents}
+                        specs={Specification}
                         addBerthComponent={this.props.addBerthComponent} removeBerthComponent={this.props.removeBerthComponent}
                         shippingLines={this.props.shippingLines} />
                 </Row>
@@ -48,7 +50,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                                         <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
                                         <Descriptions.Item label={<FormattedMessage id="Label.MooringBitt" />}>{item.mooringBitt}</Descriptions.Item>
                                         {item.berthes.map((berth, index) => {
-                                            return <Descriptions.Item label={<FormattedMessage id="Label.BerthItem" values={{ index: index + 1 }} />}>{berth.name} : {berth.crane}=>{berth.cellGuide}</Descriptions.Item>
+                                            return <Descriptions.Item key={'berth' + index} label={<FormattedMessage id="Label.BerthItem" values={{ index: index + 1 }} />}>{berth.name} : {berth.crane}=>{berth.cellGuide}</Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                     </Descriptions>

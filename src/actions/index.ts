@@ -142,7 +142,7 @@ export const constructQuayArea = (constructBill): IAction<any> => ({
 });
 
 export const demolishQuayArea = (demolishBill): IAction<string> => ({
-    type: ActionTypes.CONSTRUCT_QUAYAREA,
+    type: ActionTypes.DEMOLISH_QUAYAREA,
     value: demolishBill
 });
 
