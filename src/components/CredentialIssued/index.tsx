@@ -1,82 +1,36 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { CaptainIcon, ShippingLineIcon } from '../Icon';
-import { ShippingLine, StampComponent } from '../../reducers/State';
+import { ShippingLine } from '../../reducers/State';
 import TextArea from 'antd/lib/input/TextArea';
 import { autobind } from 'core-decorators';
+import DynamicFieldList from '../DynamicFieldList';
 
-export interface ICaptainTrainingProps {
+export interface ICredentialIssuedProps {
     shippingLines: ShippingLine[];
-    stampComponents: StampComponent[];
     issue: (string) => void;
     reload: () => void;
-    addStampComponent: (number) => void;
-    removeStampComponent: (number) => void;
     form: any;
 }
 
-class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
-    @autobind
-    addStamp() {
-        this.props.addStampComponent(this.props.stampComponents.length + 1);
-    }
-    @autobind
-    removeStamp(index) {
-        this.props.removeStampComponent(index);
-    }
-    @autobind
-    getRemoveComponent(index, lastIndex) {
-        if (index == lastIndex) {
-            return <Button icon="minus" onClick={() => { this.removeStamp(index); }} />;
-        }
-    }
+class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let stampsJson = '';
-                Object.keys(values).filter((k) => { return k.startsWith('stamp-key'); }).map((k, index) => {
-                    let elementIndex = k.substr('stamp-key'.length);
-                    stampsJson += _.template('"<%= key %>":"<%= content %>",')({ key: values[k], content: btoa(values['stamp-content' + elementIndex]) });
-                });
-                stampsJson = _.template('{<%= children %>}')({ children: _.trimEnd(stampsJson, ',') });
-                let stamps;
-                if (stampsJson !== '') {
-                    stamps = JSON.parse(stampsJson);
-                }
-                this.props.issue({ shippingLine: values.shippingLine, name: values.name.toLowerCase(), stamps: stamps });
+                let stamps = {};
+                values.stampKeys ? values.stampKeys.map((stampKey, index) => {
+                    stamps[stampKey] = btoa(values.stampContents[index]);
+                }) : null;
+                this.props.issue({ shippingLine: values.shippingLine, name: values.name.toLowerCase(), type: values.type, stamps: stamps });
             }
         });
     };
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        var stampComponents = this.props.stampComponents.map((item, index) => {
-            return <Row gutter={16} key={item.name + index}>
-                <Col span={6}>
-                    <Form.Item>
-                        {getFieldDecorator('stamp-key' + index, {
-                            rules: [{ required: true, message: 'Please input key!' }],
-                        })(
-                            <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('stamp-content' + index, {
-                            rules: [{ required: true, message: 'Please input content!' }],
-                        })(
-                            <TextArea rows={4} placeholder="Content" />
-                        )}
-                    </Form.Item>
-                </Col>
-                <Col span={6}>
-                    <Form.Item>
-                        {this.getRemoveComponent(index, this.props.stampComponents.length - 1)}
-                    </Form.Item>
-                </Col>
-            </Row>
-        });
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row gutter={16}>
@@ -102,13 +56,37 @@ class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
                             )}
                         </Form.Item>
                     </Col>
-                </Row>
-                {stampComponents}
-                <Row gutter={16}>
-                    <Col span={24}>
-                        <Button icon="plus" onClick={this.addStamp} />
+                    <Col span={6}>
+                        <Form.Item>
+                            {getFieldDecorator('type', {
+                                rules: [{ required: true, message: 'Please input type!' }],
+                            })(
+                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" />
+                            )}
+                        </Form.Item>
                     </Col>
                 </Row>
+                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                    [<Col span={3} key={1}>
+                        <Form.Item>
+                            {getFieldDecorator(`stampKeys[${k}]`, {
+                                rules: [{ required: true, message: 'Please input key!' }],
+                            })(
+                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
+                            )}
+                        </Form.Item>
+                    </Col>,
+                    <Col span={3} key={2}>
+                        <Form.Item>
+                            {getFieldDecorator(`stampContents[${k}]`, {
+                                rules: [{ required: true, message: 'Please input content!' }],
+                            })(
+                                <TextArea rows={4} placeholder="Content" />
+                            )}
+                        </Form.Item>
+                    </Col>
+                    ]
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddCredential" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
@@ -122,4 +100,4 @@ class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'captain_training' })(CaptainTraining));
+export default connect()(Form.create({ name: 'credential_issued' })(CredentialIssued));

@@ -77,7 +77,6 @@ export interface CaptainPage {
 }
 export interface CredentialPage {
     credentials: Credential[];
-    stampComponents: StampComponent[];
 }
 
 /** Biz **/
@@ -191,8 +190,5 @@ export interface BerthComponent {
     name: string;
 }
 export interface ChannelComponent {
-    name: string;
-}
-export interface StampComponent {
     name: string;
 }

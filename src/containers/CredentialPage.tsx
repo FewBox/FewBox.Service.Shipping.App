@@ -2,19 +2,16 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse, Popover, Button } from 'antd';
-import { initShippingLineDropdownList, initCredentialPage, issueCredential, revokeCredential, addStampComponent, removeStampComponent } from '../actions';
+import { initShippingLineDropdownList, initCredentialPage, issueCredential, revokeCredential } from '../actions';
 import CredentialIssued from '../components/CredentialIssued';
-import { Store, Credential, ShippingLine, StampComponent } from '../reducers/State';
+import { Store, Credential, ShippingLine } from '../reducers/State';
 
 export interface ICredentialPageProps {
-    stampComponents: StampComponent[];
     shippingLines: ShippingLine[];
     credentials: Credential[];
     initCredentialPage: () => void;
     issueCredential: (any) => void;
     revokeCredential: (any) => void;
-    addStampComponent: () => void;
-    removeStampComponent: () => void;
     initShippingLineDropdownList: () => void;
 }
 
@@ -27,8 +24,7 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
         return (
             <div>
                 <Row>
-                    <CredentialIssued issue={this.props.issueCredential} reload={this.props.initCredentialPage} shippingLines={this.props.shippingLines} stampComponents={this.props.stampComponents}
-                        addStampComponent={this.props.addStampComponent} removeStampComponent={this.props.removeStampComponent} />
+                    <CredentialIssued issue={this.props.issueCredential} reload={this.props.initCredentialPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.credentials}
@@ -64,7 +60,6 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
 
 const mapStateToProps = ({ credentialPage, masterPage }: Store) => ({
     credentials: credentialPage.credentials,
-    stampComponents: credentialPage.stampComponents,
     shippingLines: masterPage.shippingLines
 });
 
@@ -72,9 +67,7 @@ const mapDispatchToProps = {
     initShippingLineDropdownList,
     initCredentialPage,
     issueCredential,
-    revokeCredential,
-    addStampComponent,
-    removeStampComponent
+    revokeCredential
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CredentialPage);

@@ -269,13 +269,3 @@ export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
     payload: payload
 });
-
-export const addStampComponent = (index): IAction<number> => ({
-    type: ActionTypes.ADD_STAMPCOMPONENT,
-    value: index
-});
-
-export const removeStampComponent = (index): IAction<number> => ({
-    type: ActionTypes.REMOVE_STAMPCOMPONENT,
-    value: index
-});
