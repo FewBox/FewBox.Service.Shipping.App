@@ -16,6 +16,13 @@ export interface IShipyardConstructionProps {
 }
 
 class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProps> {
+    validateNumbering = (rule, value, callback) => {
+        const { getFieldValue } = this.props.form
+        if (value.indexOf(':') != -1) {
+            callback('Please remove the numbering.')
+        }
+        callback()
+    }
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -23,14 +30,16 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
                     return { name: doorName, leaf: values.doorLeafs[index] };
                 }) : null;
-                let documentCredentials = values.documentNames?values.documentNames.map((documentName, index) => {
+                let documentCredentials = values.documentNames ? values.documentNames.map((documentName, index) => {
                     return { name: documentName, secret: { secretName: values.documentCredentialNames[index] } };
-                }):null;
-                let documentCredentialDefinitions = values.documentNames?values.documentNames.map((documentName, index) => {
-                    return { name: documentName, term: values.documentCredentialTerms[index], 
-                        subTerm: values.documentCredentialSubTerms?values.documentCredentialSubTerms[index]:null,
-                        isWaterMarked: values.documentCredentialIsWaterMarkeds[index] };
-                }):null;
+                }) : null;
+                let documentCredentialDefinitions = values.documentNames ? values.documentNames.map((documentName, index) => {
+                    return {
+                        name: documentName, term: values.documentCredentialTerms[index],
+                        subTerm: values.documentCredentialSubTerms ? values.documentCredentialSubTerms[index] : null,
+                        isWaterMarked: values.documentCredentialIsWaterMarkeds[index]
+                    };
+                }) : null;
                 let documents = documentCredentials;
                 let documentDefinitions = documentCredentialDefinitions;
                 this.props.construct({
@@ -88,7 +97,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('cargo', {
-                                rules: [{ required: true, message: 'Please input cargo!' }],
+                                rules: [{ required: true, message: 'Please input cargo!' }, { validator: this.validateNumbering }],
                             })(
                                 <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
                             )}
