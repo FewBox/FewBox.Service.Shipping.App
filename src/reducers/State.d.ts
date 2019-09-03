@@ -39,6 +39,7 @@ export interface MasterPage {
     isMessageVisible: boolean;
     isLoadingVisible: boolean;
     isDrawerVisible: boolean;
+    drawer: any;
     path?: string;
     shippingLines: ShippingLine[];
 }
@@ -177,7 +178,7 @@ export interface Credential {
     stamps: any[];
     age: string;
 }
-export interface DocumentDefinition{
+export interface DocumentDefinition {
     name: string;
     term: string;
     subTerm: string;

@@ -42,6 +42,26 @@ const switchShipyardEpic = (action$: ActionsObservable<any>, store$: StateObserv
             }
         })
     );
+const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.CHANGE_CONTAINERSHIPNUMBERING),
+        mergeMap((action) => {
+            /*let containers = action.value.cargos.map((cargo, index) => {
+                return { image: cargo };
+            });
+            return AjaxObservable({ path: '/api/shipyards/mergepatch/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { template: { spec: { containers: containers } } } } },
+                (payload) => {
+                    return initShipyardPage();
+                });*/
+            let operations = action.value.cargos.map((cargo, index) => {
+                return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
+            });
+            return AjaxObservable({ path: '/api/shipyards/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: operations },
+                (payload) => {
+                    return initShipyardPage();
+                });
+        })
+    );
 
 const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -76,4 +96,4 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic];
+export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic];

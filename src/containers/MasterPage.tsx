@@ -9,7 +9,8 @@ const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery } from '../actions';
+import ShipyardDrawer from '../components/ShipyardDrawer';
+import { hideMessage, signOut, clearPath, switchFewBoxDelivery, hideDrawer, changeContainerShipNumbering } from '../actions';
 const CountryPage = lazy(() => import('./CountryPage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -36,9 +37,13 @@ export interface IMasterPageProps {
     isMessageVisible: boolean;
     isLoadingVisible: boolean;
     isDrawerVisible: boolean;
+    drawer: any;
     isFewBoxDelivery: boolean;
     hideMessage: () => void;
+    hideDrawer: () => void;
     switchFewBoxOcean: (boolean) => void;
+    changeContainerShipNumbering: (any) => void;
+    intl: any;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -62,15 +67,29 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 </Menu.Item>
             </Menu>
         );
+        let drawer = () => {
+            switch (this.props.drawer.type) {
+                case 'Shipyard':
+                    return <ShipyardDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} />
+                default:
+                    return <div></div>
+            }
+        };
+        let drawerTitle = () =>{
+            switch (this.props.drawer.type) {
+                case 'Shipyard':
+                    return this.props.intl.formatMessage({ id: 'Label.Shipyard' });
+                default:
+                    return this.props.intl.formatMessage({ id: 'Label.None' });
+            }
+        };
         return (
             <div className="masterPage">
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
                 <Loading isVisable={this.props.isLoadingVisible} />
                 <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
-                <Drawer title="Basic Drawer" placement="right" closable={false} visible={this.props.isDrawerVisible}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                <Drawer title={drawerTitle()} width='50%' placement="right" closable={false} visible={this.props.isDrawerVisible} onClose={this.props.hideDrawer}>
+                    {drawer()}
                 </Drawer>
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -166,6 +185,7 @@ const mapStateToProps = ({ masterPage, settingPage }: Store) => ({
     isMessageVisible: masterPage.isMessageVisible,
     isLoadingVisible: masterPage.isLoadingVisible,
     isDrawerVisible: masterPage.isDrawerVisible,
+    drawer: masterPage.drawer,
     redirectPath: masterPage.path,
     isFewBoxDelivery: settingPage.isFewBoxDelivery
 })
@@ -174,7 +194,9 @@ const mapDispatchToProps = {
     hideMessage,
     signOut,
     clearPath,
-    switchFewBoxOcean: switchFewBoxDelivery
+    switchFewBoxDelivery,
+    hideDrawer,
+    changeContainerShipNumbering
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MasterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));

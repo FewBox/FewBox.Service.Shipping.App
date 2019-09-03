@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList } from '../actions';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, Shipyard, ShippingLine } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
 
@@ -15,6 +15,7 @@ export interface IShipyardPageProps {
     scaleContainerShipQuantity: (any) => void;
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
+    showDrawer: (drawerType: any) => void;
 }
 
 class ShipyardPage extends React.Component<IShipyardPageProps, any> {
@@ -35,7 +36,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
-                                    <Icon type="ellipsis" />]}>
+                                    <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Shipyard', shippingLine: item.shippingLine, name: item.name, cargos: item.cargos })} />]}>
                                     <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} />
                                     <Descriptions size='small' column={1} bordered>
                                         <Descriptions.Item label={<FormattedMessage id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
@@ -57,7 +58,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                                 <p>{documentDefinition.name}</p>
                                                 <p>{documentDefinition.term}</p>
                                                 <p>{documentDefinition.subTerm}</p>
-                                                <p>{documentDefinition.isWaterMarked?<Icon type="edit" theme="twoTone" twoToneColor="red" />:<Icon type="edit" theme="twoTone" twoToneColor="green" />}</p>
+                                                <p>{documentDefinition.isWaterMarked ? <Icon type="edit" theme="twoTone" twoToneColor="red" /> : <Icon type="edit" theme="twoTone" twoToneColor="green" />}</p>
                                             </Descriptions.Item>
                                         })}
                                         <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
@@ -82,7 +83,8 @@ const mapDispatchToProps = {
     initShipyardPage,
     constructContainerShip,
     scaleContainerShipQuantity,
-    scrapContainerShip
+    scrapContainerShip,
+    showDrawer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShipyardPage);

@@ -1,18 +1,22 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist",
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "sourceMap": true,
-      "module": "esNext",
-      "target": "es6",
-      "jsx": "react",
-      "allowJs": true,
-      "moduleResolution": "node",
-      "experimentalDecorators": true,
-      "lib": ["es2015", "es6", "dom"]
-    },
-    "exclude": [
-      "./node_modules"
+  "compilerOptions": {
+    "outDir": "./dist",
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "module": "esNext",
+    "target": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "es6",
+      "dom"
     ]
-  }
+  },
+  "exclude": [
+    "./node_modules"
+  ]
+}

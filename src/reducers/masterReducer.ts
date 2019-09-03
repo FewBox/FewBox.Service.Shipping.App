@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { MasterPage } from './State';
 import { MessageType } from '@fewbox/react-components';
 
-const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, shippingLines: [] };
+const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, shippingLines: [], drawer: { type: '' } };
 export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
@@ -14,7 +14,7 @@ export default (state: MasterPage = master, action: any): MasterPage => {
         case ActionTypes.HIDE_MESSAGE:
             return { ...state, isMessageVisible: false };
         case ActionTypes.SHOW_DRAWER:
-            return { ...state, isDrawerVisible: true };
+            return { ...state, isDrawerVisible: true, drawer: action.value };
         case ActionTypes.HIDE_DRAWER:
             return { ...state, isDrawerVisible: false };
         case ActionTypes.REDIRECT:

@@ -28,7 +28,6 @@ class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                debugger;
                 let channels = Object.keys(values).filter((k) => { return k.startsWith('gate-name'); }).map((k, index) => {
                     let elementIndex = k.substr('gate-name'.length);
                     let warehouses = values['warehouses' + elementIndex];

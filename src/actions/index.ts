@@ -1,6 +1,7 @@
 import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
+import { /*DrawerType*/ } from '../reducers/State';
 
 // Common
 export const redirect = (path: string): IAction<string> => ({
@@ -122,6 +123,11 @@ export const sinkContainerShip = (artificialReefBill): IAction<any> => ({
     value: artificialReefBill
 });
 
+export const changeContainerShipNumbering = (renewBill): IAction<any> => ({
+    type: ActionTypes.CHANGE_CONTAINERSHIPNUMBERING,
+    value: renewBill
+});
+
 export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     type: ActionTypes.SCALE_CONTAINERSHIPQUANTITY,
     value: renewBill
@@ -236,8 +242,9 @@ export const showMessage = (messageType: MessageType, messageIntlId: string, mes
 export const hideMessage = (): IEmptyAction => ({
     type: ActionTypes.HIDE_MESSAGE
 });
-export const showDrawer = (): IEmptyAction => ({
-    type: ActionTypes.SHOW_DRAWER
+export const showDrawer = (drawer: any): IAction<any> => ({
+    type: ActionTypes.SHOW_DRAWER,
+    value: drawer
 });
 export const hideDrawer = (): IEmptyAction => ({
     type: ActionTypes.HIDE_DRAWER
