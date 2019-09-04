@@ -149,8 +149,8 @@ export interface QuayArea {
     containerShipSpec: string;
     position: string;
     type: string;
-    mooringBitt: string;
     berthes: Berth[];
+    containerShipAgreementType: string;
     age: string;
 }
 export interface Berth {

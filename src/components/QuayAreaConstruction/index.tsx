@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
-import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, } from '../Icon';
+import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, BrandIcon, } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import { Spec } from '../GateAreaConstruction';
 
@@ -28,7 +28,7 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                     }
                     return { name: berthName, crane: values.berthCranes[index], cellGuide: cellGuide };
                 }) : null;
-                this.props.construct({ shippingLine: values.shippingLine, name: values.name, specificationType: values.specificationType, berths: berths });
+                this.props.construct({ shippingLine: values.shippingLine, name: values.name, specificationType: values.specificationType, berths: berths, containerShipAgreementType: values.containerShipAgreementType });
             }
         });
     };
@@ -56,6 +56,19 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                                 rules: [{ required: true, message: 'Please input name!' }],
                             })(
                                 <Input prefix={<QuayAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                            )}
+                        </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                        <Form.Item>
+                            {getFieldDecorator('containerShipAgreementType', {
+                                rules: [{ required: true, message: 'Please input fixed bitt type!' }],
+                                initialValue: 0
+                            })(
+                                <Select showSearch placeholder="ContainerShip Agreement Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select.Option value={0}><FormattedMessage id='Label.Rent' /></Select.Option>
+                                    <Select.Option value={1}><FormattedMessage id='Label.Own' /></Select.Option>
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>

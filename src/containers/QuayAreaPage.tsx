@@ -44,7 +44,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                                                 <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipSpec" />}>{item.containerShipSpec}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.MooringBitt" />}>{item.mooringBitt}</Descriptions.Item>
+                                                <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipAgreementType" />}>{item.containerShipAgreementType}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
