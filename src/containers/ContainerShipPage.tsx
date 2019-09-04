@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover } from 'antd';
+import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
 import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
 import { Store, ContainerShip, ShippingLine } from '../reducers/State';
 import { Link } from 'react-router-dom';
@@ -69,34 +69,41 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         </a>
                                     </Dropdown>
                                 ]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} />
-                                    <Descriptions size='small' column={1} bordered>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Country" />}>{item.country}</Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.CountryPosition" />}>{item.countryPosition}</Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
-                                        {item.containers.map((container, index) => {
-                                            return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ index: index + 1 }} />}>{container}</Descriptions.Item>
-                                        })}
-                                        {item.documents.map((document, index) => {
-                                            return <Descriptions.Item key={'document' + index} label={<FormattedMessage id="Label.DocumentItem" values={{ index: index + 1 }} />}>
-                                                <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
-                                                    <Button type="primary" icon='eye'></Button>
-                                                </Popover>
-                                            </Descriptions.Item>
-                                        })}
-                                        {item.documentDefinitions.map((documentDefinition, index) => {
-                                            return <Descriptions.Item key={'documentDefinition' + index} label={<FormattedMessage id="Label.DocumentDefinition" values={{ index: index + 1 }} />}>
-                                                <p>{documentDefinition.name}</p>
-                                                <p>{documentDefinition.term}</p>
-                                                <p>{documentDefinition.subTerm}</p>
-                                                <p>{documentDefinition.isWaterMarked}</p>
-                                            </Descriptions.Item>
-                                        })}
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                    </Descriptions>
+                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
+                                        <Collapse bordered={false} defaultActiveKey={['1']}>
+                                            <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
+                                                <Descriptions size='small' column={1} bordered>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Country" />}>{item.country}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.CountryPosition" />}>{item.countryPosition}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                </Descriptions>
+                                            </Collapse.Panel>
+                                            <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
+                                                <Descriptions size='small' column={1} bordered>
+                                                    {item.containers.map((container, index) => {
+                                                        return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
+                                                    })}
+                                                    {item.documents.map((document, index) => {
+                                                        return <Descriptions.Item key={'document' + index} label={<FormattedMessage id="Label.DocumentItem" values={{ key: document.name }} />}>
+                                                            <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
+                                                                <Button type="primary" icon='eye'></Button>
+                                                            </Popover>
+                                                        </Descriptions.Item>
+                                                    })}
+                                                    {item.documentDefinitions.map((documentDefinition, index) => {
+                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<FormattedMessage id="Label.DocumentDefinition" values={{ key: documentDefinition.name }} />} />}>
+                                                            <p>{documentDefinition.term}</p>
+                                                            <p>{documentDefinition.subTerm}</p>
+                                                        </Descriptions.Item>
+                                                    })}
+                                                </Descriptions>
+                                            </Collapse.Panel>
+                                        </Collapse>
+                                    } />
                                 </Card>
                             </List.Item>
                         )}

@@ -26,14 +26,14 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.Telescope" />} key='1'>
+                                        <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered layout="vertical">
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Alias" />}>{item.alias}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.Compass" />} key='2'>
+                                        <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered layout="vertical">
                                                 <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipPositionZone" />}>{item.containerShipPositionZone}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Horsepower" />}>{item.allocatableHorsepower}/{item.horsepower}</Descriptions.Item>

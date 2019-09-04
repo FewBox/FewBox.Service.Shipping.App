@@ -35,18 +35,26 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
-                                        <Descriptions size='small' column={1} bordered>
-                                            <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                            <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
-                                            {Object.keys(item.stamps).map((key, index) => {
-                                                return <Descriptions.Item key={'stamp' + index} label={<FormattedMessage id="Label.StampItem" values={{ key: key }} />}>
-                                                    <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
-                                                        <Button type="primary" icon='eye'></Button>
-                                                    </Popover>
-                                                </Descriptions.Item>
-                                            })}
-                                            <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                        </Descriptions>
+                                        <Collapse bordered={false} defaultActiveKey={['1']}>
+                                            <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
+                                                <Descriptions size='small' column={1} bordered>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                </Descriptions>
+                                            </Collapse.Panel>
+                                            <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
+                                                <Descriptions size='small' column={1} bordered>
+                                                    {Object.keys(item.stamps).map((key, index) => {
+                                                        return <Descriptions.Item key={'stamp' + index} label={<FormattedMessage id="Label.StampItem" values={{ key: key }} />}>
+                                                            <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
+                                                                <Button type="primary" icon='eye'></Button>
+                                                            </Popover>
+                                                        </Descriptions.Item>
+                                                    })}
+                                                </Descriptions>
+                                            </Collapse.Panel>
+                                        </Collapse>
                                     } />
                                 </Card>
                             </List.Item>
