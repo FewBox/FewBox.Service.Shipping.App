@@ -68,7 +68,7 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
     action$.pipe(
         ofType(ActionTypes.ENABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } },
+            return AjaxObservable({ path: '/api/shippinglines/merge/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } },
                 (payload) => {
                     return enableIstioStatus(action.value);
                 });
@@ -78,7 +78,7 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
     action$.pipe(
         ofType(ActionTypes.DISABLE_ISTIO),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/mergepatch/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } },
+            return AjaxObservable({ path: '/api/shippinglines/merge/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } },
                 (payload) => {
                     return disableIstioStatus(action.value);
                 });

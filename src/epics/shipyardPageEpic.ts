@@ -71,7 +71,7 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.SCALE_CONTAINERSHIPQUANTITY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/mergepatch/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } },
+            return AjaxObservable({ path: '/api/shipyards/merge/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } },
                 (payload) => {
                     return initShipyardPage();
                 });
