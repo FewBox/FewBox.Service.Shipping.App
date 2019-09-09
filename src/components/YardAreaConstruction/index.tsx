@@ -73,13 +73,13 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.GateArea" />} />
-                <DynamicFieldList keys='guideboard' itemComponents={(k) =>
+                <DynamicFieldList keys='guideboard' itemComponents={(k1) =>
                     [<Col offset={1} span={6} key={1}>
                         <Form.Item>
-                            <DynamicFieldList keys='information' itemComponents={(k) =>
+                            <DynamicFieldList keys={'information' + k1} itemComponents={(k2) =>
                                 [<Col offset={1} key={1}>
                                     <Form.Item>
-                                        {getFieldDecorator(`informations[${k}]`, {
+                                        {getFieldDecorator(`informations${k1}[${k2}]`, {
                                             rules: [{ required: true, message: <FormattedMessage id='Message.InformationRequired' /> }],
                                         })(
                                             <Input.TextArea placeholder="Information" />
