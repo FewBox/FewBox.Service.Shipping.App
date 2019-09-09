@@ -17,7 +17,7 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.countries}
                         renderItem={(item: Country) => (
                             <List.Item>

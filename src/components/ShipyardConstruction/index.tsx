@@ -30,6 +30,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
                     return { name: doorName, leaf: values.doorLeafs[index] };
                 }) : null;
+                
                 let documentCredentials = values.documentNames ? values.documentNames.map((documentName, index) => {
                     return { name: documentName, secret: { secretName: values.documentCredentialNames[index] } };
                 }) : null;
@@ -114,17 +115,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>
-                    <Col span={3}>
-                        <Form.Item>
-                            {getFieldDecorator('quantity', {
-                                rules: [{ required: true, message: 'Please input quantity!' }],
-                                initialValue: '2'
-                            })(
-                                <InputNumber min={1} max={10} />
-                            )}
-                        </Form.Item>
-                    </Col>
-                    <Col span={3}>
+                    <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('cargoPackagePolicy', {
                                 rules: [{ required: true, message: 'Please input cargo package policy!' }],
@@ -138,22 +129,32 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>
+                    <Col span={6}>
+                        <Form.Item>
+                            {getFieldDecorator('quantity', {
+                                rules: [{ required: true, message: 'Please input quantity!' }],
+                                initialValue: '2'
+                            })(
+                                <InputNumber min={1} max={10} />
+                            )}
+                        </Form.Item>
+                    </Col>
                 </Row>
                 <DynamicFieldList keys='door' itemComponents={(k) =>
-                    [<Col span={3} key={1}>
+                    [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`doorNames[${k}]`, {
                                 rules: [{ required: true, message: 'Please input door name!' }],
                                 initialValue: 'http'
                             })(
-                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Door Name">
+                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} style={{ width: '100%' }} placeholder="Door Name">
                                     <Select.Option value="http">http</Select.Option>
                                     <Select.Option value="https">https</Select.Option>
                                 </Select>
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={2}>
+                    <Col span={6} key={2}>
                         <Form.Item>
                             {getFieldDecorator(`doorLeafs[${k}]`, {
                                 rules: [{ required: true, message: 'Please input leaf!' }],
@@ -179,11 +180,11 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             {getFieldDecorator(`documentCredentialNames[${k}]`, {
                                 rules: [{ required: true, message: 'Please input credential name!' }]
                             })(
-                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Credential Name" />
+                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Credential" />
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={3}>
+                    <Col span={6} key={3}>
                         <Form.Item>
                             {getFieldDecorator(`documentCredentialTerms[${k}]`, {
                                 rules: [{ required: true, message: 'Please input term!' }]
@@ -192,7 +193,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={4}>
+                    <Col span={6} key={4}>
                         <Form.Item>
                             {getFieldDecorator(`documentCredentialSubTerms[${k}]`, {
                             })(
@@ -200,7 +201,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={5}>
+                    <Col span={2} key={5}>
                         <Form.Item>
                             {getFieldDecorator(`documentCredentialIsWaterMarkeds[${k}]`, {
                                 rules: [{ required: true, message: 'Please input name!' }],

@@ -32,10 +32,10 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   render() {
     return (
       <div>
-        <Row>
+        <Row gutter={16}>
           <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Label.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
         </Row>
-        <Row>
+        <Row gutter={16}>
           <XTerminalSimulator exit={() => this.props.redirect('/master/containership')} websocketUrl={this.state.websocketUrl} />
         </Row>
         {

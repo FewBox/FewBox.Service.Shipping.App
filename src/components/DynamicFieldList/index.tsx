@@ -37,15 +37,17 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     const fromItems = keys.map((k, index) => {
       return <Row gutter={16} key={'item' + index}>
         {this.props.itemComponents(index)}
-        <Col span={1}><Button icon="minus" onClick={() => { this.remove(k); }} /></Col>
+        <Col span={1}><Button type="link" icon="minus" onClick={() => { this.remove(k); }} /></Col>
       </Row>
     });
     return (
-      <Row gutter={16}>
+      <Row>
         {fromItems}
-        <Col span={1}>
-          <Button icon="plus" onClick={this.add}>{this.props.addCaption}</Button>
-        </Col>
+        <Row>
+          <Col span={3}>
+            <Button icon="plus" type="link" onClick={this.add}>{this.props.addCaption}</Button>
+          </Col>
+        </Row>
       </Row>
     );
   }

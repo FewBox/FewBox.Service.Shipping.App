@@ -25,11 +25,11 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <QuayAreaConstruction construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage}
                         specs={Specification} shippingLines={this.props.shippingLines} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.quayAreas}
                         renderItem={(item: QuayArea) => (
                             <List.Item>

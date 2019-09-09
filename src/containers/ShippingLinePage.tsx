@@ -31,10 +31,10 @@ class ShippingLinePage extends React.Component<IShippingLinePageProps, any> {
                     //<Search placeholder={this.props.intl.formatMessage({ id: 'Label.Search' })} onSearch={value => console.log(value)} />
                 //</Row>
                 }
-                <Row>
+                <Row gutter={16}>
                     <ShippingLineFounder start={this.props.startShippingLine} reload={this.props.initShippingLinePage} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shippingLines}
                         renderItem={(item: ShippingLine) => (
                             <List.Item>

@@ -27,10 +27,10 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
                         renderItem={(item: ContainerShip) => (
                             <List.Item>

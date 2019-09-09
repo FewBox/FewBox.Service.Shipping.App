@@ -23,10 +23,10 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <CredentialIssued issue={this.props.issueCredential} reload={this.props.initCredentialPage} shippingLines={this.props.shippingLines} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.credentials}
                         renderItem={(item: Credential) => (
                             <List.Item>

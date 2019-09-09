@@ -67,7 +67,7 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                     </Col>
                 </Row>
                 <DynamicFieldList keys='credential' itemComponents={(k) =>
-                    [<Col span={3} key={1}>
+                    [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`stampKeys[${k}]`, {
                                 rules: [{ required: true, message: 'Please input key!' }],
@@ -76,7 +76,7 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             )}
                         </Form.Item>
                     </Col>,
-                    <Col span={3} key={2}>
+                    <Col span={12} key={2}>
                         <Form.Item>
                             {getFieldDecorator(`stampContents[${k}]`, {
                                 rules: [{ required: true, message: 'Please input content!' }],

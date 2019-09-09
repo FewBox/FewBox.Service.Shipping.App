@@ -23,10 +23,10 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <CaptainTraining train={this.props.trainCaptain} reload={this.props.initCaptainPage} shippingLines={this.props.shippingLines} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.captains}
                         renderItem={(item: Captain) => (
                             <List.Item>
@@ -38,7 +38,7 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
                                         <Descriptions size='small' column={1} bordered>
                                             <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
                                             {item.credentials.map((credential, index) => {
-                                                return <Descriptions.Item key={'credential' + index} label={<FormattedMessage id="Label.CredentialItem" values={{ index: index + 1 }} />}>{credential.name}</Descriptions.Item>
+                                                return <Descriptions.Item key={'credential' + index} label={<FormattedMessage id="Label.CredentialItem" values={{ key: index }} />}>{credential.name}</Descriptions.Item>
                                             })}
                                             <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                         </Descriptions>

@@ -26,10 +26,10 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage} shippingLines={this.props.shippingLines} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
                         renderItem={(item: Shipyard) => (
                             <List.Item>
@@ -37,7 +37,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.quantity} onBlur={(value) => { this.props.scaleContainerShipQuantity({ shippingLine: item.shippingLine, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Shipyard', shippingLine: item.shippingLine, name: item.name, cargos: item.cargos })} />]}>
-                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
+                                    <Card.Meta title={item.name} description={
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>

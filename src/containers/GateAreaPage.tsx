@@ -25,11 +25,11 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
     render() {
         return (
             <div>
-                <Row>
+                <Row gutter={16}>
                     <GateAreaConstruction shippingLines={this.props.shippingLines} specs={Specification}
                         reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
                 </Row>
-                <Row>
+                <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateAreas}
                         renderItem={(item: GateArea) => (
                             <List.Item>

@@ -19,10 +19,10 @@ class LogBookPage extends React.Component<ILogBookPageProps, any> {
   render() {
     return (
       <div>
-        <Row>
+        <Row gutter={16}>
           <PageHeader onBack={() => this.props.redirect('/master/containership')} title={<FormattedMessage id="Label.Back" />} subTitle={<FormattedMessage id='Navigation.ContainerShip' />} />
         </Row>
-        <Row>
+        <Row gutter={16}>
           {this.props.logBook.content}
         </Row>
       </div>
