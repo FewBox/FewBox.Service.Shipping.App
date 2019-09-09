@@ -175,12 +175,8 @@ export interface YardArea {
     age: string;
 }
 export interface Guideboard {
-    informations: Information[];
+    informations: any[];
     directions: Direction[];
-}
-export interface Information{
-    type: string;
-    name: string;
 }
 export interface Direction{
     quayArea: string;

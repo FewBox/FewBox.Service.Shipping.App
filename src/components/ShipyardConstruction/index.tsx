@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { ShippingLine } from '../../reducers/State';
 import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon, BrandIcon } from '../Icon';
-import TextArea from 'antd/lib/input/TextArea';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IShipyardConstructionProps {

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { CaptainIcon, ShippingLineIcon } from '../Icon';
 import { ShippingLine } from '../../reducers/State';
-import TextArea from 'antd/lib/input/TextArea';
 import { autobind } from 'core-decorators';
 import DynamicFieldList from '../DynamicFieldList';
 
@@ -81,7 +80,7 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             {getFieldDecorator(`stampContents[${k}]`, {
                                 rules: [{ required: true, message: 'Please input content!' }],
                             })(
-                                <TextArea rows={4} placeholder="Content" />
+                                <Input.TextArea rows={4} placeholder="Content" />
                             )}
                         </Form.Item>
                     </Col>
