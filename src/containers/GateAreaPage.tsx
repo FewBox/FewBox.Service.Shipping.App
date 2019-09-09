@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initGateAreaPage, initShippingLineDropdownList, constructGateArea, demolishGateArea } from '../actions';
 import { GateArea, Store, ShippingLine } from '../reducers/State';
 import GateAreaConstruction from '../components/GateAreaConstruction';
@@ -37,7 +37,16 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishGateArea({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ height: 40, whiteSpace: 'nowrap' }} title={item.name} description={<Tooltip placement="topLeft" title={item.shippingLine}></Tooltip>} />
+                                    <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
+                                        <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
+                                            <Descriptions size='small' column={1} bordered>
+                                                <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                                <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                            </Descriptions>
+                                        </Collapse.Panel>
+                                        <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
+                                        </Collapse.Panel>
+                                    </Collapse>} />
                                 </Card>
                             </List.Item>
                         )}

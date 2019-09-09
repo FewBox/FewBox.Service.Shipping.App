@@ -10,7 +10,8 @@ import gateAreaPageEpic from './gateAreaPageEpic';
 import logBookPageEpic from './logBookPageEpic';
 import captainPageEpic from './captainPageEpic';
 import credentialPageEpic from './credentialPageEpic';
+import yardAreaPageEpic from './yardAreaPageEpic';
 import commonEpic from './commonEpic';
 
 export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...countryPageEpic, ...shippingLinePageEpic, ...containerShipPageEpic, ...shipyardPageEpic,
-    ...quayAreaPageEpic, ...gateAreaPageEpic, ...logBookPageEpic, ...captainPageEpic, ...credentialPageEpic);
+    ...quayAreaPageEpic, ...gateAreaPageEpic, ...logBookPageEpic, ...captainPageEpic, ...credentialPageEpic, ...yardAreaPageEpic);

@@ -152,6 +152,25 @@ export const demolishQuayArea = (demolishBill): IAction<string> => ({
     value: demolishBill
 });
 
+export const initYardAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_YARDAREAPAGE
+});
+
+export const loadYardArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_YARDAREA,
+    payload: payload
+});
+
+export const constructYardArea = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_YARDAREA,
+    value: constructBill
+});
+
+export const demolishYardArea = (demolishBill): IAction<string> => ({
+    type: ActionTypes.DEMOLISH_YARDAREA,
+    value: demolishBill
+});
+
 export const initGateAreaPage = (): IEmptyAction => ({
     type: ActionTypes.INIT_GATEAREAPAGE
 });

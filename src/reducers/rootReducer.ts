@@ -13,8 +13,9 @@ import gateAreaPage from './gateAreaReducer';
 import logBookPage from './logBookReducer';
 import captainPage from './captainReducer';
 import credentialPage from './credentialReducer';
+import yardAreaPage from './yardAreaReducer';
 
-const appReducer = combineReducers({ masterPage, signinPage, landingPage, settingPage, countryPage, shippingLinePage, containerShipPage, shipyardPage, quayAreaPage, gateAreaPage, logBookPage, captainPage, credentialPage, routing });
+const appReducer = combineReducers({ masterPage, signinPage, landingPage, settingPage, countryPage, shippingLinePage, containerShipPage, shipyardPage, quayAreaPage, gateAreaPage, logBookPage, captainPage, credentialPage, yardAreaPage, routing });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {
         state = undefined;

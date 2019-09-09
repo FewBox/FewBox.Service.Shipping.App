@@ -26,6 +26,7 @@ export interface Store {
     logBookPage: LogBookPage;
     captainPage: CaptainPage;
     credentialPage: CredentialPage;
+    yardAreaPage: YardAreaPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -77,7 +78,9 @@ export interface CaptainPage {
 export interface CredentialPage {
     credentials: Credential[];
 }
-
+export interface YardAreaPage{
+    yardAreas: YardArea[];
+}
 /** Biz **/
 export interface Contributor {
     name: string;
@@ -161,6 +164,27 @@ export interface Berth {
 export interface GateArea {
     shippingLine: string;
     name: string;
+    age: string;
+}
+export interface YardArea {
+    shippingLine: string;
+    name: string;
+    aliases: string[];
+    gateAreas: string[];
+    guideboards: Guideboard[];
+    age: string;
+}
+export interface Guideboard {
+    informations: Information[];
+    directions: Direction[];
+}
+export interface Information{
+    type: string;
+    name: string;
+}
+export interface Direction{
+    quayArea: string;
+    crane: string;
 }
 export interface LogBook {
     content: string;

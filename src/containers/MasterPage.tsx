@@ -23,6 +23,7 @@ const GateAreaPage = lazy(() => import('./GateAreaPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
 const CaptainPage = lazy(() => import('./CaptainPage'));
 const CredentialPage = lazy(() => import('./CredentialPage'));
+const YardAreaPage = lazy(() => import('./YardAreaPage'));
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
 
@@ -41,7 +42,7 @@ export interface IMasterPageProps {
     isFewBoxDelivery: boolean;
     hideMessage: () => void;
     hideDrawer: () => void;
-    switchFewBoxOcean: (boolean) => void;
+    switchFewBoxDelivery: (boolean) => void;
     changeContainerShipNumbering: (any) => void;
     intl: any;
 }
@@ -134,6 +135,10 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.GateArea" /></Link>
                             </Menu.Item>
                             <Menu.Item key="10">
+                                <Link to='/master/yardarea'><BrandIcon />
+                                    <FormattedMessage id="Navigation.YardArea" /></Link>
+                            </Menu.Item>
+                            <Menu.Item key="11">
                                 <Link to='/master/about'><Icon type="info-circle" />
                                     <FormattedMessage id="Navigation.About" /></Link>
                             </Menu.Item>
@@ -142,7 +147,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     <Layout>
                         <Header style={{ background: '#fff', padding: 0 }}>
                             <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
-                            <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxOcean(isFewBox); }} />
+                            <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxDelivery(isFewBox); }} />
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" href="#" style={{ float: 'right', marginRight: '20px' }}>
                                     <Avatar icon="user" style={{ marginRight: '5px' }} />
@@ -162,6 +167,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
                                     <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />
                                     <Route path="/master/gatearea" render={props => <GateAreaPage {...props} />} />
+                                    <Route path="/master/yardarea" render={props => <YardAreaPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:namespace/:pod/:container/:command" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />
