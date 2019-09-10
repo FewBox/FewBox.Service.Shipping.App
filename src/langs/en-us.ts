@@ -1,5 +1,4 @@
 export default {
-
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
@@ -24,8 +23,10 @@ export default {
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',
     'Label.None': 'None',
-    'Label.Rent': 'Rent',
-    'Label.Own': 'Own',
+    'Label.Rent': 'Rent (None)',
+    'Label.Own': 'Own (ClientIP)',
+    'Label.Address': 'Address (Exact)',
+    'Label.Area': 'Area (Prefix)',
     'Label.Cancel': 'Cancel',
     'Label.Loading': 'Loading...',
     'Label.Back': 'Back',

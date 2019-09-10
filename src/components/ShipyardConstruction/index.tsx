@@ -3,18 +3,26 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { ShippingLine } from '../../reducers/State';
-import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon, BrandIcon } from '../Icon';
+import { ShippingLine, Captain, Credential } from '../../reducers/State';
+import { ShippingLineIcon, ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon, BrandIcon, CredentialIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IShipyardConstructionProps {
     shippingLines: ShippingLine[];
+    captains: Captain[];
+    credentials: Credential[];
+    refreshCaptains: (shippingLine: string) => void;
+    refreshCredentials: (shippingLine: string) => void;
     construct: (any) => void;
     reload: () => void;
     form: any;
 }
 
 class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProps> {
+    changeShippingLine = (shippingLine: string) => {
+        this.props.refreshCaptains(shippingLine);
+        this.props.refreshCredentials(shippingLine);
+    };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
         if (value.indexOf(':') != -1) {
@@ -29,7 +37,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                 let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
                     return { name: doorName, leaf: values.doorLeafs[index] };
                 }) : null;
-                
+
                 let documentCredentials = values.documentNames ? values.documentNames.map((documentName, index) => {
                     return { name: documentName, secret: { secretName: values.documentCredentialNames[index] } };
                 }) : null;
@@ -67,7 +75,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             {getFieldDecorator('shippingLine', {
                                 rules: [{ required: true, message: 'Please input Shipping Line!' }],
                             })(
-                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
+                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children" onChange={this.changeShippingLine} >
                                     {this.props.shippingLines.map((item, index) => {
                                         return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
                                     })}
@@ -110,7 +118,11 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                             {getFieldDecorator('captain', {
                                 rules: [{ required: true, message: 'Please input captain!' }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Captain" />
+                                <Select suffixIcon={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Captain" optionFilterProp="children">
+                                    {this.props.captains.map((item, index) => {
+                                        return <Select.Option key={'captain' + index} value={item.name}>{item.name}</Select.Option>
+                                    })}
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>
@@ -177,9 +189,13 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                     <Col span={3} key={2}>
                         <Form.Item>
                             {getFieldDecorator(`documentCredentialNames[${k}]`, {
-                                rules: [{ required: true, message: 'Please input credential name!' }]
+                                rules: [{ required: true, message: 'Please input credential!' }],
                             })(
-                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Credential" />
+                                <Select suffixIcon={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Credential" optionFilterProp="children">
+                                    {this.props.credentials ? this.props.credentials.map((item, index) => {
+                                        return <Select.Option key={'credential' + index} value={item.name}>{item.name}</Select.Option>
+                                    }) : null}
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>,

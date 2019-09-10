@@ -86,27 +86,39 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                         )}
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Information" />} />
-                            {/*<DynamicFieldList keys='direction' itemComponents={(k) =>
-                                [<Col span={3} key={1}>
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Target" />} />
+                            <DynamicFieldList keys={'direction' + k1} itemComponents={(k2) =>
+                                [<Col key={1}>
                                     <Form.Item>
-                                        {getFieldDecorator(`directionQuayArea[${k}]`, {
+                                        {getFieldDecorator(`directionTypes${k1}[${k2}]`, {
+                                            rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
+                                        })(
+                                            <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select.Option value='exact'><FormattedMessage id='Label.Address' /></Select.Option>
+                                                <Select.Option value='prefix'><FormattedMessage id='Label.Area' /></Select.Option>
+                                            </Select>
+                                        )}
+                                    </Form.Item>
+                                </Col>,
+                                <Col key={2}>
+                                    <Form.Item>
+                                        {getFieldDecorator(`directionQuayAreas${k1}[${k2}]`, {
                                             rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
                                         })(
                                             <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Quay Area" />
                                         )}
                                     </Form.Item>
                                 </Col>,
-                                <Col span={3} key={1}>
+                                <Col key={3}>
                                     <Form.Item>
-                                        {getFieldDecorator(`directionCrane[${k}]`, {
+                                        {getFieldDecorator(`directionCrane${k1}[${k2}]`, {
                                             rules: [{ required: true, message: <FormattedMessage id='Message.CraneRequired' /> }],
                                         })(
                                             <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
                                         )}
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Crane" />} />*/}
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Crane" />} />
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Guideboard" />} />

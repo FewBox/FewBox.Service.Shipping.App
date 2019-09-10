@@ -3,19 +3,23 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
-import { Store, Shipyard, ShippingLine } from '../reducers/State';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer, initCaptainDropdownList, initCredentialDropdownList } from '../actions';
+import { Store, Shipyard, ShippingLine, Captain, Credential } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
 
 export interface IShipyardPageProps {
     shipyards: Shipyard[];
     shippingLines: ShippingLine[];
+    captains: Captain[];
+    credentials: Credential[];
     initShipyardPage: () => void;
     initShippingLineDropdownList: () => void;
     scaleContainerShipQuantity: (any) => void;
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
     showDrawer: (drawerType: any) => void;
+    initCaptainDropdownList: (shippingLine: string) => void;
+    initCredentialDropdownList: (shippingLine: string) => void;
 }
 
 class ShipyardPage extends React.Component<IShipyardPageProps, any> {
@@ -27,7 +31,9 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage} shippingLines={this.props.shippingLines} />
+                    <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
+                    shippingLines={this.props.shippingLines} captains={this.props.captains} credentials={this.props.credentials}
+                    refreshCaptains={this.props.initCaptainDropdownList} refreshCredentials={this.props.initCredentialDropdownList} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
@@ -86,6 +92,8 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
 
 const mapStateToProps = ({ shipyardPage, masterPage }: Store) => ({
     shipyards: shipyardPage.shipyards,
+    captains: shipyardPage.captains,
+    credentials: shipyardPage.credentials,
     shippingLines: masterPage.shippingLines
 });
 
@@ -95,7 +103,9 @@ const mapDispatchToProps = {
     constructContainerShip,
     scaleContainerShipQuantity,
     scrapContainerShip,
-    showDrawer
+    showDrawer,
+    initCaptainDropdownList,
+    initCredentialDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShipyardPage);

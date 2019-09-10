@@ -65,6 +65,8 @@ export interface ContainerShipPage {
 }
 export interface ShipyardPage {
     shipyards: Shipyard[];
+    captains: Captain[];
+    credentials: Credential[];
 }
 export interface GateAreaPage {
     gateAreas: GateArea[];

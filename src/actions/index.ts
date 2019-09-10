@@ -271,8 +271,23 @@ export const hideDrawer = (): IEmptyAction => ({
 export const initShippingLineDropdownList = (): IEmptyAction => ({
     type: ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST
 });
-
 export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
+    payload: payload
+});
+export const initCaptainDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_CAPTAINDROPDOWNLIST,
+    value: shippingLine
+});
+export const fillCaptainDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_CAPTAINDROPDOWNLIST,
+    payload: payload
+});
+export const initCredentialDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_CREDENTIALDROPDOWNLIST,
+    value: shippingLine
+});
+export const fillCredentialDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_CREDENTIALDROPDOWNLIST,
     payload: payload
 });
