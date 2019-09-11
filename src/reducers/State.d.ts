@@ -62,6 +62,7 @@ export interface QuayAreaPage {
 }
 export interface ContainerShipPage {
     containerShips: ContainerShip[];
+    captains: Captain[];
 }
 export interface ShipyardPage {
     shipyards: Shipyard[];
@@ -82,6 +83,8 @@ export interface CredentialPage {
 }
 export interface YardAreaPage{
     yardAreas: YardArea[];
+    gateAreas: GateArea[];
+    quayAreas: QuayArea[];
 }
 /** Biz **/
 export interface Contributor {
@@ -177,7 +180,7 @@ export interface YardArea {
     age: string;
 }
 export interface Guideboard {
-    informations: any[];
+    targets: any[];
     directions: Direction[];
 }
 export interface Direction{

@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer } from '../actions';
-import { Store, ContainerShip, ShippingLine } from '../reducers/State';
+import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer, initCaptainDropdownList } from '../actions';
+import { Store, ContainerShip, ShippingLine, Captain } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -12,11 +12,13 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 export interface IContainerShipPageProps {
     shippingLines: ShippingLine[];
     containerShips: ContainerShip[];
+    captains: Captain[];
     showDrawer: () => void;
     initShippingLineDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
     constructTemporaryContainerShip: (any) => void;
+    initCaptainDropdownList: (shippingLine: string) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
@@ -28,7 +30,8 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage} shippingLines={this.props.shippingLines} />
+                    <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage}
+                    captains={this.props.captains} refreshCaptains={this.props.initCaptainDropdownList} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
@@ -116,6 +119,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
 
 const mapStateToProps = ({ containerShipPage, masterPage }: Store) => ({
     containerShips: containerShipPage.containerShips,
+    captains: containerShipPage.captains,
     shippingLines: masterPage.shippingLines
 });
 
@@ -124,7 +128,8 @@ const mapDispatchToProps = {
     initContainerShipPage,
     sinkContainerShip,
     constructTemporaryContainerShip,
-    showDrawer
+    showDrawer,
+    initCaptainDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);

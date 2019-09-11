@@ -89,26 +89,4 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
         })
     );
 
-const initCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
-    action$.pipe(
-        ofType(ActionTypes.INIT_CAPTAINDROPDOWNLIST),
-        mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' },
-                (payload) => {
-                    return fillCaptainDropdownList(payload);
-                });
-        })
-    );
-
-const initCredentialEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
-    action$.pipe(
-        ofType(ActionTypes.INIT_CREDENTIALDROPDOWNLIST),
-        mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/credentials', method: 'GET' },
-                (payload) => {
-                    return fillCredentialDropdownList(payload);
-                });
-        })
-    );
-
-export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initCaptainEpic, initCredentialEpic];
+export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic];

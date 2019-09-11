@@ -2,31 +2,38 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { ShippingLine } from '../../reducers/State';
+import { ShippingLine, Captain } from '../../reducers/State';
 import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, ShippingLineIcon, DoorIcon, CaptainIcon } from '../Icon';
 
 export interface IShipBuildingProps {
     shippingLines: ShippingLine[];
+    captains: Captain[];
     construct: (any) => void;
+    refreshCaptains: (shippingLine: string) => void;
     reload: () => void;
     form: any;
 }
 
 class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
+    changeShippingLine = (shippingLine: string) => {
+        this.props.refreshCaptains(shippingLine);
+    };
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let doors;
-                if (typeof (values.doors) == 'object') {
-                    doors = values.doors.map((item, index) => {
-                        let door = _.split(item, '|');
-                        return { name: door[0], leaf: door[1] };
-                    });
-                }
-                else {
-                    let door = _.split(values.doors, '|');
-                    doors = [{ name: door[0], leaf: door[1] }];
+                if (values.doors && values.doors.length > 0) {
+                    if (typeof (values.doors) == 'object') {
+                        doors = values.doors.map((item, index) => {
+                            let door = _.split(item, '|');
+                            return { name: door[0], leaf: door[1] };
+                        });
+                    }
+                    else {
+                        let door = _.split(values.doors, '|');
+                        doors = [{ name: door[0], leaf: door[1] }];
+                    }
                 }
                 this.props.construct({
                     shippingLine: values.shippingLine,
@@ -53,7 +60,8 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                             {getFieldDecorator('shippingLine', {
                                 rules: [{ required: true, message: 'Please input Shipping Line!' }],
                             })(
-                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
+                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line"
+                                    onChange={this.changeShippingLine} optionFilterProp="children">
                                     {this.props.shippingLines.map((item, index) => {
                                         return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
                                     })}
@@ -94,9 +102,13 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('captain', {
-                                rules: [{ required: true, message: 'Please input captain!' }],
+                                rules: [{ message: 'Please input captain!' }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Captain" />
+                                <Select suffixIcon={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch allowClear placeholder="Captain" optionFilterProp="children">
+                                    {this.props.captains ? this.props.captains.map((item, index) => {
+                                        return <Select.Option key={'captain' + index} value={item.name}>{item.name}</Select.Option>
+                                    }) : null}
+                                </Select>
                             )}
                         </Form.Item>
                     </Col>
@@ -105,7 +117,7 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                             {getFieldDecorator('doors', {
                                 initialValue: 'http|80'
                             })(
-                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Locking Rods">
+                                <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Doors">
                                     <Select.Option value="http|80">http|80</Select.Option>
                                     <Select.Option value="https|443">https|443</Select.Option>
                                 </Select>

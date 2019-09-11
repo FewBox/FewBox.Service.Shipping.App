@@ -291,3 +291,19 @@ export const fillCredentialDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_CREDENTIALDROPDOWNLIST,
     payload: payload
 });
+export const initGateAreaDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_GATEAREADROPDOWNLIST,
+    value: shippingLine
+});
+export const fillGateAreaDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_GATEAREADROPDOWNLIST,
+    payload: payload
+});
+export const initQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_QUAYAREADROPDOWNLIST,
+    value: shippingLine
+});
+export const fillQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_QUAYAREADROPDOWNLIST,
+    payload: payload
+});

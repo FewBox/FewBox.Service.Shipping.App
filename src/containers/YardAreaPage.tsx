@@ -2,17 +2,21 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initYardAreaPage, initShippingLineDropdownList, constructYardArea, demolishYardArea } from '../actions';
-import { YardArea, Store, ShippingLine } from '../reducers/State';
+import { initYardAreaPage, initShippingLineDropdownList, constructYardArea, demolishYardArea, initGateAreaDropdownList, initQuayAreaDropdownList } from '../actions';
+import { YardArea, Store, ShippingLine, GateArea, QuayArea } from '../reducers/State';
 import YardAreaConstruction from '../components/YardAreaConstruction';
 
 export interface IYardAreaPageProps {
     shippingLines: ShippingLine[];
     yardAreas: YardArea[];
+    gateAreas: GateArea[];
+    quayAreas: QuayArea[];
     initYardAreaPage: () => void;
     initShippingLineDropdownList: () => void;
     constructYardArea: (any) => void;
     demolishYardArea: (any) => void;
+    initGateAreaDropdownList: (shippingLine: string) => void;
+    initQuayAreaDropdownList: (shippingLine: string) => void;
 }
 
 class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
@@ -24,7 +28,8 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <YardAreaConstruction shippingLines={this.props.shippingLines} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
+                    <YardAreaConstruction shippingLines={this.props.shippingLines} gateAreas={this.props.gateAreas} quayAreas={this.props.quayAreas}
+                    refreshGateAreas={this.props.initGateAreaDropdownList} refreshQuayAreas={this.props.initQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.yardAreas}
@@ -51,8 +56,8 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
                                                 })}
                                                 {item.guideboards.map((guideboard, index) => {
                                                     return <Descriptions.Item key={'guideboard' + index} label={<FormattedMessage id="Label.GuideboardItem" values={{ key: index }} />}>
-                                                        {guideboard.informations != null ? guideboard.informations.map((information, index) => {
-                                                            return <p key={'information' + index}>{JSON.stringify(information)}</p>
+                                                        {guideboard.targets != null ? guideboard.targets.map((target, index) => {
+                                                            return <p key={'target' + index}>{JSON.stringify(target)}</p>
                                                         }) : null}
                                                         {guideboard.directions.map((direction, index) => {
                                                             return <p key={'direction' + index}>{direction.quayArea} : {direction.crane}</p>
@@ -74,6 +79,8 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
 
 const mapStateToProps = ({ yardAreaPage, masterPage }: Store) => ({
     yardAreas: yardAreaPage.yardAreas,
+    gateAreas: yardAreaPage.gateAreas,
+    quayAreas: yardAreaPage.quayAreas,
     shippingLines: masterPage.shippingLines
 });
 
@@ -81,7 +88,9 @@ const mapDispatchToProps = {
     initYardAreaPage,
     initShippingLineDropdownList,
     constructYardArea,
-    demolishYardArea
+    demolishYardArea,
+    initGateAreaDropdownList,
+    initQuayAreaDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YardAreaPage);

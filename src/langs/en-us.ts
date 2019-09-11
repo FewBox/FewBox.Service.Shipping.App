@@ -85,5 +85,6 @@ export default {
     'Label.AddCredential': 'Add Credential',
     'Label.AddDoor': 'Add Door',
     'Label.DocumentDefinition': 'Definition[{key}]',
-    'Label.AddQuayArea': 'Add QuayArea'
+    'Label.AddQuayArea': 'Add QuayArea',
+    'Label.Target': 'Target'
 }
