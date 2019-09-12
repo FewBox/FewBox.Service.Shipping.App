@@ -15,10 +15,6 @@ export const setValidStatus = (isValid: boolean): IAction<boolean> => ({
     type: ActionTypes.SET_VALIDSTATUS,
     value: isValid
 });
-export const empty = (comment: string): IAction<string> => ({
-    type: ActionTypes.EMPTY,
-    value: comment
-});
 // Auth
 export const signIn = (username, password): IAction<any> => ({
     type: ActionTypes.SIGNIN,

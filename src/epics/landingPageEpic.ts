@@ -1,6 +1,6 @@
 import { ActionsObservable, ofType, StateObservable } from 'redux-observable';
-import { of } from "rxjs";
-import { switchMap, map } from 'rxjs/operators';
+import { of, zip, empty } from "rxjs";
+import { switchMap, map, mergeMap, startWith, endWith } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
@@ -10,12 +10,14 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
     action$.pipe(
         ofType(ActionTypes.INIT_LANDINGPAGE),
         switchMap(() => {
-            //return AjaxObservable({ path: '/api/dashboard', method: 'GET' }, store);
-            return of();
+            return AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' });
         }),
-        map((response: any) => {
-            //return loadLandingPage(response.value.payload);
-            return loadLanding(response.contributors);
+        mergeMap((payload) => {
+            if(payload.type)
+            {
+                return of(payload);
+            }
+            return of(loadLanding(payload));
         })
     );
 

@@ -4,6 +4,7 @@ import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { Store } from '../reducers/State';
 import { changeLanguage, fillShippingLineDropdownList, fillCredentialDropdownList, fillCaptainDropdownList, fillGateAreaDropdownList, fillQuayAreaDropdownList } from '../actions';
+import { of } from 'rxjs';
 
 const changeLanguageEric = (action$: ActionsObservable<any>) =>
     action$.pipe(
@@ -18,17 +19,17 @@ const initShippingLineDropdownListEpic = (action$: ActionsObservable<any>, store
         ofType(ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/shippinglines/fewbox', method: 'GET' },
-                    (payload) => {
-                        return fillShippingLineDropdownList(payload);
-                    });
+                return AjaxObservable({ path: '/api/shippinglines/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/shippinglines', method: 'GET' },
-                    (payload) => {
-                        return fillShippingLineDropdownList(payload);
-                    });
+                return AjaxObservable({ path: '/api/shippinglines', method: 'GET' });
             }
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(fillShippingLineDropdownList(payload));
         })
     );
 
@@ -36,10 +37,13 @@ const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.INIT_CREDENTIALDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/credentials', method: 'GET' },
-                (payload) => {
-                    return fillCredentialDropdownList(payload);
-                });
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/credentials', method: 'GET' });
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(fillCredentialDropdownList(payload));
         })
     );
 
@@ -47,10 +51,13 @@ const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.INIT_CAPTAINDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' },
-                (payload) => {
-                    return fillCaptainDropdownList(payload);
-                });
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' });
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(fillCaptainDropdownList(payload));
         })
     );
 
@@ -58,10 +65,13 @@ const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.INIT_GATEAREADROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' },
-                (payload) => {
-                    return fillGateAreaDropdownList(payload);
-                });
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' });
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(fillGateAreaDropdownList(payload));
         })
     );
 
@@ -69,10 +79,13 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.INIT_QUAYAREADROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' },
-                (payload) => {
-                    return fillQuayAreaDropdownList(payload);
-                });
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(fillQuayAreaDropdownList(payload));
         })
     );
 

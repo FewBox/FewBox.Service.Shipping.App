@@ -3,7 +3,6 @@ const ActionTypes = {
     REDIRECT: 'REDIRECT',
     CLEAR_PATH: 'CLEAR_PATH',
     SET_VALIDSTATUS: 'SET_VALIDSTATUS',
-    EMPTY: 'EMPTY',
     CANCEL: 'CANCEL',
     // Auth
     SIGNIN: 'SIGNIN',

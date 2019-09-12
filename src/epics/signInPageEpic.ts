@@ -1,10 +1,10 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { of } from 'rxjs';
+import { of, empty } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { redirect, empty } from '../actions';
+import { redirect } from '../actions';
 
 const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -12,10 +12,7 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
         mergeMap((action) => {
             //return AjaxObservable({ path: '/api/signin', method: 'POST', body: { username: action.value.username, password: action.value.password } }, store$);
             if(action.value.password == '401' || action.value.password == '403' || action.value.password == '500'){
-                return AjaxObservable({ path: '/status/'+action.value.password, method: 'POST', body: { username: action.value.username, password: action.value.password } }, 
-                (payload)=>{
-                    return null;
-                });
+                return AjaxObservable({ path: '/status/'+action.value.password, method: 'POST', body: { username: action.value.username, password: action.value.password } });
             }
             else if(action.value.password=='200')
             {
@@ -25,6 +22,12 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
             else{
                 return of({ isValid:true, token:'Bearer {token}' });
             }
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return empty();
         })
     );
 
@@ -33,7 +36,7 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
         ofType(ActionTypes.SIGNOUT),
         map(() => {
             window.localStorage.removeItem('token');
-            return empty('Sign Out.');
+            return empty();
         })
     );
 

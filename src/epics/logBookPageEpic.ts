@@ -4,15 +4,19 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadLogBook } from '../actions';
+import { of } from 'rxjs';
 
 const initLogBookPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_LOGBOOK),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/logbook/' + action.value.namespace + '/' + action.value.pod + '/' + action.value.container, method: 'GET' },
-                (payload) => {
-                    return loadLogBook(payload);
-                });
+            return AjaxObservable({ path: '/api/logbook/' + action.value.namespace + '/' + action.value.pod + '/' + action.value.container, method: 'GET' });
+        }),
+        mergeMap((payload) => {
+            if (payload.type) {
+                return of(payload);
+            }
+            return of(loadLogBook(payload));
         })
     );
 
