@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { initCaptainPage, loadCaptain } from '../actions';
-import { of } from 'rxjs';
 
 const initCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initCaptainPageEpic = (action$: ActionsObservable<any>, store$: StateObser
                 return AjaxObservable({ path: '/api/captains', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadCaptain(payload));
+            return loadCaptain(payload);
         })
     );
 
@@ -31,11 +30,11 @@ const trainCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservab
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/captains', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initCaptainPage());
+            return initCaptainPage();
         })
     );
 
@@ -45,11 +44,11 @@ const fireCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservabl
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/captains/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initCaptainPage());
+            return initCaptainPage();
         })
     );
 
@@ -64,11 +63,11 @@ const switchCaptainEpic = (action$: ActionsObservable<any>, store$: StateObserva
                 return AjaxObservable({ path: '/api/captains', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadCaptain(payload));
+            return loadCaptain(payload);
         })
     );
 

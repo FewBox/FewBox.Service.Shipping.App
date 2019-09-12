@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadGateArea, initGateAreaPage } from '../actions';
-import { of } from 'rxjs';
 
 const initGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
                 return AjaxObservable({ path: '/api/gateareas', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadGateArea(payload));
+            return loadGateArea(payload);
         })
     );
 const switchGateAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -35,11 +34,11 @@ const switchGateAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
                 return AjaxObservable({ path: '/api/gateareas', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadGateArea(payload));
+            return loadGateArea(payload);
         })
     );
 const constructGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -48,11 +47,11 @@ const constructGateAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/gateareas', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initGateAreaPage());
+            return initGateAreaPage();
         })
     );
 const demolishGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -61,11 +60,11 @@ const demolishGateAreaPageEpic = (action$: ActionsObservable<any>, store$: State
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/gateareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initGateAreaPage());
+            return initGateAreaPage();
         })
     );
 

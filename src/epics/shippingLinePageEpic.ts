@@ -5,7 +5,6 @@ import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadShippingLine, enableIstioStatus, disableIstioStatus, initShippingLinePage } from '../actions';
 import { IAction } from '../actions/Action';
-import { of } from 'rxjs';
 
 const initShippingLinePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -18,11 +17,11 @@ const initShippingLinePageEpic = (action$: ActionsObservable<any>, store$: State
                 return AjaxObservable({ path: '/api/shippinglines', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadShippingLine(payload));
+            return loadShippingLine(payload);
         })
     );
 
@@ -37,11 +36,11 @@ const switchShippingLinePageEpic = (action$: ActionsObservable<any>, store$: Sta
                 return AjaxObservable({ path: '/api/shippinglines', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadShippingLine(payload));
+            return loadShippingLine(payload);
         })
     );
 
@@ -51,11 +50,11 @@ const startShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action: IAction<any>) => {
             return AjaxObservable({ path: '/api/shippinglines', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShippingLinePage());
+            return initShippingLinePage();
         })
     );
 const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -64,11 +63,11 @@ const closeShippingLineEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/' + action.value, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShippingLinePage());
+            return initShippingLinePage();
         })
     );
 const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -77,11 +76,11 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/merge/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": "enabled" } } } });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(enableIstioStatus(payload));
+            return enableIstioStatus(payload);
         })
     );
 const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -90,11 +89,11 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/merge/' + action.value, method: 'PATCH', body: { metadata: { labels: { "istio-injection": null } } } });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(disableIstioStatus(payload));
+            return disableIstioStatus(payload);
         })
     );
 

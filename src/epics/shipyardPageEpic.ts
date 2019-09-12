@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadShipyard, initShipyardPage, fillCaptainDropdownList, fillCredentialDropdownList } from '../actions';
-import { of } from 'rxjs';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservab
                 return AjaxObservable({ path: '/api/shipyards', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadShipyard(payload));
+            return loadShipyard(payload);
         })
     );
 
@@ -36,11 +35,11 @@ const switchShipyardEpic = (action$: ActionsObservable<any>, store$: StateObserv
                 return AjaxObservable({ path: '/api/shipyards', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadShipyard(payload));
+            return loadShipyard(payload);
         })
     );
 const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -52,11 +51,11 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
             });
             return AjaxObservable({ path: '/api/shipyards/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: operations });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShipyardPage());
+            return initShipyardPage();
         })
     );
 
@@ -66,11 +65,11 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shipyards/oncontainer', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShipyardPage());
+            return initShipyardPage();
         })
     );
 
@@ -80,11 +79,11 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shipyards/merge/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShipyardPage());
+            return initShipyardPage();
         })
     );
 
@@ -94,11 +93,11 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shipyards/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initShipyardPage());
+            return initShipyardPage();
         })
     );
 

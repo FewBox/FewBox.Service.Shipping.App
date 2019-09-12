@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { initYardAreaPage, loadYardArea } from '../actions';
-import { of } from 'rxjs';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
                 return AjaxObservable({ path: '/api/yardareas', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadYardArea(payload));
+            return loadYardArea(payload);
         })
     );
 const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -35,11 +34,11 @@ const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
                 return AjaxObservable({ path: '/api/yardareas', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadYardArea(payload));
+            return loadYardArea(payload);
         })
     );
 const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -48,11 +47,11 @@ const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/yardareas', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initYardAreaPage());
+            return initYardAreaPage();
         })
     );
 const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -61,11 +60,11 @@ const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: State
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/yardareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initYardAreaPage());
+            return initYardAreaPage();
         })
     );
 

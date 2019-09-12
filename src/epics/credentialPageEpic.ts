@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { initCredentialPage, loadCredential } from '../actions';
-import { of } from 'rxjs';
 
 const initCredentialPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initCredentialPageEpic = (action$: ActionsObservable<any>, store$: StateOb
                 return AjaxObservable({ path: '/api/credentials', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadCredential(payload));
+            return loadCredential(payload);
         })
     );
 
@@ -31,11 +30,11 @@ const issueCredentialEpic = (action$: ActionsObservable<any>, store$: StateObser
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/credentials', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initCredentialPage());
+            return initCredentialPage();
         })
     );
 
@@ -45,11 +44,11 @@ const revokeCredentialEpic = (action$: ActionsObservable<any>, store$: StateObse
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/credentials/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initCredentialPage());
+            return initCredentialPage();
         })
     );
 
@@ -64,11 +63,11 @@ const switchCredentialEpic = (action$: ActionsObservable<any>, store$: StateObse
                 return AjaxObservable({ path: '/api/credentials', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadCredential(payload));
+            return loadCredential(payload);
         })
     );
 

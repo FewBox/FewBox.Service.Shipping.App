@@ -1,10 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadContainerShip, initContainerShipPage } from '../actions';
-import { of } from 'rxjs';
 
 const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -17,11 +16,11 @@ const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
                 return AjaxObservable({ path: '/api/containerships', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadContainerShip(payload));
+            return loadContainerShip(payload);
         })
     );
 
@@ -36,11 +35,11 @@ const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateO
                 return AjaxObservable({ path: '/api/containerships', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadContainerShip(payload));
+            return loadContainerShip(payload);
         })
     );
 const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -49,11 +48,11 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/containerships/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initContainerShipPage());
+            return initContainerShipPage();
         })
     );
 const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -62,11 +61,11 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/containerships', method: 'POST', body: action.value });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(initContainerShipPage());
+            return initContainerShipPage();
         })
     );
 

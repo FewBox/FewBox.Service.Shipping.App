@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { Observable, of, empty } from 'rxjs';
 import { ajax, AjaxResponse, AjaxRequest } from 'rxjs/ajax';
-import { beginLoading, endLoading, showMessage, redirect } from '../actions';
+import { showMessage, redirect, beginLoading, endLoading } from '../actions';
 import { IAjaxSetting } from './Fetch';
 import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
 import { map, catchError, retry, startWith, endWith, mergeMap } from 'rxjs/operators';
@@ -23,13 +23,14 @@ const ajaxObservable = (ajaxSetting: IAjaxSetting): Observable<any> => {
     var options = initAjaxSetting(ajaxSetting);
     return ajax(options).pipe(
         map((ajaxResponse: AjaxResponse) => {
-            if (ajaxResponse.response.isSuccessful == false) {
-                return showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: ajaxResponse.response.errorMessage });
+            if (ajaxResponse.response.isSuccessful) {
+                return ajaxResponse.response.payload ? ajaxResponse.response.payload : {};
             }
-            return ajaxResponse.response.payload ? ajaxResponse.response.payload : {};
+            return showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: ajaxResponse.response.errorMessage });
         }),
         retry(3),
         catchError(error => {
+            debugger;
             if (error.status == 401 || error.status == 403) {
                 return of(redirect('/signin'));
             }

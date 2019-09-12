@@ -1,14 +1,14 @@
 import ActionTypes from '../actions/ActionTypes';
 import { IPayloadAction } from '../actions/Action';
-import { LandingPage, Contributor } from './State';
+import { LandingPage } from './State';
 
 const landingState = {
-    contributors: []
+    shippingIndustryStatuses: []
 };
-export default (state: LandingPage = landingState, action: IPayloadAction<Contributor[]>): LandingPage => {
+export default (state: LandingPage = landingState, action: IPayloadAction<any>): LandingPage => {
     switch (action.type) {
         case ActionTypes.LOAD_LANDING:
-            return { ...state, contributors: action.payload };
+            return { ...state, shippingIndustryStatuses: action.payload.shippingIndustryStatuses };
         default:
             return state;
     }

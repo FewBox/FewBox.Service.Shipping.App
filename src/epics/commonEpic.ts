@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { Store } from '../reducers/State';
 import { changeLanguage, fillShippingLineDropdownList, fillCredentialDropdownList, fillCaptainDropdownList, fillGateAreaDropdownList, fillQuayAreaDropdownList } from '../actions';
-import { of } from 'rxjs';
 
 const changeLanguageEric = (action$: ActionsObservable<any>) =>
     action$.pipe(
@@ -25,11 +24,11 @@ const initShippingLineDropdownListEpic = (action$: ActionsObservable<any>, store
                 return AjaxObservable({ path: '/api/shippinglines', method: 'GET' });
             }
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(fillShippingLineDropdownList(payload));
+            return fillShippingLineDropdownList(payload);
         })
     );
 
@@ -39,11 +38,11 @@ const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$:
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/credentials', method: 'GET' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(fillCredentialDropdownList(payload));
+            return fillCredentialDropdownList(payload);
         })
     );
 
@@ -53,11 +52,11 @@ const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(fillCaptainDropdownList(payload));
+            return fillCaptainDropdownList(payload);
         })
     );
 
@@ -67,11 +66,11 @@ const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(fillGateAreaDropdownList(payload));
+            return fillGateAreaDropdownList(payload);
         })
     );
 
@@ -81,11 +80,11 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(fillQuayAreaDropdownList(payload));
+            return fillQuayAreaDropdownList(payload);
         })
     );
 

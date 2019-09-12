@@ -4,7 +4,6 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadCountry } from '../actions';
-import { of } from 'rxjs';
 
 const initCountryPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -12,11 +11,11 @@ const initCountryPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/countries', method: 'GET' });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return of(loadCountry(payload));
+            return loadCountry(payload);
         })
     );
 

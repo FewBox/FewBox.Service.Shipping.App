@@ -45,7 +45,7 @@ export interface MasterPage {
     shippingLines: ShippingLine[];
 }
 export interface LandingPage {
-    contributors: Contributor[];
+    shippingIndustryStatuses: ShippingIndustryStatus[];
 }
 export interface SettingPage {
     lang: string;
@@ -87,9 +87,14 @@ export interface YardAreaPage{
     quayAreas: QuayArea[];
 }
 /** Biz **/
-export interface Contributor {
+export interface ShippingIndustryStatus {
     name: string;
-    avatar: Avatar
+    conditions: Condition[];
+}
+export interface Condition{
+    type: string;
+    status: string;
+    message: string;
 }
 export interface Avatar {
     url: string

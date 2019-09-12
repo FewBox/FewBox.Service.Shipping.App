@@ -4,20 +4,21 @@ import { switchMap, map, mergeMap, startWith, endWith } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadLanding } from '../actions';
+import { loadLanding, beginLoading, endLoading } from '../actions';
 
 const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_LANDINGPAGE),
         switchMap(() => {
-            return AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' });
+            return zip(AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' }), AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' }));
         }),
-        mergeMap((payload) => {
-            if(payload.type)
-            {
-                return of(payload);
+        map((payloads) => {
+            for (var key in payloads) {
+                if (payloads[key].type) {
+                    return payloads[key];
+                }
             }
-            return of(loadLanding(payload));
+            return loadLanding({ shippingIndustryStatuses: payloads[0] });
         })
     );
 
