@@ -24,6 +24,7 @@ const LogBookPage = lazy(() => import('./LogBookPage'));
 const CaptainPage = lazy(() => import('./CaptainPage'));
 const CredentialPage = lazy(() => import('./CredentialPage'));
 const YardAreaPage = lazy(() => import('./YardAreaPage'));
+const StackPolicyPage = lazy(() => import('./StackPolicyPage'));
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
 
@@ -139,6 +140,10 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <FormattedMessage id="Navigation.YardArea" /></Link>
                             </Menu.Item>
                             <Menu.Item key="11">
+                                <Link to='/master/stackpolicy'><BrandIcon />
+                                    <FormattedMessage id="Navigation.StackPolicy" /></Link>
+                            </Menu.Item>
+                            <Menu.Item key="12">
                                 <Link to='/master/about'><Icon type="info-circle" />
                                     <FormattedMessage id="Navigation.About" /></Link>
                             </Menu.Item>
@@ -168,6 +173,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />
                                     <Route path="/master/gatearea" render={props => <GateAreaPage {...props} />} />
                                     <Route path="/master/yardarea" render={props => <YardAreaPage {...props} />} />
+                                    <Route path="/master/stackpolicy" render={props => <StackPolicyPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:namespace/:pod/:container/:command" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />

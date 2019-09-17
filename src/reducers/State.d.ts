@@ -27,6 +27,7 @@ export interface Store {
     captainPage: CaptainPage;
     credentialPage: CredentialPage;
     yardAreaPage: YardAreaPage;
+    stackPolicyPage: StackPolicyPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -81,17 +82,20 @@ export interface CaptainPage {
 export interface CredentialPage {
     credentials: Credential[];
 }
-export interface YardAreaPage{
+export interface YardAreaPage {
     yardAreas: YardArea[];
     gateAreas: GateArea[];
     quayAreas: QuayArea[];
+}
+export interface StackPolicyPage {
+    stackPolicies: StackPolicy[];
 }
 /** Biz **/
 export interface ShippingIndustryStatus {
     name: string;
     conditions: Condition[];
 }
-export interface Condition{
+export interface Condition {
     type: string;
     status: string;
     message: string;
@@ -137,7 +141,8 @@ export interface ContainerShip {
     containers: string[];
     documents: any[];
     documentDefinitions: DocumentDefinition[];
-    description: string;
+    identificationCode: string;
+    numbering: string;
     status: string;
     country: string;
     countryPosition: string;
@@ -149,7 +154,7 @@ export interface Shipyard {
     name: string;
     numbering: string;
     captain: string;
-    description: string;
+    identificationCode: string;
     quantity: number;
     cargos: string[];
     documents: any[];
@@ -188,7 +193,7 @@ export interface Guideboard {
     targets: any[];
     directions: Direction[];
 }
-export interface Direction{
+export interface Direction {
     quayArea: string;
     crane: string;
 }
@@ -213,4 +218,19 @@ export interface DocumentDefinition {
     term: string;
     subTerm: string;
     isWaterMarked: boolean;
+}
+export interface StackPolicy {
+    shippingLine: string;
+    name: string;
+    alias: string;
+    mode: string;
+    subsets: Subset[];
+    age: string;
+}
+export interface Subset {
+    name: string;
+    labels: LabelBag;
+}
+export interface LabelBag {
+    version: string;
 }

@@ -76,6 +76,8 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.IdentificationCode" />}>{item.identificationCode}</Descriptions.Item>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>

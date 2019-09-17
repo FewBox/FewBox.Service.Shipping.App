@@ -32,8 +32,8 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
-                    shippingLines={this.props.shippingLines} captains={this.props.captains} credentials={this.props.credentials}
-                    refreshCaptains={this.props.initCaptainDropdownList} refreshCredentials={this.props.initCredentialDropdownList} />
+                        shippingLines={this.props.shippingLines} captains={this.props.captains} credentials={this.props.credentials}
+                        refreshCaptains={this.props.initCaptainDropdownList} refreshCredentials={this.props.initCredentialDropdownList} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
@@ -47,6 +47,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
+                                                    <Descriptions.Item label={<FormattedMessage id="Label.IdentificationCode" />}>{item.identificationCode}</Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
                                                     <Descriptions.Item label={<FormattedMessage id="Label.Quantity" />}>{item.quantity}</Descriptions.Item>

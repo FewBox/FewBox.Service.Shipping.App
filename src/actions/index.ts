@@ -243,6 +243,25 @@ export const revokeCredential = (dismission): IAction<any> => ({
     value: dismission
 });
 
+export const initStackPolicyPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_STACKPOLICYPAGE
+});
+
+export const loadStackPolicy = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_STACKPOLICY,
+    payload: payload
+});
+
+export const draftStackPolicy = (stackPolicy): IAction<any> => ({
+    type: ActionTypes.DRAFT_STACKPOLICY,
+    value: stackPolicy
+});
+
+export const abolishStackPolicy = (dismission): IAction<any> => ({
+    type: ActionTypes.ABOLISH_STACKPOLICY,
+    value: dismission
+});
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING
