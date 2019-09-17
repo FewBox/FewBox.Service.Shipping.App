@@ -151,7 +151,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList keys='door' itemComponents={(k) =>
+                <DynamicFieldList fieldName='door' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`doorNames[${k}]`, {
@@ -176,7 +176,7 @@ class ShipyardConstruction extends React.PureComponent<IShipyardConstructionProp
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.AddDoor" />} />
-                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`documentNames[${k}]`, {

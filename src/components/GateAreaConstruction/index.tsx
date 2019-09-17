@@ -75,7 +75,7 @@ class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`gateNames[${k}]`, {

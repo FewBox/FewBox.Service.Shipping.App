@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initYardAreaPage, loadYardArea } from '../actions';
+import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaQuayAreaDropdownList } from '../actions';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -67,5 +67,31 @@ const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: State
             return initYardAreaPage();
         })
     );
+const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillYardAreaGateAreaDropdownList(payload);
+        })
+    );
+const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillYardAreaQuayAreaDropdownList(payload);
+        })
+    );
 
-export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic];
+export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic];

@@ -290,35 +290,59 @@ export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
     payload: payload
 });
-export const initCaptainDropdownList = (shippingLine: string): IAction<string> => ({
-    type: ActionTypes.INIT_CAPTAINDROPDOWNLIST,
+export const initContainerShipCaptainDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_CONTAINERSHIPCAPTAINDROPDOWNLIST,
     value: shippingLine
 });
-export const fillCaptainDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_CAPTAINDROPDOWNLIST,
+export const fillContainerShipCaptainDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_CONTAINERSHIPCAPTAINDROPDOWNLIST,
     payload: payload
 });
-export const initCredentialDropdownList = (shippingLine: string): IAction<string> => ({
-    type: ActionTypes.INIT_CREDENTIALDROPDOWNLIST,
+export const initShipyardCaptainDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_SHIPYARDCAPTAINDROPDOWNLIST,
     value: shippingLine
 });
-export const fillCredentialDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_CREDENTIALDROPDOWNLIST,
+export const fillShipyardCaptainDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SHIPYARDCAPTAINDROPDOWNLIST,
     payload: payload
 });
-export const initGateAreaDropdownList = (shippingLine: string): IAction<string> => ({
-    type: ActionTypes.INIT_GATEAREADROPDOWNLIST,
+export const initShipyardCredentialDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_SHIPYARDCREDENTIALDROPDOWNLIST,
     value: shippingLine
 });
-export const fillGateAreaDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_GATEAREADROPDOWNLIST,
+export const fillShipyardCredentialDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SHIPYARDCREDENTIALDROPDOWNLIST,
     payload: payload
 });
-export const initQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
-    type: ActionTypes.INIT_QUAYAREADROPDOWNLIST,
+export const initYardAreaGateAreaDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST,
     value: shippingLine
 });
-export const fillQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_QUAYAREADROPDOWNLIST,
+export const fillYardAreaGateAreaDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST,
+    payload: payload
+});
+export const initStackPolicyQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST,
+    value: shippingLine
+});
+export const fillStackPolicyQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_STACKPOLICYQUAYAREADROPDOWNLIST,
+    payload: payload
+});
+export const initYardAreaQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
+    type: ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST,
+    value: shippingLine
+});
+export const fillYardAreaQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_YARDAREAQUAYAREADROPDOWNLIST,
+    payload: payload
+});
+export const initStackPolicyShipyardDropdownList = (identificationCode: string): IAction<string> => ({
+    type: ActionTypes.INIT_STACKPOLICYSHIPYARDDROPDOWNLIST,
+    value: identificationCode
+});
+export const fillStackPolicyShipyardDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_STACKPOLICYSHIPYARDDROPDOWNLIST,
     payload: payload
 });

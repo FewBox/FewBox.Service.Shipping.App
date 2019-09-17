@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { Store } from '../reducers/State';
-import { changeLanguage, fillShippingLineDropdownList, fillCredentialDropdownList, fillCaptainDropdownList, fillGateAreaDropdownList, fillQuayAreaDropdownList } from '../actions';
+import { changeLanguage, fillShippingLineDropdownList } from '../actions';
 
 const changeLanguageEric = (action$: ActionsObservable<any>) =>
     action$.pipe(
@@ -32,7 +32,7 @@ const initShippingLineDropdownListEpic = (action$: ActionsObservable<any>, store
         })
     );
 
-const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+/*const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_CREDENTIALDROPDOWNLIST),
         mergeMap((action) => {
@@ -87,5 +87,46 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             return fillQuayAreaDropdownList(payload);
         })
     );
+const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_GATEAREADROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillGateAreaDropdownList(payload);
+        })
+    );
 
-export default [changeLanguageEric, initShippingLineDropdownListEpic, initCredentialDropdownListEpic, initCaptainDropdownListEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic];
+const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_QUAYAREADROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillQuayAreaDropdownList(payload);
+        })
+    );
+
+const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_STACKPOLICYSHIPYARDDROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value, method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillShipyardDropdownList(payload);
+        })
+    );*/
+
+export default [changeLanguageEric, initShippingLineDropdownListEpic];

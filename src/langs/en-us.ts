@@ -87,6 +87,11 @@ export default {
     'Label.AddCredential': 'Add Credential',
     'Label.AddDoor': 'Add Door',
     'Label.DocumentDefinition': 'Definition[{key}]',
+    'Label.SubsetItem': 'Subset[{key}]',
     'Label.AddQuayArea': 'Add QuayArea',
-    'Label.Target': 'Target'
+    'Label.Target': 'Target',
+    'Label.Disable': 'Disable',
+    'Label.IstioMutual': 'Istio Mutual',
+    'Label.AddSubset': 'Add Subset',
+    'Label.StackPolicy': 'Stack Policy'
 }

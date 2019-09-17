@@ -88,7 +88,10 @@ export interface YardAreaPage {
     quayAreas: QuayArea[];
 }
 export interface StackPolicyPage {
+    selectedStackPolicy: SelectedStackPolicy;
     stackPolicies: StackPolicy[];
+    quayAreas: QuayArea[];
+    shipyards: Shipyard[];
 }
 /** Biz **/
 export interface ShippingIndustryStatus {
@@ -218,6 +221,10 @@ export interface DocumentDefinition {
     term: string;
     subTerm: string;
     isWaterMarked: boolean;
+}
+export interface SelectedStackPolicy {
+    subsets: Subset[];
+    shipyards: Shipyard[];
 }
 export interface StackPolicy {
     shippingLine: string;

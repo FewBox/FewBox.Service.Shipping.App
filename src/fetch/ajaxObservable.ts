@@ -30,7 +30,6 @@ const ajaxObservable = (ajaxSetting: IAjaxSetting): Observable<any> => {
         }),
         retry(3),
         catchError(error => {
-            debugger;
             if (error.status == 401 || error.status == 403) {
                 return of(redirect('/signin'));
             }

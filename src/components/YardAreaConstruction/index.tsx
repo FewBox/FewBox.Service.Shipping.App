@@ -74,7 +74,7 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList keys='alias' itemComponents={(k) =>
+                <DynamicFieldList fieldName='alias' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`aliases[${k}]`, {
@@ -85,7 +85,7 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Alias" />} />
-                <DynamicFieldList keys='gateArea' itemComponents={(k) =>
+                <DynamicFieldList fieldName='gateArea' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`gateAreas[${k}]`, {
@@ -100,10 +100,10 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.GateArea" />} />
-                <DynamicFieldList keys='guideboard' itemComponents={(k1) =>
+                <DynamicFieldList fieldName='guideboard' itemComponents={(k1) =>
                     [<Col offset={1} span={6} key={1}>
                         <Form.Item>
-                            <DynamicFieldList keys={'target' + k1} itemComponents={(k2) =>
+                            <DynamicFieldList fieldName={'target' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         {getFieldDecorator(`targetTypes[${k1}][${k2}]`, {
@@ -126,7 +126,7 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Target" />} />
-                            <DynamicFieldList keys={'direction' + k1} itemComponents={(k2) =>
+                            <DynamicFieldList fieldName={'direction' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {

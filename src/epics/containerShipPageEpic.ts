@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadContainerShip, initContainerShipPage } from '../actions';
+import { loadContainerShip, initContainerShipPage, fillContainerShipCaptainDropdownList } from '../actions';
 
 const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -68,6 +68,18 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
             return initContainerShipPage();
         })
     );
+const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_CONTAINERSHIPCAPTAINDROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillContainerShipCaptainDropdownList(payload);
+        })
+    );
 
-
-export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, constructContainerShipEpic];
+export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, constructContainerShipEpic, initCaptainDropdownListEpic];

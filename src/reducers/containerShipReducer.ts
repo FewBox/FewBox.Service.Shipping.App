@@ -9,7 +9,7 @@ export default (state: ContainerShipPage = containerShipState, action: any): Con
     switch (action.type) {
         case ActionTypes.LOAD_CONTAINERSHIP:
             return { ...state, containerShips: action.payload };
-        case ActionTypes.FILL_CAPTAINDROPDOWNLIST:
+        case ActionTypes.FILL_CONTAINERSHIPCAPTAINDROPDOWNLIST:
             return { ...state, captains: action.payload };
         default:
             return state;

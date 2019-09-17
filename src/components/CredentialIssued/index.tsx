@@ -65,7 +65,7 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`stampKeys[${k}]`, {

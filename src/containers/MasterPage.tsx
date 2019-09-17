@@ -9,7 +9,6 @@ const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import ShipyardDrawer from '../components/ShipyardDrawer';
 import { hideMessage, signOut, clearPath, switchFewBoxDelivery, hideDrawer, changeContainerShipNumbering } from '../actions';
 const CountryPage = lazy(() => import('./CountryPage'));
 const LandingPage = lazy(() => import('./LandingPage'));
@@ -25,6 +24,8 @@ const CaptainPage = lazy(() => import('./CaptainPage'));
 const CredentialPage = lazy(() => import('./CredentialPage'));
 const YardAreaPage = lazy(() => import('./YardAreaPage'));
 const StackPolicyPage = lazy(() => import('./StackPolicyPage'));
+const StackPolicyDrawer = lazy(() => import('../components/StackPolicyDrawer'));
+const ShipyardDrawer = lazy(() => import('../components/ShipyardDrawer'));
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
 
@@ -45,6 +46,7 @@ export interface IMasterPageProps {
     hideDrawer: () => void;
     switchFewBoxDelivery: (boolean) => void;
     changeContainerShipNumbering: (any) => void;
+    changeStackPolicySubset: (any) => void;
     intl: any;
 }
 
@@ -72,15 +74,19 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Shipyard':
-                    return <ShipyardDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} />
+                    return <Suspense fallback={<Skeleton active />}><ShipyardDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
+                case 'StackPolicy':
+                    return <Suspense fallback={<Skeleton active />}><StackPolicyDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} subsets={this.props.drawer.subsets} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
                 default:
                     return <div></div>
             }
         };
-        let drawerTitle = () =>{
+        let drawerTitle = () => {
             switch (this.props.drawer.type) {
                 case 'Shipyard':
                     return this.props.intl.formatMessage({ id: 'Label.Shipyard' });
+                case 'StackPolicy':
+                    return this.props.intl.formatMessage({ id: 'Label.StackPolicy' });
                 default:
                     return this.props.intl.formatMessage({ id: 'Label.None' });
             }

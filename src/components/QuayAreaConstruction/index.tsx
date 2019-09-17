@@ -87,7 +87,7 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList keys='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             {getFieldDecorator(`berthNames[${k}]`, {

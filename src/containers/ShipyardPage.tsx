@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer, initCaptainDropdownList, initCredentialDropdownList } from '../actions';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer, initShipyardCaptainDropdownList, initShipyardCredentialDropdownList } from '../actions';
 import { Store, Shipyard, ShippingLine, Captain, Credential } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
 
@@ -18,8 +18,8 @@ export interface IShipyardPageProps {
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
     showDrawer: (drawerType: any) => void;
-    initCaptainDropdownList: (shippingLine: string) => void;
-    initCredentialDropdownList: (shippingLine: string) => void;
+    initShipyardCaptainDropdownList: (shippingLine: string) => void;
+    initShipyardCredentialDropdownList: (shippingLine: string) => void;
 }
 
 class ShipyardPage extends React.Component<IShipyardPageProps, any> {
@@ -33,7 +33,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                 <Row gutter={16}>
                     <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
                         shippingLines={this.props.shippingLines} captains={this.props.captains} credentials={this.props.credentials}
-                        refreshCaptains={this.props.initCaptainDropdownList} refreshCredentials={this.props.initCredentialDropdownList} />
+                        refreshCaptains={this.props.initShipyardCaptainDropdownList} refreshCredentials={this.props.initShipyardCredentialDropdownList} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
@@ -105,8 +105,8 @@ const mapDispatchToProps = {
     scaleContainerShipQuantity,
     scrapContainerShip,
     showDrawer,
-    initCaptainDropdownList,
-    initCredentialDropdownList
+    initShipyardCaptainDropdownList,
+    initShipyardCredentialDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShipyardPage);

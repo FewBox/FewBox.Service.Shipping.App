@@ -10,9 +10,9 @@ export default (state: YardAreaPage = yardAreaState, action: any): YardAreaPage 
     switch (action.type) {
         case ActionTypes.LOAD_YARDAREA:
             return { ...state, yardAreas: action.payload };
-        case ActionTypes.FILL_GATEAREADROPDOWNLIST:
+        case ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST:
             return { ...state, gateAreas: action.payload };
-            case ActionTypes.FILL_QUAYAREADROPDOWNLIST:
+        case ActionTypes.FILL_YARDAREAQUAYAREADROPDOWNLIST:
             return { ...state, quayAreas: action.payload };
         default:
             return state;

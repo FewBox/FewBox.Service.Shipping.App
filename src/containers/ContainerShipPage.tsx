@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer, initCaptainDropdownList } from '../actions';
+import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initShippingLineDropdownList, showDrawer, initContainerShipCaptainDropdownList } from '../actions';
 import { Store, ContainerShip, ShippingLine, Captain } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/ShipBuilding';
@@ -18,7 +18,7 @@ export interface IContainerShipPageProps {
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
     constructTemporaryContainerShip: (any) => void;
-    initCaptainDropdownList: (shippingLine: string) => void;
+    initContainerShipCaptainDropdownList: (shippingLine: string) => void;
 }
 
 class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
@@ -31,7 +31,7 @@ class ContainerShipPage extends React.Component<IContainerShipPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ShipBuilding construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage}
-                    captains={this.props.captains} refreshCaptains={this.props.initCaptainDropdownList} shippingLines={this.props.shippingLines} />
+                    captains={this.props.captains} refreshCaptains={this.props.initContainerShipCaptainDropdownList} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
@@ -131,7 +131,7 @@ const mapDispatchToProps = {
     sinkContainerShip,
     constructTemporaryContainerShip,
     showDrawer,
-    initCaptainDropdownList
+    initContainerShipCaptainDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerShipPage);
