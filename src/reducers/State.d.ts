@@ -51,6 +51,7 @@ export interface LandingPage {
 export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
+    isHelp: boolean;
 }
 export interface CountryPage {
     countries: Country[];

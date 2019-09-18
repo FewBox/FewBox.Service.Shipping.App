@@ -100,6 +100,11 @@ export const switchFewBoxDelivery = (isFewBox): IAction<boolean> => ({
     value: isFewBox
 });
 
+export const switchHelp = (isHelp): IAction<boolean> => ({
+    type: ActionTypes.SWITCH_HELP,
+    value: isHelp
+});
+
 export const constructContainerShip = (designBill): IAction<any> => ({
     type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
     value: designBill

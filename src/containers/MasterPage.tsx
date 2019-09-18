@@ -9,7 +9,7 @@ const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery, hideDrawer, changeContainerShipNumbering, changeStackPolicySubset } from '../actions';
+import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changeContainerShipNumbering, changeStackPolicySubset } from '../actions';
 const CountryPage = lazy(() => import('./CountryPage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -28,6 +28,7 @@ const StackPolicyDrawer = lazy(() => import('../components/StackPolicyDrawer'));
 const ShipyardDrawer = lazy(() => import('../components/ShipyardDrawer'));
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
+import Help from '../components/Help';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -42,9 +43,11 @@ export interface IMasterPageProps {
     isDrawerVisible: boolean;
     drawer: any;
     isFewBoxDelivery: boolean;
+    isHelp: boolean;
     hideMessage: () => void;
     hideDrawer: () => void;
-    switchFewBoxDelivery: (boolean) => void;
+    switchFewBoxDelivery: (isFewBox: boolean) => void;
+    switchHelp: (isHelp: boolean) => void;
     changeContainerShipNumbering: (any) => void;
     changeStackPolicySubset: (any) => void;
     intl: any;
@@ -69,6 +72,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
             <Menu>
                 <Menu.Item>
                     <Link to="/" onClick={this.props.signOut} ><FormattedMessage id="Label.SignOut" /></Link>
+                </Menu.Item>
+                <Menu.Item>
+                    <ANTD_Switch checkedChildren={<Icon type="question-circle" />} checked={this.props.isHelp} unCheckedChildren={<Icon type="question-circle" />} defaultChecked onChange={(isHelp) => { this.props.switchHelp(isHelp); }} />
                 </Menu.Item>
             </Menu>
         );
@@ -112,43 +118,53 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to='/master/country'><CountryIcon />
-                                    <FormattedMessage id="Navigation.Country" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Node" />}>
+                                        <FormattedMessage id="Navigation.Country" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <Link to='/master/shippingline'><ShippingLineIcon />
-                                    <FormattedMessage id="Navigation.ShippingLine" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
+                                        <FormattedMessage id="Navigation.ShippingLine" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Link to='/master/captain'><CaptainIcon />
-                                    <FormattedMessage id="Navigation.Captain" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceAccount" />}>
+                                        <FormattedMessage id="Navigation.Captain" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="5">
                                 <Link to='/master/credential'><CredentialIcon />
-                                    <FormattedMessage id="Navigation.Credential" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
+                                        <FormattedMessage id="Navigation.Credential" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="6">
                                 <Link to='/master/quayarea'><QuayAreaIcon />
-                                    <FormattedMessage id="Navigation.QuayArea" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Service" />}>
+                                        <FormattedMessage id="Navigation.QuayArea" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <Link to='/master/shipyard'><ShipyardIcon />
-                                    <FormattedMessage id="Navigation.Shipyard" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Deployment" />}>
+                                        <FormattedMessage id="Navigation.Shipyard" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="8">
                                 <Link to='/master/containership'><ContainerShipIcon />
-                                    <FormattedMessage id="Navigation.ContainerShip" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
+                                        <FormattedMessage id="Navigation.ContainerShip" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="9">
                                 <Link to='/master/gatearea'><GateAreaIcon />
-                                    <FormattedMessage id="Navigation.GateArea" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Gateway" />}>
+                                        <FormattedMessage id="Navigation.GateArea" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="10">
                                 <Link to='/master/yardarea'><BrandIcon />
-                                    <FormattedMessage id="Navigation.YardArea" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.VirtualService" />}>
+                                        <FormattedMessage id="Navigation.YardArea" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="11">
                                 <Link to='/master/stackpolicy'><BrandIcon />
-                                    <FormattedMessage id="Navigation.StackPolicy" /></Link>
+                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.DestinationRule" />}>
+                                        <FormattedMessage id="Navigation.StackPolicy" /></Help></Link>
                             </Menu.Item>
                             <Menu.Item key="12">
                                 <Link to='/master/about'><Icon type="info-circle" />
@@ -159,7 +175,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     <Layout>
                         <Header style={{ background: '#fff', padding: 0 }}>
                             <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
-                            <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<FormattedMessage id='Label.All' />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxDelivery(isFewBox); }} />
+                            <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<BrandIcon />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxDelivery(isFewBox); }} />
                             <Dropdown overlay={menu}>
                                 <a className="ant-dropdown-link" href="#" style={{ float: 'right', marginRight: '20px' }}>
                                     <Avatar icon="user" style={{ marginRight: '5px' }} />
@@ -207,7 +223,8 @@ const mapStateToProps = ({ masterPage, settingPage, stackPolicyPage }: Store) =>
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
     selectedStackPolicy: stackPolicyPage.selectedStackPolicy,
-    isFewBoxDelivery: settingPage.isFewBoxDelivery
+    isFewBoxDelivery: settingPage.isFewBoxDelivery,
+    isHelp: settingPage.isHelp
 })
 
 const mapDispatchToProps = {
@@ -215,6 +232,7 @@ const mapDispatchToProps = {
     signOut,
     clearPath,
     switchFewBoxDelivery,
+    switchHelp,
     hideDrawer,
     changeContainerShipNumbering,
     changeStackPolicySubset

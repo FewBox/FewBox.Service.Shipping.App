@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse } from 'antd';
 import { initCountryPage } from '../actions';
 import { Store, Country } from '../reducers/State';
+import Help from '../components/Help';
 
 export interface ICountryPageProps {
     countries: Country[];
+    isHelp: boolean;
     initCountryPage: () => void;
 }
 
@@ -28,8 +30,8 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered layout="vertical">
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Alias" />}>{item.alias}</Descriptions.Item>
+                                                <Descriptions.Item label={<Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.IP" />}><FormattedMessage id="Label.Position" /></Help>}>{item.position}</Descriptions.Item>
+                                                <Descriptions.Item label={<Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Host" />}><FormattedMessage id="Label.Alias" /></Help>}>{item.alias}</Descriptions.Item>
                                                 <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
@@ -68,8 +70,9 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ countryPage }: Store) => ({
-    countries: countryPage.countries
+const mapStateToProps = ({ countryPage, settingPage }: Store) => ({
+    countries: countryPage.countries,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
