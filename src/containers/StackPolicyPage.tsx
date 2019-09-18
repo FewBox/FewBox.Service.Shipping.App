@@ -2,7 +2,9 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initStackPolicyPage, initShippingLineDropdownList, draftStackPolicy, abolishStackPolicy, initStackPolicyQuayAreaDropdownList, initStackPolicyShipyardDropdownList, showDrawer } from '../actions';
+import { initStackPolicyPage, initShippingLineDropdownList, draftStackPolicy, abolishStackPolicy, initStackPolicyQuayAreaDropdownList, initStackPolicyShipyardDropdownList,
+    showDrawer, selectStackPolicy
+} from '../actions';
 import { StackPolicy, Store, ShippingLine, GateArea, QuayArea, Shipyard } from '../reducers/State';
 import StackPolicyDraft from '../components/StackPolicyDraft';
 
@@ -18,6 +20,7 @@ export interface IStackPolicyPageProps {
     abolishStackPolicy: (any) => void;
     initStackPolicyQuayAreaDropdownList: (shippingLine: string) => void;
     initStackPolicyShipyardDropdownList: (identificationCode: string) => void;
+    selectStackPolicy: (shippingLine: string, name: string) => void;
 }
 
 class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
@@ -39,7 +42,7 @@ class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.abolishStackPolicy({ shippingLine: item.shippingLine, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
-                                    <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'StackPolicy', shippingLine: item.shippingLine, name: item.name, subsets: item.subsets, shipyards: this.props.shipyards })} />]}>
+                                    <Icon type="ellipsis" onClick={() => { this.props.selectStackPolicy(item.shippingLine, item.name); this.props.showDrawer({ type: 'StackPolicy', shippingLine: item.shippingLine, name: item.name, subsets: item.subsets, shipyards: this.props.shipyards }); }} />]}>
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
@@ -79,7 +82,8 @@ const mapDispatchToProps = {
     abolishStackPolicy,
     initStackPolicyQuayAreaDropdownList,
     initStackPolicyShipyardDropdownList,
-    showDrawer
+    showDrawer,
+    selectStackPolicy
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StackPolicyPage);

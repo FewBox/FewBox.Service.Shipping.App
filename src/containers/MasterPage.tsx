@@ -3,13 +3,13 @@ import { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Store } from '../reducers/State';
+import { Store, SelectedStackPolicy } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery, hideDrawer, changeContainerShipNumbering } from '../actions';
+import { hideMessage, signOut, clearPath, switchFewBoxDelivery, hideDrawer, changeContainerShipNumbering, changeStackPolicySubset } from '../actions';
 const CountryPage = lazy(() => import('./CountryPage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -48,6 +48,7 @@ export interface IMasterPageProps {
     changeContainerShipNumbering: (any) => void;
     changeStackPolicySubset: (any) => void;
     intl: any;
+    selectedStackPolicy: SelectedStackPolicy;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -76,7 +77,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 case 'Shipyard':
                     return <Suspense fallback={<Skeleton active />}><ShipyardDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
                 case 'StackPolicy':
-                    return <Suspense fallback={<Skeleton active />}><StackPolicyDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} subsets={this.props.drawer.subsets} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><StackPolicyDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} selectedStackPolicy={this.props.selectedStackPolicy} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
                 default:
                     return <div></div>
             }
@@ -195,7 +196,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, stackPolicyPage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -205,6 +206,7 @@ const mapStateToProps = ({ masterPage, settingPage }: Store) => ({
     isDrawerVisible: masterPage.isDrawerVisible,
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
+    selectedStackPolicy: stackPolicyPage.selectedStackPolicy,
     isFewBoxDelivery: settingPage.isFewBoxDelivery
 })
 
@@ -214,7 +216,8 @@ const mapDispatchToProps = {
     clearPath,
     switchFewBoxDelivery,
     hideDrawer,
-    changeContainerShipNumbering
+    changeContainerShipNumbering,
+    changeStackPolicySubset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));

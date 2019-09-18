@@ -1,9 +1,10 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map } from 'rxjs/operators';
+import { zip } from 'rxjs';
+import { mergeMap, map, switchMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initStackPolicyPage, loadStackPolicy, fillStackPolicyQuayAreaDropdownList, fillStackPolicyShipyardDropdownList } from '../actions';
+import { initStackPolicyPage, loadStackPolicy, fillStackPolicyQuayAreaDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
 
 const initStackPolicyPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -67,6 +68,19 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
             return initStackPolicyPage();
         })
     );
+const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.CHANGE_STACKPOLICYSUBSET),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return initStackPolicyPage();
+        })
+    );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST),
@@ -93,5 +107,21 @@ const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             return fillStackPolicyShipyardDropdownList(payload);
         })
     );
+const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SELECT_STACKPOLICY),
+        switchMap((action) => {
+            return zip(AjaxObservable({ path: '/api/shippinglines/' + action.value.shippingLine + '/stackpolicies/' + action.value.name, method: 'GET' }),
+                AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value.name, method: 'GET' }));
+        }),
+        map((payloads) => {
+            for (var key in payloads) {
+                if (payloads[key].type) {
+                    return payloads[key];
+                }
+            }
+            return fillSelectedStackPolicyShipyardDropdownList({ subsets: payloads[0].subsets, shipyards: payloads[1] });
+        })
+    );
 
-export default [initStackPolicyPageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic];
+export default [initStackPolicyPageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];

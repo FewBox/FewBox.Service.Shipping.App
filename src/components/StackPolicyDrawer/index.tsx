@@ -3,12 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { CargoIcon, ShippingLineIcon } from '../Icon';
-import { Subset, Shipyard } from '../../reducers/State';
+import { Subset, SelectedStackPolicy } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IStackPolicyDrawerProps {
-    subsets: Subset[];
-    shipyards: Shipyard[];
+    selectedStackPolicy: SelectedStackPolicy;
     shippingLine: string;
     name: string;
     changeStackPolicySubset: (any) => void;
@@ -20,17 +19,19 @@ class StackPolicyDrawer extends React.PureComponent<IStackPolicyDrawerProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.changeStackPolicySubset({ shippingLine: this.props.shippingLine, name: this.props.name, subsets: values.subsets });
+                let subsets = values.subsets.map((subset, index) => {
+                    return { "labels": { "version": subset }, "name": subset };
+                });
+                this.props.changeStackPolicySubset({ shippingLine: this.props.shippingLine, name: this.props.name, subsets: subsets });
             }
         });
     };
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        debugger;
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    <DynamicFieldList fieldName='subset' initialItems={this.props.subsets} itemComponents={(k, i: Subset) =>
+                    <DynamicFieldList fieldName='subset' initialItems={this.props.selectedStackPolicy.subsets} itemComponents={(k, i: Subset) =>
                         [<Col span={6} key={1}>
                             <Form.Item>
                                 {getFieldDecorator(`subsets[${k}]`, {
@@ -38,7 +39,7 @@ class StackPolicyDrawer extends React.PureComponent<IStackPolicyDrawerProps> {
                                     initialValue: i ? i.name : null
                                 })(
                                     <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.shipyards ? this.props.shipyards.map((item, index) => {
+                                        {this.props.selectedStackPolicy.shipyards ? this.props.selectedStackPolicy.shipyards.map((item, index) => {
                                             return <Select.Option key={'numbering' + index} value={item.numbering}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>

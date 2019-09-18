@@ -1,7 +1,8 @@
 import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
-import { /*DrawerType*/ } from '../reducers/State';
+import { SelectedStackPolicy } from '../reducers/State';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 // Common
 export const redirect = (path: string): IAction<string> => ({
@@ -262,6 +263,11 @@ export const abolishStackPolicy = (dismission): IAction<any> => ({
     value: dismission
 });
 
+export const changeStackPolicySubset = (subsets): IAction<any> => ({
+    type: ActionTypes.CHANGE_STACKPOLICYSUBSET,
+    value: subsets
+});
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING
@@ -344,5 +350,13 @@ export const initStackPolicyShipyardDropdownList = (identificationCode: string):
 });
 export const fillStackPolicyShipyardDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_STACKPOLICYSHIPYARDDROPDOWNLIST,
+    payload: payload
+});
+export const selectStackPolicy = (shippingLine: string, name: string): IAction<any> => ({
+    type: ActionTypes.SELECT_STACKPOLICY,
+    value: { shippingLine: shippingLine, name: name }
+});
+export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedStackPolicy): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTEDSTACKPOLICY,
     payload: payload
 });
