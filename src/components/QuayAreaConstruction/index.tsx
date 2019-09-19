@@ -7,6 +7,7 @@ import { autobind } from 'core-decorators';
 import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, BrandIcon, } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import { Spec } from '../GateAreaConstruction';
+import HelpComponent from '../HelpComponent';
 
 export interface IQuayAreaConstructionProps {
     specs: Spec[];
@@ -14,6 +15,7 @@ export interface IQuayAreaConstructionProps {
     construct: (string) => void;
     reload: () => void;
     form: any;
+    isHelp: boolean;
 }
 
 class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProps> {
@@ -39,15 +41,17 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('shippingLine', {
-                                rules: [{ required: true, message: 'Please input Shipping Line!' }],
-                            })(
-                                <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.shippingLines.map((item, index) => {
-                                        return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
+                                {getFieldDecorator('shippingLine', {
+                                    rules: [{ required: true, message: 'Please input Shipping Line!' }],
+                                })(
+                                    <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.shippingLines.map((item, index) => {
+                                            return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -61,15 +65,17 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('containerShipAgreementType', {
-                                rules: [{ required: true, message: 'Please input fixed bitt type!' }],
-                                initialValue: 0
-                            })(
-                                <Select showSearch placeholder="ContainerShip Agreement Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    <Select.Option value={0}><FormattedMessage id='Label.Rent' /></Select.Option>
-                                    <Select.Option value={1}><FormattedMessage id='Label.Own' /></Select.Option>
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.SessionAffinity" />}>
+                                {getFieldDecorator('containerShipAgreementType', {
+                                    rules: [{ required: true, message: 'Please input fixed bitt type!' }],
+                                    initialValue: 0
+                                })(
+                                    <Select showSearch placeholder="ContainerShip Agreement Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        <Select.Option value={0}><FormattedMessage id='Label.Rent' /></Select.Option>
+                                        <Select.Option value={1}><FormattedMessage id='Label.Own' /></Select.Option>
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={3}>
@@ -90,29 +96,35 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                 <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`berthNames[${k}]`, {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
-                            })(
-                                <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.PortName" />}>
+                                {getFieldDecorator(`berthNames[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
+                                })(
+                                    <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={3} key={2}>
                         <Form.Item >
-                            {getFieldDecorator(`berthCranes[${k}]`, {
-                                rules: [{ required: true, message: 'Please input crane!' }],
-                            })(
-                                <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Port" />}>
+                                {getFieldDecorator(`berthCranes[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input crane!' }],
+                                })(
+                                    <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={3} key={3}>
                         <Form.Item >
-                            {getFieldDecorator(`berthCellGuides[${k}]`, {
-                                rules: [{ required: true, message: 'Please input cell guide!' }],
-                            })(
-                                <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.TargetPort" />}>
+                                {getFieldDecorator(`berthCellGuides[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input cell guide!' }],
+                                })(
+                                    <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.AddQuayArea" />} />

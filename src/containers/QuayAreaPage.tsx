@@ -6,6 +6,7 @@ import { initQuayAreaPage, demolishQuayArea, constructQuayArea, initShippingLine
 import { QuayArea, Store, ShippingLine } from '../reducers/State';
 import QuayAreaConstruction from '../components/QuayAreaConstruction';
 import { Specification } from '../jsons';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
 export interface IQuayAreaPageProps {
@@ -15,6 +16,7 @@ export interface IQuayAreaPageProps {
     initQuayAreaPage: () => void;
     constructQuayArea: (any) => void;
     demolishQuayArea: (any) => void;
+    isHelp: boolean;
 }
 
 class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
@@ -26,7 +28,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <QuayAreaConstruction construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage}
+                    <QuayAreaConstruction isHelp={this.props.isHelp} construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage}
                         specs={Specification} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
@@ -40,18 +42,18 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipSpec" />}>{item.containerShipSpec}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Position" />}>{item.position}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.ContainerShipAgreementType" />}>{item.containerShipAgreementType}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerShipSpec" helpId="Help.PodSelector" />}>{item.containerShipSpec}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Position" helpId="Help.ClusterIP" />}>{item.position}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerShipAgreementType" helpId="Help.SessionAffinity" />}>{item.containerShipAgreementType}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.berthes.map((berth, index) => {
-                                                    return <Descriptions.Item key={'berth' + index} label={<FormattedMessage id="Label.BerthItem" values={{ key: berth.name }} />}>{berth.crane}=>{berth.cellGuide}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'berth' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.BerthItem" helpId="Help.Port" values={{ key: berth.name }} />}>{berth.crane}=>{berth.cellGuide}</Descriptions.Item>
                                                 })}
                                             </Descriptions>
                                         </Collapse.Panel>
@@ -66,9 +68,10 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ quayAreaPage, masterPage }: Store) => ({
+const mapStateToProps = ({ quayAreaPage, masterPage, settingPage }: Store) => ({
     quayAreas: quayAreaPage.quayAreas,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
