@@ -6,6 +6,7 @@ import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descripti
 import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initShippingLineDropdownList, showDrawer, initShipyardCaptainDropdownList, initShipyardCredentialDropdownList } from '../actions';
 import { Store, Shipyard, ShippingLine, Captain, Credential } from '../reducers/State';
 import ShipyardConstruction from '../components/ShipyardConstruction';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IShipyardPageProps {
     shipyards: Shipyard[];
@@ -20,6 +21,7 @@ export interface IShipyardPageProps {
     showDrawer: (drawerType: any) => void;
     initShipyardCaptainDropdownList: (shippingLine: string) => void;
     initShipyardCredentialDropdownList: (shippingLine: string) => void;
+    isHelp: boolean;
 }
 
 class ShipyardPage extends React.Component<IShipyardPageProps, any> {
@@ -47,32 +49,32 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.IdentificationCode" />}>{item.identificationCode}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Quantity" />}>{item.quantity}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Captain" />}>{item.captain}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IdentificationCode" helpId="Help.App" />}>{item.identificationCode}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Numbering" helpId="Help.Version" />}>{item.numbering}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Quantity" helpId="Help.Replica" />}>{item.quantity}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Captain" helpId="Help.ServiceAccout" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {item.cargos.map((cargo, index) => {
-                                                        return <Descriptions.Item key={'cargo' + index} label={<FormattedMessage id="Label.CargoItem" values={{ key: index + 1 }} />}>
+                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CargoItem" helpId="Help.Image" values={{ key: index + 1 }} />}>
                                                             <Popover title={<FormattedMessage id="Label.CargoItem" values={{ key: index + 1 }} />} trigger="click" content={cargo}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.documents.map((document, index) => {
-                                                        return <Descriptions.Item key={'document' + index} label={<FormattedMessage id="Label.DocumentItem" values={{ key: document.name }} />}>
+                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage  isHelp={this.props.isHelp} id="Label.DocumentItem" helpId="Help.Volume" values={{ key: document.name }} />}>
                                                             <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.documentDefinitions.map((documentDefinition, index) => {
-                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<FormattedMessage id="Label.DocumentDefinition" values={{ key: documentDefinition.name }} />} />}>
+                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DocumentDefinition" helpId="Help.VolumeMount" values={{ key: documentDefinition.name }} />} />}>
                                                             <p>{documentDefinition.term}</p>
                                                             <p>{documentDefinition.subTerm}</p>
                                                         </Descriptions.Item>
@@ -91,11 +93,12 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ shipyardPage, masterPage }: Store) => ({
+const mapStateToProps = ({ shipyardPage, masterPage, settingPage }: Store) => ({
     shipyards: shipyardPage.shipyards,
     captains: shipyardPage.captains,
     credentials: shipyardPage.credentials,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
