@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Button } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { FormattedMessage } from 'react-intl';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IAboutPageProps {
 }

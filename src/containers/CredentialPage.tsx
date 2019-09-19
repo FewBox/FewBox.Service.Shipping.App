@@ -5,6 +5,7 @@ import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, D
 import { initShippingLineDropdownList, initCredentialPage, issueCredential, revokeCredential } from '../actions';
 import CredentialIssued from '../components/CredentialIssued';
 import { Store, Credential, ShippingLine } from '../reducers/State';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface ICredentialPageProps {
     shippingLines: ShippingLine[];
@@ -13,6 +14,7 @@ export interface ICredentialPageProps {
     issueCredential: (any) => void;
     revokeCredential: (any) => void;
     initShippingLineDropdownList: () => void;
+    isHelp: boolean;
 }
 
 class CredentialPage extends React.Component<ICredentialPageProps, any> {
@@ -24,7 +26,7 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <CredentialIssued issue={this.props.issueCredential} reload={this.props.initCredentialPage} shippingLines={this.props.shippingLines} />
+                    <CredentialIssued isHelp={this.props.isHelp} issue={this.props.issueCredential} reload={this.props.initCredentialPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.credentials}
@@ -38,15 +40,15 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Type" />}>{item.type}</Descriptions.Item>
-                                                    <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {Object.keys(item.stamps).map((key, index) => {
-                                                        return <Descriptions.Item key={'stamp' + index} label={<FormattedMessage id="Label.StampItem" values={{ key: key }} />}>
+                                                        return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.StampItem" helpId="Help.Data" />}>
                                                             <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
@@ -66,9 +68,10 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ credentialPage, masterPage }: Store) => ({
+const mapStateToProps = ({ credentialPage, masterPage, settingPage }: Store) => ({
     credentials: credentialPage.credentials,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {

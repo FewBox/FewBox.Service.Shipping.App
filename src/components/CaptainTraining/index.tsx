@@ -1,14 +1,17 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { CaptainIcon, ShippingLineIcon } from '../Icon';
 import { ShippingLine } from '../../reducers/State';
+import HelpComponent from '../HelpComponent';
 
 export interface ICaptainTrainingProps {
     shippingLines: ShippingLine[];
     train: (string) => void;
     reload: () => void;
     form: any;
+    isHelp: boolean;
 }
 
 class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
@@ -30,11 +33,11 @@ class CaptainTraining extends React.PureComponent<ICaptainTrainingProps> {
                             {getFieldDecorator('shippingLine', {
                                 rules: [{ required: true, message: 'Please input Shipping Line!' }],
                             })(
-                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}><Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
                                     {this.props.shippingLines.map((item, index) => {
                                         return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
                                     })}
-                                </Select>
+                                </Select></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>

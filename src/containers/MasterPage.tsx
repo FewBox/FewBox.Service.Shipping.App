@@ -28,7 +28,7 @@ const StackPolicyDrawer = lazy(() => import('../components/StackPolicyDrawer'));
 const ShipyardDrawer = lazy(() => import('../components/ShipyardDrawer'));
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
-import Help from '../components/Help';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -118,53 +118,43 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <Link to='/master/country'><CountryIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Node" />}>
-                                        <FormattedMessage id="Navigation.Country" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.Country" helpId="Help.Node" /></Link>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <Link to='/master/shippingline'><ShippingLineIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
-                                        <FormattedMessage id="Navigation.ShippingLine" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.ShippingLine" helpId="Help.Namespace" /></Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Link to='/master/captain'><CaptainIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceAccount" />}>
-                                        <FormattedMessage id="Navigation.Captain" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.Captain" helpId="Help.ServiceAccount" /></Link>
                             </Menu.Item>
                             <Menu.Item key="5">
                                 <Link to='/master/credential'><CredentialIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                        <FormattedMessage id="Navigation.Credential" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.Credential" helpId="Help.Secret" /></Link>
                             </Menu.Item>
                             <Menu.Item key="6">
                                 <Link to='/master/quayarea'><QuayAreaIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Service" />}>
-                                        <FormattedMessage id="Navigation.QuayArea" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.QuayArea" helpId="Help.Secret" /></Link>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <Link to='/master/shipyard'><ShipyardIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Deployment" />}>
-                                        <FormattedMessage id="Navigation.Shipyard" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.Shipyard" helpId="Help.Deployment" /></Link>
                             </Menu.Item>
                             <Menu.Item key="8">
                                 <Link to='/master/containership'><ContainerShipIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
-                                        <FormattedMessage id="Navigation.ContainerShip" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.ContainerShip" helpId="Help.Pod" /></Link>
                             </Menu.Item>
                             <Menu.Item key="9">
                                 <Link to='/master/gatearea'><GateAreaIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Gateway" />}>
-                                        <FormattedMessage id="Navigation.GateArea" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.GateArea" helpId="Help.Gateway" /></Link>
                             </Menu.Item>
                             <Menu.Item key="10">
                                 <Link to='/master/yardarea'><BrandIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.VirtualService" />}>
-                                        <FormattedMessage id="Navigation.YardArea" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.YardArea" helpId="Help.VirtualService" /></Link>
                             </Menu.Item>
                             <Menu.Item key="11">
                                 <Link to='/master/stackpolicy'><BrandIcon />
-                                    <Help isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.DestinationRule" />}>
-                                        <FormattedMessage id="Navigation.StackPolicy" /></Help></Link>
+                                    <HelpFormattedMessage isHelp={this.props.isHelp} id="Navigation.StackPolicy" helpId="Help.DestinationRule" /></Link>
                             </Menu.Item>
                             <Menu.Item key="12">
                                 <Link to='/master/about'><Icon type="info-circle" />

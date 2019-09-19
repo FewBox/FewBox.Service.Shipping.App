@@ -5,6 +5,7 @@ import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, D
 import { initShippingLineDropdownList, initCaptainPage, trainCaptain, fireCaptain } from '../actions';
 import CaptainTraining from '../components/CaptainTraining';
 import { Store, Captain, ShippingLine } from '../reducers/State';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface ICaptainPageProps {
     shippingLines: ShippingLine[];
@@ -13,6 +14,7 @@ export interface ICaptainPageProps {
     trainCaptain: (any) => void;
     fireCaptain: (any) => void;
     initShippingLineDropdownList: () => void;
+    isHelp: boolean;
 }
 
 class CaptainPage extends React.Component<ICaptainPageProps, any> {
@@ -24,7 +26,7 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <CaptainTraining train={this.props.trainCaptain} reload={this.props.initCaptainPage} shippingLines={this.props.shippingLines} />
+                    <CaptainTraining isHelp={this.props.isHelp} train={this.props.trainCaptain} reload={this.props.initCaptainPage} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.captains}
@@ -36,11 +38,11 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
                                         <Descriptions size='small' column={1} bordered>
-                                            <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
                                             {item.credentials.map((credential, index) => {
-                                                return <Descriptions.Item key={'credential' + index} label={<FormattedMessage id="Label.CredentialItem" values={{ key: index }} />}>{credential.name}</Descriptions.Item>
+                                                return <Descriptions.Item key={'credential' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CredentialItem" helpId="Help.Secret" />}>}>{credential.name}</Descriptions.Item>
                                             })}
-                                            <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>>{item.age}</Descriptions.Item>
                                         </Descriptions>
                                     } />
                                 </Card>
@@ -53,9 +55,10 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ captainPage, masterPage }: Store) => ({
+const mapStateToProps = ({ captainPage, masterPage, settingPage }: Store) => ({
     captains: captainPage.captains,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {

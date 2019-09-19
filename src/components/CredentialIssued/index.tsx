@@ -7,12 +7,14 @@ import { CaptainIcon, ShippingLineIcon } from '../Icon';
 import { ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
 import DynamicFieldList from '../DynamicFieldList';
+import HelpComponent from '../HelpComponent';
 
 export interface ICredentialIssuedProps {
     shippingLines: ShippingLine[];
     issue: (string) => void;
     reload: () => void;
     form: any;
+    isHelp: boolean;
 }
 
 class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
@@ -38,11 +40,12 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             {getFieldDecorator('shippingLine', {
                                 rules: [{ required: true, message: 'Please input Shipping Line!' }],
                             })(
-                                <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
-                                    {this.props.shippingLines.map((item, index) => {
-                                        return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
+                                    <Select suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Shipping Line" optionFilterProp="children">
+                                        {this.props.shippingLines.map((item, index) => {
+                                            return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
+                                        })}
+                                    </Select></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>
@@ -60,7 +63,8 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             {getFieldDecorator('type', {
                                 rules: [{ required: true, message: 'Please input type!' }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" />
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Type" />}>
+                                    <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" /></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>
@@ -71,7 +75,8 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             {getFieldDecorator(`stampKeys[${k}]`, {
                                 rules: [{ required: true, message: 'Please input key!' }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
+                                    <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" /></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>,
@@ -80,7 +85,8 @@ class CredentialIssued extends React.PureComponent<ICredentialIssuedProps> {
                             {getFieldDecorator(`stampContents[${k}]`, {
                                 rules: [{ required: true, message: 'Please input content!' }],
                             })(
-                                <Input.TextArea rows={4} placeholder="Content" />
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
+                                    <Input.TextArea rows={4} placeholder="Content" /></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>
