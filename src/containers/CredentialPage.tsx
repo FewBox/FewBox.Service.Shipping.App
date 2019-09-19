@@ -40,15 +40,15 @@ class CredentialPage extends React.Component<ICredentialPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {Object.keys(item.stamps).map((key, index) => {
-                                                        return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.StampItem" helpId="Help.Data" />}>
+                                                        return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.StampItem" helpId="Help.Data" values={{key: key}} />}>
                                                             <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>

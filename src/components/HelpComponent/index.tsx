@@ -9,10 +9,18 @@ export interface IHelpComponentProps {
 
 export default class HelpComponent extends React.PureComponent<IHelpComponentProps> {
     public render() {
-        return (
-            <Tooltip placement="topLeft" title={this.props.helpContent} >
-                {this.props.children}
-            </Tooltip>
-        );
+        if (this.props.isHelp) {
+            return (
+                <Tooltip placement="topLeft" title={this.props.helpContent} >
+                    {this.props.children}
+                </Tooltip>
+            );
+        } else {
+            return (
+                <Tooltip placement="topLeft" title={this.props.helpContent} visible={false} >
+                    {this.props.children}
+                </Tooltip>
+            );
+        }
     }
 }
