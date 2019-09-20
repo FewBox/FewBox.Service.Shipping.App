@@ -49,6 +49,8 @@ export default {
     'Help.Protocol': 'Protocol',
     'Help.Match': 'Match',
     'Help.Uri': 'Uri',
+    'Help.Subset': 'Subset',
+    'Help.TLSMode': 'TLS Mode',
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',

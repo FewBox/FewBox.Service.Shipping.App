@@ -6,6 +6,7 @@ import { StackPolicy, ShippingLine, QuayArea, Shipyard } from '../../reducers/St
 import { ShippingLineIcon } from '../Icon';
 import { BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
+import HelpComponent from '../HelpComponent';
 
 export interface IStackPolicyDraftProps {
     stackPolicys: StackPolicy[];
@@ -17,6 +18,7 @@ export interface IStackPolicyDraftProps {
     draft: (any) => void;
     reload: () => void;
     form: any;
+    isHelp: boolean;
 }
 
 class StackPolicyDraft extends React.PureComponent<IStackPolicyDraftProps> {
@@ -44,15 +46,17 @@ class StackPolicyDraft extends React.PureComponent<IStackPolicyDraftProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('shippingLine', {
-                                rules: [{ required: true, message: 'Please input Shipping Line!' }],
-                            })(
-                                <Select showSearch onChange={this.changeShippingLine} placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.shippingLines.map((item, index) => {
-                                        return <Select.Option key={'shippingLine' + index} value={item.name}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Namespace' />}>
+                                {getFieldDecorator('shippingLine', {
+                                    rules: [{ required: true, message: 'Please input Shipping Line!' }],
+                                })(
+                                    <Select showSearch onChange={this.changeShippingLine} placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.shippingLines.map((item, index) => {
+                                            return <Select.Option key={'shippingLine' + index} value={item.name}>{item.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -66,43 +70,49 @@ class StackPolicyDraft extends React.PureComponent<IStackPolicyDraftProps> {
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('alias', {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
-                            })(
-                                <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
-                                        return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
-                                    }) : null}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
+                                {getFieldDecorator('alias', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
+                                })(
+                                    <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
+                                            return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
+                                        }) : null}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('trafficPolicyMode', {
-                                rules: [{ required: true, message: 'Please input traffic policy mode!' }],
-                                initialValue: 0
-                            })(
-                                <Select showSearch placeholder="Traffic Policy Mode" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    <Select.Option value={0}><FormattedMessage id='Label.IstioMutual' /></Select.Option>
-                                    <Select.Option value={1}><FormattedMessage id='Label.Disable' /></Select.Option>
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.TLSMode' />}>
+                                {getFieldDecorator('trafficPolicyMode', {
+                                    rules: [{ required: true, message: 'Please input traffic policy mode!' }],
+                                    initialValue: 0
+                                })(
+                                    <Select showSearch placeholder="Traffic Policy Mode" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        <Select.Option value={0}><FormattedMessage id='Label.IstioMutual' /></Select.Option>
+                                        <Select.Option value={1}><FormattedMessage id='Label.Disable' /></Select.Option>
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                 </Row>
                 <DynamicFieldList fieldName='subset' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`subsets[${k}]`, {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.NumberingRequired' /> }],
-                            })(
-                                <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.shipyards ? this.props.shipyards.map((item, index) => {
-                                        return <Select.Option key={'subset' + index} value={item.numbering}>{item.name}</Select.Option>
-                                    }) : null}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
+                                {getFieldDecorator(`subsets[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.NumberingRequired' /> }],
+                                })(
+                                    <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.shipyards ? this.props.shipyards.map((item, index) => {
+                                            return <Select.Option key={'subset' + index} value={item.numbering}>{item.name}</Select.Option>
+                                        }) : null}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.AddSubset" />} />

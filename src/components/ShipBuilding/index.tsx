@@ -172,6 +172,10 @@ class ShipBuilding extends React.PureComponent<IShipBuildingProps> {
                             })(
                                 <Switch checkedChildren={<SleepIcon />} unCheckedChildren={<SleepIcon />} />
                             )}
+                        </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                        <Form.Item>
                             {getFieldDecorator('isIstioInjected', {
                                 initialValue: true
                             })(

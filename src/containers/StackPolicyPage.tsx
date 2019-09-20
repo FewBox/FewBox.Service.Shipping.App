@@ -7,6 +7,7 @@ import { initStackPolicyPage, initShippingLineDropdownList, draftStackPolicy, ab
 } from '../actions';
 import { StackPolicy, Store, ShippingLine, GateArea, QuayArea, Shipyard } from '../reducers/State';
 import StackPolicyDraft from '../components/StackPolicyDraft';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IStackPolicyPageProps {
     shippingLines: ShippingLine[];
@@ -21,6 +22,7 @@ export interface IStackPolicyPageProps {
     initStackPolicyQuayAreaDropdownList: (shippingLine: string) => void;
     initStackPolicyShipyardDropdownList: (identificationCode: string) => void;
     selectStackPolicy: (shippingLine: string, name: string) => void;
+    isHelp: boolean;
 }
 
 class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
@@ -32,7 +34,7 @@ class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <StackPolicyDraft shippingLines={this.props.shippingLines} quayAreas={this.props.quayAreas} refreshQuayAreas={this.props.initStackPolicyQuayAreaDropdownList}
+                    <StackPolicyDraft isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} quayAreas={this.props.quayAreas} refreshQuayAreas={this.props.initStackPolicyQuayAreaDropdownList}
                         shipyards={this.props.shipyards} refreshShipyards={this.props.initStackPolicyShipyardDropdownList} reload={this.props.initStackPolicyPage} draft={this.props.draftStackPolicy} />
                 </Row>
                 <Row gutter={16}>
@@ -46,14 +48,14 @@ class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.subsets.map((subset, index) => {
-                                                    return <Descriptions.Item key={'subset' + index} label={<FormattedMessage id="Label.SubsetItem" values={{ key: index }} />}>{subset.name}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'subset' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.SubsetItem" values={{ key: index }} />}>{subset.name}</Descriptions.Item>
                                                 })}
                                             </Descriptions>
                                         </Collapse.Panel>
@@ -68,11 +70,12 @@ class StackPolicyPage extends React.Component<IStackPolicyPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ stackPolicyPage, masterPage }: Store) => ({
+const mapStateToProps = ({ stackPolicyPage, masterPage, settingPage }: Store) => ({
     stackPolicies: stackPolicyPage.stackPolicies,
     quayAreas: stackPolicyPage.quayAreas,
     shipyards: stackPolicyPage.shipyards,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
