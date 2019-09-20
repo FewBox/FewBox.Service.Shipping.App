@@ -8,13 +8,14 @@ export interface IHelpFormattedMessageProps {
     id: string;
     intl: any;
     values?: any;
+    helpValues?: any;
 }
 
 class HelpFormattedMessage extends React.PureComponent<IHelpFormattedMessageProps> {
     public render() {
         if (this.props.isHelp) {
-            return (<Tooltip placement="topLeft" title={<FormattedMessage id={this.props.helpId} values={this.props.values} />} >
-                <span>{this.props.intl.formatMessage({ id: this.props.id })}</span>
+            return (<Tooltip placement="topLeft" title={<FormattedMessage id={this.props.helpId} values={this.props.helpValues} />} >
+                <span>{this.props.intl.formatMessage({ id: this.props.id }, this.props.values)}</span>
             </Tooltip>);
         }
         else {

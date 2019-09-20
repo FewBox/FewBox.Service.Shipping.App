@@ -6,6 +6,7 @@ import { initGateAreaPage, initShippingLineDropdownList, constructGateArea, demo
 import { GateArea, Store, ShippingLine } from '../reducers/State';
 import GateAreaConstruction from '../components/GateAreaConstruction';
 import { Specification } from '../jsons';
+import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
 export interface IGateAreaPageProps {
@@ -15,6 +16,7 @@ export interface IGateAreaPageProps {
     initShippingLineDropdownList: () => void;
     constructGateArea: (any) => void;
     demolishGateArea: (any) => void;
+    isHelp: boolean;
 }
 
 class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
@@ -26,7 +28,7 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <GateAreaConstruction shippingLines={this.props.shippingLines} specs={Specification}
+                    <GateAreaConstruction isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} specs={Specification}
                         reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
                 </Row>
                 <Row gutter={16}>
@@ -40,8 +42,8 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
-                                                <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.ShippingLine" />}>{item.shippingLine}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
@@ -57,9 +59,10 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ gateAreaPage, masterPage }: Store) => ({
+const mapStateToProps = ({ gateAreaPage, masterPage, settingPage }: Store) => ({
     gateAreas: gateAreaPage.gateAreas,
-    shippingLines: masterPage.shippingLines
+    shippingLines: masterPage.shippingLines,
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {

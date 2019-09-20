@@ -5,6 +5,7 @@ import { Form, Row, Col, Select, Input, Button } from 'antd';
 import { ShippingLine, GateArea, QuayArea } from '../../reducers/State';
 import { ShippingLineIcon, BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
+import HelpComponent from '../HelpComponent';
 
 export interface IYardAreaConstructionProps {
     shippingLines: ShippingLine[];
@@ -15,6 +16,7 @@ export interface IYardAreaConstructionProps {
     construct: (string) => void;
     reload: () => void;
     form: any;
+    isHelp: boolean;
 }
 
 class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProps> {
@@ -26,7 +28,6 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
                 let data = values;
                 let guideboards = values.guideboard.map((guideboard, index) => {
                     let targets = data.targets[index].map((target, targetIndex) => {
@@ -42,7 +43,7 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                     });
                     return { targets: targets, directions: directions };
                 });
-                this.props.construct({shippingLine: values.shippingLine, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards});
+                this.props.construct({ shippingLine: values.shippingLine, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
             }
         });
     };
@@ -53,15 +54,17 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('shippingLine', {
-                                rules: [{ required: true, message: 'Please input Shipping Line!' }],
-                            })(
-                                <Select showSearch onChange={this.changeShippingLine} placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.shippingLines.map((item, index) => {
-                                        return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Namespace' />}>
+                                {getFieldDecorator('shippingLine', {
+                                    rules: [{ required: true, message: 'Please input Shipping Line!' }],
+                                })(
+                                    <Select showSearch onChange={this.changeShippingLine} placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.shippingLines.map((item, index) => {
+                                            return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -77,26 +80,30 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                 <DynamicFieldList fieldName='alias' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`aliases[${k}]`, {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
-                            })(
-                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Alias" />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
+                                {getFieldDecorator(`aliases[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
+                                })(
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Alias" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Alias" />} />
                 <DynamicFieldList fieldName='gateArea' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`gateAreas[${k}]`, {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.GateAreaRequired' /> }],
-                            })(
-                                <Select showSearch placeholder="GateArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.gateAreas ? this.props.gateAreas.map((item, index) => {
-                                        return <Select.Option key={'gateArea' + index} value={item.name}>{item.name}</Select.Option>
-                                    }) : null}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
+                                {getFieldDecorator(`gateAreas[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.GateAreaRequired' /> }],
+                                })(
+                                    <Select showSearch placeholder="GateArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.gateAreas ? this.props.gateAreas.map((item, index) => {
+                                            return <Select.Option key={'gateArea' + index} value={item.name}>{item.name}</Select.Option>
+                                        }) : null}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.GateArea" />} />
@@ -106,47 +113,55 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                             <DynamicFieldList fieldName={'target' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
-                                        {getFieldDecorator(`targetTypes[${k1}][${k2}]`, {
-                                            rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
-                                        })(
-                                            <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                <Select.Option value='exact'><FormattedMessage id='Label.Address' /></Select.Option>
-                                                <Select.Option value='prefix'><FormattedMessage id='Label.Area' /></Select.Option>
-                                            </Select>
-                                        )}
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
+                                            {getFieldDecorator(`targetTypes[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
+                                            })(
+                                                <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                    <Select.Option value='exact'><FormattedMessage id='Label.Address' /></Select.Option>
+                                                    <Select.Option value='prefix'><FormattedMessage id='Label.Area' /></Select.Option>
+                                                </Select>
+                                            )}
+                                        </HelpComponent>
                                     </Form.Item>
                                 </Col>,
                                 <Col key={2}>
                                     <Form.Item>
-                                        {getFieldDecorator(`targets[${k1}][${k2}]`, {
-                                            rules: [{ required: true, message: <FormattedMessage id='Message.InformationRequired' /> }],
-                                        })(
-                                            <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Information" />
-                                        )}
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Uri' />}>
+                                            {getFieldDecorator(`targets[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.InformationRequired' /> }],
+                                            })(
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Information" />
+                                            )}
+                                        </HelpComponent>
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Target" />} />
                             <DynamicFieldList fieldName={'direction' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
-                                        {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {
-                                            rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
-                                        })(
-                                            <Select showSearch placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
-                                                    return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
-                                                }) : null}
-                                            </Select>
-                                        )}
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
+                                            {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
+                                            })(
+                                                <Select showSearch placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                    {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
+                                                        return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
+                                                    }) : null}
+                                                </Select>
+                                            )}
+                                        </HelpComponent>
                                     </Form.Item>
                                 </Col>,
                                 <Col key={2}>
                                     <Form.Item>
-                                        {getFieldDecorator(`directionCranes[${k1}][${k2}]`, {
-                                            rules: [{ required: true, message: <FormattedMessage id='Message.CraneRequired' /> }],
-                                        })(
-                                            <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
-                                        )}
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
+                                            {getFieldDecorator(`directionCranes[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.CraneRequired' /> }],
+                                            })(
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                                            )}
+                                        </HelpComponent>
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Crane" />} />

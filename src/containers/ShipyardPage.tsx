@@ -33,7 +33,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipyardConstruction construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
+                    <ShipyardConstruction isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
                         shippingLines={this.props.shippingLines} captains={this.props.captains} credentials={this.props.credentials}
                         refreshCaptains={this.props.initShipyardCaptainDropdownList} refreshCredentials={this.props.initShipyardCredentialDropdownList} />
                 </Row>
@@ -53,7 +53,7 @@ class ShipyardPage extends React.Component<IShipyardPageProps, any> {
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Numbering" helpId="Help.Version" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Quantity" helpId="Help.Replica" />}>{item.quantity}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Captain" helpId="Help.ServiceAccout" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Captain" helpId="Help.ServiceAccount" />}>{item.captain}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>

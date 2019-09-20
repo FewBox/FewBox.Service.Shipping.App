@@ -23,7 +23,7 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
                 <Card>
                   <p>{item.name}</p>
                   {item.conditions.map((condition, index) => {
-                    return <p><Badge color={condition.status === 'True' ? 'green' : 'red'} text={condition.status} /></p>
+                    return <p key={'condition' + index}><Badge color={condition.status === 'True' ? 'green' : 'red'} text={condition.status} /></p>
                   })}
                 </Card>
               </List.Item>

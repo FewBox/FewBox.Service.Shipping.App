@@ -37,15 +37,15 @@ class CountryPage extends React.Component<ICountryPageProps, any> {
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered layout="vertical">
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.CIDR" />}>{item.containerShipPositionZone}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.CPU" />}>{item.allocatableHorsepower}/{item.horsepower}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.HardDisk" />}>{item.allocatableDisplacement}/{item.displacement}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Memory" />}>{item.allocatableCube}/{item.cube}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Pods" />}>{item.tonnage}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.OS" />}>{item.government}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Runtime" />}>{item.constitution}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Kubelet" />}>{item.industry}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.KubeProxy" />}>{item.transportation}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerShipPositionZone" helpId="Help.CIDR" />}>{item.containerShipPositionZone}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Horsepower" helpId="Help.CPU" />}>{item.allocatableHorsepower}/{item.horsepower}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Displacement" helpId="Help.HardDisk" />}>{item.allocatableDisplacement}/{item.displacement}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Cube" helpId="Help.Memory" />}>{item.allocatableCube}/{item.cube}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Tonnage" helpId="Help.Pods" />}>{item.tonnage}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Government" helpId="Help.OS" />}>{item.government}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Constitution" helpId="Help.Runtime" />}>{item.constitution}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Industry" helpId="Help.Kubelet" />}>{item.industry}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Transportation" helpId="Help.KubeProxy" />}>{item.transportation}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Cargos" helpId="Help.Image" />} key='3'>

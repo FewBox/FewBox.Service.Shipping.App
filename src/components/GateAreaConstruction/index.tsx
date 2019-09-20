@@ -6,6 +6,7 @@ import { ShippingLine } from '../../reducers/State';
 import { autobind } from 'core-decorators';
 import { ShippingLineIcon, GateAreaIcon, WarehouseIcon, GateIcon, NumberingIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
+import HelpComponent from '../HelpComponent';
 
 export interface Spec {
     name: string;
@@ -21,6 +22,7 @@ export interface IGateAreaConstructionProps {
     reload: () => void;
     form: any;
     intl: any;
+    isHelp: boolean;
 }
 
 class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProps> {
@@ -54,15 +56,17 @@ class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProp
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('shippingLine', {
-                                rules: [{ required: true, message: 'Please input Shipping Line!' }],
-                            })(
-                                <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.shippingLines.map((item, index) => {
-                                        return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Namespace' />}>
+                                {getFieldDecorator('shippingLine', {
+                                    rules: [{ required: true, message: 'Please input Shipping Line!' }],
+                                })(
+                                    <Select showSearch placeholder="Shipping Line" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.shippingLines.map((item, index) => {
+                                            return <Select.Option key={'shippingline' + index} value={item.name}>{item.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -75,49 +79,57 @@ class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='gate' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`gateNames[${k}]`, {
-                                rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
-                            })(
-                                <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gate' })} />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Server' />}>
+                                {getFieldDecorator(`gateNames[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
+                                })(
+                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gate' })} />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={3} key={2}>
                         <Form.Item >
-                            {getFieldDecorator(`gateNumberings[${k}]`, {
-                                rules: [{ required: true, message: 'Please input numbering!' }],
-                            })(
-                                <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
+                                {getFieldDecorator(`gateNumberings[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input numbering!' }],
+                                })(
+                                    <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={3} key={3}>
                         <Form.Item>
-                            {getFieldDecorator(`gateSpecifications[${k}]`, {
-                                rules: [{ required: true, message: 'Please input Specification!' }],
-                                initialValue: 'http'
-                            })(
-                                <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.specs.map((item, index) => {
-                                        return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
-                                    })}
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Protocol' />}>
+                                {getFieldDecorator(`gateSpecifications[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input Specification!' }],
+                                    initialValue: 'http'
+                                })(
+                                    <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.specs.map((item, index) => {
+                                            return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
+                                        })}
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={3} key={4}>
                         <Form.Item>
-                            {getFieldDecorator(`gateWarehouses[${k}]`, {
-                                rules: [{ required: true, message: 'Please input warehouses!' }],
-                                initialValue: '*'
-                            })(
-                                <Select suffixIcon={<WarehouseIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
-                                    <Select.Option value="*">*</Select.Option>
-                                </Select>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
+                                {getFieldDecorator(`gateWarehouses[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input warehouses!' }],
+                                    initialValue: '*'
+                                })(
+                                    <Select suffixIcon={<WarehouseIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
+                                        <Select.Option value="*">*</Select.Option>
+                                    </Select>
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     ]

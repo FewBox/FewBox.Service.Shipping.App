@@ -40,7 +40,7 @@ class CaptainPage extends React.Component<ICaptainPageProps, any> {
                                         <Descriptions size='small' column={1} bordered>
                                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ShippingLine" helpId="Help.Namespace" />}>{item.shippingLine}</Descriptions.Item>
                                             {item.credentials.map((credential, index) => {
-                                                return <Descriptions.Item key={'credential' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CredentialItem" helpId="Help.Secret" />}>}>{credential.name}</Descriptions.Item>
+                                                return <Descriptions.Item key={'credential' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CredentialItem" helpId="Help.Secret" values={{ key: index }} />}>{credential.name}</Descriptions.Item>
                                             })}
                                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>>{item.age}</Descriptions.Item>
                                         </Descriptions>
