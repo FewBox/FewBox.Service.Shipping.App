@@ -2,8 +2,8 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initYardAreaPage, initShippingLineDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaQuayAreaDropdownList } from '../actions';
-import { YardArea, Store, ShippingLine, GateArea, QuayArea } from '../reducers/State';
+import { initYardAreaPage, initShippingLineDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaQuayAreaDropdownList, initYardAreaShipyardDropdownList } from '../actions';
+import { YardArea, Store, ShippingLine, GateArea, QuayArea, Shipyard } from '../reducers/State';
 import YardAreaConstruction from '../components/YardAreaConstruction';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
@@ -12,12 +12,14 @@ export interface IYardAreaPageProps {
     yardAreas: YardArea[];
     gateAreas: GateArea[];
     quayAreas: QuayArea[];
+    shipyards: Shipyard[];
     initYardAreaPage: () => void;
     initShippingLineDropdownList: () => void;
     constructYardArea: (any) => void;
     demolishYardArea: (any) => void;
     initYardAreaGateAreaDropdownList: (shippingLine: string) => void;
     initYardAreaQuayAreaDropdownList: (shippingLine: string) => void;
+    initYardAreaShipyardDropdownList: (identificationCode: string) => void;
     isHelp: boolean;
 }
 
@@ -31,7 +33,8 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <YardAreaConstruction isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} gateAreas={this.props.gateAreas} quayAreas={this.props.quayAreas}
-                    refreshGateAreas={this.props.initYardAreaGateAreaDropdownList} refreshQuayAreas={this.props.initYardAreaQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
+                        shipyards={this.props.shipyards} refreshShipyards={this.props.initYardAreaShipyardDropdownList}
+                        refreshGateAreas={this.props.initYardAreaGateAreaDropdownList} refreshQuayAreas={this.props.initYardAreaQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.yardAreas}
@@ -62,7 +65,7 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
                                                             return <p key={'target' + index}>{JSON.stringify(target)}</p>
                                                         }) : null}
                                                         {guideboard.directions.map((direction, index) => {
-                                                            return <p key={'direction' + index}>{direction.quayArea} : {direction.crane}</p>
+                                                            return <p key={'direction' + index}>{direction.quayArea} : {direction.crane ? direction.crane : direction.numbering}</p>
                                                         })}
                                                     </Descriptions.Item>
                                                 })}
@@ -83,6 +86,7 @@ const mapStateToProps = ({ yardAreaPage, masterPage, settingPage }: Store) => ({
     yardAreas: yardAreaPage.yardAreas,
     gateAreas: yardAreaPage.gateAreas,
     quayAreas: yardAreaPage.quayAreas,
+    shipyards: yardAreaPage.shipyards,
     shippingLines: masterPage.shippingLines,
     isHelp: settingPage
 });
@@ -93,7 +97,8 @@ const mapDispatchToProps = {
     constructYardArea,
     demolishYardArea,
     initYardAreaGateAreaDropdownList,
-    initYardAreaQuayAreaDropdownList
+    initYardAreaQuayAreaDropdownList,
+    initYardAreaShipyardDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(YardAreaPage);

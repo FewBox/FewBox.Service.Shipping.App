@@ -384,3 +384,11 @@ export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedSta
     type: ActionTypes.FILL_SELECTEDSTACKPOLICY,
     payload: payload
 });
+export const initYardAreaShipyardDropdownList = (identificationCode: string): IAction<string> => ({
+    type: ActionTypes.INIT_YARDAREASHIPYARDDROPDOWNLIST,
+    value: identificationCode
+});
+export const fillYardAreaShipyardDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_YARDAREASHIPYARDDROPDOWNLIST,
+    payload: payload
+});

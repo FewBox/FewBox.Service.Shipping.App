@@ -88,6 +88,7 @@ export interface YardAreaPage {
     yardAreas: YardArea[];
     gateAreas: GateArea[];
     quayAreas: QuayArea[];
+    shipyards: Shipyard[];
 }
 export interface StackPolicyPage {
     selectedStackPolicy: SelectedStackPolicy;
@@ -204,6 +205,7 @@ export interface Guideboard {
 export interface Direction {
     quayArea: string;
     crane: string;
+    numbering: string;
 }
 export interface LogBook {
     content: string;

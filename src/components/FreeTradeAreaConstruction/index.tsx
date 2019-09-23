@@ -83,8 +83,9 @@ class FreeTradeAreaConstruction extends React.PureComponent<IFreeTradeAreaConstr
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Resolution' />}>
                                 {getFieldDecorator('resolution', {
                                     rules: [{ required: false, message: 'Please input Resolution!' }],
+                                    initialValue: 'DNS'
                                 })(
-                                    <Select showSearch placeholder="Resolution" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select showSearch allowClear placeholder="Resolution" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.resolutions.map((item, index) => {
                                             return <Select.Option key={'resolution' + index} value={item.value}>{item.name}</Select.Option>
                                         })}

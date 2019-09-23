@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaQuayAreaDropdownList } from '../actions';
+import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaQuayAreaDropdownList, fillYardAreaShipyardDropdownList } from '../actions';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -93,5 +93,18 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             return fillYardAreaQuayAreaDropdownList(payload);
         })
     );
+const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_YARDAREASHIPYARDDROPDOWNLIST),
+        mergeMap((action) => {
+            return AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value, method: 'GET' });
+        }),
+        map((payload) => {
+            if (payload.type) {
+                return payload;
+            }
+            return fillYardAreaShipyardDropdownList(payload);
+        })
+    );
 
-export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic];
+export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic];

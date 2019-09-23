@@ -4,7 +4,8 @@ import { YardAreaPage } from './State';
 const yardAreaState = {
     yardAreas: [],
     gateAreas: [],
-    quayAreas: []
+    quayAreas: [],
+    shipyards: []
 };
 export default (state: YardAreaPage = yardAreaState, action: any): YardAreaPage => {
     switch (action.type) {
@@ -14,6 +15,8 @@ export default (state: YardAreaPage = yardAreaState, action: any): YardAreaPage 
             return { ...state, gateAreas: action.payload };
         case ActionTypes.FILL_YARDAREAQUAYAREADROPDOWNLIST:
             return { ...state, quayAreas: action.payload };
+            case ActionTypes.FILL_YARDAREASHIPYARDDROPDOWNLIST:
+                    return { ...state, shipyards: action.payload };
         default:
             return state;
     }

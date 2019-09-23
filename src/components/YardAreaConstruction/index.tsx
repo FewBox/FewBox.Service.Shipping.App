@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Select, Input, Button } from 'antd';
-import { ShippingLine, GateArea, QuayArea } from '../../reducers/State';
+import { ShippingLine, GateArea, QuayArea, Shipyard } from '../../reducers/State';
 import { ShippingLineIcon, BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -11,8 +11,10 @@ export interface IYardAreaConstructionProps {
     shippingLines: ShippingLine[];
     gateAreas: GateArea[];
     quayAreas: QuayArea[];
+    shipyards: Shipyard[];
     refreshGateAreas: (shippingLine: string) => void;
     refreshQuayAreas: (shippingLine: string) => void;
+    refreshShipyards: (identificationCode: string) => void;
     construct: (string) => void;
     reload: () => void;
     form: any;
@@ -24,23 +26,26 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
         this.props.refreshGateAreas(shippingLine);
         this.props.refreshQuayAreas(shippingLine);
     };
+    changeShipyard = (identificationCode: string) => {
+        this.props.refreshShipyards(identificationCode);
+    };
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let data = values;
                 let guideboards = values.guideboard.map((guideboard, index) => {
-                    let targets = data.targets[index].map((target, targetIndex) => {
+                    let targets = data.targets ? data.targets[index].map((target, targetIndex) => {
                         if (data.targetTypes[index][targetIndex] === 'exact') {
                             return { exact: target };
                         }
                         else if (data.targetTypes[index][targetIndex] === 'prefix') {
                             return { prefix: target };
                         }
-                    });
-                    let directions = data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
-                        return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex] };
-                    });
+                    }) : null;;
+                    let directions = data.directionQuayAreas ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
+                        return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.directionNumberings[index][directionQuayAreaIndex] };
+                    }) : null;
                     return { targets: targets, directions: directions };
                 });
                 this.props.construct({ shippingLine: values.shippingLine, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
@@ -144,7 +149,7 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                             {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
                                             })(
-                                                <Select showSearch placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
                                                         return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
                                                     }) : null}
@@ -157,9 +162,24 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
                                             {getFieldDecorator(`directionCranes[${k1}][${k2}]`, {
-                                                rules: [{ required: true, message: <FormattedMessage id='Message.CraneRequired' /> }],
+                                                rules: [{ required: false, message: <FormattedMessage id='Message.CraneRequired' /> }],
                                             })(
                                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                                            )}
+                                        </HelpComponent>
+                                    </Form.Item>
+                                </Col>,
+                                <Col key={3}>
+                                    <Form.Item>
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Deployment' />}>
+                                            {getFieldDecorator(`directionNumberings[${k1}][${k2}]`, {
+                                                rules: [{ required: false, message: <FormattedMessage id='Message.ShipyardRequired' /> }],
+                                            })(
+                                                <Select showSearch placeholder="Shipyard" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                    {this.props.shipyards ? this.props.shipyards.map((item, index) => {
+                                                        return <Select.Option key={'shipyard' + index} value={item.numbering}>{item.name}</Select.Option>
+                                                    }) : null}
+                                                </Select>
                                             )}
                                         </HelpComponent>
                                     </Form.Item>
