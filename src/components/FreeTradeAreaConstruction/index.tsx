@@ -67,7 +67,7 @@ class FreeTradeAreaConstruction extends React.PureComponent<IFreeTradeAreaConstr
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Location' />}>
                                 {getFieldDecorator('location', {
                                     rules: [{ required: true, message: 'Please input Location!' }],
-                                    initialValue: 'mesh_external'
+                                    initialValue: 'MESH_EXTERNAL'
                                 })(
                                     <Select showSearch placeholder="Location" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.locations.map((item, index) => {
@@ -150,7 +150,7 @@ class FreeTradeAreaConstruction extends React.PureComponent<IFreeTradeAreaConstr
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Protocol' />}>
                                 {getFieldDecorator(`passProtocols[${k}]`, {
                                     rules: [{ required: true, message: 'Please input Protocol!' }],
-                                    initialValue: 'http'
+                                    initialValue: 'HTTP'
                                 })(
                                     <Select showSearch placeholder="Protocol" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.protocols.map((item, index) => {
