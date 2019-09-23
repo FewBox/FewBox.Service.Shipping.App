@@ -1,3 +1,5 @@
-import * as Specification from './specification.json';
+import * as Protocols from './protocols.json';
+import * as Locations from './locations.json';
+import * as Resolutions from './resolutions.json';
 
-export { Specification };
+export { Protocols, Locations, Resolutions };

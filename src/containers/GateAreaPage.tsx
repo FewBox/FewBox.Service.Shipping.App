@@ -5,7 +5,7 @@ import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, C
 import { initGateAreaPage, initShippingLineDropdownList, constructGateArea, demolishGateArea } from '../actions';
 import { GateArea, Store, ShippingLine } from '../reducers/State';
 import GateAreaConstruction from '../components/GateAreaConstruction';
-import { Specification } from '../jsons';
+import { Protocols } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
@@ -28,7 +28,7 @@ class GateAreaPage extends React.Component<IGateAreaPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <GateAreaConstruction isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} specs={Specification}
+                    <GateAreaConstruction isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} protocols={Protocols}
                         reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
                 </Row>
                 <Row gutter={16}>

@@ -51,6 +51,11 @@ export default {
     'Help.Uri': 'Uri',
     'Help.Subset': 'Subset',
     'Help.TLSMode': 'TLS Mode',
+    'Help.ServiceEntry': 'ServiceEntry',
+    'Help.Address': 'Address',
+    'Help.Resolution': 'Resolution',
+    'Help.Location': 'Location',
+    'Help.PortNumber': 'PortNumber',
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
@@ -64,6 +69,7 @@ export default {
     'Navigation.ShippingLine': 'Shipping Line',
     'Navigation.StackPolicy': 'Stack Policy',
     'Navigation.GateArea': 'Gate Area',
+    'Navigation.FreeTradeArea': 'Free Trade Area',
     'Message.UsernameOrPasswordIsNotValid': 'The username or password is not valid!',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.BusinessException': 'Business Exception: {errorMessage}',
@@ -145,5 +151,9 @@ export default {
     'Label.Disable': 'Disable',
     'Label.IstioMutual': 'Istio Mutual',
     'Label.AddSubset': 'Add Subset',
-    'Label.StackPolicy': 'Stack Policy'
+    'Label.StackPolicy': 'Stack Policy',
+    'Label.PositionItem': 'Position[{key}]',
+    'Label.PassItem': 'Pass[{key}]',
+    'Label.Pass': 'Pass',
+    'Label.Number': 'Number'
 }

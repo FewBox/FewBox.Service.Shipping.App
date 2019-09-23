@@ -28,6 +28,7 @@ export interface Store {
     credentialPage: CredentialPage;
     yardAreaPage: YardAreaPage;
     stackPolicyPage: StackPolicyPage;
+    freeTradeAreaPage: FreeTradeAreaPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -93,6 +94,9 @@ export interface StackPolicyPage {
     stackPolicies: StackPolicy[];
     quayAreas: QuayArea[];
     shipyards: Shipyard[];
+}
+export interface FreeTradeAreaPage {
+    freeTradeAreas: FreeTradeArea[];
 }
 /** Biz **/
 export interface ShippingIndustryStatus {
@@ -241,4 +245,22 @@ export interface Subset {
 }
 export interface LabelBag {
     version: string;
+}
+export interface FreeTradeArea {
+    shippingLine: string;
+    name: string;
+    aliases: string[];
+    positions: string[];
+    passes: Pass[];
+    age: string;
+}
+export interface Pass {
+    name: string;
+    number: string;
+    protocol: string;
+}
+/* UI */
+export interface Option{
+    name: string;
+    value: string;
 }

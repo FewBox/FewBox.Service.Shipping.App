@@ -2,20 +2,14 @@ import * as React from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { ShippingLine } from '../../reducers/State';
-import { autobind } from 'core-decorators';
+import { ShippingLine, Option } from '../../reducers/State';
 import { ShippingLineIcon, GateAreaIcon, WarehouseIcon, GateIcon, NumberingIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 
-export interface Spec {
-    name: string;
-    value: string;
-}
-
 export interface IGateAreaConstructionProps {
     shippingLines: ShippingLine[];
-    specs: Spec[];
+    protocols: Option[];
     addChannelComponent: (number) => void;
     removeChannelComponent: (number) => void;
     construct: (string) => void;
@@ -110,7 +104,7 @@ class GateAreaConstruction extends React.PureComponent<IGateAreaConstructionProp
                                     initialValue: 'http'
                                 })(
                                     <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.specs.map((item, index) => {
+                                        {this.props.protocols.map((item, index) => {
                                             return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>

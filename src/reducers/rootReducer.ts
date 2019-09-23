@@ -15,9 +15,12 @@ import captainPage from './captainReducer';
 import credentialPage from './credentialReducer';
 import yardAreaPage from './yardAreaReducer';
 import stackPolicyPage from './stackPolicyReducer';
+import freeTradeAreaPage from './freeTradeAreaReducer';
 
-const appReducer = combineReducers({ masterPage, signinPage, landingPage, settingPage, countryPage, shippingLinePage, containerShipPage, shipyardPage, quayAreaPage,
-    gateAreaPage, logBookPage, captainPage, credentialPage, yardAreaPage, stackPolicyPage, routing });
+const appReducer = combineReducers({
+    masterPage, signinPage, landingPage, settingPage, countryPage, shippingLinePage, containerShipPage, shipyardPage, quayAreaPage,
+    gateAreaPage, logBookPage, captainPage, credentialPage, yardAreaPage, stackPolicyPage, freeTradeAreaPage, routing
+});
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {
         state = undefined;

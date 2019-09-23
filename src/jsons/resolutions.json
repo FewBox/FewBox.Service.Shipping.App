@@ -1,0 +1,14 @@
+[
+    {
+        "name": "none",
+        "value": "NONE"
+    },
+    {
+        "name": "static",
+        "value": "STATIC"
+    },
+    {
+        "name": "dns",
+        "value": "DNS"
+    }
+]

@@ -273,6 +273,25 @@ export const changeStackPolicySubset = (subsets): IAction<any> => ({
     value: subsets
 });
 
+export const initFreeTradeAreaPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_FREETRADEAREAPAGE
+});
+
+export const loadFreeTradeArea = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_FREETRADEAREA,
+    payload: payload
+});
+
+export const constructFreeTradeArea = (constructBill): IAction<any> => ({
+    type: ActionTypes.CONSTRUCT_FREETRADEAREA,
+    value: constructBill
+});
+
+export const demolishFreeTradeArea = (demolishBill): IAction<string> => ({
+    type: ActionTypes.DEMOLISH_FREETRADEAREA,
+    value: demolishBill
+});
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING

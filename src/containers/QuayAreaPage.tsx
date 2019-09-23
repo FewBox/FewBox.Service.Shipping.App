@@ -5,7 +5,7 @@ import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, D
 import { initQuayAreaPage, demolishQuayArea, constructQuayArea, initShippingLineDropdownList } from '../actions';
 import { QuayArea, Store, ShippingLine } from '../reducers/State';
 import QuayAreaConstruction from '../components/QuayAreaConstruction';
-import { Specification } from '../jsons';
+import { Protocols } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
@@ -29,7 +29,7 @@ class QuayAreaPage extends React.Component<IQuayAreaPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <QuayAreaConstruction isHelp={this.props.isHelp} construct={this.props.constructQuayArea} reload={this.props.initQuayAreaPage}
-                        specs={Specification} shippingLines={this.props.shippingLines} />
+                        protocols={Protocols} shippingLines={this.props.shippingLines} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.quayAreas}

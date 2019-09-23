@@ -2,15 +2,13 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { ShippingLine } from '../../reducers/State';
-import { autobind } from 'core-decorators';
+import { ShippingLine, Option } from '../../reducers/State';
 import { ShippingLineIcon, QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, BrandIcon, } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
-import { Spec } from '../GateAreaConstruction';
 import HelpComponent from '../HelpComponent';
 
 export interface IQuayAreaConstructionProps {
-    specs: Spec[];
+    protocols: Option[];
     shippingLines: ShippingLine[];
     construct: (string) => void;
     reload: () => void;
@@ -85,7 +83,7 @@ class QuayAreaConstruction extends React.PureComponent<IQuayAreaConstructionProp
                                 initialValue: 'http'
                             })(
                                 <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.specs.map((item, index) => {
+                                    {this.props.protocols.map((item, index) => {
                                         return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
                                     })}
                                 </Select>

@@ -50,6 +50,7 @@ export const CargoIcon = props => <Icon style={fontSize} component={CargoSvg} {.
 export const SleepIcon = props => <Icon style={fontSize} component={SleepSvg} {...props} />;
 export const CaptainIcon = props => <Icon style={fontSize} component={CaptainSvg} {...props} />;
 export const CredentialIcon = props => <Icon style={fontSize} component={CredentialSvg} {...props} />;
+export const FreeTradeAreaIcon = props => <Icon style={fontSize} component={BrandIcon} {...props} />
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;
