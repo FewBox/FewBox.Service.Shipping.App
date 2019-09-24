@@ -200,6 +200,7 @@ export interface YardArea {
 }
 export interface Guideboard {
     targets: any[];
+    tagTargets: any[];
     directions: Direction[];
 }
 export interface Direction {

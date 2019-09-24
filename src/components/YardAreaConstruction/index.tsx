@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Select, Input, Button } from 'antd';
-import { ShippingLine, GateArea, QuayArea, Shipyard } from '../../reducers/State';
+import { ShippingLine, GateArea, QuayArea, Shipyard, Option } from '../../reducers/State';
 import { ShippingLineIcon, BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -12,6 +12,7 @@ export interface IYardAreaConstructionProps {
     gateAreas: GateArea[];
     quayAreas: QuayArea[];
     shipyards: Shipyard[];
+    matches: Option[];
     refreshGateAreas: (shippingLine: string) => void;
     refreshQuayAreas: (shippingLine: string) => void;
     refreshShipyards: (identificationCode: string) => void;
@@ -35,18 +36,17 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
             if (!err) {
                 let data = values;
                 let guideboards = values.guideboard.map((guideboard, index) => {
-                    let targets = data.targets ? data.targets[index].map((target, targetIndex) => {
-                        if (data.targetTypes[index][targetIndex] === 'exact') {
-                            return { exact: target };
-                        }
-                        else if (data.targetTypes[index][targetIndex] === 'prefix') {
-                            return { prefix: target };
-                        }
-                    }) : null;;
-                    let directions = data.directionQuayAreas ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
+                    let targets = data.targets && data.targets[index] ? data.targets[index].map((target, targetIndex) => {
+                        return { [data.targetTypes[index][targetIndex]]: target };
+                    }) : null;
+                    let tagTargets = data.tagTargets && data.tagTargets[index] ? data.tagTargets[index].map((tagTarget, tagTargetIndex) => {
+                        let name = data.tagTargetNames[index][tagTargetIndex];
+                        return { [name]: { [data.tagTargetTypes[index][tagTargetIndex]]: tagTarget } };
+                    }) : null;
+                    let directions = data.directionQuayAreas && data.directionQuayAreas[index] ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
                         return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.directionNumberings[index][directionQuayAreaIndex] };
                     }) : null;
-                    return { targets: targets, directions: directions };
+                    return { targets: targets, tagTargets: tagTargets, directions: directions };
                 });
                 this.props.construct({ shippingLine: values.shippingLine, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
             }
@@ -123,8 +123,9 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    <Select.Option value='exact'><FormattedMessage id='Label.Address' /></Select.Option>
-                                                    <Select.Option value='prefix'><FormattedMessage id='Label.Area' /></Select.Option>
+                                                    {this.props.matches ? this.props.matches.map((item, index) => {
+                                                        return <Select.Option key={'match' + index} value={item.value}>{item.name}</Select.Option>
+                                                    }) : null}
                                                 </Select>
                                             )}
                                         </HelpComponent>
@@ -142,6 +143,45 @@ class YardAreaConstruction extends React.PureComponent<IYardAreaConstructionProp
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Target" />} />
+                            <DynamicFieldList fieldName={'tagTarget' + k1} itemComponents={(k2) =>
+                                [<Col key={1}>
+                                    <Form.Item>
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Header' />}>
+                                            {getFieldDecorator(`tagTargetNames[${k1}][${k2}]`, {
+                                                rules: [{ required: false, message: <FormattedMessage id='Message.NameRequired' /> }],
+                                            })(
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                            )}
+                                        </HelpComponent>
+                                    </Form.Item>
+                                </Col>,
+                                <Col key={2}>
+                                    <Form.Item>
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MatchType' />}>
+                                            {getFieldDecorator(`tagTargetTypes[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
+                                            })(
+                                                <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                    {this.props.matches ? this.props.matches.map((item, index) => {
+                                                        return <Select.Option key={'match' + index} value={item.value}>{item.name}</Select.Option>
+                                                    }) : null}
+                                                </Select>
+                                            )}
+                                        </HelpComponent>
+                                    </Form.Item>
+                                </Col>,
+                                <Col key={3}>
+                                    <Form.Item>
+                                        <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.HeaderValue' />}>
+                                            {getFieldDecorator(`tagTargets[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.TagTargetRequired' /> }],
+                                            })(
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Tag Target" />
+                                            )}
+                                        </HelpComponent>
+                                    </Form.Item>
+                                </Col>]
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.TagTarget" />} />
                             <DynamicFieldList fieldName={'direction' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>

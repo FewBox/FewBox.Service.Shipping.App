@@ -6,6 +6,7 @@ import { initYardAreaPage, initShippingLineDropdownList, constructYardArea, demo
 import { YardArea, Store, ShippingLine, GateArea, QuayArea, Shipyard } from '../reducers/State';
 import YardAreaConstruction from '../components/YardAreaConstruction';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import { Matches } from '../jsons';
 
 export interface IYardAreaPageProps {
     shippingLines: ShippingLine[];
@@ -33,7 +34,7 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <YardAreaConstruction isHelp={this.props.isHelp} shippingLines={this.props.shippingLines} gateAreas={this.props.gateAreas} quayAreas={this.props.quayAreas}
-                        shipyards={this.props.shipyards} refreshShipyards={this.props.initYardAreaShipyardDropdownList}
+                        shipyards={this.props.shipyards} refreshShipyards={this.props.initYardAreaShipyardDropdownList} matches={Matches}
                         refreshGateAreas={this.props.initYardAreaGateAreaDropdownList} refreshQuayAreas={this.props.initYardAreaQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
                 </Row>
                 <Row gutter={16}>
@@ -63,6 +64,9 @@ class YardAreaPage extends React.Component<IYardAreaPageProps, any> {
                                                     return <Descriptions.Item key={'guideboard' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.GuideboardItem" values={{ key: index }} />}>
                                                         {guideboard.targets != null ? guideboard.targets.map((target, index) => {
                                                             return <p key={'target' + index}>{JSON.stringify(target)}</p>
+                                                        }) : null}
+                                                        {guideboard.tagTargets != null ? guideboard.tagTargets.map((tagTarget, index) => {
+                                                            return <p key={'tagTarget' + index}>{JSON.stringify(tagTarget)}</p>
                                                         }) : null}
                                                         {guideboard.directions.map((direction, index) => {
                                                             return <p key={'direction' + index}>{direction.quayArea} : {direction.crane ? direction.crane : direction.numbering}</p>

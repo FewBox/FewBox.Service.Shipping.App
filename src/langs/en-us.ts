@@ -56,6 +56,7 @@ export default {
     'Help.Resolution': 'Resolution',
     'Help.Location': 'Location',
     'Help.PortNumber': 'PortNumber',
+    'Help.Header': 'Header',
     'Navigation.Landing': 'Landing',
     'Navigation.Terminal': 'Terminal',
     'Navigation.ContainerShip': 'Container Ship',
