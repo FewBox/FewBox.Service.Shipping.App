@@ -58,7 +58,7 @@ const demolishGateAreaPageEpic = (action$: ActionsObservable<any>, store$: State
     action$.pipe(
         ofType(ActionTypes.DEMOLISH_GATEAREA),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gateareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/gateareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

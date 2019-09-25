@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { MasterPage } from './State';
 import { MessageType } from '@fewbox/react-components';
 
-const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, shippingLines: [], drawer: { type: '' } };
+const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, namespaces: [], drawer: { type: '' } };
 export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
@@ -21,8 +21,8 @@ export default (state: MasterPage = master, action: any): MasterPage => {
             return { ...state, path: action.value };
         case ActionTypes.CLEAR_PATH:
             return { ...state, path: undefined };
-        case ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST:
-            return { ...state, shippingLines: action.payload };
+        case ActionTypes.FILL_NAMESPACEDROPDOWNLIST:
+            return { ...state, namespaces: action.payload };
         default:
             return state;
     }

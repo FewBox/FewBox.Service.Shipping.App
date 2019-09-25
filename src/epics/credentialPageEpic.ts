@@ -42,7 +42,7 @@ const revokeCredentialEpic = (action$: ActionsObservable<any>, store$: StateObse
     action$.pipe(
         ofType(ActionTypes.REVOKE_CREDENTIAL),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/credentials/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/credentials/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

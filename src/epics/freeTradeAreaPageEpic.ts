@@ -58,7 +58,7 @@ const demolishFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: 
     action$.pipe(
         ofType(ActionTypes.DEMOLISH_FREETRADEAREA),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/freetradeareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/freetradeareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

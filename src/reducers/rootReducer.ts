@@ -5,7 +5,7 @@ import signinPage from './signinReducer';
 import landingPage from './landingReducer';
 import settingPage from './settingReducer';
 import countryPage from './countryReducer';
-import shippingLinePage from './shippingLineReducer';
+import namespacePage from './namespaceReducer';
 import containerShipPage from './containerShipReducer';
 import shipyardPage from './shipyardReducer';
 import quayAreaPage from './quayAreaReducer';
@@ -18,7 +18,7 @@ import stackPolicyPage from './stackPolicyReducer';
 import freeTradeAreaPage from './freeTradeAreaReducer';
 
 const appReducer = combineReducers({
-    masterPage, signinPage, landingPage, settingPage, countryPage, shippingLinePage, containerShipPage, shipyardPage, quayAreaPage,
+    masterPage, signinPage, landingPage, settingPage, countryPage, namespacePage, containerShipPage, shipyardPage, quayAreaPage,
     gateAreaPage, logBookPage, captainPage, credentialPage, yardAreaPage, stackPolicyPage, freeTradeAreaPage, routing
 });
 export default (state: any, action: any) => {

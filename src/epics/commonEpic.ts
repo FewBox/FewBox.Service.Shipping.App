@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { Store } from '../reducers/State';
-import { changeLanguage, fillShippingLineDropdownList } from '../actions';
+import { changeLanguage, fillNamespaceDropdownList } from '../actions';
 
 const changeLanguageEric = (action$: ActionsObservable<any>) =>
     action$.pipe(
@@ -13,23 +13,23 @@ const changeLanguageEric = (action$: ActionsObservable<any>) =>
         })
     );
 
-const initShippingLineDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initNamespaceDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST),
+        ofType(ActionTypes.INIT_NAMESPACEDROPDOWNLIST),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/shippinglines/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/namespaces/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/shippinglines', method: 'GET' });
+                return AjaxObservable({ path: '/api/namespaces', method: 'GET' });
             }
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return fillShippingLineDropdownList(payload);
+            return fillNamespaceDropdownList(payload);
         })
     );
 
-export default [changeLanguageEric, initShippingLineDropdownListEpic];
+export default [changeLanguageEric, initNamespaceDropdownListEpic];

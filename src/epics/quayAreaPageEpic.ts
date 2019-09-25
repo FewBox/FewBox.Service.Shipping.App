@@ -58,7 +58,7 @@ const demolishQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: State
     action$.pipe(
         ofType(ActionTypes.DEMOLISH_QUAYAREA),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/quayareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/quayareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

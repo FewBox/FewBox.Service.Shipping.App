@@ -10,23 +10,23 @@ import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
 import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changeContainerShipNumbering, changeStackPolicySubset } from '../actions';
-const CountryPage = lazy(() => import('./CountryPage'));
+const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
 const TerminalPage = lazy(() => import('./TerminalPage'));
-const ShippingLinePage = lazy(() => import('./ShippingLinePage'));
-const ContainerShipPage = lazy(() => import('./ContainerShipPage'));
-const ShipyardPage = lazy(() => import('./ShipyardPage'));
-const QuayAreaPage = lazy(() => import('./QuayAreaPage'));
-const GateAreaPage = lazy(() => import('./GateAreaPage'));
+const NamespacePage = lazy(() => import('./NamespacePage'));
+const PodPage = lazy(() => import('./PodPage'));
+const DeploymentPage = lazy(() => import('./DeploymentPage'));
+const ServicePage = lazy(() => import('./ServicePage'));
+const GatewayPage = lazy(() => import('./GatewayPage'));
 const LogBookPage = lazy(() => import('./LogBookPage'));
-const CaptainPage = lazy(() => import('./CaptainPage'));
-const CredentialPage = lazy(() => import('./CredentialPage'));
-const YardAreaPage = lazy(() => import('./YardAreaPage'));
-const StackPolicyPage = lazy(() => import('./StackPolicyPage'));
-const FreeTradeAreaPage = lazy(() => import('./FreeTradeAreaPage'));
-const StackPolicyDrawer = lazy(() => import('../components/StackPolicyDrawer'));
-const ShipyardDrawer = lazy(() => import('../components/ShipyardDrawer'));
+const ServiceAccountPage = lazy(() => import('./ServiceAccountPage'));
+const SecretPage = lazy(() => import('./SecretPage'));
+const VirtualServicePage = lazy(() => import('./VirtualServicePage'));
+const DestinationRulePage = lazy(() => import('./DestinationRulePage'));
+const ServiceEntryPage = lazy(() => import('./ServiceEntryPage'));
+const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDrawer'));
+const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
 import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
@@ -83,9 +83,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Shipyard':
-                    return <Suspense fallback={<Skeleton active />}><ShipyardDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
                 case 'StackPolicy':
-                    return <Suspense fallback={<Skeleton active />}><StackPolicyDrawer shippingLine={this.props.drawer.shippingLine} name={this.props.drawer.name} selectedStackPolicy={this.props.selectedStackPolicy} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedStackPolicy={this.props.selectedStackPolicy} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
                 default:
                     return <div></div>
             }
@@ -120,68 +120,68 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Node" />}>
-                                    <Link to='/master/country'><CountryIcon />
-                                        <FormattedMessage id="Navigation.Country" /></Link>
+                                    <Link to='/master/node'><CountryIcon />
+                                        <FormattedMessage id="Navigation.Node" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
-                                    <Link to='/master/shippingline'><ShippingLineIcon />
-                                        <FormattedMessage id="Navigation.ShippingLine" /></Link>
+                                    <Link to='/master/namespace'><ShippingLineIcon />
+                                        <FormattedMessage id="Navigation.Namespace" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceAccount" />}>
-                                    <Link to='/master/captain'><CaptainIcon />
-                                        <FormattedMessage id="Navigation.Captain" /></Link>
+                                    <Link to='/master/serviceaccount'><CaptainIcon />
+                                        <FormattedMessage id="Navigation.ServiceAccount" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="5">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                    <Link to='/master/credential'><CredentialIcon />
-                                        <FormattedMessage id="Navigation.Credential" /></Link>
+                                    <Link to='/master/secret'><CredentialIcon />
+                                        <FormattedMessage id="Navigation.Secret" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="6">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Service" />}>
-                                    <Link to='/master/quayarea'><QuayAreaIcon />
-                                        <FormattedMessage id="Navigation.QuayArea" /></Link>
+                                    <Link to='/master/service'><QuayAreaIcon />
+                                        <FormattedMessage id="Navigation.Service" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Deployment" />}>
-                                    <Link to='/master/shipyard'><ShipyardIcon />
-                                        <FormattedMessage id="Navigation.Shipyard" /></Link>
+                                    <Link to='/master/deployment'><ShipyardIcon />
+                                        <FormattedMessage id="Navigation.Deployment" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="8">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
-                                    <Link to='/master/containership'><ContainerShipIcon />
-                                        <FormattedMessage id="Navigation.ContainerShip" /></Link>
+                                    <Link to='/master/pod'><ContainerShipIcon />
+                                        <FormattedMessage id="Navigation.pod" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="9">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Gateway" />}>
-                                    <Link to='/master/gatearea'><GateAreaIcon />
-                                        <FormattedMessage id="Navigation.GateArea" /></Link>
+                                    <Link to='/master/gateway'><GateAreaIcon />
+                                        <FormattedMessage id="Navigation.Gateway" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="10">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.VirtualService" />}>
-                                    <Link to='/master/yardarea'><BrandIcon />
-                                        <FormattedMessage id="Navigation.YardArea" /></Link>
+                                    <Link to='/master/virtualservcie'><BrandIcon />
+                                        <FormattedMessage id="Navigation.VirtualService" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="11">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.DestinationRule" />}>
-                                    <Link to='/master/stackpolicy'><BrandIcon />
-                                        <FormattedMessage id="Navigation.StackPolicy" /></Link>
+                                    <Link to='/master/destinationrule'><BrandIcon />
+                                        <FormattedMessage id="Navigation.DestinationRule" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="12">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceEntry" />}>
-                                    <Link to='/master/freetradearea'><BrandIcon />
-                                        <FormattedMessage id="Navigation.FreeTradeArea" /></Link>
+                                    <Link to='/master/serviceentry'><BrandIcon />
+                                        <FormattedMessage id="Navigation.ServiceEntry" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="13">
@@ -205,17 +205,17 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Suspense fallback={<Skeleton active />}>
                                 <Switch>
                                     <Route path="/master/landing" render={props => <LandingPage {...props} />} />
-                                    <Route path="/master/country" render={props => <CountryPage {...props} />} />
-                                    <Route path="/master/shippingline" render={props => <ShippingLinePage {...props} />} />
-                                    <Route path="/master/captain" render={props => <CaptainPage {...props} />} />
-                                    <Route path="/master/credential" render={props => <CredentialPage {...props} />} />
-                                    <Route path="/master/containership" render={props => <ContainerShipPage {...props} />} />
-                                    <Route path="/master/shipyard" render={props => <ShipyardPage {...props} />} />
-                                    <Route path="/master/quayarea" render={props => <QuayAreaPage {...props} />} />
-                                    <Route path="/master/gatearea" render={props => <GateAreaPage {...props} />} />
-                                    <Route path="/master/yardarea" render={props => <YardAreaPage {...props} />} />
-                                    <Route path="/master/stackpolicy" render={props => <StackPolicyPage {...props} />} />
-                                    <Route path="/master/freetradearea" render={props => <FreeTradeAreaPage {...props} />} />
+                                    <Route path="/master/node" render={props => <NodePage {...props} />} />
+                                    <Route path="/master/namespace" render={props => <NamespacePage {...props} />} />
+                                    <Route path="/master/serviceaccount" render={props => <ServiceAccountPage {...props} />} />
+                                    <Route path="/master/secret" render={props => <SecretPage {...props} />} />
+                                    <Route path="/master/pod" render={props => <PodPage {...props} />} />
+                                    <Route path="/master/deployment" render={props => <DeploymentPage {...props} />} />
+                                    <Route path="/master/service" render={props => <ServicePage {...props} />} />
+                                    <Route path="/master/gateway" render={props => <GatewayPage {...props} />} />
+                                    <Route path="/master/virtualservice" render={props => <VirtualServicePage {...props} />} />
+                                    <Route path="/master/destinationrul" render={props => <DestinationRulePage {...props} />} />
+                                    <Route path="/master/serviceentry" render={props => <ServiceEntryPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:namespace/:pod/:container/:command" render={props => <TerminalPage {...props} />} />
                                     <Route path="/master/logbook/:namespace/:pod/:container" render={props => <LogBookPage {...props} />} />

@@ -49,7 +49,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
             let operations = action.value.cargos.map((cargo, index) => {
                 return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
             });
-            return AjaxObservable({ path: '/api/shipyards/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: operations });
+            return AjaxObservable({ path: '/api/shipyards/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: operations });
         }),
         map((payload) => {
             if (payload.type) {
@@ -77,7 +77,7 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.SCALE_CONTAINERSHIPQUANTITY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/merge/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
+            return AjaxObservable({ path: '/api/shipyards/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
         }),
         map((payload) => {
             if (payload.type) {
@@ -91,7 +91,7 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
     action$.pipe(
         ofType(ActionTypes.SCRAP_CONTAINERSHIP),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/shipyards/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -104,7 +104,7 @@ const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPYARDCAPTAINDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/captains', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -117,7 +117,7 @@ const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.INIT_SHIPYARDCREDENTIALDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/credentials', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/credentials', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {

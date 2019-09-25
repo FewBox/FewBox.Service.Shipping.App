@@ -42,7 +42,7 @@ const fireCaptainEpic = (action$: ActionsObservable<any>, store$: StateObservabl
     action$.pipe(
         ofType(ActionTypes.FIRE_CAPTAIN),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/captains/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/captains/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

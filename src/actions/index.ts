@@ -38,43 +38,43 @@ export const loadLanding = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const initShippingLinePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SHIPPINGLINEPAGE
+export const initNamespacePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_NAMESPACEPAGE
 });
 
-export const loadShippingLine = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_SHIPPINGLINE,
+export const loadNamespace = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_NAMESPACE,
     payload: payload
 });
 
-export const startShippingLine = (shippingLine): IAction<any> => ({
-    type: ActionTypes.START_SHIPPINGLINE,
-    value: shippingLine
+export const createNamespace = (namespace): IAction<any> => ({
+    type: ActionTypes.CREATE_NAMESPACE,
+    value: namespace
 });
 
-export const closeShippingLine = (shippingLineName): IAction<string> => ({
-    type: ActionTypes.CLOSE_SHIPPINGLINE,
-    value: shippingLineName
+export const deleteNamespace = (namespaceName): IAction<string> => ({
+    type: ActionTypes.DELETE_NAMESPACE,
+    value: namespaceName
 });
 
-export const enableIstio = (shippingLineName): IAction<string> => ({
+export const enableIstio = (namespaceName): IAction<string> => ({
     type: ActionTypes.ENABLE_ISTIO,
-    value: shippingLineName
+    value: namespaceName
 });
 
-export const disableIstio = (shippingLineName): IAction<string> => ({
+export const disableIstio = (namespaceName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIO,
-    value: shippingLineName
+    value: namespaceName
 });
 
-export const enableIstioStatus = (shippingLineName): IAction<string> => ({
+export const enableIstioStatus = (namespaceName): IAction<string> => ({
     type: ActionTypes.ENABLE_ISTIOSTATUS,
-    value: shippingLineName
+    value: namespaceName
 });
 
-export const disableIstioStatus = (shippingLineName): IAction<string> => ({
+export const disableIstioStatus = (namespaceName): IAction<string> => ({
     type: ActionTypes.DISABLE_ISTIOSTATUS,
-    value: shippingLineName
+    value: namespaceName
 });
 
 export const initContainerShipPage = (): IEmptyAction => ({
@@ -313,56 +313,56 @@ export const showDrawer = (drawer: any): IAction<any> => ({
 export const hideDrawer = (): IEmptyAction => ({
     type: ActionTypes.HIDE_DRAWER
 });
-export const initShippingLineDropdownList = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SHIPPINGLINEDROPDOWNLIST
+export const initNamespaceDropdownList = (): IEmptyAction => ({
+    type: ActionTypes.INIT_NAMESPACEDROPDOWNLIST
 });
-export const fillShippingLineDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SHIPPINGLINEDROPDOWNLIST,
+export const fillNamespaceDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_NAMESPACEDROPDOWNLIST,
     payload: payload
 });
-export const initContainerShipCaptainDropdownList = (shippingLine: string): IAction<string> => ({
+export const initContainerShipCaptainDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_CONTAINERSHIPCAPTAINDROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillContainerShipCaptainDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_CONTAINERSHIPCAPTAINDROPDOWNLIST,
     payload: payload
 });
-export const initShipyardCaptainDropdownList = (shippingLine: string): IAction<string> => ({
+export const initShipyardCaptainDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_SHIPYARDCAPTAINDROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillShipyardCaptainDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPYARDCAPTAINDROPDOWNLIST,
     payload: payload
 });
-export const initShipyardCredentialDropdownList = (shippingLine: string): IAction<string> => ({
+export const initShipyardCredentialDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_SHIPYARDCREDENTIALDROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillShipyardCredentialDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SHIPYARDCREDENTIALDROPDOWNLIST,
     payload: payload
 });
-export const initYardAreaGateAreaDropdownList = (shippingLine: string): IAction<string> => ({
+export const initYardAreaGateAreaDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillYardAreaGateAreaDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST,
     payload: payload
 });
-export const initStackPolicyQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
+export const initStackPolicyQuayAreaDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillStackPolicyQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_STACKPOLICYQUAYAREADROPDOWNLIST,
     payload: payload
 });
-export const initYardAreaQuayAreaDropdownList = (shippingLine: string): IAction<string> => ({
+export const initYardAreaQuayAreaDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST,
-    value: shippingLine
+    value: namespaceName
 });
 export const fillYardAreaQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_YARDAREAQUAYAREADROPDOWNLIST,
@@ -376,9 +376,9 @@ export const fillStackPolicyShipyardDropdownList = (payload): IPayloadAction<any
     type: ActionTypes.FILL_STACKPOLICYSHIPYARDDROPDOWNLIST,
     payload: payload
 });
-export const selectStackPolicy = (shippingLine: string, name: string): IAction<any> => ({
+export const selectStackPolicy = (namespaceName: string, name: string): IAction<any> => ({
     type: ActionTypes.SELECT_STACKPOLICY,
-    value: { shippingLine: shippingLine, name: name }
+    value: { namespaceName: namespaceName, name: name }
 });
 export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedStackPolicy): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SELECTEDSTACKPOLICY,

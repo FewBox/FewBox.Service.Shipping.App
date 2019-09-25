@@ -46,7 +46,7 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
     action$.pipe(
         ofType(ActionTypes.SINK_CONTAINERSHIP),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/containerships/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/containerships/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -72,7 +72,7 @@ const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.INIT_CONTAINERSHIPCAPTAINDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/captains', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/captains', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {

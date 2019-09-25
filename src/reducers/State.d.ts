@@ -18,7 +18,7 @@ export interface Store {
     landingPage: LandingPage;
     settingPage: SettingPage;
     countryPage: CountryPage;
-    shippingLinePage: ShippingLinePage;
+    namespacePage: NamespacePage;
     containerShipPage: ContainerShipPage;
     shipyardPage: ShipyardPage;
     quayAreaPage: QuayAreaPage;
@@ -44,7 +44,7 @@ export interface MasterPage {
     isDrawerVisible: boolean;
     drawer: any;
     path?: string;
-    shippingLines: ShippingLine[];
+    namespaces: Namespace[];
 }
 export interface LandingPage {
     shippingIndustryStatuses: ShippingIndustryStatus[];
@@ -57,8 +57,8 @@ export interface SettingPage {
 export interface CountryPage {
     countries: Country[];
 }
-export interface ShippingLinePage {
-    shippingLines: ShippingLine[];
+export interface NamespacePage {
+    namespaces: Namespace[];
 }
 export interface QuayAreaPage {
     quayAreas: QuayArea[];
@@ -136,7 +136,7 @@ export interface Cargo {
     names: string[];
     size: string;
 }
-export interface ShippingLine {
+export interface Namespace {
     name: string;
     isIstioInjected: boolean;
     description: string;
@@ -144,7 +144,7 @@ export interface ShippingLine {
     age: string;
 }
 export interface ContainerShip {
-    shippingLine: string;
+    namespace: string;
     name: string;
     captain: string;
     containers: string[];
@@ -159,7 +159,7 @@ export interface ContainerShip {
     age: string;
 }
 export interface Shipyard {
-    shippingLine: string;
+    namespace: string;
     name: string;
     numbering: string;
     captain: string;
@@ -171,7 +171,7 @@ export interface Shipyard {
     age: string;
 }
 export interface QuayArea {
-    shippingLine: string;
+    namespace: string;
     name: string;
     containerShipSpec: string;
     position: string;
@@ -186,12 +186,12 @@ export interface Berth {
     cellGuide: string;
 }
 export interface GateArea {
-    shippingLine: string;
+    namespace: string;
     name: string;
     age: string;
 }
 export interface YardArea {
-    shippingLine: string;
+    namespace: string;
     name: string;
     aliases: string[];
     gateAreas: string[];
@@ -212,13 +212,13 @@ export interface LogBook {
     content: string;
 }
 export interface Captain {
-    shippingLine: string;
+    namespace: string;
     name: string;
     credentials: Credential[];
     age: string;
 }
 export interface Credential {
-    shippingLine: string;
+    namespace: string;
     name: string;
     type: string;
     stamps: any[];
@@ -235,7 +235,7 @@ export interface SelectedStackPolicy {
     shipyards: Shipyard[];
 }
 export interface StackPolicy {
-    shippingLine: string;
+    namespace: string;
     name: string;
     alias: string;
     mode: string;
@@ -250,7 +250,7 @@ export interface LabelBag {
     version: string;
 }
 export interface FreeTradeArea {
-    shippingLine: string;
+    namespace: string;
     name: string;
     aliases: string[];
     positions: string[];

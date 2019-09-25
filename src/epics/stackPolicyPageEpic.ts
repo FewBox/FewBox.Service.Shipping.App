@@ -59,7 +59,7 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
     action$.pipe(
         ofType(ActionTypes.ABOLISH_STACKPOLICY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -72,7 +72,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
     action$.pipe(
         ofType(ActionTypes.CHANGE_STACKPOLICYSUBSET),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.shippingLine + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
+            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
         }),
         map((payload) => {
             if (payload.type) {
@@ -85,7 +85,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -111,7 +111,7 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
     action$.pipe(
         ofType(ActionTypes.SELECT_STACKPOLICY),
         switchMap((action) => {
-            return zip(AjaxObservable({ path: '/api/shippinglines/' + action.value.shippingLine + '/stackpolicies/' + action.value.name, method: 'GET' }),
+            return zip(AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/stackpolicies/' + action.value.name, method: 'GET' }),
                 AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value.name, method: 'GET' }));
         }),
         map((payloads) => {

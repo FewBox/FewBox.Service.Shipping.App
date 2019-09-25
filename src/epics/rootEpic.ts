@@ -3,7 +3,7 @@ import { combineEpics } from 'redux-observable';
 import landingPageEpic from './landingPageEpic';
 import signInPageEpic from './signInPageEpic';
 import countryPageEpic from './countryPageEpic';
-import shippingLinePageEpic from './shippingLinePageEpic';
+import namespacePageEpic from './namespacePageEpic';
 import containerShipPageEpic from './containerShipPageEpic';
 import shipyardPageEpic from './shipyardPageEpic';
 import quayAreaPageEpic from './quayAreaPageEpic';
@@ -15,5 +15,5 @@ import yardAreaPageEpic from './yardAreaPageEpic';
 import stackPolicyPageEpic from './stackPolicyPageEpic';
 import freeTradeAreaPageEpic from './freeTradeAreaPageEpic';
 
-export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...countryPageEpic, ...shippingLinePageEpic, ...containerShipPageEpic, ...shipyardPageEpic,
+export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...countryPageEpic, ...namespacePageEpic, ...containerShipPageEpic, ...shipyardPageEpic,
     ...quayAreaPageEpic, ...gateAreaPageEpic, ...logBookPageEpic, ...captainPageEpic, ...credentialPageEpic, ...yardAreaPageEpic, ...stackPolicyPageEpic, ...freeTradeAreaPageEpic);

@@ -58,7 +58,7 @@ const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: State
     action$.pipe(
         ofType(ActionTypes.DEMOLISH_YARDAREA),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/yardareas/' + action.value.shippingLine + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/yardareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -71,7 +71,7 @@ const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/gateareas', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateareas', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -84,7 +84,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shippinglines/' + action.value + '/quayareas', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
