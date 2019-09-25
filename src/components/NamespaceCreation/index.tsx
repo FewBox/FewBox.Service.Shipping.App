@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Row, Col } from 'antd';
 import { ShippingLineIcon } from '../Icon';
@@ -26,7 +27,7 @@ class NamespaceCreation extends React.PureComponent<INamespaceCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
                                 <Input prefix={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}

@@ -24,7 +24,7 @@ export interface Store {
     quayAreaPage: QuayAreaPage;
     gateAreaPage: GateAreaPage;
     logBookPage: LogBookPage;
-    captainPage: CaptainPage;
+    serviceAccountPage: ServiceAccountPage;
     credentialPage: CredentialPage;
     yardAreaPage: YardAreaPage;
     stackPolicyPage: StackPolicyPage;
@@ -65,11 +65,11 @@ export interface QuayAreaPage {
 }
 export interface ContainerShipPage {
     containerShips: ContainerShip[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
 }
 export interface ShipyardPage {
     shipyards: Shipyard[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
     credentials: Credential[];
 }
 export interface GateAreaPage {
@@ -78,8 +78,8 @@ export interface GateAreaPage {
 export interface LogBookPage {
     logBook: LogBook;
 }
-export interface CaptainPage {
-    captains: Captain[];
+export interface ServiceAccountPage {
+    serviceAccounts: ServiceAccount[];
 }
 export interface CredentialPage {
     credentials: Credential[];
@@ -146,7 +146,7 @@ export interface Namespace {
 export interface ContainerShip {
     namespace: string;
     name: string;
-    captain: string;
+    serviceAccount: string;
     containers: string[];
     documents: any[];
     documentDefinitions: DocumentDefinition[];
@@ -162,7 +162,7 @@ export interface Shipyard {
     namespace: string;
     name: string;
     numbering: string;
-    captain: string;
+    serviceAccount: string;
     identificationCode: string;
     quantity: number;
     cargos: string[];
@@ -211,7 +211,7 @@ export interface Direction {
 export interface LogBook {
     content: string;
 }
-export interface Captain {
+export interface ServiceAccount {
     namespace: string;
     name: string;
     credentials: Credential[];

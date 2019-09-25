@@ -3,16 +3,17 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { Namespace, Captain } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, DoorIcon, CaptainIcon } from '../Icon';
+import { Namespace, ServiceAccount } from '../../reducers/State';
+import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, DoorIcon } from '../Icon';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
+import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 
 export interface IPodCreationProps {
     namespaces: Namespace[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
     construct: (any) => void;
-    refreshCaptains: (namespaceName: string) => void;
+    refreshServiceAccounts: (namespaceName: string) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -20,7 +21,7 @@ export interface IPodCreationProps {
 
 class PodCreation extends React.PureComponent<IPodCreationProps> {
     changeNamespace = (namespaceName: string) => {
-        this.props.refreshCaptains(namespaceName);
+        this.props.refreshServiceAccounts(namespaceName);
     };
     handleSubmit = e => {
         e.preventDefault();
@@ -41,7 +42,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                 }
                 this.props.construct({
                     namespace: values.namespace,
-                    captain: values.captain,
+                    serviceAccount: values.serviceAccount,
                     name: values.name,
                     numbering: values.numbering,
                     quantity: values.quantity,
@@ -61,13 +62,13 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} getFieldDecorator={getFieldDecorator} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
                                 <Input prefix={<ShipyardIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
@@ -100,17 +101,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ServiceAccount' />}>
-                                {getFieldDecorator('captain', {
-                                    rules: [{ message: 'Please input captain!' }],
-                                })(
-                                    <Select suffixIcon={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch allowClear placeholder="Captain" optionFilterProp="children">
-                                        {this.props.captains ? this.props.captains.map((item, index) => {
-                                            return <Select.Option key={'captain' + index} value={item.name}>{item.name}</Select.Option>
-                                        }) : null}
-                                    </Select>
-                                )}
-                            </HelpComponent>
+                            <ServiceAccountDropdownList isHelp={this.props.isHelp} serviceAccounts={this.props.serviceAccounts} form={this.props.form} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>

@@ -41,13 +41,13 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} getFieldDecorator={getFieldDecorator} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
                                 <Input prefix={<FreeTradeAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}

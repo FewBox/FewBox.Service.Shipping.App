@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initNamespaceDropdownList, showDrawer, initContainerShipCaptainDropdownList } from '../actions';
-import { Store, ContainerShip, Namespace, Captain } from '../reducers/State';
+import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initNamespaceDropdownList, showDrawer, initContainerShipServiceAccountDropdownList } from '../actions';
+import { Store, ContainerShip, Namespace, ServiceAccount } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/PodCreation';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -13,13 +13,13 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 export interface IPodPageProps {
     namespaces: Namespace[];
     containerShips: ContainerShip[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
     showDrawer: () => void;
     initNamespaceDropdownList: () => void;
     initContainerShipPage: () => void;
     sinkContainerShip: (any) => void;
     constructTemporaryContainerShip: (any) => void;
-    initContainerShipCaptainDropdownList: (namespaceName: string) => void;
+    initContainerShipServiceAccountDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
 }
 
@@ -33,7 +33,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ShipBuilding isHelp={this.props.isHelp} construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage}
-                    captains={this.props.captains} refreshCaptains={this.props.initContainerShipCaptainDropdownList} namespaces={this.props.namespaces} />
+                    serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initContainerShipServiceAccountDropdownList} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
@@ -82,7 +82,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.serviceAccount}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.country}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.NodeIP' id="Label.NodeIP" />}>{item.countryPosition}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.PodIP' id="Label.IP" />}>{item.position}</Descriptions.Item>
@@ -123,7 +123,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
 
 const mapStateToProps = ({ containerShipPage, masterPage, settingPage }: Store) => ({
     containerShips: containerShipPage.containerShips,
-    captains: containerShipPage.captains,
+    serviceAccounts: containerShipPage.serviceAccounts,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
@@ -134,7 +134,7 @@ const mapDispatchToProps = {
     sinkContainerShip,
     constructTemporaryContainerShip,
     showDrawer,
-    initContainerShipCaptainDropdownList
+    initContainerShipServiceAccountDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PodPage);

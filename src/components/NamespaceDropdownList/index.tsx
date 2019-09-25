@@ -8,14 +8,14 @@ import { Namespace } from '../../reducers/State';
 export interface INamespaceDropdownListProps {
   namespaces: Namespace[];
   isHelp: boolean;
-  getFieldDecorator: any;
+  form: any;
 }
 
 export default class NamespaceDropdownList extends React.PureComponent<INamespaceDropdownListProps> {
   public render() {
     return (
       <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
-        {this.props.getFieldDecorator('namespace', {
+        {this.props.form.getFieldDecorator('namespace', {
           rules: [{ required: true, message: <FormattedMessage id='Message.NamespaceRequired' /> }],
         })(
           <Select showSearch placeholder={<FormattedMessage id='Label.Namespace' />} optionFilterProp="children" suffixIcon={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>

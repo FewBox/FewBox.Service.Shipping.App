@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Col, Row } from 'antd';
-import { CaptainIcon } from '../Icon';
+import { CredentialIcon, BrandIcon } from '../Icon';
 import { Namespace } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -37,15 +37,15 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} getFieldDecorator={getFieldDecorator} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -55,7 +55,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                                 rules: [{ required: true, message: 'Please input type!' }],
                             })(
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Type" />}>
-                                    <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" /></HelpComponent>
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" /></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>
@@ -67,7 +67,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                                 rules: [{ required: true, message: 'Please input key!' }],
                             })(
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                    <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" /></HelpComponent>
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" /></HelpComponent>
                             )}
                         </Form.Item>
                     </Col>,

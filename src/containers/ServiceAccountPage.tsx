@@ -2,17 +2,17 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse } from 'antd';
-import { initNamespaceDropdownList, initCaptainPage, trainCaptain, fireCaptain } from '../actions';
-import CaptainTraining from '../components/ServiceAccountCreation';
-import { Store, Captain, Namespace } from '../reducers/State';
+import { initNamespaceDropdownList, initServiceAccountPage, createServiceAccount, deleteServiceAccount } from '../actions';
+import ServiceAccountCreation from '../components/ServiceAccountCreation';
+import { Store, ServiceAccount, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IServiceAccountPageProps {
     namespaces: Namespace[];
-    captains: Captain[];
-    initCaptainPage: () => void;
-    trainCaptain: (any) => void;
-    fireCaptain: (any) => void;
+    serviceAccounts: ServiceAccount[];
+    initServiceAccountPage: () => void;
+    createServiceAccount: (any) => void;
+    deleteServiceAccount: (any) => void;
     initNamespaceDropdownList: () => void;
     isHelp: boolean;
 }
@@ -20,20 +20,20 @@ export interface IServiceAccountPageProps {
 class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
-        this.props.initCaptainPage();
+        this.props.initServiceAccountPage();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <CaptainTraining isHelp={this.props.isHelp} train={this.props.trainCaptain} reload={this.props.initCaptainPage} namespaces={this.props.namespaces} />
+                    <ServiceAccountCreation isHelp={this.props.isHelp} train={this.props.createServiceAccount} reload={this.props.initServiceAccountPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.captains}
-                        renderItem={(item: Captain) => (
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.serviceAccounts}
+                        renderItem={(item: ServiceAccount) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.fireCaptain({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceAccount({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
@@ -55,17 +55,17 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
     }
 }
 
-const mapStateToProps = ({ captainPage, masterPage, settingPage }: Store) => ({
-    captains: captainPage.captains,
+const mapStateToProps = ({ serviceAccountPage, masterPage, settingPage }: Store) => ({
+    serviceAccounts: serviceAccountPage.serviceAccounts,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
-    initCaptainPage,
-    trainCaptain,
-    fireCaptain
+    initServiceAccountPage,
+    createServiceAccount,
+    deleteServiceAccount
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServiceAccountPage);

@@ -3,17 +3,18 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { Namespace, Captain, Credential } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, CaptainIcon, BrandIcon, CredentialIcon } from '../Icon';
+import { Namespace, ServiceAccount, Credential } from '../../reducers/State';
+import { ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, BrandIcon, CredentialIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
+import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 
 export interface IDeploymentCreationProps {
     namespaces: Namespace[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
     credentials: Credential[];
-    refreshCaptains: (namespaceName: string) => void;
+    refreshServiceAccounts: (namespaceName: string) => void;
     refreshCredentials: (namespaceName: string) => void;
     construct: (any) => void;
     reload: () => void;
@@ -23,7 +24,7 @@ export interface IDeploymentCreationProps {
 
 class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     changeNamespace = (namespaceName: string) => {
-        this.props.refreshCaptains(namespaceName);
+        this.props.refreshServiceAccounts(namespaceName);
         this.props.refreshCredentials(namespaceName);
     };
     validateNumbering = (rule, value, callback) => {
@@ -56,7 +57,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 this.props.construct({
                     namespace: values.namespace,
                     name: values.name,
-                    captain: values.captain,
+                    serviceAccount: values.serviceAccount,
                     numbering: values.numbering,
                     quantity: values.quantity,
                     cargo: values.cargo,
@@ -75,13 +76,13 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} getFieldDecorator={getFieldDecorator} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
                                 <Input prefix={<ShipyardIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
@@ -114,17 +115,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ServiceAccount' />}>
-                                {getFieldDecorator('captain', {
-                                    rules: [{ required: true, message: 'Please input captain!' }],
-                                })(
-                                    <Select suffixIcon={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Captain" optionFilterProp="children">
-                                        {this.props.captains.map((item, index) => {
-                                            return <Select.Option key={'captain' + index} value={item.name}>{item.name}</Select.Option>
-                                        })}
-                                    </Select>
-                                )}
-                            </HelpComponent>
+                            <ServiceAccountDropdownList isHelp={this.props.isHelp} serviceAccounts={this.props.serviceAccounts} form={this.props.form} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -190,7 +181,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.SecretName' />}>
                                 {getFieldDecorator(`documentNames[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input name!' }]
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }]
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                                 )}
@@ -237,7 +228,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.IsReadOnly' />}>
                                 {getFieldDecorator(`documentCredentialIsWaterMarkeds[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input name!' }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                                     initialValue: true
                                 })(
                                     <Switch checkedChildren={<BrandIcon />} unCheckedChildren={<BrandIcon />} />

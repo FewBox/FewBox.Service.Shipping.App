@@ -3,14 +3,14 @@ import { ContainerShipPage } from './State';
 
 const containerShipState = {
     containerShips: [],
-    captains: []
+    serviceAccounts: []
 };
 export default (state: ContainerShipPage = containerShipState, action: any): ContainerShipPage => {
     switch (action.type) {
         case ActionTypes.LOAD_CONTAINERSHIP:
             return { ...state, containerShips: action.payload };
-        case ActionTypes.FILL_CONTAINERSHIPCAPTAINDROPDOWNLIST:
-            return { ...state, captains: action.payload };
+        case ActionTypes.FILL_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST:
+            return { ...state, serviceAccounts: action.payload };
         default:
             return state;
     }

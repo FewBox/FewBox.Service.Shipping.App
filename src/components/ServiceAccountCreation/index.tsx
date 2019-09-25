@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { CaptainIcon } from '../Icon';
 import { Namespace } from '../../reducers/State';
-import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IServiceAccountCreationProps {
@@ -30,12 +29,14 @@ class ServiceAccountCreation extends React.PureComponent<IServiceAccountCreation
             <Form onSubmit={this.handleSubmit}>
                 <Row gutter={16}>
                     <Col span={6}>
-                        <NamespaceDropdownList isHelp={this.props.isHelp} getFieldDecorator={getFieldDecorator} namespaces={this.props.namespaces} />
+                        <Form.Item>
+                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
+                        </Form.Item>
                     </Col>
                     <Col span={6}>
                         <Form.Item>
                             {getFieldDecorator('name', {
-                                rules: [{ required: true, message: 'Please input name!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
                                 <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
@@ -53,4 +54,4 @@ class ServiceAccountCreation extends React.PureComponent<IServiceAccountCreation
     }
 }
 
-export default connect()(Form.create({ name: 'captain_training' })(ServiceAccountCreation));
+export default connect()(Form.create({ name: 'serviceaccount_creation' })(ServiceAccountCreation));

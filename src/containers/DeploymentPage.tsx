@@ -3,15 +3,15 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initShipyardCaptainDropdownList, initShipyardCredentialDropdownList } from '../actions';
-import { Store, Shipyard, Namespace, Captain, Credential } from '../reducers/State';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initShipyardServiceAccountDropdownList, initShipyardCredentialDropdownList } from '../actions';
+import { Store, Shipyard, Namespace, ServiceAccount, Credential } from '../reducers/State';
 import ShipyardConstruction from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IDeploymentPageProps {
     shipyards: Shipyard[];
     namespaces: Namespace[];
-    captains: Captain[];
+    serviceAccounts: ServiceAccount[];
     credentials: Credential[];
     initShipyardPage: () => void;
     initNamespaceDropdownList: () => void;
@@ -19,7 +19,7 @@ export interface IDeploymentPageProps {
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
     showDrawer: (drawerType: any) => void;
-    initShipyardCaptainDropdownList: (namespaceName: string) => void;
+    initShipyardServiceAccountDropdownList: (namespaceName: string) => void;
     initShipyardCredentialDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
 }
@@ -34,8 +34,8 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ShipyardConstruction isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
-                        namespaces={this.props.namespaces} captains={this.props.captains} credentials={this.props.credentials}
-                        refreshCaptains={this.props.initShipyardCaptainDropdownList} refreshCredentials={this.props.initShipyardCredentialDropdownList} />
+                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} credentials={this.props.credentials}
+                        refreshServiceAccounts={this.props.initShipyardServiceAccountDropdownList} refreshCredentials={this.props.initShipyardCredentialDropdownList} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
@@ -53,7 +53,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Version" helpId="Help.Version" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Replica" helpId="Help.Replica" />}>{item.quantity}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServiceAccount" helpId="Help.ServiceAccount" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServiceAccount" helpId="Help.ServiceAccount" />}>{item.serviceAccount}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
@@ -95,7 +95,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
 
 const mapStateToProps = ({ shipyardPage, masterPage, settingPage }: Store) => ({
     shipyards: shipyardPage.shipyards,
-    captains: shipyardPage.captains,
+    serviceAccounts: shipyardPage.serviceAccounts,
     credentials: shipyardPage.credentials,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
@@ -108,7 +108,7 @@ const mapDispatchToProps = {
     scaleContainerShipQuantity,
     scrapContainerShip,
     showDrawer,
-    initShipyardCaptainDropdownList,
+    initShipyardServiceAccountDropdownList,
     initShipyardCredentialDropdownList
 };
 

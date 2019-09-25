@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShipyard, initShipyardPage, fillShipyardCaptainDropdownList, fillShipyardCredentialDropdownList } from '../actions';
+import { loadShipyard, initShipyardPage, fillShipyardServiceAccountDropdownList, fillShipyardCredentialDropdownList } from '../actions';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -100,17 +100,17 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
             return initShipyardPage();
         })
     );
-const initCaptainDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPYARDCAPTAINDROPDOWNLIST),
+        ofType(ActionTypes.INIT_SHIPYARDSERVICEACCOUNTDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/captains', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/serviceaccounts', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return fillShipyardCaptainDropdownList(payload);
+            return fillShipyardServiceAccountDropdownList(payload);
         })
     );
 const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -127,4 +127,4 @@ const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$:
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initCaptainDropdownListEpic, initCredentialDropdownListEpic];
+export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initCredentialDropdownListEpic];

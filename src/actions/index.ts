@@ -211,23 +211,23 @@ export const loadCountry = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const initCaptainPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CAPTAINPAGE
+export const initServiceAccountPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SERVICEACCOUNTPAGE
 });
 
-export const loadCaptain = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CAPTAIN,
+export const loadServiceAccount = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SERVICEACCOUNT,
     payload: payload
 });
 
-export const trainCaptain = (captain): IAction<any> => ({
-    type: ActionTypes.TRAIN_CAPTAIN,
-    value: captain
+export const createServiceAccount = (serviceAccount): IAction<any> => ({
+    type: ActionTypes.CREATE_SERVICEACCOUNT,
+    value: serviceAccount
 });
 
-export const fireCaptain = (dismission): IAction<any> => ({
-    type: ActionTypes.FIRE_CAPTAIN,
-    value: dismission
+export const deleteServiceAccount = (serviceAccount): IAction<any> => ({
+    type: ActionTypes.DELETE_SERVICEACCOUNT,
+    value: serviceAccount
 });
 
 export const initCredentialPage = (): IEmptyAction => ({
@@ -239,9 +239,9 @@ export const loadCredential = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const issueCredential = (captain): IAction<any> => ({
+export const issueCredential = (secret): IAction<any> => ({
     type: ActionTypes.ISSUE_CREDENTIAL,
-    value: captain
+    value: secret
 });
 
 export const revokeCredential = (dismission): IAction<any> => ({
@@ -320,20 +320,20 @@ export const fillNamespaceDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_NAMESPACEDROPDOWNLIST,
     payload: payload
 });
-export const initContainerShipCaptainDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_CONTAINERSHIPCAPTAINDROPDOWNLIST,
+export const initContainerShipServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST,
     value: namespaceName
 });
-export const fillContainerShipCaptainDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_CONTAINERSHIPCAPTAINDROPDOWNLIST,
+export const fillContainerShipServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST,
     payload: payload
 });
-export const initShipyardCaptainDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_SHIPYARDCAPTAINDROPDOWNLIST,
+export const initShipyardServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_SHIPYARDSERVICEACCOUNTDROPDOWNLIST,
     value: namespaceName
 });
-export const fillShipyardCaptainDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SHIPYARDCAPTAINDROPDOWNLIST,
+export const fillShipyardServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SHIPYARDSERVICEACCOUNTDROPDOWNLIST,
     payload: payload
 });
 export const initShipyardCredentialDropdownList = (namespaceName: string): IAction<string> => ({
