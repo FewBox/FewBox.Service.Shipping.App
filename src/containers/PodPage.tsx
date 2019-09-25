@@ -79,30 +79,30 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.IdentificationCode" />}>{item.identificationCode}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Numbering" />}>{item.numbering}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.Captain" />}>{item.captain}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Country" />}>{item.country}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.NodeIP' id="Label.CountryPosition" />}>{item.countryPosition}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.PodIP' id="Label.Position" />}>{item.position}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.country}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.NodeIP' id="Label.NodeIP" />}>{item.countryPosition}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.PodIP' id="Label.IP" />}>{item.position}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {item.containers.map((container, index) => {
-                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.CargoItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
+                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.ImageItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
                                                     })}
                                                     {item.documents.map((document, index) => {
-                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.DocumentItem" values={{ key: document.name }} />}>
+                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.VolumeItem" values={{ key: document.name }} />}>
                                                             <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.documentDefinitions.map((documentDefinition, index) => {
-                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.DocumentDefinition" values={{ key: documentDefinition.name }} />} />}>
+                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: documentDefinition.name }} />} />}>
                                                             <p>{documentDefinition.term}</p>
                                                             <p>{documentDefinition.subTerm}</p>
                                                         </Descriptions.Item>

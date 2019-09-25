@@ -93,13 +93,13 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`aliases[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Alias' })} />
+                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Host' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Alias" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
                 <DynamicFieldList fieldName='position' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
@@ -107,13 +107,13 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`positions[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PositionRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Position' })} />
+                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.IP' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Position" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.IP" />} />
                 <DynamicFieldList fieldName='pass' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
@@ -121,7 +121,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`passNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Pass' })} />
+                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Port' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -154,7 +154,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Pass" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

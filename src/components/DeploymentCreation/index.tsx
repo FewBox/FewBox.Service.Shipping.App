@@ -184,7 +184,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddDoor" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.ContainerPort" />} />
                 <DynamicFieldList fieldName='credential' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
@@ -245,7 +245,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddCredential" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Secret" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

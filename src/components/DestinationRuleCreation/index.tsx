@@ -105,7 +105,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddSubset" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Subset" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

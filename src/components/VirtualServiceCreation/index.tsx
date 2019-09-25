@@ -85,7 +85,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Alias" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
                 <DynamicFieldList fieldName='gateArea' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
@@ -102,7 +102,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.GateArea" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Gateway" />} />
                 <DynamicFieldList fieldName='guideboard' itemComponents={(k1) =>
                     [<Col offset={1} span={6} key={1}>
                         <Form.Item>
@@ -133,7 +133,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                         </HelpComponent>
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Target" />} />
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} />
                             <DynamicFieldList fieldName={'tagTarget' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
@@ -215,10 +215,10 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                         </HelpComponent>
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Crane" />} />
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Guideboard" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Http" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

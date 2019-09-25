@@ -43,17 +43,17 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerShipSpec" helpId="Help.PodSelector" />}>{item.containerShipSpec}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Position" helpId="Help.ClusterIP" />}>{item.position}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.PodSelector" />}>{item.containerShipSpec}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.ClusterIP" />}>{item.position}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerShipAgreementType" helpId="Help.SessionAffinity" />}>{item.containerShipAgreementType}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SessionAffinity" helpId="Help.SessionAffinity" />}>{item.containerShipAgreementType}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.berthes.map((berth, index) => {
-                                                    return <Descriptions.Item key={'berth' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.BerthItem" helpId="Help.Port" values={{ key: berth.name }} />}>{berth.crane}=>{berth.cellGuide}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'berth' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServicePortItem" helpId="Help.Port" values={{ key: berth.name }} />}>{berth.crane}=>{berth.cellGuide}</Descriptions.Item>
                                                 })}
                                             </Descriptions>
                                         </Collapse.Panel>

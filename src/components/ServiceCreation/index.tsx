@@ -116,7 +116,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddQuayArea" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Service" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

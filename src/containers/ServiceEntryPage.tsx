@@ -49,13 +49,13 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.aliases ? item.aliases.map((alias, index) => {
-                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.AliasItem" helpId="Help.Host" values={{ key: index }} />}>{alias}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{alias}</Descriptions.Item>
                                                 }) : null}
                                                 {item.positions ? item.positions.map((position, index) => {
-                                                    return <Descriptions.Item key={'position' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PositionItem" helpId="Help.Address" values={{ key: index }} />}>{position}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'position' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{position}</Descriptions.Item>
                                                 }) : null}
                                                 {item.passes ? item.passes.map((pass, index) => {
-                                                    return <Descriptions.Item key={'pass' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PassItem" helpId="Help.Port" values={{ key: pass.name }} />}>{pass.protocol}:{pass.number}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'pass' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: pass.name }} />}>{pass.protocol}:{pass.number}</Descriptions.Item>
                                                 }) : null}
                                             </Descriptions>
                                         </Collapse.Panel>

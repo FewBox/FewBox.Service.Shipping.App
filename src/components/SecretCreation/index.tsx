@@ -82,7 +82,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddCredential" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Secret" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

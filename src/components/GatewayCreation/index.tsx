@@ -71,7 +71,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                 {getFieldDecorator(`gateNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gate' })} />
+                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gateway' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -118,7 +118,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.AddCredential" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Secret" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

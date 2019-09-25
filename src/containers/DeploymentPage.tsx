@@ -50,31 +50,31 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IdentificationCode" helpId="Help.App" />}>{item.identificationCode}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Numbering" helpId="Help.Version" />}>{item.numbering}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Version" helpId="Help.Version" />}>{item.numbering}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Quantity" helpId="Help.Replica" />}>{item.quantity}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Captain" helpId="Help.ServiceAccount" />}>{item.captain}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Replica" helpId="Help.Replica" />}>{item.quantity}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServiceAccount" helpId="Help.ServiceAccount" />}>{item.captain}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {item.cargos.map((cargo, index) => {
-                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CargoItem" helpId="Help.Image" values={{ key: index + 1 }} />}>
-                                                            <Popover title={<FormattedMessage id="Label.CargoItem" values={{ key: index + 1 }} />} trigger="click" content={cargo}>
+                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ImageItem" helpId="Help.Image" values={{ key: index + 1 }} />}>
+                                                            <Popover title={<FormattedMessage id="Label.ImageItem" values={{ key: index + 1 }} />} trigger="click" content={cargo}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.documents.map((document, index) => {
-                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage  isHelp={this.props.isHelp} id="Label.DocumentItem" helpId="Help.Volume" values={{ key: document.name }} />}>
+                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage  isHelp={this.props.isHelp} id="Label.VolumeItem" helpId="Help.Volume" values={{ key: document.name }} />}>
                                                             <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.documentDefinitions.map((documentDefinition, index) => {
-                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DocumentDefinition" helpId="Help.VolumeMount" values={{ key: documentDefinition.name }} />} />}>
+                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.VolumeMountItem" helpId="Help.VolumeMount" values={{ key: documentDefinition.name }} />} />}>
                                                             <p>{documentDefinition.term}</p>
                                                             <p>{documentDefinition.subTerm}</p>
                                                         </Descriptions.Item>

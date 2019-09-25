@@ -55,13 +55,13 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.aliases.map((alias, index) => {
-                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.AliasItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
                                                 })}
                                                 {item.gateAreas.map((gateArea, index) => {
-                                                    return <Descriptions.Item key={'gateArea' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GateAreaItem" values={{ key: index }} />}>{gateArea}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'gateArea' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateArea}</Descriptions.Item>
                                                 })}
                                                 {item.guideboards.map((guideboard, index) => {
-                                                    return <Descriptions.Item key={'guideboard' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.GuideboardItem" values={{ key: index }} />}>
+                                                    return <Descriptions.Item key={'guideboard' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
                                                         {guideboard.targets != null ? guideboard.targets.map((target, index) => {
                                                             return <p key={'target' + index}>{JSON.stringify(target)}</p>
                                                         }) : null}

@@ -95,7 +95,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 case 'Shipyard':
                     return this.props.intl.formatMessage({ id: 'Label.Shipyard' });
                 case 'StackPolicy':
-                    return this.props.intl.formatMessage({ id: 'Label.StackPolicy' });
+                    return this.props.intl.formatMessage({ id: 'Label.DestinationRule' });
                 default:
                     return this.props.intl.formatMessage({ id: 'Label.None' });
             }
@@ -157,7 +157,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Menu.Item key="8">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
                                     <Link to='/master/pod'><ContainerShipIcon />
-                                        <FormattedMessage id="Navigation.pod" /></Link>
+                                        <FormattedMessage id="Navigation.Pod" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="9">
