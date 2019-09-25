@@ -22,12 +22,12 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let berths = values.berthNames ? values.berthNames.map((berthName, index) => {
+                let berths = values.portNames ? values.portNames.map((portName, index) => {
                     let cellGuide = parseInt(values.berthCellGuides[index]);
                     if (isNaN(cellGuide)) {
                         cellGuide = values.berthCellGuides[index];
                     }
-                    return { name: berthName, crane: values.berthCranes[index], cellGuide: cellGuide };
+                    return { name: portName, crane: values.berthCranes[index], cellGuide: cellGuide };
                 }) : null;
                 this.props.construct({ namespace: values.namespace, name: values.name, specificationType: values.specificationType, berths: berths, containerShipAgreementType: values.containerShipAgreementType });
             }
@@ -82,11 +82,11 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='port' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.PortName" />}>
-                                {getFieldDecorator(`berthNames[${k}]`, {
+                                {getFieldDecorator(`portNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
                                 })(
                                     <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />

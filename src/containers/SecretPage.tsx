@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse, Popover, Button } from 'antd';
-import { initNamespaceDropdownList, initCredentialPage, issueCredential, revokeCredential } from '../actions';
-import CredentialIssued from '../components/SecretCreation';
-import { Store, Credential, Namespace } from '../reducers/State';
+import { Card, Icon, Row, Popconfirm, List, Descriptions, Collapse, Popover, Button } from 'antd';
+import { initNamespaceDropdownList, initSecretPage, createSecret, deleteSecret } from '../actions';
+import SecretCreation from '../components/SecretCreation';
+import { Store, Secret, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface ISecretPageProps {
     namespaces: Namespace[];
-    credentials: Credential[];
-    initCredentialPage: () => void;
-    issueCredential: (any) => void;
-    revokeCredential: (any) => void;
+    secrets: Secret[];
+    initSecretPage: () => void;
+    createSecret: (any) => void;
+    deleteSecret: (any) => void;
     initNamespaceDropdownList: () => void;
     isHelp: boolean;
 }
@@ -20,20 +20,20 @@ export interface ISecretPageProps {
 class SecretPage extends React.Component<ISecretPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
-        this.props.initCredentialPage();
+        this.props.initSecretPage();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <CredentialIssued isHelp={this.props.isHelp} issue={this.props.issueCredential} reload={this.props.initCredentialPage} namespaces={this.props.namespaces} />
+                    <SecretCreation isHelp={this.props.isHelp} create={this.props.createSecret} reload={this.props.initSecretPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.credentials}
-                        renderItem={(item: Credential) => (
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.secrets}
+                        renderItem={(item: Secret) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.revokeCredential({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
@@ -48,7 +48,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {Object.keys(item.stamps).map((key, index) => {
-                                                        return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{key: key}} />}>
+                                                        return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{ key: key }} />}>
                                                             <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
@@ -68,17 +68,17 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ credentialPage, masterPage, settingPage }: Store) => ({
-    credentials: credentialPage.credentials,
+const mapStateToProps = ({ secretPage, masterPage, settingPage }: Store) => ({
+    secrets: secretPage.secrets,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
-    initCredentialPage,
-    issueCredential,
-    revokeCredential
+    initSecretPage,
+    createSecret,
+    deleteSecret
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SecretPage);

@@ -80,6 +80,7 @@ export default {
     'Message.404Caption': 'Sinking Ship! The page you visited does not exist.',
     'Message.Crush': 'Crush',
     'Message.CrushCaption': 'The terminal can not connect the pod!',
+    'Message.NameRequired': 'Please input the name!',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',

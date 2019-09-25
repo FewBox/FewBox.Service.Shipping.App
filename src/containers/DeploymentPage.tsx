@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initShipyardServiceAccountDropdownList, initShipyardCredentialDropdownList } from '../actions';
-import { Store, Shipyard, Namespace, ServiceAccount, Credential } from '../reducers/State';
+import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initShipyardServiceAccountDropdownList, initShipyardSecretDropdownList } from '../actions';
+import { Store, Shipyard, Namespace, ServiceAccount, Secret } from '../reducers/State';
 import ShipyardConstruction from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
@@ -12,7 +12,7 @@ export interface IDeploymentPageProps {
     shipyards: Shipyard[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
-    credentials: Credential[];
+    secrets: Secret[];
     initShipyardPage: () => void;
     initNamespaceDropdownList: () => void;
     scaleContainerShipQuantity: (any) => void;
@@ -20,7 +20,7 @@ export interface IDeploymentPageProps {
     scrapContainerShip: (any) => void;
     showDrawer: (drawerType: any) => void;
     initShipyardServiceAccountDropdownList: (namespaceName: string) => void;
-    initShipyardCredentialDropdownList: (namespaceName: string) => void;
+    initShipyardSecretDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
 }
 
@@ -34,8 +34,8 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ShipyardConstruction isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
-                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} credentials={this.props.credentials}
-                        refreshServiceAccounts={this.props.initShipyardServiceAccountDropdownList} refreshCredentials={this.props.initShipyardCredentialDropdownList} />
+                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
+                        refreshServiceAccounts={this.props.initShipyardServiceAccountDropdownList} refreshSecrets={this.props.initShipyardSecretDropdownList} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
@@ -96,7 +96,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
 const mapStateToProps = ({ shipyardPage, masterPage, settingPage }: Store) => ({
     shipyards: shipyardPage.shipyards,
     serviceAccounts: shipyardPage.serviceAccounts,
-    credentials: shipyardPage.credentials,
+    secrets: shipyardPage.secrets,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
@@ -109,7 +109,7 @@ const mapDispatchToProps = {
     scrapContainerShip,
     showDrawer,
     initShipyardServiceAccountDropdownList,
-    initShipyardCredentialDropdownList
+    initShipyardSecretDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeploymentPage);

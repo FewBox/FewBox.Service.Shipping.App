@@ -11,7 +11,7 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface ISecretCreationProps {
     namespaces: Namespace[];
-    issue: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -23,10 +23,10 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let stamps = {};
-                values.stampKeys ? values.stampKeys.map((stampKey, index) => {
-                    stamps[stampKey] = btoa(values.stampContents[index]);
+                values.dataKeys ? values.dataKeys.map((dataKey, index) => {
+                    stamps[dataKey] = btoa(values.dataContents[index]);
                 }) : null;
-                this.props.issue({ namespace: values.namespace, name: values.name.toLowerCase(), type: values.type, stamps: stamps });
+                this.props.create({ namespace: values.namespace, name: values.name.toLowerCase(), type: values.type, stamps: stamps });
             }
         });
     };
@@ -51,34 +51,37 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            {getFieldDecorator('type', {
-                                rules: [{ required: true, message: 'Please input type!' }],
-                            })(
-                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Type" />}>
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" /></HelpComponent>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Type" />}>
+                                {getFieldDecorator('type', {
+                                    rules: [{ required: true, message: 'Please input type!' }],
+                                })(
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='data' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
-                            {getFieldDecorator(`stampKeys[${k}]`, {
-                                rules: [{ required: true, message: 'Please input key!' }],
-                            })(
-                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" /></HelpComponent>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
+                                {getFieldDecorator(`dataKeys[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input key!' }],
+                                })(
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={12} key={2}>
                         <Form.Item>
-                            {getFieldDecorator(`stampContents[${k}]`, {
-                                rules: [{ required: true, message: 'Please input content!' }],
-                            })(
-                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
-                                    <Input.TextArea rows={4} placeholder="Content" /></HelpComponent>
-                            )}
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
+                                {getFieldDecorator(`dataContents[${k}]`, {
+                                    rules: [{ required: true, message: 'Please input content!' }],
+                                })(
+                                    <Input.TextArea rows={4} placeholder="Content" />
+                                )}
+                            </HelpComponent>
                         </Form.Item>
                     </Col>
                     ]
@@ -96,4 +99,4 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'credential_issued' })(SecretCreation));
+export default connect()(Form.create({ name: 'secret_creation' })(SecretCreation));

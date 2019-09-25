@@ -26,7 +26,7 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
         return (
             <div>
                 <Row gutter={16}>
-                    <ServiceAccountCreation isHelp={this.props.isHelp} train={this.props.createServiceAccount} reload={this.props.initServiceAccountPage} namespaces={this.props.namespaces} />
+                    <ServiceAccountCreation isHelp={this.props.isHelp} create={this.props.createServiceAccount} reload={this.props.initServiceAccountPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.serviceAccounts}
@@ -39,8 +39,8 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
                                         <Descriptions size='small' column={1} bordered>
                                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                            {item.credentials.map((credential, index) => {
-                                                return <Descriptions.Item key={'credential' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SecretItem" helpId="Help.Secret" values={{ key: index }} />}>{credential.name}</Descriptions.Item>
+                                            {item.secrets.map((secret, index) => {
+                                                return <Descriptions.Item key={'secret' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SecretItem" helpId="Help.Secret" values={{ key: index }} />}>{secret.name}</Descriptions.Item>
                                             })}
                                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>>{item.age}</Descriptions.Item>
                                         </Descriptions>

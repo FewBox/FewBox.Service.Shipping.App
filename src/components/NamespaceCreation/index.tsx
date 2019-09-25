@@ -5,7 +5,7 @@ import { Form, Input, Button, Row, Col } from 'antd';
 import { ShippingLineIcon } from '../Icon';
 
 export interface INamespaceCreationProps {
-    start: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
 }
@@ -15,7 +15,7 @@ class NamespaceCreation extends React.PureComponent<INamespaceCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.start({ name: values.name.toLowerCase() });
+                this.props.create({ name: values.name.toLowerCase() });
             }
         });
     };

@@ -8,7 +8,7 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IServiceAccountCreationProps {
     namespaces: Namespace[];
-    train: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -19,7 +19,7 @@ class ServiceAccountCreation extends React.PureComponent<IServiceAccountCreation
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.train({ namespace: values.namespace, name: values.name.toLowerCase() });
+                this.props.create({ namespace: values.namespace, name: values.name.toLowerCase() });
             }
         });
     };

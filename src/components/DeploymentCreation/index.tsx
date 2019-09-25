@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { Namespace, ServiceAccount, Credential } from '../../reducers/State';
+import { Namespace, ServiceAccount, Secret } from '../../reducers/State';
 import { ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, BrandIcon, CredentialIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -13,9 +13,9 @@ import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 export interface IDeploymentCreationProps {
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
-    credentials: Credential[];
+    secrets: Secret[];
     refreshServiceAccounts: (namespaceName: string) => void;
-    refreshCredentials: (namespaceName: string) => void;
+    refreshSecrets: (namespaceName: string) => void;
     construct: (any) => void;
     reload: () => void;
     form: any;
@@ -25,7 +25,7 @@ export interface IDeploymentCreationProps {
 class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     changeNamespace = (namespaceName: string) => {
         this.props.refreshServiceAccounts(namespaceName);
-        this.props.refreshCredentials(namespaceName);
+        this.props.refreshSecrets(namespaceName);
     };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
@@ -42,18 +42,16 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     return { name: doorName, leaf: values.doorLeafs[index] };
                 }) : null;
 
-                let documentCredentials = values.documentNames ? values.documentNames.map((documentName, index) => {
-                    return { name: documentName, secret: { secretName: values.documentCredentialNames[index] } };
+                let volumns = values.volumns ? values.volumns.map((volumn, index) => {
+                    return { name: volumn, secret: { secretName: values.secretKeys[index] } };
                 }) : null;
-                let documentCredentialDefinitions = values.documentNames ? values.documentNames.map((documentName, index) => {
+                let volumnMounts = values.volumns ? values.volumns.map((volumn, index) => {
                     return {
-                        name: documentName, term: values.documentCredentialTerms[index],
-                        subTerm: values.documentCredentialSubTerms ? values.documentCredentialSubTerms[index] : null,
-                        isWaterMarked: values.documentCredentialIsWaterMarkeds[index]
+                        name: volumn, term: values.mountPathes[index],
+                        subTerm: values.mountSubPathes ? values.mountSubPathes[index] : null,
+                        isWaterMarked: values.isReadonlies[index]
                     };
                 }) : null;
-                let documents = documentCredentials;
-                let documentDefinitions = documentCredentialDefinitions;
                 this.props.construct({
                     namespace: values.namespace,
                     name: values.name,
@@ -63,8 +61,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     cargo: values.cargo,
                     cargoPackagePolicy: values.cargoPackagePolicy,
                     doors: doors,
-                    documents: documents,
-                    documentDefinitions: documentDefinitions
+                    volumns: volumns,
+                    volumnMounts: volumnMounts
                 });
             }
         });
@@ -176,11 +174,11 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.ContainerPort" />} />
-                <DynamicFieldList fieldName='credential' itemComponents={(k) =>
+                <DynamicFieldList fieldName='secret' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.SecretName' />}>
-                                {getFieldDecorator(`documentNames[${k}]`, {
+                                {getFieldDecorator(`volumns[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }]
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
@@ -191,12 +189,12 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={3} key={2}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.SecretKey' />}>
-                                {getFieldDecorator(`documentCredentialNames[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input credential!' }],
+                                {getFieldDecorator(`secretKeys[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.SecretRequired' /> }],
                                 })(
-                                    <Select suffixIcon={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder="Credential" optionFilterProp="children">
-                                        {this.props.credentials ? this.props.credentials.map((item, index) => {
-                                            return <Select.Option key={'credential' + index} value={item.name}>{item.name}</Select.Option>
+                                    <Select suffixIcon={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder={<FormattedMessage id='Label.Secret' />} optionFilterProp="children">
+                                        {this.props.secrets ? this.props.secrets.map((item, index) => {
+                                            return <Select.Option key={'secretKey' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
                                 )}
@@ -206,7 +204,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6} key={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MountPath' />}>
-                                {getFieldDecorator(`documentCredentialTerms[${k}]`, {
+                                {getFieldDecorator(`mountPathes[${k}]`, {
                                     rules: [{ required: true, message: 'Please input term!' }]
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Term" />
@@ -217,7 +215,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6} key={4}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MountSubPath' />}>
-                                {getFieldDecorator(`documentCredentialSubTerms[${k}]`, {
+                                {getFieldDecorator(`mountSubPathes[${k}]`, {
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="SubTerm" />
                                 )}
@@ -227,7 +225,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={2} key={5}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.IsReadOnly' />}>
-                                {getFieldDecorator(`documentCredentialIsWaterMarkeds[${k}]`, {
+                                {getFieldDecorator(`isReadonlies[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                                     initialValue: true
                                 })(

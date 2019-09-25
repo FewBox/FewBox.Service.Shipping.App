@@ -230,22 +230,22 @@ export const deleteServiceAccount = (serviceAccount): IAction<any> => ({
     value: serviceAccount
 });
 
-export const initCredentialPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CREDENTIALPAGE
+export const initSecretPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SECRETPAGE
 });
 
-export const loadCredential = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CREDENTIAL,
+export const loadSecret = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SECRET,
     payload: payload
 });
 
-export const issueCredential = (secret): IAction<any> => ({
-    type: ActionTypes.ISSUE_CREDENTIAL,
+export const createSecret = (secret): IAction<any> => ({
+    type: ActionTypes.CREATE_SECRET,
     value: secret
 });
 
-export const revokeCredential = (dismission): IAction<any> => ({
-    type: ActionTypes.REVOKE_CREDENTIAL,
+export const deleteSecret = (dismission): IAction<any> => ({
+    type: ActionTypes.DELETE_SECRET,
     value: dismission
 });
 
@@ -336,12 +336,12 @@ export const fillShipyardServiceAccountDropdownList = (payload): IPayloadAction<
     type: ActionTypes.FILL_SHIPYARDSERVICEACCOUNTDROPDOWNLIST,
     payload: payload
 });
-export const initShipyardCredentialDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_SHIPYARDCREDENTIALDROPDOWNLIST,
+export const initShipyardSecretDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_SHIPYARDSECRETDROPDOWNLIST,
     value: namespaceName
 });
-export const fillShipyardCredentialDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SHIPYARDCREDENTIALDROPDOWNLIST,
+export const fillShipyardSecretDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SHIPYARDSECRETDROPDOWNLIST,
     payload: payload
 });
 export const initYardAreaGateAreaDropdownList = (namespaceName: string): IAction<string> => ({

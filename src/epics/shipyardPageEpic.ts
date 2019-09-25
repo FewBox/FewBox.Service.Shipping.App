@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShipyard, initShipyardPage, fillShipyardServiceAccountDropdownList, fillShipyardCredentialDropdownList } from '../actions';
+import { loadShipyard, initShipyardPage, fillShipyardServiceAccountDropdownList, fillShipyardSecretDropdownList } from '../actions';
 
 const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -113,18 +113,18 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
             return fillShipyardServiceAccountDropdownList(payload);
         })
     );
-const initCredentialDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPYARDCREDENTIALDROPDOWNLIST),
+        ofType(ActionTypes.INIT_SHIPYARDSECRETDROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/credentials', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/secrets', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return fillShipyardCredentialDropdownList(payload);
+            return fillShipyardSecretDropdownList(payload);
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initCredentialDropdownListEpic];
+export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];

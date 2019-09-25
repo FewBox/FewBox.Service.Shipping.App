@@ -32,7 +32,7 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
                     //</Row>
                 }
                 <Row gutter={16}>
-                    <NamespaceCreation start={this.props.createNamespace} reload={this.props.initNamespacePage} />
+                    <NamespaceCreation create={this.props.createNamespace} reload={this.props.initNamespacePage} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.namespaces}

@@ -25,7 +25,7 @@ export interface Store {
     gateAreaPage: GateAreaPage;
     logBookPage: LogBookPage;
     serviceAccountPage: ServiceAccountPage;
-    credentialPage: CredentialPage;
+    secretPage: SecretPage;
     yardAreaPage: YardAreaPage;
     stackPolicyPage: StackPolicyPage;
     freeTradeAreaPage: FreeTradeAreaPage;
@@ -70,7 +70,7 @@ export interface ContainerShipPage {
 export interface ShipyardPage {
     shipyards: Shipyard[];
     serviceAccounts: ServiceAccount[];
-    credentials: Credential[];
+    secrets: Secret[];
 }
 export interface GateAreaPage {
     gateAreas: GateArea[];
@@ -81,8 +81,8 @@ export interface LogBookPage {
 export interface ServiceAccountPage {
     serviceAccounts: ServiceAccount[];
 }
-export interface CredentialPage {
-    credentials: Credential[];
+export interface SecretPage {
+    secrets: Secret[];
 }
 export interface YardAreaPage {
     yardAreas: YardArea[];
@@ -214,10 +214,10 @@ export interface LogBook {
 export interface ServiceAccount {
     namespace: string;
     name: string;
-    credentials: Credential[];
+    secrets: Secret[];
     age: string;
 }
-export interface Credential {
+export interface Secret {
     namespace: string;
     name: string;
     type: string;

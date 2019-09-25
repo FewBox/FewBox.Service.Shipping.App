@@ -12,14 +12,14 @@ import quayAreaPage from './quayAreaReducer';
 import gateAreaPage from './gateAreaReducer';
 import logBookPage from './logBookReducer';
 import serviceAccountPage from './serviceAccountReducer';
-import credentialPage from './credentialReducer';
+import secretPage from './secretReducer';
 import yardAreaPage from './yardAreaReducer';
 import stackPolicyPage from './stackPolicyReducer';
 import freeTradeAreaPage from './freeTradeAreaReducer';
 
 const appReducer = combineReducers({
     masterPage, signinPage, landingPage, settingPage, countryPage, namespacePage, containerShipPage, shipyardPage, quayAreaPage,
-    gateAreaPage, logBookPage, serviceAccountPage, credentialPage, yardAreaPage, stackPolicyPage, freeTradeAreaPage, routing
+    gateAreaPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage, stackPolicyPage, freeTradeAreaPage, routing
 });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {
