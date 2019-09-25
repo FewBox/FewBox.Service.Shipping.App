@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { BrandIcon } from '../Icon';
-import { Subset, SelectedStackPolicy } from '../../reducers/State';
+import { Subset, SelectedDestinationRule } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IDestinationRuleDrawerProps {
-    selectedStackPolicy: SelectedStackPolicy;
+    selectedStackPolicy: SelectedDestinationRule;
     namespaceName: string;
     name: string;
     changeStackPolicySubset: (any) => void;
@@ -39,8 +39,8 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
                                     initialValue: i ? i.name : null
                                 })(
                                     <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.selectedStackPolicy.shipyards ? this.props.selectedStackPolicy.shipyards.map((item, index) => {
-                                            return <Select.Option key={'numbering' + index} value={item.numbering}>{item.name}</Select.Option>
+                                        {this.props.selectedStackPolicy.deployments ? this.props.selectedStackPolicy.deployments.map((item, index) => {
+                                            return <Select.Option key={'version' + index} value={item.version}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
                                 )}

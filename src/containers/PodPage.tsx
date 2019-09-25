@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
 import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initNamespaceDropdownList, showDrawer, initContainerShipServiceAccountDropdownList } from '../actions';
-import { Store, ContainerShip, Namespace, ServiceAccount } from '../reducers/State';
+import { Store, Pod, Namespace, ServiceAccount } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/PodCreation';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -12,7 +12,7 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IPodPageProps {
     namespaces: Namespace[];
-    containerShips: ContainerShip[];
+    containerShips: Pod[];
     serviceAccounts: ServiceAccount[];
     showDrawer: () => void;
     initNamespaceDropdownList: () => void;
@@ -37,7 +37,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
-                        renderItem={(item: ContainerShip) => (
+                        renderItem={(item: Pod) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
@@ -78,14 +78,14 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.IdentificationCode" />}>{item.identificationCode}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}>{item.numbering}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.IdentificationCode" />}>{item.app}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}>{item.version}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.serviceAccount}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.country}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.NodeIP' id="Label.NodeIP" />}>{item.countryPosition}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.PodIP' id="Label.IP" />}>{item.position}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.node}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.NodeIP' id="Label.NodeIP" />}>{item.nodeIP}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.PodIP' id="Label.IP" />}>{item.ip}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                                                 </Descriptions>
                                             </Collapse.Panel>
@@ -94,17 +94,17 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                                     {item.containers.map((container, index) => {
                                                         return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.ImageItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
                                                     })}
-                                                    {item.documents.map((document, index) => {
+                                                    {item.volumns.map((document, index) => {
                                                         return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.VolumeItem" values={{ key: document.name }} />}>
                                                             <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
-                                                    {item.documentDefinitions.map((documentDefinition, index) => {
-                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isWaterMarked ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: documentDefinition.name }} />} />}>
-                                                            <p>{documentDefinition.term}</p>
-                                                            <p>{documentDefinition.subTerm}</p>
+                                                    {item.volumnMounts.map((documentDefinition, index) => {
+                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: documentDefinition.name }} />} />}>
+                                                            <p>{documentDefinition.mountPath}</p>
+                                                            <p>{documentDefinition.mountSubPath}</p>
                                                         </Descriptions.Item>
                                                     })}
                                                 </Descriptions>
@@ -121,8 +121,8 @@ class PodPage extends React.Component<IPodPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ containerShipPage, masterPage, settingPage }: Store) => ({
-    containerShips: containerShipPage.containerShips,
+const mapStateToProps = ({ podPage: containerShipPage, masterPage, settingPage }: Store) => ({
+    containerShips: containerShipPage.pods,
     serviceAccounts: containerShipPage.serviceAccounts,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

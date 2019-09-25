@@ -2,18 +2,18 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
-import { StackPolicy, Namespace, QuayArea, Shipyard } from '../../reducers/State';
+import { DestinationRule, Namespace, Service, Deployment } from '../../reducers/State';
 import { BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IDestinationRuleCreationProps {
-    stackPolicys: StackPolicy[];
+    stackPolicys: DestinationRule[];
     namespaces: Namespace[];
-    quayAreas: QuayArea[];
-    shipyards: Shipyard[];
-    refreshQuayAreas: (namespaceName: string) => void;
+    services: Service[];
+    shipyards: Deployment[];
+    refreshServices: (namespaceName: string) => void;
     refreshShipyards: (identificationCode: string) => void;
     draft: (any) => void;
     reload: () => void;
@@ -23,7 +23,7 @@ export interface IDestinationRuleCreationProps {
 
 class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreationProps> {
     changeNamespace = (namespaceName: string) => {
-        this.props.refreshQuayAreas(namespaceName);
+        this.props.refreshServices(namespaceName);
     };
     changeShipyard = (identificationCode: string) => {
         this.props.refreshShipyards(identificationCode);
@@ -61,12 +61,12 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
-                                {getFieldDecorator('alias', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
+                                {getFieldDecorator('service', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ServiceRequired' /> }],
                                 })(
-                                    <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
-                                            return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
+                                    <Select showSearch onChange={this.changeShipyard} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.services ? this.props.services.map((item, index) => {
+                                            return <Select.Option key={'service' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
                                 )}
@@ -98,7 +98,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                                 })(
                                     <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.shipyards ? this.props.shipyards.map((item, index) => {
-                                            return <Select.Option key={'subset' + index} value={item.numbering}>{item.name}</Select.Option>
+                                            return <Select.Option key={'subset' + index} value={item.version}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
                                 )}

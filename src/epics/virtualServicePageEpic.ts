@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaQuayAreaDropdownList, fillYardAreaShipyardDropdownList } from '../actions';
+import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaServiceDropdownList, fillYardAreaShipyardDropdownList } from '../actions';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -82,7 +82,7 @@ const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
     );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST),
+        ofType(ActionTypes.INIT_YARDAREASERVICEDROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
@@ -90,7 +90,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             if (payload.type) {
                 return payload;
             }
-            return fillYardAreaQuayAreaDropdownList(payload);
+            return fillYardAreaServiceDropdownList(payload);
         })
     );
 const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>

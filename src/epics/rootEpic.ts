@@ -1,19 +1,19 @@
-import commonEpic from './commonEpic';
 import { combineEpics } from 'redux-observable';
+import commonEpic from './commonEpic';
 import landingPageEpic from './landingPageEpic';
 import signInPageEpic from './signInPageEpic';
-import countryPageEpic from './countryPageEpic';
+import nodePageEpic from './nodePageEpic';
 import namespacePageEpic from './namespacePageEpic';
-import containerShipPageEpic from './containerShipPageEpic';
-import shipyardPageEpic from './shipyardPageEpic';
-import quayAreaPageEpic from './quayAreaPageEpic';
-import gateAreaPageEpic from './gateAreaPageEpic';
+import podPageEpic from './podPageEpic';
+import deploymentPageEpic from './deploymentPageEpic';
+import servicePageEpic from './servicePageEpic';
+import gatewayPageEpic from './gatewayPageEpic';
 import logBookPageEpic from './logBookPageEpic';
 import serviceAccountPageEpic from './serviceAccountPageEpic';
 import secretPageEpic from './secretPageEpic';
-import yardAreaPageEpic from './yardAreaPageEpic';
-import stackPolicyPageEpic from './stackPolicyPageEpic';
-import freeTradeAreaPageEpic from './freeTradeAreaPageEpic';
+import virtualServicePageEpic from './virtualServicePageEpic';
+import destinationRulePageEpic from './destinationRulePageEpic';
+import serviceEntryPageEpic from './serviceEntryPageEpic';
 
-export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...countryPageEpic, ...namespacePageEpic, ...containerShipPageEpic, ...shipyardPageEpic,
-    ...quayAreaPageEpic, ...gateAreaPageEpic, ...logBookPageEpic, ...serviceAccountPageEpic, ...secretPageEpic, ...yardAreaPageEpic, ...stackPolicyPageEpic, ...freeTradeAreaPageEpic);
+export default combineEpics(...commonEpic, ...landingPageEpic, ...signInPageEpic, ...nodePageEpic, ...namespacePageEpic, ...podPageEpic, ...deploymentPageEpic,
+    ...servicePageEpic, ...gatewayPageEpic, ...logBookPageEpic, ...serviceAccountPageEpic, ...secretPageEpic, ...virtualServicePageEpic, ...destinationRulePageEpic, ...serviceEntryPageEpic);

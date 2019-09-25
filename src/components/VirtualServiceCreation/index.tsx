@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Select, Input, Button } from 'antd';
-import { Namespace, GateArea, QuayArea, Shipyard, Option } from '../../reducers/State';
+import { Namespace, Gateway, Service, Deployment, Option } from '../../reducers/State';
 import { BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -10,12 +10,12 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IVirtualServiceCreationProps {
     namespaces: Namespace[];
-    gateAreas: GateArea[];
-    quayAreas: QuayArea[];
-    shipyards: Shipyard[];
+    gateAreas: Gateway[];
+    services: Service[];
+    shipyards: Deployment[];
     matches: Option[];
     refreshGateAreas: (namespaceName: string) => void;
-    refreshQuayAreas: (namespaceName: string) => void;
+    refreshServices: (namespaceName: string) => void;
     refreshShipyards: (identificationCode: string) => void;
     construct: (string) => void;
     reload: () => void;
@@ -26,7 +26,7 @@ export interface IVirtualServiceCreationProps {
 class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreationProps> {
     changeNamespace = (namespaceName: string) => {
         this.props.refreshGateAreas(namespaceName);
-        this.props.refreshQuayAreas(namespaceName);
+        this.props.refreshServices(namespaceName);
     };
     changeShipyard = (identificationCode: string) => {
         this.props.refreshShipyards(identificationCode);
@@ -44,10 +44,10 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         let name = data.tagTargetNames[index][tagTargetIndex];
                         return { [name]: { [data.tagTargetTypes[index][tagTargetIndex]]: tagTarget } };
                     }) : null;
-                    let directions = data.directionQuayAreas && data.directionQuayAreas[index] ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
+                    let routes = data.directionQuayAreas && data.directionQuayAreas[index] ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
                         return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.directionNumberings[index][directionQuayAreaIndex] };
                     }) : null;
-                    return { targets: targets, tagTargets: tagTargets, directions: directions };
+                    return { targets: targets, tagTargets: tagTargets, directions: routes };
                 });
                 this.props.construct({ namespace: values.namespace, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
             }
@@ -181,7 +181,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
                                             })(
                                                 <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.quayAreas ? this.props.quayAreas.map((item, index) => {
+                                                    {this.props.services ? this.props.services.map((item, index) => {
                                                         return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
@@ -208,7 +208,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                             })(
                                                 <Select showSearch placeholder="Shipyard" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.shipyards ? this.props.shipyards.map((item, index) => {
-                                                        return <Select.Option key={'shipyard' + index} value={item.numbering}>{item.name}</Select.Option>
+                                                        return <Select.Option key={'shipyard' + index} value={item.version}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
                                             )}

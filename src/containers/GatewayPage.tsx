@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initGateAreaPage, initNamespaceDropdownList, constructGateArea, demolishGateArea } from '../actions';
-import { GateArea, Store, Namespace } from '../reducers/State';
+import { Gateway, Store, Namespace } from '../reducers/State';
 import GateAreaConstruction from '../components/GatewayCreation';
 import { Protocols } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -11,7 +11,7 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IGatewayPageProps {
     namespaces: Namespace[];
-    gateAreas: GateArea[];
+    gateAreas: Gateway[];
     initGateAreaPage: () => void;
     initNamespaceDropdownList: () => void;
     constructGateArea: (any) => void;
@@ -33,7 +33,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateAreas}
-                        renderItem={(item: GateArea) => (
+                        renderItem={(item: Gateway) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishGateArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
@@ -59,8 +59,8 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ gateAreaPage, masterPage, settingPage }: Store) => ({
-    gateAreas: gateAreaPage.gateAreas,
+const mapStateToProps = ({ gatewayPage: gateAreaPage, masterPage, settingPage }: Store) => ({
+    gateAreas: gateAreaPage.gateways,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

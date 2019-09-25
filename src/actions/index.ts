@@ -1,7 +1,7 @@
 import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
-import { SelectedStackPolicy } from '../reducers/State';
+import { SelectedDestinationRule } from '../reducers/State';
 import { Action } from 'rxjs/internal/scheduler/Action';
 
 // Common
@@ -135,23 +135,23 @@ export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
     value: renewBill
 });
 
-export const initQuayAreaPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_QUAYAREAPAGE
+export const initServicePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SERVICEPAGE
 });
 
-export const loadQuayArea = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_QUAYAREA,
+export const loadService = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SERVICE,
     payload: payload
 });
 
-export const constructQuayArea = (constructBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_QUAYAREA,
-    value: constructBill
+export const createService = (service): IAction<any> => ({
+    type: ActionTypes.CREATE_SERVICE,
+    value: service
 });
 
-export const demolishQuayArea = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_QUAYAREA,
-    value: demolishBill
+export const deleteService = (service): IAction<string> => ({
+    type: ActionTypes.DELETE_SERVICE,
+    value: service
 });
 
 export const initYardAreaPage = (): IEmptyAction => ({
@@ -352,20 +352,20 @@ export const fillYardAreaGateAreaDropdownList = (payload): IPayloadAction<any> =
     type: ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST,
     payload: payload
 });
-export const initStackPolicyQuayAreaDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST,
+export const initStackPolicyServiceDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_STACKPOLICYSERVICEDROPDOWNLIST,
     value: namespaceName
 });
-export const fillStackPolicyQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_STACKPOLICYQUAYAREADROPDOWNLIST,
+export const fillStackPolicyServiceDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_STACKPOLICYSERVICEDROPDOWNLIST,
     payload: payload
 });
-export const initYardAreaQuayAreaDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_YARDAREAQUAYAREADROPDOWNLIST,
+export const initYardAreaServiceDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_YARDAREASERVICEDROPDOWNLIST,
     value: namespaceName
 });
-export const fillYardAreaQuayAreaDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_YARDAREAQUAYAREADROPDOWNLIST,
+export const fillYardAreaServiceDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_YARDAREASERVICEDROPDOWNLIST,
     payload: payload
 });
 export const initStackPolicyShipyardDropdownList = (identificationCode: string): IAction<string> => ({
@@ -380,7 +380,7 @@ export const selectStackPolicy = (namespaceName: string, name: string): IAction<
     type: ActionTypes.SELECT_STACKPOLICY,
     value: { namespaceName: namespaceName, name: name }
 });
-export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedStackPolicy): IPayloadAction<any> => ({
+export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedDestinationRule): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SELECTEDSTACKPOLICY,
     payload: payload
 });

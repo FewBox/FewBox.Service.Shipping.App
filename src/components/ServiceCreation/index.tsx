@@ -130,4 +130,4 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'quayarea_construct' })(ServiceCreation));
+export default connect()(Form.create({ name: 'service_creation' })(ServiceCreation));

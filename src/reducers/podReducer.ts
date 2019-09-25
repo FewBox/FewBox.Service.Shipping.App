@@ -1,14 +1,14 @@
 import ActionTypes from '../actions/ActionTypes';
-import { ContainerShipPage } from './State';
+import { PodPage } from './State';
 
-const containerShipState = {
-    containerShips: [],
+const podState = {
+    pods: [],
     serviceAccounts: []
 };
-export default (state: ContainerShipPage = containerShipState, action: any): ContainerShipPage => {
+export default (state: PodPage = podState, action: any): PodPage => {
     switch (action.type) {
         case ActionTypes.LOAD_CONTAINERSHIP:
-            return { ...state, containerShips: action.payload };
+            return { ...state, pods: action.payload };
         case ActionTypes.FILL_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST:
             return { ...state, serviceAccounts: action.payload };
         default:

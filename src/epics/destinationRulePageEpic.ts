@@ -4,7 +4,7 @@ import { mergeMap, map, switchMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initStackPolicyPage, loadStackPolicy, fillStackPolicyQuayAreaDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
+import { initStackPolicyPage, loadStackPolicy, fillStackPolicyServiceDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
 
 const initStackPolicyPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -83,7 +83,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
     );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_STACKPOLICYQUAYAREADROPDOWNLIST),
+        ofType(ActionTypes.INIT_STACKPOLICYSERVICEDROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
@@ -91,7 +91,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             if (payload.type) {
                 return payload;
             }
-            return fillStackPolicyQuayAreaDropdownList(payload);
+            return fillStackPolicyServiceDropdownList(payload);
         })
     );
 const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -120,7 +120,7 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
                     return payloads[key];
                 }
             }
-            return fillSelectedStackPolicyShipyardDropdownList({ subsets: payloads[0].subsets, shipyards: payloads[1] });
+            return fillSelectedStackPolicyShipyardDropdownList({ subsets: payloads[0].subsets, deployments: payloads[1] });
         })
     );
 

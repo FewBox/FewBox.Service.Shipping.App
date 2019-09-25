@@ -3,11 +3,11 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initQuayAreaPage, loadQuayArea } from '../actions';
+import { initServicePage, loadService } from '../actions';
 
 const initQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_QUAYAREAPAGE),
+        ofType(ActionTypes.INIT_SERVICEPAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/quayareas/fewbox', method: 'GET' });
@@ -20,7 +20,7 @@ const initQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
             if (payload.type) {
                 return payload;
             }
-            return loadQuayArea(payload);
+            return loadService(payload);
         })
     );
 const switchQuayAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -38,12 +38,12 @@ const switchQuayAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
             if (payload.type) {
                 return payload;
             }
-            return loadQuayArea(payload);
+            return loadService(payload);
         })
     );
 const constructQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CONSTRUCT_QUAYAREA),
+        ofType(ActionTypes.CREATE_SERVICE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/quayareas', method: 'POST', body: action.value });
         }),
@@ -51,12 +51,12 @@ const constructQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
             if (payload.type) {
                 return payload;
             }
-            return initQuayAreaPage();
+            return initServicePage();
         })
     );
 const demolishQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.DEMOLISH_QUAYAREA),
+        ofType(ActionTypes.DELETE_SERVICE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/quayareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
@@ -64,7 +64,7 @@ const demolishQuayAreaPageEpic = (action$: ActionsObservable<any>, store$: State
             if (payload.type) {
                 return payload;
             }
-            return initQuayAreaPage();
+            return initServicePage();
         })
     );
 

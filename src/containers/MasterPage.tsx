@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Store, SelectedStackPolicy } from '../reducers/State';
+import { Store, SelectedDestinationRule } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
@@ -53,7 +53,7 @@ export interface IMasterPageProps {
     changeContainerShipNumbering: (any) => void;
     changeStackPolicySubset: (any) => void;
     intl: any;
-    selectedStackPolicy: SelectedStackPolicy;
+    selectedStackPolicy: SelectedDestinationRule;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -231,7 +231,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage, stackPolicyPage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, destinationRulePage: stackPolicyPage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -241,7 +241,7 @@ const mapStateToProps = ({ masterPage, settingPage, stackPolicyPage }: Store) =>
     isDrawerVisible: masterPage.isDrawerVisible,
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
-    selectedStackPolicy: stackPolicyPage.selectedStackPolicy,
+    selectedStackPolicy: stackPolicyPage.selectedDestinationRule,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })

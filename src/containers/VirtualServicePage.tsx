@@ -2,18 +2,18 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaQuayAreaDropdownList, initYardAreaShipyardDropdownList } from '../actions';
-import { YardArea, Store, Namespace, GateArea, QuayArea, Shipyard } from '../reducers/State';
+import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaServiceDropdownList, initYardAreaShipyardDropdownList } from '../actions';
+import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import YardAreaConstruction from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { Matches } from '../jsons';
 
 export interface IVirtualServicePageProps {
     namespaces: Namespace[];
-    yardAreas: YardArea[];
-    gateAreas: GateArea[];
-    quayAreas: QuayArea[];
-    shipyards: Shipyard[];
+    yardAreas: VirtualService[];
+    gateAreas: Gateway[];
+    quayAreas: Service[];
+    shipyards: Deployment[];
     initYardAreaPage: () => void;
     initNamespaceDropdownList: () => void;
     constructYardArea: (any) => void;
@@ -39,7 +39,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.yardAreas}
-                        renderItem={(item: YardArea) => (
+                        renderItem={(item: VirtualService) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishYardArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
@@ -54,22 +54,22 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
-                                                {item.aliases.map((alias, index) => {
+                                                {item.hosts.map((alias, index) => {
                                                     return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
                                                 })}
-                                                {item.gateAreas.map((gateArea, index) => {
+                                                {item.gateways.map((gateArea, index) => {
                                                     return <Descriptions.Item key={'gateArea' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateArea}</Descriptions.Item>
                                                 })}
-                                                {item.guideboards.map((guideboard, index) => {
+                                                {item.https.map((guideboard, index) => {
                                                     return <Descriptions.Item key={'guideboard' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
-                                                        {guideboard.targets != null ? guideboard.targets.map((target, index) => {
+                                                        {guideboard.uris != null ? guideboard.uris.map((target, index) => {
                                                             return <p key={'target' + index}>{JSON.stringify(target)}</p>
                                                         }) : null}
-                                                        {guideboard.tagTargets != null ? guideboard.tagTargets.map((tagTarget, index) => {
+                                                        {guideboard.headers != null ? guideboard.headers.map((tagTarget, index) => {
                                                             return <p key={'tagTarget' + index}>{JSON.stringify(tagTarget)}</p>
                                                         }) : null}
-                                                        {guideboard.directions.map((direction, index) => {
-                                                            return <p key={'direction' + index}>{direction.quayArea} : {direction.crane ? direction.crane : direction.numbering}</p>
+                                                        {guideboard.routes.map((direction, index) => {
+                                                            return <p key={'direction' + index}>{direction.host} : {direction.subset ? direction.subset : direction.port}</p>
                                                         })}
                                                     </Descriptions.Item>
                                                 })}
@@ -86,11 +86,11 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
     }
 }
 
-const mapStateToProps = ({ yardAreaPage, masterPage, settingPage }: Store) => ({
-    yardAreas: yardAreaPage.yardAreas,
-    gateAreas: yardAreaPage.gateAreas,
-    quayAreas: yardAreaPage.quayAreas,
-    shipyards: yardAreaPage.shipyards,
+const mapStateToProps = ({ virtualServicePage: yardAreaPage, masterPage, settingPage }: Store) => ({
+    yardAreas: yardAreaPage.virtualServices,
+    gateAreas: yardAreaPage.gateways,
+    quayAreas: yardAreaPage.services,
+    shipyards: yardAreaPage.deployments,
     namespaces: masterPage.namespaces,
     isHelp: settingPage
 });
@@ -101,7 +101,7 @@ const mapDispatchToProps = {
     constructYardArea,
     demolishYardArea,
     initYardAreaGateAreaDropdownList,
-    initYardAreaQuayAreaDropdownList,
+    initYardAreaQuayAreaDropdownList: initYardAreaServiceDropdownList,
     initYardAreaShipyardDropdownList
 };
 

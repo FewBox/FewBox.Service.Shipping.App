@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initFreeTradeAreaPage, initNamespaceDropdownList, constructFreeTradeArea, demolishFreeTradeArea } from '../actions';
-import { FreeTradeArea, Store, Namespace } from '../reducers/State';
+import { ServiceEntry, Store, Namespace } from '../reducers/State';
 import FreeTradeAreaConstruction from '../components/ServiceEntryCreation';
 import { Protocols, Locations, Resolutions } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -11,7 +11,7 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IServiceEntryPageProps {
     namespaces: Namespace[];
-    freeTradeAreas: FreeTradeArea[];
+    freeTradeAreas: ServiceEntry[];
     initFreeTradeAreaPage: () => void;
     initNamespaceDropdownList: () => void;
     constructFreeTradeArea: (any) => void;
@@ -33,7 +33,7 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.freeTradeAreas}
-                        renderItem={(item: FreeTradeArea) => (
+                        renderItem={(item: ServiceEntry) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishFreeTradeArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
@@ -48,13 +48,13 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
-                                                {item.aliases ? item.aliases.map((alias, index) => {
+                                                {item.hosts ? item.hosts.map((alias, index) => {
                                                     return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{alias}</Descriptions.Item>
                                                 }) : null}
-                                                {item.positions ? item.positions.map((position, index) => {
+                                                {item.addresses ? item.addresses.map((position, index) => {
                                                     return <Descriptions.Item key={'position' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{position}</Descriptions.Item>
                                                 }) : null}
-                                                {item.passes ? item.passes.map((pass, index) => {
+                                                {item.ports ? item.ports.map((pass, index) => {
                                                     return <Descriptions.Item key={'pass' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: pass.name }} />}>{pass.protocol}:{pass.number}</Descriptions.Item>
                                                 }) : null}
                                             </Descriptions>
@@ -70,8 +70,8 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ freeTradeAreaPage, masterPage, settingPage }: Store) => ({
-    freeTradeAreas: freeTradeAreaPage.freeTradeAreas,
+const mapStateToProps = ({ serviceEntryPage: freeTradeAreaPage, masterPage, settingPage }: Store) => ({
+    freeTradeAreas: freeTradeAreaPage.serviceEntries,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

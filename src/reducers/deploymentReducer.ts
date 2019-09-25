@@ -1,15 +1,15 @@
 import ActionTypes from '../actions/ActionTypes';
-import { ShipyardPage } from './State';
+import { DeploymentPage } from './State';
 
-const shipyardState = {
-    shipyards: [],
+const deploymentState = {
+    deployments: [],
     serviceAccounts: [],
     secrets: []
 };
-export default (state: ShipyardPage = shipyardState, action: any): ShipyardPage => {
+export default (state: DeploymentPage = deploymentState, action: any): DeploymentPage => {
     switch (action.type) {
         case ActionTypes.LOAD_SHIPYARD:
-            return { ...state, shipyards: action.payload };
+            return { ...state, deployments: action.payload };
         case ActionTypes.FILL_SHIPYARDSERVICEACCOUNTDROPDOWNLIST:
             return { ...state, serviceAccounts: action.payload };
         case ActionTypes.FILL_SHIPYARDSECRETDROPDOWNLIST:

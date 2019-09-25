@@ -4,22 +4,22 @@ import masterPage from './masterReducer';
 import signinPage from './signinReducer';
 import landingPage from './landingReducer';
 import settingPage from './settingReducer';
-import countryPage from './countryReducer';
+import nodePage from './nodeReducer';
 import namespacePage from './namespaceReducer';
-import containerShipPage from './containerShipReducer';
-import shipyardPage from './shipyardReducer';
-import quayAreaPage from './quayAreaReducer';
-import gateAreaPage from './gateAreaReducer';
+import podPage from './podReducer';
+import deploymentPage from './deploymentReducer';
+import servicePage from './serviceReducer';
+import gatewayPage from './gatewayReducer';
 import logBookPage from './logBookReducer';
 import serviceAccountPage from './serviceAccountReducer';
 import secretPage from './secretReducer';
-import yardAreaPage from './yardAreaReducer';
-import stackPolicyPage from './stackPolicyReducer';
-import freeTradeAreaPage from './freeTradeAreaReducer';
+import virtualServicePage from './virtualServiceReducer';
+import destinationRulePage from './destinationRuleReducer';
+import serviceEntryPage from './serviceEntryReducer';
 
 const appReducer = combineReducers({
-    masterPage, signinPage, landingPage, settingPage, countryPage, namespacePage, containerShipPage, shipyardPage, quayAreaPage,
-    gateAreaPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage, stackPolicyPage, freeTradeAreaPage, routing
+    masterPage, signinPage, landingPage, settingPage, countryPage: nodePage, namespacePage, containerShipPage: podPage, shipyardPage: deploymentPage, quayAreaPage: servicePage,
+    gateAreaPage: gatewayPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage: virtualServicePage, stackPolicyPage: destinationRulePage, freeTradeAreaPage: serviceEntryPage, routing
 });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {

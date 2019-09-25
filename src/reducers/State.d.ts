@@ -17,18 +17,18 @@ export interface Store {
     masterPage: MasterPage;
     landingPage: LandingPage;
     settingPage: SettingPage;
-    countryPage: CountryPage;
+    nodePage: NodePage;
     namespacePage: NamespacePage;
-    containerShipPage: ContainerShipPage;
-    shipyardPage: ShipyardPage;
-    quayAreaPage: QuayAreaPage;
-    gateAreaPage: GateAreaPage;
+    podPage: PodPage;
+    deploymentPage: DeploymentPage;
+    servicePage: ServicePage;
+    gatewayPage: GatewayPage;
     logBookPage: LogBookPage;
     serviceAccountPage: ServiceAccountPage;
     secretPage: SecretPage;
-    yardAreaPage: YardAreaPage;
-    stackPolicyPage: StackPolicyPage;
-    freeTradeAreaPage: FreeTradeAreaPage;
+    virtualServicePage: VirtualServicePage;
+    destinationRulePage: DestinationRulePage;
+    serviceEntryPage: ServiceEntryPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -47,33 +47,33 @@ export interface MasterPage {
     namespaces: Namespace[];
 }
 export interface LandingPage {
-    shippingIndustryStatuses: ShippingIndustryStatus[];
+    componentStatuses: ComponentStatus[];
 }
 export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
 }
-export interface CountryPage {
-    countries: Country[];
+export interface NodePage {
+    nodes: Node[];
 }
 export interface NamespacePage {
     namespaces: Namespace[];
 }
-export interface QuayAreaPage {
-    quayAreas: QuayArea[];
+export interface ServicePage {
+    services: Service[];
 }
-export interface ContainerShipPage {
-    containerShips: ContainerShip[];
+export interface PodPage {
+    pods: Pod[];
     serviceAccounts: ServiceAccount[];
 }
-export interface ShipyardPage {
-    shipyards: Shipyard[];
+export interface DeploymentPage {
+    deployments: Deployment[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
 }
-export interface GateAreaPage {
-    gateAreas: GateArea[];
+export interface GatewayPage {
+    gateways: Gateway[];
 }
 export interface LogBookPage {
     logBook: LogBook;
@@ -84,23 +84,23 @@ export interface ServiceAccountPage {
 export interface SecretPage {
     secrets: Secret[];
 }
-export interface YardAreaPage {
-    yardAreas: YardArea[];
-    gateAreas: GateArea[];
-    quayAreas: QuayArea[];
-    shipyards: Shipyard[];
+export interface VirtualServicePage {
+    virtualServices: VirtualService[];
+    gateways: Gateway[];
+    services: Service[];
+    deployments: Deployment[];
 }
-export interface StackPolicyPage {
-    selectedStackPolicy: SelectedStackPolicy;
-    stackPolicies: StackPolicy[];
-    quayAreas: QuayArea[];
-    shipyards: Shipyard[];
+export interface DestinationRulePage {
+    selectedDestinationRule: SelectedDestinationRule;
+    destinationRules: DestinationRule[];
+    services: Service[];
+    deployments: Deployment[];
 }
-export interface FreeTradeAreaPage {
-    freeTradeAreas: FreeTradeArea[];
+export interface ServiceEntryPage {
+    serviceEntries: ServiceEntry[];
 }
 /** Biz **/
-export interface ShippingIndustryStatus {
+export interface ComponentStatus {
     name: string;
     conditions: Condition[];
 }
@@ -112,24 +112,24 @@ export interface Condition {
 export interface Avatar {
     url: string
 }
-export interface Country {
+export interface Node {
     name: string;
-    horsepower: string;
-    displacement: string;
-    cube: string;
-    tonnage: string;
-    allocatableHorsepower: string;
-    allocatableDisplacement: string;
-    allocatableCube: string;
-    allocatableTonnage: string;
-    containerShipPositionZone: string;
-    position: string;
-    alias: string;
-    government: string;
-    constitution: string;
-    industry: string;
-    transportation: string;
-    cargos: Cargo[];
+    cpu: string;
+    hd: string;
+    memory: string;
+    pods: string;
+    allocatableCPU: string;
+    allocatableHD: string;
+    allocatableMemory: string;
+    allocatablePods: string;
+    podCIDR: string;
+    ip: string;
+    hostname: string;
+    os: string;
+    containerRuntime: string;
+    kubelet: string;
+    kubeProxy: string;
+    images: Cargo[];
     age: string;
 }
 export interface Cargo {
@@ -143,70 +143,70 @@ export interface Namespace {
     status: string;
     age: string;
 }
-export interface ContainerShip {
+export interface Pod {
     namespace: string;
     name: string;
     serviceAccount: string;
     containers: string[];
-    documents: any[];
-    documentDefinitions: DocumentDefinition[];
-    identificationCode: string;
-    numbering: string;
+    volumns: any[];
+    volumnMounts: DocumentDefinition[];
+    app: string;
+    version: string;
     status: string;
-    country: string;
-    countryPosition: string;
-    position: string;
+    node: string;
+    nodeIP: string;
+    ip: string;
     age: string;
 }
-export interface Shipyard {
+export interface Deployment {
     namespace: string;
     name: string;
-    numbering: string;
+    version: string;
     serviceAccount: string;
-    identificationCode: string;
-    quantity: number;
-    cargos: string[];
-    documents: any[];
-    documentDefinitions: DocumentDefinition[];
+    app: string;
+    replias: number;
+    images: string[];
+    volumns: any[];
+    volumnMounts: DocumentDefinition[];
     age: string;
 }
-export interface QuayArea {
+export interface Service {
     namespace: string;
     name: string;
-    containerShipSpec: string;
-    position: string;
+    nodeSelector: string;
+    ip: string;
     type: string;
-    berthes: Berth[];
-    containerShipAgreementType: string;
+    containerPorts: ContainerPort[];
+    imagePullPolicyType: string;
     age: string;
 }
-export interface Berth {
+export interface ContainerPort {
     name: string;
-    crane: string;
-    cellGuide: string;
+    port: number;
+    targetPort: number;
 }
-export interface GateArea {
+export interface Gateway {
     namespace: string;
     name: string;
     age: string;
 }
-export interface YardArea {
+export interface VirtualService {
     namespace: string;
     name: string;
-    aliases: string[];
-    gateAreas: string[];
-    guideboards: Guideboard[];
+    hosts: string[];
+    gateways: string[];
+    https: Http[];
     age: string;
 }
-export interface Guideboard {
-    targets: any[];
-    tagTargets: any[];
-    directions: Direction[];
+export interface Http {
+    uris: any[];
+    headers: any[];
+    routes: Route[];
 }
-export interface Direction {
-    quayArea: string;
-    crane: string;
-    numbering: string;
+export interface Route {
+    host: string;
+    subset: string;
+    port: string;
 }
 export interface LogBook {
     content: string;
@@ -221,24 +221,24 @@ export interface Secret {
     namespace: string;
     name: string;
     type: string;
-    stamps: any[];
+    datas: any[];
     age: string;
 }
 export interface DocumentDefinition {
     name: string;
-    term: string;
-    subTerm: string;
-    isWaterMarked: boolean;
+    mountPath: string;
+    mountSubPath: string;
+    isReadOnly: boolean;
 }
-export interface SelectedStackPolicy {
+export interface SelectedDestinationRule {
     subsets: Subset[];
-    shipyards: Shipyard[];
+    deployments: Deployment[];
 }
-export interface StackPolicy {
+export interface DestinationRule {
     namespace: string;
     name: string;
-    alias: string;
-    mode: string;
+    host: string;
+    tlsMode: string;
     subsets: Subset[];
     age: string;
 }
@@ -249,21 +249,21 @@ export interface Subset {
 export interface LabelBag {
     version: string;
 }
-export interface FreeTradeArea {
+export interface ServiceEntry {
     namespace: string;
     name: string;
-    aliases: string[];
-    positions: string[];
-    passes: Pass[];
+    hosts: string[];
+    addresses: string[];
+    ports: Port[];
     age: string;
 }
-export interface Pass {
+export interface Port {
     name: string;
     number: string;
     protocol: string;
 }
 /* UI */
-export interface Option{
+export interface Option {
     name: string;
     value: string;
 }

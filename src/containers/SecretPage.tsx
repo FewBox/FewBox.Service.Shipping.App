@@ -47,9 +47,9 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                                             </Collapse.Panel>
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    {Object.keys(item.stamps).map((key, index) => {
+                                                    {Object.keys(item.datas).map((key, index) => {
                                                         return <Descriptions.Item key={'stamp' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{ key: key }} />}>
-                                                            <Popover title={key} trigger="click" content={atob(item.stamps[key])}>
+                                                            <Popover title={key} trigger="click" content={atob(item.datas[key])}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
