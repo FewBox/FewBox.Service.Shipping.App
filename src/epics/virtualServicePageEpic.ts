@@ -5,15 +5,15 @@ import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
 
-const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/yardareas/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/yardareas', method: 'GET' });
+                return AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -23,15 +23,15 @@ const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
             return loadVirtualService(payload);
         })
     );
-const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchVirtualServiceEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/yardareas/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/yardareas', method: 'GET' });
+                return AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -41,11 +41,11 @@ const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
             return loadVirtualService(payload);
         })
     );
-const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const createVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_VIRTUALSERVICE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/yardareas', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/virtualservices', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
@@ -54,11 +54,11 @@ const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
             return initVirtualServicePage();
         })
     );
-const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const deleteVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_VIRTUALSERVICE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/yardareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -107,4 +107,4 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
         })
     );
 
-export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGatewayDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic];
+export default [initVirtualServicePageEpic, createVirtualServicePageEpic, switchVirtualServiceEpic, deleteVirtualServicePageEpic, initGatewayDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic];

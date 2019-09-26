@@ -97,10 +97,10 @@ const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store)
 });
 
 const mapDispatchToProps = {
-    initYardAreaPage: initVirtualServicePage,
+    initVirtualServicePage,
     initNamespaceDropdownList,
-    constructYardArea: createVirtualService,
-    demolishYardArea: deleteVirtualService,
+    createVirtualService,
+    deleteVirtualService,
     initVirtualServiceGatewayDropdownList,
     initVirtualServiceServiceDropdownList,
     initVirtualServiceDeploymentDropdownList
