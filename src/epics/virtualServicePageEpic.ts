@@ -3,7 +3,7 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaServiceDropdownList, fillYardAreaShipyardDropdownList } from '../actions';
+import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -93,18 +93,18 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             return fillYardAreaServiceDropdownList(payload);
         })
     );
-const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_YARDAREASHIPYARDDROPDOWNLIST),
+        ofType(ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value, method: 'GET' });
+            return AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return fillYardAreaShipyardDropdownList(payload);
+            return fillVirtualServiceDeploymentDropdownList(payload);
         })
     );
 
-export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic];
+export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initQuayAreaDropdownListEpic, initDeploymentDropdownListEpic];

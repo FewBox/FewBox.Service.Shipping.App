@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button } from 'antd';
-import { CargoIcon } from '../Icon';
+import { ImageIcon } from '../Icon';
 
 export interface IDeploymentDrawerProps {
     cargos: string[];
@@ -33,7 +33,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
                                         rules: [{ required: true, message: 'Please input cargo!' }],
                                         initialValue: this.props.cargos[index]
                                     })(
-                                        <Input prefix={<CargoIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                        <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
                                     )}
                                 </Form.Item>
                             </Col>
@@ -52,4 +52,4 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'shipyard_renovation' })(DeploymentDrawer));
+export default connect()(Form.create({ name: 'deployment_drawer' })(DeploymentDrawer));

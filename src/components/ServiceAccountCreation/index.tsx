@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
-import { CaptainIcon } from '../Icon';
+import { ServiceAccountIcon } from '../Icon';
 import { Namespace } from '../../reducers/State';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
@@ -38,7 +38,7 @@ class ServiceAccountCreation extends React.PureComponent<IServiceAccountCreation
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<CaptainIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<ServiceAccountIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>

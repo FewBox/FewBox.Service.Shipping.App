@@ -86,12 +86,12 @@ export const loadContainerShip = (payload): IPayloadAction<any> => ({
     payload: payload
 });
 
-export const initShipyardPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SHIPYARDPAGE
+export const initDeploymentPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_DEPLOYMENTPAGE
 });
 
-export const loadShipyard = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_SHIPYARD,
+export const loadDeployment = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_DEPLOYMENT,
     payload: payload
 });
 
@@ -328,20 +328,20 @@ export const fillContainerShipServiceAccountDropdownList = (payload): IPayloadAc
     type: ActionTypes.FILL_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST,
     payload: payload
 });
-export const initShipyardServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_SHIPYARDSERVICEACCOUNTDROPDOWNLIST,
+export const initDeploymentServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_DEPLOYMENT_SERVICEACCOUNT_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillShipyardServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SHIPYARDSERVICEACCOUNTDROPDOWNLIST,
+export const fillDeploymentServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DEPLOYMENT_SERVICEACCOUNT_DROPDOWNLIST,
     payload: payload
 });
-export const initShipyardSecretDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_SHIPYARDSECRETDROPDOWNLIST,
+export const initDeploymentSecretDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_DEPLOYMENT_SECRET_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillShipyardSecretDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SHIPYARDSECRETDROPDOWNLIST,
+export const fillDeploymentSecretDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DEPLOYMENT_SECRET_DROPDOWNLIST,
     payload: payload
 });
 export const initYardAreaGateAreaDropdownList = (namespaceName: string): IAction<string> => ({
@@ -353,14 +353,14 @@ export const fillYardAreaGateAreaDropdownList = (payload): IPayloadAction<any> =
     payload: payload
 });
 export const initStackPolicyServiceDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_STACKPOLICYSERVICEDROPDOWNLIST,
+    type: ActionTypes.INIT_DESTINATIONRULE_SERVICE_DROPDOWNLIST,
     value: namespaceName
 });
 export const fillStackPolicyServiceDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_STACKPOLICYSERVICEDROPDOWNLIST,
+    type: ActionTypes.FILL_DESTINATIONRULE_SERVICE_DROPDOWNLIST,
     payload: payload
 });
-export const initYardAreaServiceDropdownList = (namespaceName: string): IAction<string> => ({
+export const initVirtualServiceServiceDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_YARDAREASERVICEDROPDOWNLIST,
     value: namespaceName
 });
@@ -368,27 +368,27 @@ export const fillYardAreaServiceDropdownList = (payload): IPayloadAction<any> =>
     type: ActionTypes.FILL_YARDAREASERVICEDROPDOWNLIST,
     payload: payload
 });
-export const initStackPolicyShipyardDropdownList = (identificationCode: string): IAction<string> => ({
-    type: ActionTypes.INIT_STACKPOLICYSHIPYARDDROPDOWNLIST,
+export const initDestinationRuleDeploymentDropdownList = (identificationCode: string): IAction<string> => ({
+    type: ActionTypes.INIT_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST,
     value: identificationCode
 });
-export const fillStackPolicyShipyardDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_STACKPOLICYSHIPYARDDROPDOWNLIST,
+export const fillDestinationRuleDeploymentDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST,
     payload: payload
 });
-export const selectStackPolicy = (namespaceName: string, name: string): IAction<any> => ({
-    type: ActionTypes.SELECT_STACKPOLICY,
+export const selectDestinationRule = (namespaceName: string, name: string): IAction<any> => ({
+    type: ActionTypes.SELECT_DESTINATIONRULE,
     value: { namespaceName: namespaceName, name: name }
 });
-export const fillSelectedStackPolicyShipyardDropdownList = (payload: SelectedDestinationRule): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SELECTEDSTACKPOLICY,
+export const fillSelectedDestinationRuleDeploymentDropdownList = (payload: SelectedDestinationRule): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTEDDESTINATIONRULE,
     payload: payload
 });
-export const initYardAreaShipyardDropdownList = (identificationCode: string): IAction<string> => ({
-    type: ActionTypes.INIT_YARDAREASHIPYARDDROPDOWNLIST,
+export const initVirtualServiceDeploymentDropdownList = (identificationCode: string): IAction<string> => ({
+    type: ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
     value: identificationCode
 });
-export const fillYardAreaShipyardDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_YARDAREASHIPYARDDROPDOWNLIST,
+export const fillVirtualServiceDeploymentDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
     payload: payload
 });

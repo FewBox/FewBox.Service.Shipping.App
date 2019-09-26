@@ -9,13 +9,12 @@ import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IDestinationRuleCreationProps {
-    stackPolicys: DestinationRule[];
     namespaces: Namespace[];
     services: Service[];
-    shipyards: Deployment[];
+    deployments: Deployment[];
     refreshServices: (namespaceName: string) => void;
-    refreshShipyards: (identificationCode: string) => void;
-    draft: (any) => void;
+    refreshDeployments: (app: string) => void;
+    create: (any) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -25,8 +24,8 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
     changeNamespace = (namespaceName: string) => {
         this.props.refreshServices(namespaceName);
     };
-    changeShipyard = (identificationCode: string) => {
-        this.props.refreshShipyards(identificationCode);
+    changeDeployment = (identificationCode: string) => {
+        this.props.refreshDeployments(identificationCode);
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -35,7 +34,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                 let subsets = values.subsets.map((subset, index) => {
                     return { name: subset, labels: { version: subset } }
                 });
-                this.props.draft({ namespace: values.namespace, name: values.name, alias: values.alias, trafficPolicyMode: values.trafficPolicyMode, subsets: subsets });
+                this.props.create({ namespace: values.namespace, name: values.name, alias: values.alias, trafficPolicyMode: values.trafficPolicyMode, subsets: subsets });
             }
         });
     };
@@ -64,7 +63,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                                 {getFieldDecorator('service', {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.ServiceRequired' /> }],
                                 })(
-                                    <Select showSearch onChange={this.changeShipyard} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select showSearch onChange={this.changeDeployment} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.services ? this.props.services.map((item, index) => {
                                             return <Select.Option key={'service' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
@@ -97,7 +96,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                                     rules: [{ required: true, message: <FormattedMessage id='Message.NumberingRequired' /> }],
                                 })(
                                     <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.shipyards ? this.props.shipyards.map((item, index) => {
+                                        {this.props.deployments ? this.props.deployments.map((item, index) => {
                                             return <Select.Option key={'subset' + index} value={item.version}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
@@ -119,4 +118,4 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
     }
 }
 
-export default connect()(Form.create({ name: 'stackpolicy_draft' })(DestinationRuleCreation));
+export default connect()(Form.create({ name: 'destinatinrul_creation' })(DestinationRuleCreation));

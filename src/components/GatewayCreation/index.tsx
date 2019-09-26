@@ -3,7 +3,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Row, Col, Select } from 'antd';
 import { Namespace, Option } from '../../reducers/State';
-import { GateAreaIcon, WarehouseIcon, GateIcon, NumberingIcon, BrandIcon } from '../Icon';
+import { GatewayIcon, VersionIcon, BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
@@ -59,7 +59,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<GateAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -71,7 +71,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                 {getFieldDecorator(`gateNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gateway' })} />
+                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gateway' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -82,7 +82,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                 {getFieldDecorator(`gateNumberings[${k}]`, {
                                     rules: [{ required: true, message: 'Please input numbering!' }],
                                 })(
-                                    <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -110,7 +110,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                     rules: [{ required: true, message: 'Please input warehouses!' }],
                                     initialValue: '*'
                                 })(
-                                    <Select suffixIcon={<WarehouseIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
+                                    <Select suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
                                         <Select.Option value="*">*</Select.Option>
                                     </Select>
                                 )}

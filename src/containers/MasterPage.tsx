@@ -29,7 +29,7 @@ const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDr
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
-import { ShippingLineIcon, QuayAreaIcon, ShipyardIcon, ContainerShipIcon, GateAreaIcon, LandingIcon, CountryIcon, ReefIcon, BrandIcon, CaptainIcon, CredentialIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon } from '../components/Icon';
 
 
 export interface IMasterPageProps {
@@ -82,9 +82,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         );
         let drawer = () => {
             switch (this.props.drawer.type) {
-                case 'Shipyard':
+                case 'Deployment':
                     return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
-                case 'StackPolicy':
+                case 'DestinationRule':
                     return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedStackPolicy={this.props.selectedStackPolicy} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
                 default:
                     return <div></div>
@@ -92,9 +92,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         };
         let drawerTitle = () => {
             switch (this.props.drawer.type) {
-                case 'Shipyard':
-                    return this.props.intl.formatMessage({ id: 'Label.Shipyard' });
-                case 'StackPolicy':
+                case 'Deployment':
+                    return this.props.intl.formatMessage({ id: 'Label.Deployment' });
+                case 'DestinationRule':
                     return this.props.intl.formatMessage({ id: 'Label.DestinationRule' });
                 default:
                     return this.props.intl.formatMessage({ id: 'Label.None' });
@@ -120,49 +120,49 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             </Menu.Item>
                             <Menu.Item key="2">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Node" />}>
-                                    <Link to='/master/node'><CountryIcon />
+                                    <Link to='/master/node'><NodeIcon />
                                         <FormattedMessage id="Navigation.Node" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
-                                    <Link to='/master/namespace'><ShippingLineIcon />
+                                    <Link to='/master/namespace'><NamespaceIcon />
                                         <FormattedMessage id="Navigation.Namespace" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceAccount" />}>
-                                    <Link to='/master/serviceaccount'><CaptainIcon />
+                                    <Link to='/master/serviceaccount'><ServiceAccountIcon />
                                         <FormattedMessage id="Navigation.ServiceAccount" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="5">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                    <Link to='/master/secret'><CredentialIcon />
+                                    <Link to='/master/secret'><SecretIcon />
                                         <FormattedMessage id="Navigation.Secret" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="6">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Service" />}>
-                                    <Link to='/master/service'><QuayAreaIcon />
+                                    <Link to='/master/service'><ServiceIcon />
                                         <FormattedMessage id="Navigation.Service" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="7">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Deployment" />}>
-                                    <Link to='/master/deployment'><ShipyardIcon />
+                                    <Link to='/master/deployment'><DeploymentIcon />
                                         <FormattedMessage id="Navigation.Deployment" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="8">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
-                                    <Link to='/master/pod'><ContainerShipIcon />
+                                    <Link to='/master/pod'><PodIcon />
                                         <FormattedMessage id="Navigation.Pod" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
                             <Menu.Item key="9">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Gateway" />}>
-                                    <Link to='/master/gateway'><GateAreaIcon />
+                                    <Link to='/master/gateway'><GatewayIcon />
                                         <FormattedMessage id="Navigation.Gateway" /></Link>
                                 </HelpComponent>
                             </Menu.Item>

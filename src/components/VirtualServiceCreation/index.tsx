@@ -17,7 +17,7 @@ export interface IVirtualServiceCreationProps {
     refreshGatewaies: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
     refreshDeployments: (identificationCode: string) => void;
-    construct: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -28,8 +28,8 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
         this.props.refreshGatewaies(namespaceName);
         this.props.refreshServices(namespaceName);
     };
-    changeShipyard = (identificationCode: string) => {
-        this.props.refreshDeployments(identificationCode);
+    changeDeployment = (app: string) => {
+        this.props.refreshDeployments(app);
     };
     handleSubmit = e => {
         e.preventDefault();
@@ -45,11 +45,11 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         return { [name]: { [data.tagTargetTypes[index][tagTargetIndex]]: tagTarget } };
                     }) : null;
                     let routes = data.directionQuayAreas && data.directionQuayAreas[index] ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
-                        return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.directionNumberings[index][directionQuayAreaIndex] };
+                        return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.versions[index][directionQuayAreaIndex] };
                     }) : null;
                     return { targets: targets, tagTargets: tagTargets, directions: routes };
                 });
-                this.props.construct({ namespace: values.namespace, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
+                this.props.create({ namespace: values.namespace, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
             }
         });
     };
@@ -180,7 +180,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                             {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
                                             })(
-                                                <Select showSearch onChange={this.changeShipyard} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select showSearch onChange={this.changeDeployment} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.services ? this.props.services.map((item, index) => {
                                                         return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
                                                     }) : null}
@@ -203,12 +203,12 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                 <Col key={3}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Deployment' />}>
-                                            {getFieldDecorator(`directionNumberings[${k1}][${k2}]`, {
-                                                rules: [{ required: false, message: <FormattedMessage id='Message.ShipyardRequired' /> }],
+                                            {getFieldDecorator(`versions[${k1}][${k2}]`, {
+                                                rules: [{ required: false, message: <FormattedMessage id='Message.DeploymentRequired' /> }],
                                             })(
-                                                <Select showSearch placeholder="Shipyard" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.deplyments ? this.props.deplyments.map((item, index) => {
-                                                        return <Select.Option key={'shipyard' + index} value={item.version}>{item.name}</Select.Option>
+                                                        return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
                                             )}

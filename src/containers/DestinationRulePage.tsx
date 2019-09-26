@@ -2,26 +2,25 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initStackPolicyServiceDropdownList, initStackPolicyShipyardDropdownList,
-    showDrawer, selectStackPolicy
-} from '../actions';
+import { initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initStackPolicyServiceDropdownList, initDestinationRuleDeploymentDropdownList,
+    showDrawer, selectDestinationRule } from '../actions';
 import { DestinationRule, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
-import StackPolicyDraft from '../components/DestinationRuleCreation';
+import DestinationRuleCreation from '../components/DestinationRuleCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IDestinationRulePageProps {
     namespaces: Namespace[];
-    stackPolicies: DestinationRule[];
+    destinationRules: DestinationRule[];
     services: Service[];
-    shipyards: Deployment[];
+    deployments: Deployment[];
     initDestinationRulePage: () => void;
     initNamespaceDropdownList: () => void;
     showDrawer: (drawerType: any) => void;
     draftStackPolicy: (any) => void;
     abolishStackPolicy: (any) => void;
-    initStackPolicyQuayAreaDropdownList: (namespaceName: string) => void;
-    initStackPolicyShipyardDropdownList: (identificationCode: string) => void;
-    selectStackPolicy: (namespaceName: string, name: string) => void;
+    initDestinationRuleServiceDropdownList: (namespaceName: string) => void;
+    initDestinationRuleDeploymentDropdownList: (identificationCode: string) => void;
+    selectDestinationRule: (namespaceName: string, name: string) => void;
     isHelp: boolean;
 }
 
@@ -34,17 +33,17 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
         return (
             <div>
                 <Row gutter={16}>
-                    <StackPolicyDraft isHelp={this.props.isHelp} namespaces={this.props.namespaces} quayAreas={this.props.services} refreshQuayAreas={this.props.initStackPolicyQuayAreaDropdownList}
-                        shipyards={this.props.shipyards} refreshShipyards={this.props.initStackPolicyShipyardDropdownList} reload={this.props.initDestinationRulePage} draft={this.props.draftStackPolicy} />
+                    <DestinationRuleCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} services={this.props.services} refreshVirtualServices={this.props.initDestinationRuleServiceDropdownList}
+                        deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} draft={this.props.draftStackPolicy} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.stackPolicies}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.destinationRules}
                         renderItem={(item: DestinationRule) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.abolishStackPolicy({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
-                                    <Icon type="ellipsis" onClick={() => { this.props.selectStackPolicy(item.namespace, item.name); this.props.showDrawer({ type: 'StackPolicy', namespace: item.namespace, name: item.name, subsets: item.subsets, shipyards: this.props.shipyards }); }} />]}>
+                                    <Icon type="ellipsis" onClick={() => { this.props.selectDestinationRule(item.namespace, item.name); this.props.showDrawer({ type: 'StackPolicy', namespace: item.namespace, name: item.name, subsets: item.subsets, deployments: this.props.deployments }); }} />]}>
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
@@ -73,7 +72,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
 const mapStateToProps = ({ destinationRulePage, masterPage, settingPage }: Store) => ({
     stackPolicies: destinationRulePage.destinationRules,
     services: destinationRulePage.services,
-    shipyards: destinationRulePage.deployments,
+    deployments: destinationRulePage.deployments,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
@@ -84,9 +83,9 @@ const mapDispatchToProps = {
     draftStackPolicy: createDestinationRule,
     abolishStackPolicy: deleteDestinationRule,
     initStackPolicyServiceDropdownList,
-    initStackPolicyShipyardDropdownList,
+    initDestinationRuleDeploymentDropdownList,
     showDrawer,
-    selectStackPolicy
+    selectStackPolicy: selectDestinationRule
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DestinationRulePage);

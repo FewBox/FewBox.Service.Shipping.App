@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaServiceDropdownList, initYardAreaShipyardDropdownList } from '../actions';
+import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initVirtualServiceServiceDropdownList, initVirtualServiceDeploymentDropdownList } from '../actions';
 import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -14,35 +14,36 @@ export interface IVirtualServicePageProps {
     gatewaies: Gateway[];
     services: Service[];
     deployments: Deployment[];
-    initYardAreaPage: () => void;
+    initVirtualServicePage: () => void;
     initNamespaceDropdownList: () => void;
-    constructYardArea: (any) => void;
-    demolishYardArea: (any) => void;
-    initYardAreaGateAreaDropdownList: (namespaceName: string) => void;
-    initYardAreaQuayAreaDropdownList: (namespaceName: string) => void;
-    initYardAreaShipyardDropdownList: (identificationCode: string) => void;
+    createVirtualService: (any) => void;
+    deleteVirtualService: (any) => void;
+    initVirtualServiceGatewayDropdownList: (namespaceName: string) => void;
+    initVirtualServiceServiceDropdownList: (namespaceName: string) => void;
+    initVirtualServiceDeploymentDropdownList: (app: string) => void;
     isHelp: boolean;
 }
 
 class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> {
     componentDidMount() {
-        this.props.initYardAreaPage();
+        this.props.initVirtualServicePage();
         this.props.initNamespaceDropdownList();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateAreas={this.props.gatewaies} quayAreas={this.props.services}
-                        shipyards={this.props.deployments} refreshShipyards={this.props.initYardAreaShipyardDropdownList} matchOptions={MatchOptions}
-                        refreshGateAreas={this.props.initYardAreaGateAreaDropdownList} refreshQuayAreas={this.props.initYardAreaQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
+                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gatewaies={this.props.gatewaies} services={this.props.services}
+                        deployments={this.props.deployments} refreshDeployments={this.props.initVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions}
+                        refreshGatewaies={this.props.initVirtualServiceGatewayDropdownList} refreshServices={this.props.initVirtualServiceServiceDropdownList}
+                        reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.virtualServices}
                         renderItem={(item: VirtualService) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishYardArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
@@ -101,8 +102,8 @@ const mapDispatchToProps = {
     constructYardArea,
     demolishYardArea,
     initYardAreaGateAreaDropdownList,
-    initYardAreaServiceDropdownList,
-    initYardAreaShipyardDropdownList
+    initYardAreaServiceDropdownList: initVirtualServiceServiceDropdownList,
+    initVirtualServiceDeploymentDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VirtualServicePage);

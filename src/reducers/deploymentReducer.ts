@@ -8,11 +8,11 @@ const deploymentState = {
 };
 export default (state: DeploymentPage = deploymentState, action: any): DeploymentPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_SHIPYARD:
+        case ActionTypes.LOAD_DEPLOYMENT:
             return { ...state, deployments: action.payload };
-        case ActionTypes.FILL_SHIPYARDSERVICEACCOUNTDROPDOWNLIST:
+        case ActionTypes.FILL_DEPLOYMENT_SERVICEACCOUNT_DROPDOWNLIST:
             return { ...state, serviceAccounts: action.payload };
-        case ActionTypes.FILL_SHIPYARDSECRETDROPDOWNLIST:
+        case ActionTypes.FILL_DEPLOYMENT_SECRET_DROPDOWNLIST:
             return { ...state, secrets: action.payload };
         default:
             return state;

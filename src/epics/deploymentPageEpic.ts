@@ -3,43 +3,43 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadShipyard, initShipyardPage, fillShipyardServiceAccountDropdownList, fillShipyardSecretDropdownList } from '../actions';
+import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList } from '../actions';
 
-const initShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPYARDPAGE),
+        ofType(ActionTypes.INIT_DEPLOYMENTPAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/shipyards/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/deployments/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/shipyards', method: 'GET' });
+                return AjaxObservable({ path: '/api/deployments', method: 'GET' });
             }
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return loadShipyard(payload);
+            return loadDeployment(payload);
         })
     );
 
-const switchShipyardEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/shipyards/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/deployments/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/shipyards', method: 'GET' });
+                return AjaxObservable({ path: '/api/deployments', method: 'GET' });
             }
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return loadShipyard(payload);
+            return loadDeployment(payload);
         })
     );
 const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -49,13 +49,13 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
             let operations = action.value.cargos.map((cargo, index) => {
                 return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
             });
-            return AjaxObservable({ path: '/api/shipyards/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: operations });
+            return AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: operations });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return initShipyardPage();
+            return initDeploymentPage();
         })
     );
 
@@ -63,13 +63,13 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
     action$.pipe(
         ofType(ActionTypes.CONSTRUCT_CONTAINERSHIP),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/oncontainer', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/deployments/oncontainer', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return initShipyardPage();
+            return initDeploymentPage();
         })
     );
 
@@ -77,13 +77,13 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.SCALE_CONTAINERSHIPQUANTITY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
+            return AjaxObservable({ path: '/api/deployments/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return initShipyardPage();
+            return initDeploymentPage();
         })
     );
 
@@ -91,18 +91,18 @@ const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateOb
     action$.pipe(
         ofType(ActionTypes.SCRAP_CONTAINERSHIP),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return initShipyardPage();
+            return initDeploymentPage();
         })
     );
 const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPYARDSERVICEACCOUNTDROPDOWNLIST),
+        ofType(ActionTypes.INIT_DEPLOYMENT_SERVICEACCOUNT_DROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/serviceaccounts', method: 'GET' });
         }),
@@ -110,12 +110,12 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
             if (payload.type) {
                 return payload;
             }
-            return fillShipyardServiceAccountDropdownList(payload);
+            return fillDeploymentServiceAccountDropdownList(payload);
         })
     );
 const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SHIPYARDSECRETDROPDOWNLIST),
+        ofType(ActionTypes.INIT_DEPLOYMENT_SECRET_DROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/secrets', method: 'GET' });
         }),
@@ -123,8 +123,8 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
             if (payload.type) {
                 return payload;
             }
-            return fillShipyardSecretDropdownList(payload);
+            return fillDeploymentSecretDropdownList(payload);
         })
     );
 
-export default [initShipyardEpic, switchShipyardEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];
+export default [initDeploymentEpic, switchDeploymentEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];

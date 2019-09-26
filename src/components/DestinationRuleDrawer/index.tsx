@@ -60,4 +60,4 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
     }
 }
 
-export default connect()(Form.create({ name: 'shipyard_renovation' })(DestinationRuleDrawer));
+export default connect()(Form.create({ name: 'destinationrule_drawer' })(DestinationRuleDrawer));

@@ -3,48 +3,48 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initShipyardPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initShipyardServiceAccountDropdownList, initShipyardSecretDropdownList } from '../actions';
+import { initDeploymentPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList, initDeploymentSecretDropdownList } from '../actions';
 import { Store, Deployment, Namespace, ServiceAccount, Secret } from '../reducers/State';
-import ShipyardConstruction from '../components/DeploymentCreation';
+import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IDeploymentPageProps {
-    shipyards: Deployment[];
+    deployments: Deployment[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
-    initShipyardPage: () => void;
+    initDeploymentPage: () => void;
     initNamespaceDropdownList: () => void;
     scaleContainerShipQuantity: (any) => void;
     constructContainerShip: (any) => void;
     scrapContainerShip: (any) => void;
     showDrawer: (drawerType: any) => void;
-    initShipyardServiceAccountDropdownList: (namespaceName: string) => void;
-    initShipyardSecretDropdownList: (namespaceName: string) => void;
+    initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
+    initDeploymentSecretDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
 }
 
 class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
-        this.props.initShipyardPage();
+        this.props.initDeploymentPage();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipyardConstruction isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initShipyardPage}
+                    <DeploymentCreation isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initDeploymentPage}
                         namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
-                        refreshServiceAccounts={this.props.initShipyardServiceAccountDropdownList} refreshSecrets={this.props.initShipyardSecretDropdownList} />
+                        refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.shipyards}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.deployments}
                         renderItem={(item: Deployment) => (
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <InputNumber size="small" min={1} max={10} defaultValue={item.replias} onBlur={(value) => { this.props.scaleContainerShipQuantity({ namespace: item.namespace, name: item.name, quantity: value.target.value }); }} />,
-                                    <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Shipyard', namespace: item.namespace, name: item.name, cargos: item.images })} />]}>
+                                    <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name, cargos: item.images })} />]}>
                                     <Card.Meta title={item.name} description={
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
@@ -67,7 +67,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                                                         </Descriptions.Item>
                                                     })}
                                                     {item.volumns.map((document, index) => {
-                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage  isHelp={this.props.isHelp} id="Label.VolumeItem" helpId="Help.Volume" values={{ key: document.name }} />}>
+                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.VolumeItem" helpId="Help.Volume" values={{ key: document.name }} />}>
                                                             <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
@@ -93,23 +93,23 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ deploymentPage: shipyardPage, masterPage, settingPage }: Store) => ({
-    shipyards: shipyardPage.deployments,
-    serviceAccounts: shipyardPage.serviceAccounts,
-    secrets: shipyardPage.secrets,
+const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => ({
+    deployments: deploymentPage.deployments,
+    serviceAccounts: deploymentPage.serviceAccounts,
+    secrets: deploymentPage.secrets,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
-    initShipyardPage,
+    initDeploymentPage,
     constructContainerShip,
     scaleContainerShipQuantity,
     scrapContainerShip,
     showDrawer,
-    initShipyardServiceAccountDropdownList,
-    initShipyardSecretDropdownList
+    initDeploymentServiceAccountDropdownList,
+    initDeploymentSecretDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeploymentPage);

@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { Namespace, ServiceAccount } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, CargoIcon, SleepIcon, IstioIcon, DoorIcon } from '../Icon';
+import { DeploymentIcon, VersionIcon, ImageIcon, SleepIcon, IstioIcon, DoorIcon } from '../Icon';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
@@ -70,7 +70,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<ShipyardIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<DeploymentIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -81,7 +81,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                                     rules: [{ required: true, message: 'Please input numbering!' }],
                                     initialValue: 'latest'
                                 })(
-                                    <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -92,7 +92,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                                 {getFieldDecorator('cargo', {
                                     rules: [{ required: true, message: 'Please input cargo!' }],
                                 })(
-                                    <Input prefix={<CargoIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                    <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -176,4 +176,4 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'shipyard_construction' })(PodCreation));
+export default connect()(Form.create({ name: 'pod_creation' })(PodCreation));

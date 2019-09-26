@@ -3,7 +3,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { Namespace, Option } from '../../reducers/State';
-import { FreeTradeAreaIcon, WarehouseIcon, GateIcon, NumberingIcon, BrandIcon } from '../Icon';
+import { ServiceEntryIcon, GatewayIcon, VersionIcon, BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
@@ -49,7 +49,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<FreeTradeAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<ServiceEntryIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -93,7 +93,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`aliases[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Host' })} />
+                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Host' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -107,7 +107,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`positions[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PositionRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.IP' })} />
+                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.IP' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -121,7 +121,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`passNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortRequired' /> }],
                                 })(
-                                    <Input prefix={<GateIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Port' })} />
+                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Port' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -132,7 +132,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                 {getFieldDecorator(`passNumbers[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortNumberRequired' /> }],
                                 })(
-                                    <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Number' })} />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Number' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>

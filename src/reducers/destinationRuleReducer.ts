@@ -12,13 +12,13 @@ export default (state: DestinationRulePage = destinationRuleState, action: IPayl
     switch (action.type) {
         case ActionTypes.LOAD_DESTINATIONRULE:
             return { ...state, destinationRules: action.payload };
-        case ActionTypes.FILL_STACKPOLICYSERVICEDROPDOWNLIST:
+        case ActionTypes.FILL_DESTINATIONRULE_SERVICE_DROPDOWNLIST:
             return { ...state, services: action.payload };
-        case ActionTypes.FILL_SELECTEDSTACKPOLICY:
+        case ActionTypes.FILL_SELECTEDDESTINATIONRULE:
             return { ...state, selectedDestinationRule: action.payload };
         case ActionTypes.HIDE_DRAWER:
             return { ...state, selectedDestinationRule: { subsets: [], deployments: [] } };
-        case ActionTypes.FILL_STACKPOLICYSHIPYARDDROPDOWNLIST:
+        case ActionTypes.FILL_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST:
             return { ...state, deployments: action.payload };
         default:
             return state;

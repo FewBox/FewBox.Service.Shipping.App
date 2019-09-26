@@ -15,7 +15,7 @@ export default (state: VirtualServicePage = virtualServiceState, action: any): V
             return { ...state, gateways: action.payload };
         case ActionTypes.FILL_YARDAREASERVICEDROPDOWNLIST:
             return { ...state, services: action.payload };
-            case ActionTypes.FILL_YARDAREASHIPYARDDROPDOWNLIST:
+            case ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST:
                     return { ...state, deployments: action.payload };
         default:
             return state;

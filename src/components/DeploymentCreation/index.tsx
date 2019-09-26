@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { Namespace, ServiceAccount, Secret } from '../../reducers/State';
-import { ShipyardIcon, NumberingIcon, ContainerIcon, DoorIcon, CargoPackagePolicyIcon, BrandIcon, CredentialIcon } from '../Icon';
+import { DeploymentIcon, VersionIcon, ContainerIcon, DoorIcon, ImagePackagePolicyIcon, BrandIcon, SecretIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
@@ -82,7 +82,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<ShipyardIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<DeploymentIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -93,7 +93,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                                     rules: [{ required: true, message: 'Please input numbering!' }],
                                     initialValue: 'latest'
                                 })(
-                                    <Input prefix={<NumberingIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -123,7 +123,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                                     rules: [{ required: true, message: 'Please input cargo package policy!' }],
                                     initialValue: '0'
                                 })(
-                                    <Select suffixIcon={<CargoPackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select suffixIcon={<ImagePackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         <Select.Option value="0">IfNotPresent</Select.Option>
                                         <Select.Option value="1">Always</Select.Option>
                                         <Select.Option value="2">Never</Select.Option>
@@ -192,7 +192,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                                 {getFieldDecorator(`secretKeys[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.SecretRequired' /> }],
                                 })(
-                                    <Select suffixIcon={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder={<FormattedMessage id='Label.Secret' />} optionFilterProp="children">
+                                    <Select suffixIcon={<SecretIcon style={{ color: 'rgba(0,0,0,.25)' }} />} showSearch placeholder={<FormattedMessage id='Label.Secret' />} optionFilterProp="children">
                                         {this.props.secrets ? this.props.secrets.map((item, index) => {
                                             return <Select.Option key={'secretKey' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
@@ -248,4 +248,4 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'shipyard_construction' })(DeploymentCreation));
+export default connect()(Form.create({ name: 'deployment_creation' })(DeploymentCreation));

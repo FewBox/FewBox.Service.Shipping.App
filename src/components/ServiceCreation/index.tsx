@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Row, Col, Select } from 'antd';
 import { Namespace, Option } from '../../reducers/State';
-import { QuayAreaIcon, BerthIcon, CraneIcon, CellGuideIcon, BrandIcon, } from '../Icon';
+import { ServiceIcon, PortNameIcon, PortIcon, TargetIcon, BrandIcon, } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
@@ -49,7 +49,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<QuayAreaIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<ServiceIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
@@ -93,7 +93,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                                 {getFieldDecorator(`portNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                                 })(
-                                    <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="PortName" />
+                                    <Input prefix={<PortNameIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="PortName" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -104,7 +104,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                                 {getFieldDecorator(`ports[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.Portequired' /> }],
                                 })(
-                                    <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Port' />
+                                    <Input prefix={<PortIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Port' />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -115,7 +115,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                                 {getFieldDecorator(`targetPorts[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.TargetPortRequired' /> }],
                                 })(
-                                    <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="TargetPort" />
+                                    <Input prefix={<TargetIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="TargetPort" />
                                 )}
                             </HelpComponent>
                         </Form.Item>

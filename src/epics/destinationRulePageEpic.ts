@@ -4,7 +4,7 @@ import { mergeMap, map, switchMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initDestinationRulePage, loadDestinationRule, fillStackPolicyServiceDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
+import { initDestinationRulePage, loadDestinationRule, fillStackPolicyServiceDropdownList, fillDestinationRuleDeploymentDropdownList, fillSelectedDestinationRuleDeploymentDropdownList } from '../actions';
 
 const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -83,7 +83,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
     );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_STACKPOLICYSERVICEDROPDOWNLIST),
+        ofType(ActionTypes.INIT_DESTINATIONRULE_SERVICE_DROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
@@ -94,25 +94,25 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             return fillStackPolicyServiceDropdownList(payload);
         })
     );
-const initShipyardDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_STACKPOLICYSHIPYARDDROPDOWNLIST),
+        ofType(ActionTypes.INIT_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value, method: 'GET' });
+            return AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return fillStackPolicyShipyardDropdownList(payload);
+            return fillDestinationRuleDeploymentDropdownList(payload);
         })
     );
 const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.SELECT_STACKPOLICY),
+        ofType(ActionTypes.SELECT_DESTINATIONRULE),
         switchMap((action) => {
             return zip(AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/stackpolicies/' + action.value.name, method: 'GET' }),
-                AjaxObservable({ path: '/api/shipyards?labels=app=' + action.value.name, method: 'GET' }));
+                AjaxObservable({ path: '/api/deployments?labels=app=' + action.value.name, method: 'GET' }));
         }),
         map((payloads) => {
             for (var key in payloads) {
@@ -120,8 +120,8 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
                     return payloads[key];
                 }
             }
-            return fillSelectedStackPolicyShipyardDropdownList({ subsets: payloads[0].subsets, deployments: payloads[1] });
+            return fillSelectedDestinationRuleDeploymentDropdownList({ subsets: payloads[0].subsets, deployments: payloads[1] });
         })
     );
 
-export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];
+export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initDeploymentDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];

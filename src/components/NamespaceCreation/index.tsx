@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Row, Col } from 'antd';
-import { ShippingLineIcon } from '../Icon';
+import { NamespaceIcon } from '../Icon';
 
 export interface INamespaceCreationProps {
     create: (string) => void;
@@ -29,7 +29,7 @@ class NamespaceCreation extends React.PureComponent<INamespaceCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<ShippingLineIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<NamespaceIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>

@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Col, Row } from 'antd';
-import { CredentialIcon, BrandIcon } from '../Icon';
+import { SecretIcon, BrandIcon } from '../Icon';
 import { Namespace } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -45,7 +45,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                             })(
-                                <Input prefix={<CredentialIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
+                                <Input prefix={<SecretIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                             )}
                         </Form.Item>
                     </Col>
