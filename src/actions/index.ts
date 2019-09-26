@@ -202,12 +202,12 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
     payload: logBook
 });
 
-export const initCountryPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_COUNTRYPAGE
+export const initNodePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_NODEPAGE
 });
 
-export const loadCountry = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_COUNTRY,
+export const loadNode = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_NODE,
     payload: payload
 });
 

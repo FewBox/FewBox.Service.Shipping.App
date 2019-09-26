@@ -18,7 +18,7 @@ import destinationRulePage from './destinationRuleReducer';
 import serviceEntryPage from './serviceEntryReducer';
 
 const appReducer = combineReducers({
-    masterPage, signinPage, landingPage, settingPage, countryPage: nodePage, namespacePage, containerShipPage: podPage, shipyardPage: deploymentPage, quayAreaPage: servicePage,
+    masterPage, signinPage, landingPage, settingPage, nodePage, namespacePage, containerShipPage: podPage, shipyardPage: deploymentPage, quayAreaPage: servicePage,
     gateAreaPage: gatewayPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage: virtualServicePage, destinationRulePage, freeTradeAreaPage: serviceEntryPage, routing
 });
 export default (state: any, action: any) => {

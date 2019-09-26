@@ -2,32 +2,32 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse } from 'antd';
-import { initCountryPage } from '../actions';
+import { initNodePage } from '../actions';
 import { Store, Node } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface INodePageProps {
-    countries: Node[];
+    nodes: Node[];
     isHelp: boolean;
-    initCountryPage: () => void;
+    initNodePage: () => void;
 }
 
 class NodePage extends React.Component<INodePageProps, any> {
     componentDidMount() {
-        this.props.initCountryPage();
+        this.props.initNodePage();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.countries}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.nodes}
                         renderItem={(item: Node) => (
                             <List.Item>
                                 <Card actions={[
                                     <Icon type="help" />,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
+                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered layout="vertical">
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.IP"  />}>{item.ip}</Descriptions.Item>
@@ -50,12 +50,12 @@ class NodePage extends React.Component<INodePageProps, any> {
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Images" helpId="Help.Image" />} key='3'>
                                             {item.images.map((cargo, index) => {
-                                                return <p key={'cargo' + index}>
+                                                return <div key={'cargo' + index}>
                                                     {cargo.names.map((name, index) => {
-                                                        return <div key={'name' + index}>{name}</div>
+                                                        return <p key={'name' + index}>{name}</p>
                                                     })}
                                                     {cargo.size}
-                                                </p>
+                                                </div>
                                             })}
                                         </Collapse.Panel>
                                     </Collapse>} />
@@ -70,13 +70,13 @@ class NodePage extends React.Component<INodePageProps, any> {
     }
 }
 
-const mapStateToProps = ({ nodePage: countryPage, settingPage }: Store) => ({
-    countries: countryPage.nodes,
+const mapStateToProps = ({ nodePage, settingPage }: Store) => ({
+    nodes: nodePage.nodes,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
-    initCountryPage
+    initNodePage
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodePage);

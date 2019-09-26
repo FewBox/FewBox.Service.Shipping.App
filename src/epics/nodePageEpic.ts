@@ -3,20 +3,20 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { loadCountry } from '../actions';
+import { loadNode } from '../actions';
 
-const initCountryPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_COUNTRYPAGE),
+        ofType(ActionTypes.INIT_NODEPAGE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/countries', method: 'GET' });
+            return AjaxObservable({ path: '/api/nodes', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
                 return payload;
             }
-            return loadCountry(payload);
+            return loadNode(payload);
         })
     );
 
-export default [initCountryPageEpic];
+export default [initNodePageEpic];
