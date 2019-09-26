@@ -42,7 +42,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                             <List.Item>
                                 <Card actions={[
                                     <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Dropdown disabled={item.status != 'Running'} overlay={<Menu>
+                                    <Dropdown disabled={item.phase != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <SubMenu key={'contianer-shell' + index} title={container}>
                                                 <Menu.Item>
@@ -79,9 +79,9 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
                                             <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                                 <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.IdentificationCode" />}>{item.app}</Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.App" />}>{item.app}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}>{item.version}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Status" />}><Badge color={item.status === 'Running' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
+                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Phase" />}><Badge color={item.phase === 'Running' ? 'green' : 'red'} text={item.phase} /></Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.serviceAccount}</Descriptions.Item>
                                                     <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.node}</Descriptions.Item>
@@ -93,21 +93,21 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                             <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                                 <Descriptions size='small' column={1} bordered>
                                                     {item.containers.map((container, index) => {
-                                                        return <Descriptions.Item key={'cargo' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.ImageItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
+                                                        return <Descriptions.Item key={'container' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.ImageItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
                                                     })}
-                                                    {item.volumns.map((document, index) => {
-                                                        return <Descriptions.Item key={'document' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.VolumeItem" values={{ key: document.name }} />}>
-                                                            <Popover title={document.name} trigger="click" content={JSON.stringify(document)}>
+                                                    {item.volumns ? item.volumns.map((volumn, index) => {
+                                                        return <Descriptions.Item key={'volumn' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.VolumeItem" values={{ key: volumn.name }} />}>
+                                                            <Popover title={volumn.name} trigger="click" content={JSON.stringify(volumn)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
-                                                    })}
-                                                    {item.volumnMounts.map((documentDefinition, index) => {
-                                                        return <Descriptions.Item key={'documentDefinition' + index} label={<Badge color={documentDefinition.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: documentDefinition.name }} />} />}>
-                                                            <p>{documentDefinition.mountPath}</p>
-                                                            <p>{documentDefinition.mountSubPath}</p>
+                                                    }) : null}
+                                                    {item.volumnMounts ? item.volumnMounts.map((volumnMount, index) => {
+                                                        return <Descriptions.Item key={'volumnMount' + index} label={<Badge color={volumnMount.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: volumnMount.name }} />} />}>
+                                                            <p>{volumnMount.mountPath}</p>
+                                                            <p>{volumnMount.mountSubPath}</p>
                                                         </Descriptions.Item>
-                                                    })}
+                                                    }) : null}
                                                 </Descriptions>
                                             </Collapse.Panel>
                                         </Collapse>

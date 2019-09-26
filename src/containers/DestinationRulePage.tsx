@@ -22,7 +22,7 @@ export interface IDestinationRulePageProps {
     createDestinationRule: (any) => void;
     deleteDestinationRule: (any) => void;
     initDestinationRuleServiceDropdownList: (namespaceName: string) => void;
-    initDestinationRuleDeploymentDropdownList: (identificationCode: string) => void;
+    initDestinationRuleDeploymentDropdownList: (app: string) => void;
     selectDestinationRule: (namespaceName: string, name: string) => void;
     isHelp: boolean;
 }

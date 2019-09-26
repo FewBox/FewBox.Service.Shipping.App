@@ -368,9 +368,9 @@ export const fillVirtualServiceServiceDropdownList = (payload): IPayloadAction<a
     type: ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST,
     payload: payload
 });
-export const initDestinationRuleDeploymentDropdownList = (identificationCode: string): IAction<string> => ({
+export const initDestinationRuleDeploymentDropdownList = (app: string): IAction<string> => ({
     type: ActionTypes.INIT_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST,
-    value: identificationCode
+    value: app
 });
 export const fillDestinationRuleDeploymentDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST,
@@ -384,9 +384,9 @@ export const fillSelectedDestinationRuleDeploymentDropdownList = (payload: Selec
     type: ActionTypes.FILL_SELECTED_DESTINATIONRULE,
     payload: payload
 });
-export const initVirtualServiceDeploymentDropdownList = (identificationCode: string): IAction<string> => ({
+export const initVirtualServiceDeploymentDropdownList = (app: string): IAction<string> => ({
     type: ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
-    value: identificationCode
+    value: app
 });
 export const fillVirtualServiceDeploymentDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,

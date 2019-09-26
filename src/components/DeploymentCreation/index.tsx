@@ -76,7 +76,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList onChange={this.changeNamespace} isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -123,7 +123,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
                                 {getFieldDecorator('imagePackagePolicy', {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.ImagePackagePolicyRequired' /> }],
-                                    initialValue: '0'
+                                    initialValue: 'IfNotPresent'
                                 })(
                                     <Select suffixIcon={<ImagePackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.imagePackagePolicyOptions.map((imagePackagePolicyOption, index) => {

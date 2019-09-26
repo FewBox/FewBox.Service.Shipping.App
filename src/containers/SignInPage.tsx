@@ -63,14 +63,14 @@ class SignIn extends React.Component<ISignInProps, any> {
                         </Form.Item>
                         <Form.Item validateStatus={userNameError ? 'error' : ''} help={userNameError || ''}>
                             {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: 'Please input your username!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.UsernameRequired' /> }],
                             })(
                                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
                             )}
                         </Form.Item>
                         <Form.Item validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: 'Please input your Password!' }],
+                                rules: [{ required: true, message: <FormattedMessage id='Message.PasswordRequired' /> }],
                             })(
                                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
                             )}

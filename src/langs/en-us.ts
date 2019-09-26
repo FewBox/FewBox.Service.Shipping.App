@@ -81,6 +81,8 @@ export default {
     'Message.Crush': 'Crush',
     'Message.CrushCaption': 'The terminal can not connect the pod!',
     'Message.NameRequired': 'Please input the name!',
+    'Message.UsernameRequired': 'Please input the username!',
+    'Message.PasswordRequired': 'Please input the name!',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',
@@ -151,5 +153,10 @@ export default {
     'Label.DestinationRule': 'DestinationRule',
     'Label.IPItem': 'IP[{key}]',
     'Label.PortItem': 'Port[{key}]',
-    'Label.Number': 'Number'
+    'Label.Number': 'Number',
+    'Label.Data': 'Data',
+    'Label.ClusterIP': 'ClusterIP',
+    'Label.App': 'App',
+    'Label.ImagePackagePolicy': 'Pull Policy',
+    'Label.Phase': 'Phase'
 }

@@ -25,8 +25,8 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
     changeNamespace = (namespaceName: string) => {
         this.props.refreshServices(namespaceName);
     };
-    changeDeployment = (identificationCode: string) => {
-        this.props.refreshDeployments(identificationCode);
+    changeDeployment = (app: string) => {
+        this.props.refreshDeployments(app);
     }
     handleSubmit = e => {
         e.preventDefault();

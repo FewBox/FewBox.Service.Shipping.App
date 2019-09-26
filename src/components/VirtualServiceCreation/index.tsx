@@ -16,7 +16,7 @@ export interface IVirtualServiceCreationProps {
     matchOptions: Option[];
     refreshGatewaies: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
-    refreshDeployments: (identificationCode: string) => void;
+    refreshDeployments: (app: string) => void;
     create: (string) => void;
     reload: () => void;
     form: any;

@@ -152,7 +152,7 @@ export interface Pod {
     volumnMounts: DocumentDefinition[];
     app: string;
     version: string;
-    status: string;
+    phase: string;
     node: string;
     nodeIP: string;
     ip: string;

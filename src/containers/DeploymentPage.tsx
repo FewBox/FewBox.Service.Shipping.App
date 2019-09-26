@@ -67,19 +67,19 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     })}
-                                                    {item.volumns.map((volumn, index) => {
+                                                    {item.volumns ? item.volumns.map((volumn, index) => {
                                                         return <Descriptions.Item key={'volumn' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.VolumeItem" helpId="Help.Volume" values={{ key: volumn.name }} />}>
                                                             <Popover title={volumn.name} trigger="click" content={JSON.stringify(volumn)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
-                                                    })}
-                                                    {item.volumnMounts.map((volumnMount, index) => {
+                                                    }) : null}
+                                                    {item.volumnMounts ? item.volumnMounts.map((volumnMount, index) => {
                                                         return <Descriptions.Item key={'volumnMount' + index} label={<Badge color={volumnMount.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.VolumeMountItem" helpId="Help.VolumeMount" values={{ key: volumnMount.name }} />} />}>
                                                             <p>{volumnMount.mountPath}</p>
                                                             <p>{volumnMount.mountSubPath}</p>
                                                         </Descriptions.Item>
-                                                    })}
+                                                    }) : null}
                                                 </Descriptions>
                                             </Collapse.Panel>
                                         </Collapse>
