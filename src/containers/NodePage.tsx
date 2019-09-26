@@ -29,14 +29,14 @@ class NodePage extends React.Component<INodePageProps, any> {
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false}>
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
-                                            <Descriptions size='small' column={1} bordered layout="vertical">
+                                            <Descriptions size='small' bordered layout="vertical">
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.IP"  />}>{item.ip}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Host" helpId="Help.Host" />}>{item.hostname}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
-                                            <Descriptions size='small' column={1} bordered layout="vertical">
+                                            <Descriptions size='small' bordered layout="vertical">
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PodCIDR" helpId="Help.CIDR" />}>{item.podCIDR}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.CPU" helpId="Help.CPU" />}>{item.allocatableCPU}/{item.cpu}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.EphemeralStorage" helpId="Help.HardDisk" />}>{item.allocatableHD}/{item.hd}</Descriptions.Item>

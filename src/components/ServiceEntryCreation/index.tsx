@@ -10,9 +10,9 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IServiceEntryCreationProps {
     namespaces: Namespace[];
-    locations: Option[];
-    resolutions: Option[];
-    protocols: Option[];
+    locationOptions: Option[];
+    resolutionOptions: Option[];
+    protocolOptions: Option[];
     addChannelComponent: (number) => void;
     removeChannelComponent: (number) => void;
     construct: (string) => void;
@@ -61,7 +61,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                     initialValue: 'MESH_EXTERNAL'
                                 })(
                                     <Select showSearch placeholder="Location" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.locations.map((item, index) => {
+                                        {this.props.locationOptions.map((item, index) => {
                                             return <Select.Option key={'location' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>
@@ -77,7 +77,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                     initialValue: 'DNS'
                                 })(
                                     <Select showSearch allowClear placeholder="Resolution" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.resolutions.map((item, index) => {
+                                        {this.props.resolutionOptions.map((item, index) => {
                                             return <Select.Option key={'resolution' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>
@@ -145,7 +145,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                                     initialValue: 'HTTP'
                                 })(
                                     <Select showSearch placeholder="Protocol" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.protocols.map((item, index) => {
+                                        {this.props.protocolOptions.map((item, index) => {
                                             return <Select.Option key={'protocol' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>
@@ -168,4 +168,4 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
     }
 }
 
-export default connect()(Form.create({ name: 'freetradearea_construct' })(injectIntl(ServiceEntryCreation)));
+export default connect()(Form.create({ name: 'serviceentry_creation' })(injectIntl(ServiceEntryCreation)));

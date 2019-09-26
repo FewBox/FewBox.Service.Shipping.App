@@ -72,7 +72,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
 
 const mapStateToProps = ({ destinationRulePage, masterPage, settingPage }: Store) => ({
     stackPolicies: destinationRulePage.destinationRules,
-    quayAreas: destinationRulePage.services,
+    services: destinationRulePage.services,
     shipyards: destinationRulePage.deployments,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

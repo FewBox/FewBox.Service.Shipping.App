@@ -1,6 +1,8 @@
-import * as Protocols from './protocols.json';
-import * as Locations from './locations.json';
-import * as Resolutions from './resolutions.json';
-import * as Matches from './matches.json';
+import * as ProtocolOptions from './protocolOptions.json';
+import * as LocationOptions from './locationOptions.json';
+import * as ResolutionOptions from './resolutionOptions.json';
+import * as MatchOptions from './matchOptions.json';
+import * as ServiceOptions from './serviceOptions.json';
+import * as SessionAffinityOptions from './SessionAffinityOptions.json';
 
-export { Protocols, Locations, Resolutions, Matches };
+export { ProtocolOptions, LocationOptions, ResolutionOptions, MatchOptions, ServiceOptions, SessionAffinityOptions };

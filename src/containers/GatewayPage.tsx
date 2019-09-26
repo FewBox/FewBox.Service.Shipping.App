@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initGateAreaPage, initNamespaceDropdownList, constructGateArea, demolishGateArea } from '../actions';
 import { Gateway, Store, Namespace } from '../reducers/State';
-import GateAreaConstruction from '../components/GatewayCreation';
-import { Protocols } from '../jsons';
+import GatewayCreation from '../components/GatewayCreation';
+import { ProtocolOptions } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
@@ -28,7 +28,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <GateAreaConstruction isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocols={Protocols}
+                    <GatewayCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocolOptions={ProtocolOptions}
                         reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
                 </Row>
                 <Row gutter={16}>

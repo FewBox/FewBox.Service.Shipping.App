@@ -1,10 +1,10 @@
 [
     {
-        "name": "mesh_external",
+        "name": "Mesh External",
         "value": "MESH_EXTERNAL"
     },
     {
-        "name": "mesh_internal",
+        "name": "Mesh Internal",
         "value": "MESH_INTERNAL"
     }
 ]

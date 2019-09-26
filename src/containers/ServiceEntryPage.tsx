@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initFreeTradeAreaPage, initNamespaceDropdownList, constructFreeTradeArea, demolishFreeTradeArea } from '../actions';
 import { ServiceEntry, Store, Namespace } from '../reducers/State';
-import FreeTradeAreaConstruction from '../components/ServiceEntryCreation';
-import { Protocols, Locations, Resolutions } from '../jsons';
+import ServiceEntryCreation from '../components/ServiceEntryCreation';
+import { ProtocolOptions, LocationOptions, ResolutionOptions } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 
@@ -28,7 +28,7 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <FreeTradeAreaConstruction isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocols={Protocols} locations={Locations} resolutions={Resolutions}
+                    <ServiceEntryCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocolOptions={ProtocolOptions} locationOptions={LocationOptions} resolutionOptions={ResolutionOptions}
                         reload={this.props.initFreeTradeAreaPage} construct={this.props.constructFreeTradeArea} />
                 </Row>
                 <Row gutter={16}>

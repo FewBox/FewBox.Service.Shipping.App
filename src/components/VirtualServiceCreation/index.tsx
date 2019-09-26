@@ -10,13 +10,13 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IVirtualServiceCreationProps {
     namespaces: Namespace[];
-    gateAreas: Gateway[];
+    gatewaies: Gateway[];
     services: Service[];
-    shipyards: Deployment[];
-    matches: Option[];
-    refreshGateAreas: (namespaceName: string) => void;
+    deplyments: Deployment[];
+    matchOptions: Option[];
+    refreshGatewaies: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
-    refreshShipyards: (identificationCode: string) => void;
+    refreshDeployments: (identificationCode: string) => void;
     construct: (string) => void;
     reload: () => void;
     form: any;
@@ -25,11 +25,11 @@ export interface IVirtualServiceCreationProps {
 
 class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreationProps> {
     changeNamespace = (namespaceName: string) => {
-        this.props.refreshGateAreas(namespaceName);
+        this.props.refreshGatewaies(namespaceName);
         this.props.refreshServices(namespaceName);
     };
     changeShipyard = (identificationCode: string) => {
-        this.props.refreshShipyards(identificationCode);
+        this.props.refreshDeployments(identificationCode);
     };
     handleSubmit = e => {
         e.preventDefault();
@@ -94,7 +94,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     rules: [{ required: true, message: <FormattedMessage id='Message.GateAreaRequired' /> }],
                                 })(
                                     <Select showSearch placeholder="GateArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.gateAreas ? this.props.gateAreas.map((item, index) => {
+                                        {this.props.gatewaies ? this.props.gatewaies.map((item, index) => {
                                             return <Select.Option key={'gateArea' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
@@ -114,7 +114,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.matches ? this.props.matches.map((item, index) => {
+                                                    {this.props.matchOptions ? this.props.matchOptions.map((item, index) => {
                                                         return <Select.Option key={'match' + index} value={item.value}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
@@ -153,7 +153,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.matches ? this.props.matches.map((item, index) => {
+                                                    {this.props.matchOptions ? this.props.matchOptions.map((item, index) => {
                                                         return <Select.Option key={'match' + index} value={item.value}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
@@ -207,7 +207,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: false, message: <FormattedMessage id='Message.ShipyardRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Shipyard" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.shipyards ? this.props.shipyards.map((item, index) => {
+                                                    {this.props.deplyments ? this.props.deplyments.map((item, index) => {
                                                         return <Select.Option key={'shipyard' + index} value={item.version}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
@@ -232,4 +232,4 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
     }
 }
 
-export default connect()(Form.create({ name: 'yardarea_construct' })(VirtualServiceCreation));
+export default connect()(Form.create({ name: 'virtualservice_creation' })(VirtualServiceCreation));

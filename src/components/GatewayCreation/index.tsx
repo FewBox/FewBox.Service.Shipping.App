@@ -10,7 +10,7 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IGatewayCreationProps {
     namespaces: Namespace[];
-    protocols: Option[];
+    protocolOptions: Option[];
     addChannelComponent: (number) => void;
     removeChannelComponent: (number) => void;
     construct: (string) => void;
@@ -95,7 +95,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                     initialValue: 'http'
                                 })(
                                     <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.protocols.map((item, index) => {
+                                        {this.props.protocolOptions.map((item, index) => {
                                             return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>
@@ -132,4 +132,4 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
     }
 }
 
-export default connect()(Form.create({ name: 'gatearea_construct' })(injectIntl(GatewayCreation)));
+export default connect()(Form.create({ name: 'gateway_creation' })(injectIntl(GatewayCreation)));

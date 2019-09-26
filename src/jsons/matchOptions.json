@@ -1,14 +1,14 @@
 [
     {
-        "name": "exact",
+        "name": "Exact",
         "value": "exact"
     },
     {
-        "name": "prefix",
+        "name": "Prefix",
         "value": "prefix"
     },
     {
-        "name": "regex",
+        "name": "Regex",
         "value": "regex"
     }
 ]

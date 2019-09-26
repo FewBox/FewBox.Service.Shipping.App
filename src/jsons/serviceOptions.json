@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Cluster IP",
+        "value": "ClusterIP"
+    },
+    {
+        "name": "Node Port",
+        "value": "NodePort"
+    },
+    {
+        "name": "Load Balancer",
+        "value": "LoadBalancer"
+    },
+    {
+        "name": "External Name",
+        "value": "ExternalName"
+    }
+]

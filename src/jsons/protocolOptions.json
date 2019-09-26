@@ -1,30 +1,30 @@
 [
     {
-        "name": "http",
+        "name": "Http",
         "value": "HTTP"
     },
     {
-        "name": "https",
+        "name": "Https",
         "value": "HTTPS"
     },
     {
-        "name": "grpc",
+        "name": "Grpc",
         "value": "GRPC"
     },
     {
-        "name": "http2",
+        "name": "Http2",
         "value": "HTTP2"
     },
     {
-        "name": "mongo",
+        "name": "Mongo",
         "value": "MONGO"
     },
     {
-        "name": "tcp",
+        "name": "Tcp",
         "value": "TCP"
     },
     {
-        "name": "tls",
+        "name": "Tls",
         "value": "TLS"
     }
 ]

@@ -9,7 +9,8 @@ import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IServiceCreationProps {
-    protocols: Option[];
+    serviceOptions: Option[];
+    sessionAffinityOptions: Option[];
     namespaces: Namespace[];
     construct: (string) => void;
     reload: () => void;
@@ -22,14 +23,14 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let berths = values.portNames ? values.portNames.map((portName, index) => {
-                    let cellGuide = parseInt(values.berthCellGuides[index]);
-                    if (isNaN(cellGuide)) {
-                        cellGuide = values.berthCellGuides[index];
+                let servicePorts = values.portNames ? values.portNames.map((portName, index) => {
+                    let targetPort = parseInt(values.targetPorts[index]);
+                    if (isNaN(targetPort)) {
+                        targetPort = values.targetPorts[index];
                     }
-                    return { name: portName, crane: values.berthCranes[index], cellGuide: cellGuide };
+                    return { name: portName, port: values.ports[index], targetPort: targetPort };
                 }) : null;
-                this.props.construct({ namespace: values.namespace, name: values.name, specificationType: values.specificationType, berths: berths, containerShipAgreementType: values.containerShipAgreementType });
+                this.props.construct({ namespace: values.namespace, name: values.name, sessionAffinityType: values.sessionAffinityType, servicePorts: servicePorts, type: values.type });
             }
         });
     };
@@ -55,13 +56,16 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.SessionAffinity" />}>
-                                {getFieldDecorator('containerShipAgreementType', {
-                                    rules: [{ required: true, message: 'Please input fixed bitt type!' }],
-                                    initialValue: 0
+                                {getFieldDecorator('sessionAffinityType', {
+                                    rules: [{
+                                        required: true, message: <FormattedMessage id='Message.SessionAffinityRequired' />
+                                    }],
+                                    initialValue: 'None'
                                 })(
-                                    <Select showSearch placeholder="ContainerShip Agreement Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        <Select.Option value={0}><FormattedMessage id='Label.Rent' /></Select.Option>
-                                        <Select.Option value={1}><FormattedMessage id='Label.Own' /></Select.Option>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.SessionAffinity' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.sessionAffinityOptions.map((sessionAffinityOption, index) => {
+                                            return <Select.Option key={'sessionAffinity' + index} value={sessionAffinityOption.value}>{sessionAffinityOption.name}</Select.Option>
+                                        })}
                                     </Select>
                                 )}
                             </HelpComponent>
@@ -69,13 +73,13 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                     </Col>
                     <Col span={3}>
                         <Form.Item>
-                            {getFieldDecorator('specificationType', {
-                                rules: [{ required: true, message: 'Please input Specification!' }],
-                                initialValue: 'http'
+                            {getFieldDecorator('type', {
+                                rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
+                                initialValue: 'ClusterIP'
                             })(
-                                <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                    {this.props.protocols.map((item, index) => {
-                                        return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
+                                <Select showSearch placeholder={<FormattedMessage id='Label.Type' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    {this.props.serviceOptions.map((serviceOption, index) => {
+                                        return <Select.Option key={'service' + index} value={serviceOption.value}>{serviceOption.name}</Select.Option>
                                     })}
                                 </Select>
                             )}
@@ -87,9 +91,9 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.PortName" />}>
                                 {getFieldDecorator(`portNames[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.BerthRequired' /> }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
                                 })(
-                                    <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Berth" />
+                                    <Input prefix={<BerthIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="PortName" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -97,10 +101,10 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                     <Col span={3} key={2}>
                         <Form.Item >
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Port" />}>
-                                {getFieldDecorator(`berthCranes[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input crane!' }],
+                                {getFieldDecorator(`ports[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.Portequired' /> }],
                                 })(
-                                    <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                                    <Input prefix={<CraneIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder='Port' />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -108,15 +112,15 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                     <Col span={3} key={3}>
                         <Form.Item >
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.TargetPort" />}>
-                                {getFieldDecorator(`berthCellGuides[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input cell guide!' }],
+                                {getFieldDecorator(`targetPorts[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.TargetPortRequired' /> }],
                                 })(
-                                    <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cell Guide" />
+                                    <Input prefix={<CellGuideIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="TargetPort" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Service" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

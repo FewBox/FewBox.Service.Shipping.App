@@ -173,11 +173,11 @@ export interface Deployment {
 export interface Service {
     namespace: string;
     name: string;
-    nodeSelector: string;
-    ip: string;
+    selector: string;
+    clusterIP: string;
     type: string;
-    containerPorts: ContainerPort[];
-    imagePullPolicyType: string;
+    ports: ContainerPort[];
+    sessionAffinity: string;
     age: string;
 }
 export interface ContainerPort {

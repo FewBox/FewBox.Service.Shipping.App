@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initYardAreaServiceDropdownList, initYardAreaShipyardDropdownList } from '../actions';
 import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
-import YardAreaConstruction from '../components/VirtualServiceCreation';
+import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
-import { Matches } from '../jsons';
+import { MatchOptions } from '../jsons';
 
 export interface IVirtualServicePageProps {
     namespaces: Namespace[];
-    yardAreas: VirtualService[];
-    gateAreas: Gateway[];
-    quayAreas: Service[];
-    shipyards: Deployment[];
+    virtualServices: VirtualService[];
+    gatewaies: Gateway[];
+    services: Service[];
+    deployments: Deployment[];
     initYardAreaPage: () => void;
     initNamespaceDropdownList: () => void;
     constructYardArea: (any) => void;
@@ -33,12 +33,12 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
         return (
             <div>
                 <Row gutter={16}>
-                    <YardAreaConstruction isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateAreas={this.props.gateAreas} quayAreas={this.props.quayAreas}
-                        shipyards={this.props.shipyards} refreshShipyards={this.props.initYardAreaShipyardDropdownList} matches={Matches}
+                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateAreas={this.props.gatewaies} quayAreas={this.props.services}
+                        shipyards={this.props.deployments} refreshShipyards={this.props.initYardAreaShipyardDropdownList} matchOptions={MatchOptions}
                         refreshGateAreas={this.props.initYardAreaGateAreaDropdownList} refreshQuayAreas={this.props.initYardAreaQuayAreaDropdownList} reload={this.props.initYardAreaPage} construct={this.props.constructYardArea} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.yardAreas}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.virtualServices}
                         renderItem={(item: VirtualService) => (
                             <List.Item>
                                 <Card actions={[
@@ -86,13 +86,13 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
     }
 }
 
-const mapStateToProps = ({ virtualServicePage: yardAreaPage, masterPage, settingPage }: Store) => ({
-    yardAreas: yardAreaPage.virtualServices,
-    gateAreas: yardAreaPage.gateways,
-    quayAreas: yardAreaPage.services,
-    shipyards: yardAreaPage.deployments,
+const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store) => ({
+    virtualServices: virtualServicePage.virtualServices,
+    gateways: virtualServicePage.gateways,
+    services: virtualServicePage.services,
+    deployments: virtualServicePage.deployments,
     namespaces: masterPage.namespaces,
-    isHelp: settingPage
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
@@ -101,7 +101,7 @@ const mapDispatchToProps = {
     constructYardArea,
     demolishYardArea,
     initYardAreaGateAreaDropdownList,
-    initYardAreaQuayAreaDropdownList: initYardAreaServiceDropdownList,
+    initYardAreaServiceDropdownList,
     initYardAreaShipyardDropdownList
 };
 
