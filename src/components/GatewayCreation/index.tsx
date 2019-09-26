@@ -13,7 +13,7 @@ export interface IGatewayCreationProps {
     protocolOptions: Option[];
     addChannelComponent: (number) => void;
     removeChannelComponent: (number) => void;
-    construct: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     intl: any;
@@ -25,22 +25,17 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let channels = Object.keys(values).filter((k) => { return k.startsWith('gate-name'); }).map((k, index) => {
-                    let elementIndex = k.substr('gate-name'.length);
-                    let warehouses = values['warehouses' + elementIndex];
-                    return { name: values[k], gate: { name: values['gate-name' + elementIndex], numbering: values['gate-numbering' + elementIndex], specification: values['gate-specification' + elementIndex] }, warehouses: warehouses };
-                });
-                channels = values.gateNames.map((gateName, index) => {
-                    let warehouses;
-                    if (values.gateWarehouses.length > 1) {
-                        warehouses = values.gateWarehouses[index];
+                let servers = values.portNames.map((portName, index) => {
+                    let hosts;
+                    if (values.hosts.length > 1) {
+                        hosts = values.hosts[index];
                     }
                     else {
-                        warehouses = values.gateWarehouses;
+                        hosts = values.hosts;
                     }
-                    return { gate: { name: gateName, numbering: values.gateNumberings[index], specificationType: values.gateSpecifications[index] }, warehouses: warehouses };
+                    return { port: { name: portName, number: values.portNumbers[index], protocol: values.portProtocols[index] }, hosts: hosts };
                 });
-                this.props.construct({ namespace: values.namespace, name: values.name, channels: channels });
+                this.props.create({ namespace: values.namespace, name: values.name, servers: servers });
             }
         });
     };
@@ -64,12 +59,12 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='gate' itemComponents={(k) =>
+                <DynamicFieldList fieldName='port' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Server' />}>
-                                {getFieldDecorator(`gateNames[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.GateRequired' /> }],
+                                {getFieldDecorator(`portNames[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortNameRequired' /> }],
                                 })(
                                     <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gateway' })} />
                                 )}
@@ -79,10 +74,10 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                     <Col span={3} key={2}>
                         <Form.Item >
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                {getFieldDecorator(`gateNumberings[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input numbering!' }],
+                                {getFieldDecorator(`portNumbers[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortNumberRequired' /> }],
                                 })(
-                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -90,13 +85,13 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                     <Col span={3} key={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Protocol' />}>
-                                {getFieldDecorator(`gateSpecifications[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input Specification!' }],
-                                    initialValue: 'http'
+                                {getFieldDecorator(`portProtocols[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortProtocolRequired' /> }],
+                                    initialValue: 'Http'
                                 })(
-                                    <Select showSearch placeholder="Specification" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.Protocol' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.protocolOptions.map((item, index) => {
-                                            return <Select.Option key={'specification' + index} value={item.value}>{item.name}</Select.Option>
+                                            return <Select.Option key={'portProtocol' + index} value={item.value}>{item.name}</Select.Option>
                                         })}
                                     </Select>
                                 )}
@@ -106,11 +101,11 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                     <Col span={3} key={4}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
-                                {getFieldDecorator(`gateWarehouses[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input warehouses!' }],
+                                {getFieldDecorator(`hosts[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.HostRequired' /> }],
                                     initialValue: '*'
                                 })(
-                                    <Select suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Warehouses">
+                                    <Select suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder={<FormattedMessage id='Label.Host' />}>
                                         <Select.Option value="*">*</Select.Option>
                                     </Select>
                                 )}

@@ -15,7 +15,7 @@ export interface IServiceEntryCreationProps {
     protocolOptions: Option[];
     addChannelComponent: (number) => void;
     removeChannelComponent: (number) => void;
-    construct: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     intl: any;
@@ -27,10 +27,10 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let passes = values.passNames.map((passName, index) => {
-                    return { name: passName, number: values.passNumbers[index], protocol: values.passProtocols[index] };
+                let passes = values.portNames.map((passName, index) => {
+                    return { name: passName, number: values.portNumbers[index], protocol: values.portProtocols[index] };
                 });
-                this.props.construct({ namespace: values.namespace, name: values.name, location: values.location, resolution: values.resolution, aliases: values.aliases, positins: values.positions, passes: passes });
+                this.props.create({ namespace: values.namespace, name: values.name, location: values.location, resolution: values.resolution, hosts: values.hosts, positins: values.addresses, passes: passes });
             }
         });
     };
@@ -73,7 +73,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Resolution' />}>
                                 {getFieldDecorator('resolution', {
-                                    rules: [{ required: false, message: 'Please input Resolution!' }],
+                                    rules: [{ required: false, message: <FormattedMessage id='Message.ResolutionRequired' /> }],
                                     initialValue: 'DNS'
                                 })(
                                     <Select showSearch allowClear placeholder="Resolution" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
@@ -86,11 +86,11 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='alias' itemComponents={(k) =>
+                <DynamicFieldList fieldName='host' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
-                                {getFieldDecorator(`aliases[${k}]`, {
+                                {getFieldDecorator(`hosts[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
                                 })(
                                     <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Host' })} />
@@ -100,11 +100,11 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                     </Col>
                     ]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
-                <DynamicFieldList fieldName='position' itemComponents={(k) =>
+                <DynamicFieldList fieldName='address' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Address' />}>
-                                {getFieldDecorator(`positions[${k}]`, {
+                                {getFieldDecorator(`addresses[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PositionRequired' /> }],
                                 })(
                                     <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.IP' })} />
@@ -114,11 +114,11 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                     </Col>
                     ]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.IP" />} />
-                <DynamicFieldList fieldName='pass' itemComponents={(k) =>
+                <DynamicFieldList fieldName='port' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                {getFieldDecorator(`passNames[${k}]`, {
+                                {getFieldDecorator(`portNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortRequired' /> }],
                                 })(
                                     <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Port' })} />
@@ -129,7 +129,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                     <Col span={3} key={2}>
                         <Form.Item >
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.PortNumber' />}>
-                                {getFieldDecorator(`passNumbers[${k}]`, {
+                                {getFieldDecorator(`portNumbers[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortNumberRequired' /> }],
                                 })(
                                     <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Number' })} />
@@ -140,11 +140,11 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                     <Col span={3} key={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Protocol' />}>
-                                {getFieldDecorator(`passProtocols[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input Protocol!' }],
+                                {getFieldDecorator(`portProtocols[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ProtocolRequired' /> }],
                                     initialValue: 'HTTP'
                                 })(
-                                    <Select showSearch placeholder="Protocol" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.Protocol' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.protocolOptions.map((item, index) => {
                                             return <Select.Option key={'protocol' + index} value={item.value}>{item.name}</Select.Option>
                                         })}

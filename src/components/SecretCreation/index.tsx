@@ -53,7 +53,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Type" />}>
                                 {getFieldDecorator('type', {
-                                    rules: [{ required: true, message: 'Please input type!' }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Type" />
                                 )}
@@ -66,7 +66,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
                                 {getFieldDecorator(`dataKeys[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input key!' }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.KeyRequired' /> }],
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
                                 )}
@@ -77,7 +77,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
                                 {getFieldDecorator(`dataContents[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input content!' }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ContentRequired' /> }],
                                 })(
                                     <Input.TextArea rows={4} placeholder="Content" />
                                 )}
@@ -85,7 +85,7 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Secret" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Data" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

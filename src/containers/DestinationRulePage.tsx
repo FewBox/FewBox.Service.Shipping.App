@@ -9,6 +9,7 @@ import {
 import { DestinationRule, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import DestinationRuleCreation from '../components/DestinationRuleCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import { TLSModeOptions } from '../jsons';
 
 export interface IDestinationRulePageProps {
     namespaces: Namespace[];
@@ -35,7 +36,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
         return (
             <div>
                 <Row gutter={16}>
-                    <DestinationRuleCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} services={this.props.services} refreshVirtualServices={this.props.initDestinationRuleServiceDropdownList}
+                    <DestinationRuleCreation isHelp={this.props.isHelp} tlsModeOptions={TLSModeOptions} namespaces={this.props.namespaces} services={this.props.services} refreshVirtualServices={this.props.initDestinationRuleServiceDropdownList}
                         deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} create={this.props.createDestinationRule} />
                 </Row>
                 <Row gutter={16}>

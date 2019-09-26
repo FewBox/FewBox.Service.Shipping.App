@@ -2,13 +2,14 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
-import { DestinationRule, Namespace, Service, Deployment } from '../../reducers/State';
+import { Option, Namespace, Service, Deployment } from '../../reducers/State';
 import { BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IDestinationRuleCreationProps {
+    tlsModeOptions: Option[];
     namespaces: Namespace[];
     services: Service[];
     deployments: Deployment[];
@@ -34,7 +35,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                 let subsets = values.subsets.map((subset, index) => {
                     return { name: subset, labels: { version: subset } }
                 });
-                this.props.create({ namespace: values.namespace, name: values.name, alias: values.alias, trafficPolicyMode: values.trafficPolicyMode, subsets: subsets });
+                this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, tLSMode: values.tLSMode, subsets: subsets });
             }
         });
     };
@@ -75,13 +76,14 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.TLSMode' />}>
-                                {getFieldDecorator('trafficPolicyMode', {
-                                    rules: [{ required: true, message: 'Please input traffic policy mode!' }],
-                                    initialValue: 0
+                                {getFieldDecorator('tLSMode', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.TLSModeRequired' /> }],
+                                    initialValue: 'ISTIO_MUTUAL'
                                 })(
-                                    <Select showSearch placeholder="Traffic Policy Mode" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        <Select.Option value={0}><FormattedMessage id='Label.IstioMutual' /></Select.Option>
-                                        <Select.Option value={1}><FormattedMessage id='Label.Disable' /></Select.Option>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.TLSMode' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.tlsModeOptions.map((tlsModeOption, index) => {
+                                            return <Select.Option key={'tlsModeOption' + index} value={tlsModeOption.value}>{tlsModeOption.name}</Select.Option>
+                                        })}
                                     </Select>
                                 )}
                             </HelpComponent>

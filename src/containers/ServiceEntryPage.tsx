@@ -48,14 +48,14 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
-                                                {item.hosts ? item.hosts.map((alias, index) => {
-                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{alias}</Descriptions.Item>
+                                                {item.hosts ? item.hosts.map((host, index) => {
+                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{host}</Descriptions.Item>
                                                 }) : null}
-                                                {item.addresses ? item.addresses.map((position, index) => {
-                                                    return <Descriptions.Item key={'position' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{position}</Descriptions.Item>
+                                                {item.addresses ? item.addresses.map((address, index) => {
+                                                    return <Descriptions.Item key={'address' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{address}</Descriptions.Item>
                                                 }) : null}
-                                                {item.ports ? item.ports.map((pass, index) => {
-                                                    return <Descriptions.Item key={'pass' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: pass.name }} />}>{pass.protocol}:{pass.number}</Descriptions.Item>
+                                                {item.ports ? item.ports.map((port, index) => {
+                                                    return <Descriptions.Item key={'port' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: port.name }} />}>{port.protocol}:{port.number}</Descriptions.Item>
                                                 }) : null}
                                             </Descriptions>
                                         </Collapse.Panel>

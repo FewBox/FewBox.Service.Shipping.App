@@ -3,16 +3,17 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { Namespace, ServiceAccount } from '../../reducers/State';
-import { DeploymentIcon, VersionIcon, ImageIcon, SleepIcon, IstioIcon, DoorIcon } from '../Icon';
+import { Namespace, ServiceAccount, Option } from '../../reducers/State';
+import { DeploymentIcon, VersionIcon, ImageIcon, SleepIcon, IstioIcon, DoorIcon, BrandIcon } from '../Icon';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 
 export interface IPodCreationProps {
+    imagePackagePolicyOptions: Option[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
-    construct: (any) => void;
+    create: (any) => void;
     refreshServiceAccounts: (namespaceName: string) => void;
     reload: () => void;
     form: any;
@@ -27,28 +28,28 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let doors;
-                if (values.doors && values.doors.length > 0) {
-                    if (typeof (values.doors) == 'object') {
-                        doors = values.doors.map((item, index) => {
+                let ports;
+                if (values.ports && values.ports.length > 0) {
+                    if (typeof (values.ports) == 'object') {
+                        ports = values.ports.map((item, index) => {
                             let door = _.split(item, '|');
                             return { name: door[0], leaf: door[1] };
                         });
                     }
                     else {
-                        let door = _.split(values.doors, '|');
-                        doors = [{ name: door[0], leaf: door[1] }];
+                        let door = _.split(values.ports, '|');
+                        ports = [{ name: door[0], leaf: door[1] }];
                     }
                 }
-                this.props.construct({
+                this.props.create({
                     namespace: values.namespace,
                     serviceAccount: values.serviceAccount,
                     name: values.name,
-                    numbering: values.numbering,
-                    quantity: values.quantity,
-                    cargo: values.cargo,
-                    cargoPackagePolicy: values.cargoPackagePolicy,
-                    doors: doors,
+                    version: values.version,
+                    replicas: values.replicas,
+                    image: values.image,
+                    imagePackagePolicy: values.imagePackagePolicy,
+                    ports: ports,
                     isSleepInfinity: values.isSleepInfinity,
                     isIstioInjected: values.isIstioInjected
                 });
@@ -77,8 +78,8 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
-                                {getFieldDecorator('numbering', {
-                                    rules: [{ required: true, message: 'Please input numbering!' }],
+                                {getFieldDecorator('version', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
                                     initialValue: 'latest'
                                 })(
                                     <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
@@ -89,10 +90,10 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Image' />}>
-                                {getFieldDecorator('cargo', {
-                                    rules: [{ required: true, message: 'Please input cargo!' }],
+                                {getFieldDecorator('image', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }],
                                 })(
-                                    <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                    <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -107,7 +108,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                {getFieldDecorator('doors', {
+                                {getFieldDecorator('ports', {
                                     initialValue: 'http|80'
                                 })(
                                     <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Doors">
@@ -121,8 +122,8 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Replica' />}>
-                                {getFieldDecorator('quantity', {
-                                    rules: [{ required: true, message: 'Please input quantity!' }],
+                                {getFieldDecorator('replicas', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ReplicasRequired' /> }],
                                     initialValue: '2'
                                 })(
                                     <InputNumber min={1} max={10} />
@@ -133,14 +134,14 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
-                                {getFieldDecorator('cargoPackagePolicy', {
-                                    rules: [{ required: true, message: 'Please input cargo package policy!' }],
-                                    initialValue: '1'
+                                {getFieldDecorator('imagePackagePolicy', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePackagePolicyRequired' /> }],
+                                    initialValue: 'IfNotPresent'
                                 })(
-                                    <Select>
-                                        <Select.Option value="1">IfNotPresent</Select.Option>
-                                        <Select.Option value="2">Always</Select.Option>
-                                        <Select.Option value="3">Never</Select.Option>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.ImagePackagePolicy' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.imagePackagePolicyOptions.map((imagePackagePolicyOption, index) => {
+                                            return <Select.Option key={'imagePackagePolicyOption' + index} value={imagePackagePolicyOption.value}>{imagePackagePolicyOption.name}</Select.Option>
+                                        })}
                                     </Select>
                                 )}
                             </HelpComponent>

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/PodCreation';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import { ImagePackagePolicyOptions } from '../jsons';
 
 export interface IPodPageProps {
     namespaces: Namespace[];
@@ -32,7 +33,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipBuilding isHelp={this.props.isHelp} construct={this.props.createPod} reload={this.props.initPodPage}
+                    <ShipBuilding isHelp={this.props.isHelp} imagePackagePolicyOptions={ImagePackagePolicyOptions} create={this.props.createPod} reload={this.props.initPodPage}
                         serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initPodServiceAccountDropdownList} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>

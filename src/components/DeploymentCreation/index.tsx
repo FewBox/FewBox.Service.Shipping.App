@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
-import { Namespace, ServiceAccount, Secret } from '../../reducers/State';
+import { Namespace, ServiceAccount, Secret, Option } from '../../reducers/State';
 import { DeploymentIcon, VersionIcon, ContainerIcon, DoorIcon, ImagePackagePolicyIcon, BrandIcon, SecretIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -11,12 +11,14 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 
 export interface IDeploymentCreationProps {
+    protocolOptions: Option[];
+    imagePackagePolicyOptions: Option[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
     refreshServiceAccounts: (namespaceName: string) => void;
     refreshSecrets: (namespaceName: string) => void;
-    construct: (any) => void;
+    create: (any) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -30,7 +32,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
         if (value.indexOf(':') != -1) {
-            callback('Please remove the numbering.')
+            callback('Please remove the version.')
         }
         callback()
     }
@@ -38,29 +40,29 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let doors = values.doorNames ? values.doorNames.map((doorName, index) => {
-                    return { name: doorName, leaf: values.doorLeafs[index] };
+                let portNames = values.portNames ? values.portNames.map((portName, index) => {
+                    return { name: portName, port: values.ports[index] };
                 }) : null;
-
                 let volumns = values.volumns ? values.volumns.map((volumn, index) => {
                     return { name: volumn, secret: { secretName: values.secretKeys[index] } };
                 }) : null;
                 let volumnMounts = values.volumns ? values.volumns.map((volumn, index) => {
                     return {
-                        name: volumn, term: values.mountPathes[index],
-                        subTerm: values.mountSubPathes ? values.mountSubPathes[index] : null,
-                        isWaterMarked: values.isReadonlies[index]
+                        name: volumn,
+                        mountPath: values.mountPathes[index],
+                        subPath: values.mountSubPathes ? values.mountSubPathes[index] : null,
+                        readOnly: values.readonlies[index]
                     };
                 }) : null;
-                this.props.construct({
+                this.props.create({
                     namespace: values.namespace,
                     name: values.name,
                     serviceAccount: values.serviceAccount,
-                    numbering: values.numbering,
-                    quantity: values.quantity,
-                    cargo: values.cargo,
-                    cargoPackagePolicy: values.cargoPackagePolicy,
-                    doors: doors,
+                    version: values.version,
+                    replicas: values.replicas,
+                    image: values.image,
+                    imagePackagePolicy: values.imagePackagePolicy,
+                    portNames: portNames,
                     volumns: volumns,
                     volumnMounts: volumnMounts
                 });
@@ -89,8 +91,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
-                                {getFieldDecorator('numbering', {
-                                    rules: [{ required: true, message: 'Please input numbering!' }],
+                                {getFieldDecorator('version', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
                                     initialValue: 'latest'
                                 })(
                                     <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
@@ -101,8 +103,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Image' />}>
-                                {getFieldDecorator('cargo', {
-                                    rules: [{ required: true, message: 'Please input cargo!' }, { validator: this.validateNumbering }],
+                                {getFieldDecorator('image', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
                                 })(
                                     <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
                                 )}
@@ -119,14 +121,14 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
-                                {getFieldDecorator('cargoPackagePolicy', {
-                                    rules: [{ required: true, message: 'Please input cargo package policy!' }],
+                                {getFieldDecorator('imagePackagePolicy', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePackagePolicyRequired' /> }],
                                     initialValue: '0'
                                 })(
                                     <Select suffixIcon={<ImagePackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        <Select.Option value="0">IfNotPresent</Select.Option>
-                                        <Select.Option value="1">Always</Select.Option>
-                                        <Select.Option value="2">Never</Select.Option>
+                                        {this.props.imagePackagePolicyOptions.map((imagePackagePolicyOption, index) => {
+                                            return <Select.Option key={'imagePackagePolicyOption' + index} value={imagePackagePolicyOption.value}>{imagePackagePolicyOption.name}</Select.Option>
+                                        })}
                                     </Select>
                                 )}
                             </HelpComponent>
@@ -134,9 +136,9 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     </Col>
                     <Col span={6}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Replica' />}>
-                                {getFieldDecorator('quantity', {
-                                    rules: [{ required: true, message: 'Please input quantity!' }],
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Replicas' />}>
+                                {getFieldDecorator('replicas', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ReplicasRequired' /> }],
                                     initialValue: '2'
                                 })(
                                     <InputNumber min={1} max={10} />
@@ -145,17 +147,18 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='door' itemComponents={(k) =>
+                <DynamicFieldList fieldName='containerPort' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.PortName' />}>
-                                {getFieldDecorator(`doorNames[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input door name!' }],
-                                    initialValue: 'http'
+                                {getFieldDecorator(`portNames[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortNameRequired' /> }],
+                                    initialValue: 'Http'
                                 })(
                                     <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} style={{ width: '100%' }} placeholder="Door Name">
-                                        <Select.Option value="http">http</Select.Option>
-                                        <Select.Option value="https">https</Select.Option>
+                                        {this.props.protocolOptions.map((protocolOption, index) => {
+                                            return <Select.Option key={'protocolOption' + index} value={protocolOption.value}>{protocolOption.name}</Select.Option>
+                                        })}
                                     </Select>
                                 )}
                             </HelpComponent>
@@ -164,8 +167,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6} key={2}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                {getFieldDecorator(`doorLeafs[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input leaf!' }],
+                                {getFieldDecorator(`ports[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortRequired' /> }],
                                     initialValue: 80
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Leaf" />
@@ -173,13 +176,13 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             </HelpComponent>
                         </Form.Item>
                     </Col>]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.ContainerPort" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
                 <DynamicFieldList fieldName='secret' itemComponents={(k) =>
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.SecretName' />}>
                                 {getFieldDecorator(`volumns[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }]
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.VolumnRequired' /> }]
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                                 )}
@@ -205,9 +208,9 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MountPath' />}>
                                 {getFieldDecorator(`mountPathes[${k}]`, {
-                                    rules: [{ required: true, message: 'Please input term!' }]
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.MountPathRequired' /> }]
                                 })(
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Term" />
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="MountPath" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -217,16 +220,16 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MountSubPath' />}>
                                 {getFieldDecorator(`mountSubPathes[${k}]`, {
                                 })(
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="SubTerm" />
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="MountSubPath" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
                     </Col>,
                     <Col span={2} key={5}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.IsReadOnly' />}>
-                                {getFieldDecorator(`isReadonlies[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ReadOnly' />}>
+                                {getFieldDecorator(`readonlies[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ReadOnlyRequired' /> }],
                                     initialValue: true
                                 })(
                                     <Switch checkedChildren={<BrandIcon />} unCheckedChildren={<BrandIcon />} />

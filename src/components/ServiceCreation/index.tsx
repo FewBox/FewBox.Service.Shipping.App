@@ -12,7 +12,7 @@ export interface IServiceCreationProps {
     serviceOptions: Option[];
     sessionAffinityOptions: Option[];
     namespaces: Namespace[];
-    construct: (string) => void;
+    create: (string) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
@@ -30,7 +30,7 @@ class ServiceCreation extends React.PureComponent<IServiceCreationProps> {
                     }
                     return { name: portName, port: values.ports[index], targetPort: targetPort };
                 }) : null;
-                this.props.construct({ namespace: values.namespace, name: values.name, sessionAffinityType: values.sessionAffinityType, servicePorts: servicePorts, type: values.type });
+                this.props.create({ namespace: values.namespace, name: values.name, sessionAffinityType: values.sessionAffinityType, servicePorts: servicePorts, type: values.type });
             }
         });
     };

@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Istio Mutual",
+        "value": "ISTIO_MUTUAL"
+    },
+    {
+        "name": "Disable",
+        "value": "DISABLE"
+    }
+]

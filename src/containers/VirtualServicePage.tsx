@@ -55,22 +55,22 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
-                                                {item.hosts.map((alias, index) => {
-                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
+                                                {item.hosts.map((host, index) => {
+                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{host}</Descriptions.Item>
                                                 })}
                                                 {item.gateways.map((gateway, index) => {
                                                     return <Descriptions.Item key={'gateway' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateway}</Descriptions.Item>
                                                 })}
                                                 {item.https.map((http, index) => {
                                                     return <Descriptions.Item key={'http' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
-                                                        {http.uris != null ? http.uris.map((target, index) => {
-                                                            return <p key={'uri' + index}>{JSON.stringify(target)}</p>
+                                                        {http.uris != null ? http.uris.map((uri, index) => {
+                                                            return <p key={'uri' + index}>{JSON.stringify(uri)}</p>
                                                         }) : null}
-                                                        {http.headers != null ? http.headers.map((tagTarget, index) => {
-                                                            return <p key={'header' + index}>{JSON.stringify(tagTarget)}</p>
+                                                        {http.headers != null ? http.headers.map((header, index) => {
+                                                            return <p key={'header' + index}>{JSON.stringify(header)}</p>
                                                         }) : null}
-                                                        {http.routes.map((direction, index) => {
-                                                            return <p key={'route' + index}>{direction.host} : {direction.subset ? direction.subset : direction.port}</p>
+                                                        {http.routes.map((route, index) => {
+                                                            return <p key={'route' + index}>{route.host} : {route.subset ? route.subset : route.port}</p>
                                                         })}
                                                     </Descriptions.Item>
                                                 })}

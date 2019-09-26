@@ -28,7 +28,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ServiceCreation isHelp={this.props.isHelp} construct={this.props.createService} reload={this.props.initServicePage}
+                    <ServiceCreation isHelp={this.props.isHelp} create={this.props.createService} reload={this.props.initServicePage}
                         serviceOptions={ServiceOptions} sessionAffinityOptions={SessionAffinityOptions} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
@@ -43,8 +43,8 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' column={1} bordered>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.PodSelector" />}>{item.selector}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.ClusterIP" />}>{item.clusterIP}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.Selector" />}>{item.selector}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ClusterIP" helpId="Help.ClusterIP" />}>{item.clusterIP}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SessionAffinity" helpId="Help.SessionAffinity" />}>{item.sessionAffinity}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
@@ -52,8 +52,8 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
-                                                {item.ports.map((berth, index) => {
-                                                    return <Descriptions.Item key={'containerPort' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServicePortItem" helpId="Help.Port" values={{ key: berth.name }} />}>{berth.port}=>{berth.targetPort}</Descriptions.Item>
+                                                {item.ports.map((port, index) => {
+                                                    return <Descriptions.Item key={'containerPort' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ServicePortItem" helpId="Help.Port" values={{ key: port.name }} />}>{port.port}=>{port.targetPort}</Descriptions.Item>
                                                 })}
                                             </Descriptions>
                                         </Collapse.Panel>

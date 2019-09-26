@@ -1,0 +1,14 @@
+[
+    {
+        "name": "If Not Present",
+        "value": "IfNotPresent"
+    },
+    {
+        "name": "Always",
+        "value": "Always"
+    },
+    {
+        "name": "Never",
+        "value": "Never"
+    }
+]

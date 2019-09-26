@@ -29,7 +29,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <GatewayCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocolOptions={ProtocolOptions}
-                        reload={this.props.initGatewayPage} construct={this.props.createGateway} />
+                        reload={this.props.initGatewayPage} create={this.props.createGateway} />
                 </Row>
                 <Row gutter={16}>
                     <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gatewaies}

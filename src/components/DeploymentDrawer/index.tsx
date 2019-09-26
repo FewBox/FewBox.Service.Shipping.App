@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button } from 'antd';
 import { ImageIcon } from '../Icon';
 
 export interface IDeploymentDrawerProps {
-    cargos: string[];
+    images: string[];
     namespaceName: string;
     name: string;
     changePodVersion: (any) => void;
@@ -16,7 +17,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.changePodVersion({ namespace: this.props.namespaceName, name: this.props.name, cargos: values.cargos });
+                this.props.changePodVersion({ namespace: this.props.namespaceName, name: this.props.name, images: values.images });
             }
         });
     };
@@ -25,15 +26,15 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    {this.props.cargos.map((cargo, index) => {
-                        return <Row gutter={16} key={'CargoRow' + index}>
+                    {this.props.images.map((cargo, index) => {
+                        return <Row gutter={16} key={'imageRow' + index}>
                             <Col span={24}>
                                 <Form.Item>
-                                    {getFieldDecorator(`cargos[${index}]`, {
-                                        rules: [{ required: true, message: 'Please input cargo!' }],
-                                        initialValue: this.props.cargos[index]
+                                    {getFieldDecorator(`images[${index}]`, {
+                                        rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }],
+                                        initialValue: this.props.images[index]
                                     })(
-                                        <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                        <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
                                     )}
                                 </Form.Item>
                             </Col>

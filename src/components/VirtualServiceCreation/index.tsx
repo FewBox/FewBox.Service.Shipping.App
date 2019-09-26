@@ -78,9 +78,9 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
                                 {getFieldDecorator(`hosts[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.HostRequired' /> }],
                                 })(
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Alias" />
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Host" />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -106,7 +106,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                 <DynamicFieldList fieldName='https' itemComponents={(k1) =>
                     [<Col offset={1} span={6} key={1}>
                         <Form.Item>
-                            <DynamicFieldList fieldName={'target' + k1} itemComponents={(k2) =>
+                            <DynamicFieldList fieldName={'uri' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
@@ -152,7 +152,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                             {getFieldDecorator(`headerTypes[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
-                                                <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select showSearch placeholder={<FormattedMessage id='Label.Type' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.matchOptions ? this.props.matchOptions.map((item, index) => {
                                                         return <Select.Option key={'match' + index} value={item.value}>{item.name}</Select.Option>
                                                     }) : null}
@@ -165,9 +165,9 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.HeaderValue' />}>
                                             {getFieldDecorator(`headers[${k1}][${k2}]`, {
-                                                rules: [{ required: true, message: <FormattedMessage id='Message.TagTargetRequired' /> }],
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.HeaderValueRequired' /> }],
                                             })(
-                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Tag Target" />
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Header Value" />
                                             )}
                                         </HelpComponent>
                                     </Form.Item>
@@ -193,9 +193,9 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
                                             {getFieldDecorator(`ports[${k1}][${k2}]`, {
-                                                rules: [{ required: false, message: <FormattedMessage id='Message.CraneRequired' /> }],
+                                                rules: [{ required: false, message: <FormattedMessage id='Message.PortRequired' /> }],
                                             })(
-                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />
+                                                <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
                                             )}
                                         </HelpComponent>
                                     </Form.Item>
