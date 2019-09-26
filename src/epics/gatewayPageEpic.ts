@@ -5,15 +5,15 @@ import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadGateway, initGatewayPage } from '../actions';
 
-const initGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initGatewayPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_GATEWAY_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gateareas/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/gatewaies/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gateareas', method: 'GET' });
+                return AjaxObservable({ path: '/api/gatewaies', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -23,15 +23,15 @@ const initGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
             return loadGateway(payload);
         })
     );
-const switchGateAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gateareas/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/gatewaies/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gateareas', method: 'GET' });
+                return AjaxObservable({ path: '/api/gatewaies', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -41,11 +41,11 @@ const switchGateAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
             return loadGateway(payload);
         })
     );
-const constructGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const createGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gateareas', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/gatewaies', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
@@ -54,11 +54,11 @@ const constructGateAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
             return initGatewayPage();
         })
     );
-const demolishGateAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const deleteGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gateareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/gatewaies/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -68,4 +68,4 @@ const demolishGateAreaPageEpic = (action$: ActionsObservable<any>, store$: State
         })
     );
 
-export default [initGateAreaPageEpic, switchGateAreaEpic, constructGateAreaPageEpic, demolishGateAreaPageEpic];
+export default [initGatewayPageEpic, switchGatewayEpic, createGatewayEpic, deleteGatewayEpic];

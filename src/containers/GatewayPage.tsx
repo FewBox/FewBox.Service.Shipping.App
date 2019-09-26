@@ -11,17 +11,17 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IGatewayPageProps {
     namespaces: Namespace[];
-    gateAreas: Gateway[];
-    initGateAreaPage: () => void;
+    gatewaies: Gateway[];
+    initGatewayPage: () => void;
     initNamespaceDropdownList: () => void;
-    constructGateArea: (any) => void;
-    demolishGateArea: (any) => void;
+    createGateway: (any) => void;
+    deleteGateway: (any) => void;
     isHelp: boolean;
 }
 
 class GatewayPage extends React.Component<IGatewayPageProps, any> {
     componentDidMount() {
-        this.props.initGateAreaPage();
+        this.props.initGatewayPage();
         this.props.initNamespaceDropdownList();
     }
     render() {
@@ -29,14 +29,14 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <GatewayCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocolOptions={ProtocolOptions}
-                        reload={this.props.initGateAreaPage} construct={this.props.constructGateArea} />
+                        reload={this.props.initGatewayPage} construct={this.props.createGateway} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateAreas}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gatewaies}
                         renderItem={(item: Gateway) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishGateArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteGateway({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
@@ -59,17 +59,17 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ gatewayPage: gateAreaPage, masterPage, settingPage }: Store) => ({
-    gateAreas: gateAreaPage.gateways,
+const mapStateToProps = ({ gatewayPage, masterPage, settingPage }: Store) => ({
+    gateways: gatewayPage.gateways,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
-    initGateAreaPage: initGatewayPage,
+    initGatewayPage,
     initNamespaceDropdownList,
-    constructGateArea: createGateway,
-    demolishGateArea: deleteGateway
+    createGateway,
+    deleteGateway
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GatewayPage);

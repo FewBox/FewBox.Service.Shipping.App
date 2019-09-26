@@ -67,11 +67,11 @@ const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: State
             return initVirtualServicePage();
         })
     );
-const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initGatewayDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateareas', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gatewaies', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -107,4 +107,4 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
         })
     );
 
-export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGateAreaDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic];
+export default [initYardAreaPageEpic, constructYardAreaPageEpic, switchYardAreaEpic, demolishYardAreaPageEpic, initGatewayDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic];

@@ -86,16 +86,16 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
-                <DynamicFieldList fieldName='gateArea' itemComponents={(k) =>
+                <DynamicFieldList fieldName='gateway' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
                                 {getFieldDecorator(`gatewaies[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.GateAreaRequired' /> }],
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.GatewayRequired' /> }],
                                 })(
-                                    <Select showSearch placeholder="GateArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.Gateway' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.gatewaies ? this.props.gatewaies.map((item, index) => {
-                                            return <Select.Option key={'gateArea' + index} value={item.name}>{item.name}</Select.Option>
+                                            return <Select.Option key={'gateway' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
                                 )}

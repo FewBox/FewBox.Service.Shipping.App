@@ -56,21 +56,21 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                         <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
                                             <Descriptions size='small' column={1} bordered>
                                                 {item.hosts.map((alias, index) => {
-                                                    return <Descriptions.Item key={'alias' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
+                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{alias}</Descriptions.Item>
                                                 })}
-                                                {item.gateways.map((gateArea, index) => {
-                                                    return <Descriptions.Item key={'gateArea' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateArea}</Descriptions.Item>
+                                                {item.gateways.map((gateway, index) => {
+                                                    return <Descriptions.Item key={'gateway' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateway}</Descriptions.Item>
                                                 })}
-                                                {item.https.map((guideboard, index) => {
-                                                    return <Descriptions.Item key={'guideboard' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
-                                                        {guideboard.uris != null ? guideboard.uris.map((target, index) => {
-                                                            return <p key={'target' + index}>{JSON.stringify(target)}</p>
+                                                {item.https.map((http, index) => {
+                                                    return <Descriptions.Item key={'http' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
+                                                        {http.uris != null ? http.uris.map((target, index) => {
+                                                            return <p key={'uri' + index}>{JSON.stringify(target)}</p>
                                                         }) : null}
-                                                        {guideboard.headers != null ? guideboard.headers.map((tagTarget, index) => {
-                                                            return <p key={'tagTarget' + index}>{JSON.stringify(tagTarget)}</p>
+                                                        {http.headers != null ? http.headers.map((tagTarget, index) => {
+                                                            return <p key={'header' + index}>{JSON.stringify(tagTarget)}</p>
                                                         }) : null}
-                                                        {guideboard.routes.map((direction, index) => {
-                                                            return <p key={'direction' + index}>{direction.host} : {direction.subset ? direction.subset : direction.port}</p>
+                                                        {http.routes.map((direction, index) => {
+                                                            return <p key={'route' + index}>{direction.host} : {direction.subset ? direction.subset : direction.port}</p>
                                                         })}
                                                     </Descriptions.Item>
                                                 })}
@@ -101,8 +101,8 @@ const mapDispatchToProps = {
     initNamespaceDropdownList,
     constructYardArea: createVirtualService,
     demolishYardArea: deleteVirtualService,
-    initYardAreaGateAreaDropdownList: initVirtualServiceGatewayDropdownList,
-    initYardAreaServiceDropdownList: initVirtualServiceServiceDropdownList,
+    initVirtualServiceGatewayDropdownList,
+    initVirtualServiceServiceDropdownList,
     initVirtualServiceDeploymentDropdownList
 };
 
