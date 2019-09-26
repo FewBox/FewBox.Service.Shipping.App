@@ -24,7 +24,7 @@ const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: St
             return loadDestinationRule(payload);
         })
     );
-const switchStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchDestinationRuleEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
@@ -42,7 +42,7 @@ const switchStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
             return loadDestinationRule(payload);
         })
     );
-const draftStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const createDestinationRuleEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_DESTINATIONRULE),
         mergeMap((action) => {
@@ -55,7 +55,7 @@ const draftStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObse
             return initDestinationRulePage();
         })
     );
-const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const deleteDestinationRuleEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_DESTINATIONRULE),
         mergeMap((action) => {
@@ -107,7 +107,7 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
             return fillDestinationRuleDeploymentDropdownList(payload);
         })
     );
-const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const selectDestinationRuleEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SELECT_DESTINATIONRULE),
         switchMap((action) => {
@@ -124,4 +124,4 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
         })
     );
 
-export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic, selectStackPolicyEpic, changeDestinationRuleSubsetEpic];
+export default [initDestinationRulePageEpic, createDestinationRuleEpic, switchDestinationRuleEpic, deleteDestinationRuleEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic, selectDestinationRuleEpic, changeDestinationRuleSubsetEpic];

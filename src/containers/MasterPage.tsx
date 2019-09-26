@@ -85,7 +85,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 case 'Deployment':
                     return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changePodVersion={this.props.changePodVersion} /></Suspense>
                 case 'DestinationRule':
-                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeStackPolicySubset={this.props.changeDestinationRuleSubset} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} /></Suspense>
                 default:
                     return <div></div>
             }
@@ -241,7 +241,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage }: Store
     isDrawerVisible: masterPage.isDrawerVisible,
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
-    selectedStackPolicy: destinationRulePage.selectedDestinationRule,
+    selectedDestinationRule: destinationRulePage.selectedDestinationRule,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })

@@ -7,10 +7,10 @@ import { Subset, SelectedDestinationRule } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IDestinationRuleDrawerProps {
-    selectedStackPolicy: SelectedDestinationRule;
+    selectedDestinationRule: SelectedDestinationRule;
     namespaceName: string;
     name: string;
-    changeStackPolicySubset: (any) => void;
+    changeDestinationRuleSubset: (any) => void;
     form: any;
 }
 
@@ -22,7 +22,7 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
                 let subsets = values.subsets.map((subset, index) => {
                     return { "labels": { "version": subset }, "name": subset };
                 });
-                this.props.changeStackPolicySubset({ namespace: this.props.namespaceName, name: this.props.name, subsets: subsets });
+                this.props.changeDestinationRuleSubset({ namespace: this.props.namespaceName, name: this.props.name, subsets: subsets });
             }
         });
     };
@@ -31,7 +31,7 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    <DynamicFieldList fieldName='subset' initialItems={this.props.selectedStackPolicy.subsets} itemComponents={(k, i: Subset) =>
+                    <DynamicFieldList fieldName='subset' initialItems={this.props.selectedDestinationRule.subsets} itemComponents={(k, i: Subset) =>
                         [<Col span={6} key={1}>
                             <Form.Item>
                                 {getFieldDecorator(`subsets[${k}]`, {
@@ -39,7 +39,7 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
                                     initialValue: i ? i.name : null
                                 })(
                                     <Select showSearch placeholder="Subset" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.selectedStackPolicy.deployments ? this.props.selectedStackPolicy.deployments.map((item, index) => {
+                                        {this.props.selectedDestinationRule.deployments ? this.props.selectedDestinationRule.deployments.map((item, index) => {
                                             return <Select.Option key={'version' + index} value={item.version}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>
