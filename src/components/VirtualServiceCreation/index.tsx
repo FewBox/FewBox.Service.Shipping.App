@@ -36,20 +36,20 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let data = values;
-                let guideboards = values.guideboard.map((guideboard, index) => {
-                    let targets = data.targets && data.targets[index] ? data.targets[index].map((target, targetIndex) => {
-                        return { [data.targetTypes[index][targetIndex]]: target };
+                let https = values.https.map((http, index) => {
+                    let uris = data.uris && data.uris[index] ? data.uris[index].map((uri, uriIndex) => {
+                        return { [data.uriTypes[index][uriIndex]]: uri };
                     }) : null;
-                    let tagTargets = data.tagTargets && data.tagTargets[index] ? data.tagTargets[index].map((tagTarget, tagTargetIndex) => {
-                        let name = data.tagTargetNames[index][tagTargetIndex];
-                        return { [name]: { [data.tagTargetTypes[index][tagTargetIndex]]: tagTarget } };
+                    let headers = data.headers && data.headers[index] ? data.headers[index].map((header, headerIndex) => {
+                        let name = data.headerNames[index][headerIndex];
+                        return { [name]: { [data.headerTypes[index][headerIndex]]: header } };
                     }) : null;
-                    let routes = data.directionQuayAreas && data.directionQuayAreas[index] ? data.directionQuayAreas[index].map((directionQuayArea, directionQuayAreaIndex) => {
-                        return { quayArea: directionQuayArea, crane: data.directionCranes[index][directionQuayAreaIndex], numbering: data.versions[index][directionQuayAreaIndex] };
+                    let routes = data.routes && data.routes[index] ? data.routes[index].map((route, routeIndex) => {
+                        return { host: route, port: data.ports[index][routeIndex], subset: data.versions[index][routeIndex] };
                     }) : null;
-                    return { targets: targets, tagTargets: tagTargets, directions: routes };
+                    return { uris: uris, headers: headers, routes: routes };
                 });
-                this.props.create({ namespace: values.namespace, name: values.name, aliases: values.aliases, gateAreas: values.gateAreas, guideboards: guideboards });
+                this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, gatewaies: values.gatewaies, https: https });
             }
         });
     };
@@ -77,7 +77,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
-                                {getFieldDecorator(`aliases[${k}]`, {
+                                {getFieldDecorator(`hosts[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.AliasRequired' /> }],
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Alias" />
@@ -90,7 +90,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
-                                {getFieldDecorator(`gateAreas[${k}]`, {
+                                {getFieldDecorator(`gatewaies[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.GateAreaRequired' /> }],
                                 })(
                                     <Select showSearch placeholder="GateArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
@@ -103,14 +103,14 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Gateway" />} />
-                <DynamicFieldList fieldName='guideboard' itemComponents={(k1) =>
+                <DynamicFieldList fieldName='https' itemComponents={(k1) =>
                     [<Col offset={1} span={6} key={1}>
                         <Form.Item>
                             <DynamicFieldList fieldName={'target' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
-                                            {getFieldDecorator(`targetTypes[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`uriTypes[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
@@ -125,7 +125,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                 <Col key={2}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Uri' />}>
-                                            {getFieldDecorator(`targets[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`uris[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.InformationRequired' /> }],
                                             })(
                                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Information" />
@@ -134,11 +134,11 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} />
-                            <DynamicFieldList fieldName={'tagTarget' + k1} itemComponents={(k2) =>
+                            <DynamicFieldList fieldName={'header' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Header' />}>
-                                            {getFieldDecorator(`tagTargetNames[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`headerNames[${k1}][${k2}]`, {
                                                 rules: [{ required: false, message: <FormattedMessage id='Message.NameRequired' /> }],
                                             })(
                                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
@@ -149,7 +149,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                 <Col key={2}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.MatchType' />}>
-                                            {getFieldDecorator(`tagTargetTypes[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`headerTypes[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
@@ -164,7 +164,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                 <Col key={3}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.HeaderValue' />}>
-                                            {getFieldDecorator(`tagTargets[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`headers[${k1}][${k2}]`, {
                                                 rules: [{ required: true, message: <FormattedMessage id='Message.TagTargetRequired' /> }],
                                             })(
                                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Tag Target" />
@@ -173,16 +173,16 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.TagTarget" />} />
-                            <DynamicFieldList fieldName={'direction' + k1} itemComponents={(k2) =>
+                            <DynamicFieldList fieldName={'http' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
-                                            {getFieldDecorator(`directionQuayAreas[${k1}][${k2}]`, {
-                                                rules: [{ required: true, message: <FormattedMessage id='Message.QuayAreaRequired' /> }],
+                                            {getFieldDecorator(`routes[${k1}][${k2}]`, {
+                                                rules: [{ required: true, message: <FormattedMessage id='Message.RouteRequired' /> }],
                                             })(
-                                                <Select showSearch onChange={this.changeDeployment} placeholder="QuayArea" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                                <Select showSearch onChange={this.changeDeployment} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                     {this.props.services ? this.props.services.map((item, index) => {
-                                                        return <Select.Option key={'quayArea' + index} value={item.name}>{item.name}</Select.Option>
+                                                        return <Select.Option key={'route' + index} value={item.name}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>
                                             )}
@@ -192,7 +192,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                 <Col key={2}>
                                     <Form.Item>
                                         <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                            {getFieldDecorator(`directionCranes[${k1}][${k2}]`, {
+                                            {getFieldDecorator(`ports[${k1}][${k2}]`, {
                                                 rules: [{ required: false, message: <FormattedMessage id='Message.CraneRequired' /> }],
                                             })(
                                                 <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Crane" />

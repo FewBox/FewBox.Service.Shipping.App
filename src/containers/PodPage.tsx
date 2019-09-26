@@ -12,35 +12,35 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IPodPageProps {
     namespaces: Namespace[];
-    containerShips: Pod[];
+    pods: Pod[];
     serviceAccounts: ServiceAccount[];
     showDrawer: () => void;
     initNamespaceDropdownList: () => void;
-    initContainerShipPage: () => void;
-    sinkContainerShip: (any) => void;
-    constructTemporaryContainerShip: (any) => void;
-    initContainerShipServiceAccountDropdownList: (namespaceName: string) => void;
+    initPodPage: () => void;
+    deletePod: (any) => void;
+    createPod: (any) => void;
+    initPodServiceAccountDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
 }
 
 class PodPage extends React.Component<IPodPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
-        this.props.initContainerShipPage();
+        this.props.initPodPage();
     }
     render() {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipBuilding isHelp={this.props.isHelp} construct={this.props.constructTemporaryContainerShip} reload={this.props.initContainerShipPage}
-                    serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initContainerShipServiceAccountDropdownList} namespaces={this.props.namespaces} />
+                    <ShipBuilding isHelp={this.props.isHelp} construct={this.props.createPod} reload={this.props.initPodPage}
+                        serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initPodServiceAccountDropdownList} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.containerShips}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.pods}
                         renderItem={(item: Pod) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.sinkContainerShip({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Dropdown disabled={item.status != 'Running'} overlay={<Menu>
                                         {item.containers.map((container, index) => {
                                             return <SubMenu key={'contianer-shell' + index} title={container}>
@@ -121,20 +121,20 @@ class PodPage extends React.Component<IPodPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ podPage: containerShipPage, masterPage, settingPage }: Store) => ({
-    containerShips: containerShipPage.pods,
-    serviceAccounts: containerShipPage.serviceAccounts,
+const mapStateToProps = ({ podPage, masterPage, settingPage }: Store) => ({
+    pods: podPage.pods,
+    serviceAccounts: podPage.serviceAccounts,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
-    initContainerShipPage: initPodPage,
-    sinkContainerShip: deletePod,
-    constructTemporaryContainerShip: createPod,
+    initPodPage,
+    deletePod,
+    createPod,
     showDrawer,
-    initContainerShipServiceAccountDropdownList: initPodServiceAccountDropdownList
+    initPodServiceAccountDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PodPage);

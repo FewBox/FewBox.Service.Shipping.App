@@ -7,7 +7,7 @@ export interface IDeploymentDrawerProps {
     cargos: string[];
     namespaceName: string;
     name: string;
-    changeContainerShipNumbering: (any) => void;
+    changePodVersion: (any) => void;
     form: any;
 }
 
@@ -16,7 +16,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.changeContainerShipNumbering({ namespace: this.props.namespaceName, name: this.props.name, cargos: values.cargos });
+                this.props.changePodVersion({ namespace: this.props.namespaceName, name: this.props.name, cargos: values.cargos });
             }
         });
     };

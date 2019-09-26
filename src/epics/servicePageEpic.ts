@@ -23,7 +23,7 @@ const initServiePageEpic = (action$: ActionsObservable<any>, store$: StateObserv
             return loadService(payload);
         })
     );
-const switchQuayAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchServiceEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
@@ -68,4 +68,4 @@ const deleteServicePageEpic = (action$: ActionsObservable<any>, store$: StateObs
         })
     );
 
-export default [initServiePageEpic, createServicePageEpic, switchQuayAreaEpic, deleteServicePageEpic];
+export default [initServiePageEpic, createServicePageEpic, switchServiceEpic, deleteServicePageEpic];

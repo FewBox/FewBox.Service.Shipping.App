@@ -42,9 +42,9 @@ const switchDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
             return loadDeployment(payload);
         })
     );
-const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const changeDeploymentVersionEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CHANGE_POD_VERSION),
+        ofType(ActionTypes.CHANGE_DEPLOYMENT_VERSION),
         mergeMap((action) => {
             let operations = action.value.cargos.map((cargo, index) => {
                 return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
@@ -59,7 +59,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
         })
     );
 
-const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const createDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_DEPLOYMENT),
         mergeMap((action) => {
@@ -73,9 +73,9 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
-const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const scaleDeploymentReplicasEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.SCALE_POD_REPLICAS),
+        ofType(ActionTypes.SCALE_DEPLOYMENT_REPLICAS),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/deployments/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
         }),
@@ -87,7 +87,7 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
         })
     );
 
-const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const deleteDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_DEPLOYMENT),
         mergeMap((action) => {
@@ -127,4 +127,4 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
-export default [initDeploymentEpic, switchDeploymentEpic, changeContainerShipNumberingEpic, constructContainerShipEpic, scaleContainerShipQuantityEpic, scrapContainerShipEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];
+export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];

@@ -50,10 +50,10 @@ export interface IMasterPageProps {
     hideDrawer: () => void;
     switchFewBoxDelivery: (isFewBox: boolean) => void;
     switchHelp: (isHelp: boolean) => void;
-    changeContainerShipNumbering: (any) => void;
-    changeStackPolicySubset: (any) => void;
+    changePodVersion: (any) => void;
+    changeDestinationRuleSubset: (any) => void;
     intl: any;
-    selectedStackPolicy: SelectedDestinationRule;
+    selectedDestinationRule: SelectedDestinationRule;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -83,9 +83,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Deployment':
-                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changeContainerShipNumbering={this.props.changeContainerShipNumbering} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changePodVersion={this.props.changePodVersion} /></Suspense>
                 case 'DestinationRule':
-                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedStackPolicy={this.props.selectedStackPolicy} changeStackPolicySubset={this.props.changeStackPolicySubset} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeStackPolicySubset={this.props.changeDestinationRuleSubset} /></Suspense>
                 default:
                     return <div></div>
             }
@@ -253,8 +253,8 @@ const mapDispatchToProps = {
     switchFewBoxDelivery,
     switchHelp,
     hideDrawer,
-    changeContainerShipNumbering: changePodVersion,
-    changeStackPolicySubset: changeDestinationRuleSubset
+    changePodVersion,
+    changeDestinationRuleSubset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));

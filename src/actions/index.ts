@@ -126,12 +126,12 @@ export const deletePod = (pod): IAction<any> => ({
 });
 
 export const changePodVersion = (pod): IAction<any> => ({
-    type: ActionTypes.CHANGE_POD_VERSION,
+    type: ActionTypes.CHANGE_DEPLOYMENT_VERSION,
     value: pod
 });
 
 export const scalePodReplicas = (pod): IAction<any> => ({
-    type: ActionTypes.SCALE_POD_REPLICAS,
+    type: ActionTypes.SCALE_DEPLOYMENT_REPLICAS,
     value: pod
 });
 

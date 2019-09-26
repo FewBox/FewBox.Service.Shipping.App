@@ -5,15 +5,15 @@ import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { loadPod, initPodPage, fillPodServiceAccountDropdownList } from '../actions';
 
-const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_POD_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/containerships/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/pods/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/containerships', method: 'GET' });
+                return AjaxObservable({ path: '/api/pods', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -24,15 +24,15 @@ const initContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
         })
     );
 
-const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const switchPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/containerships/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/pods/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/containerships', method: 'GET' });
+                return AjaxObservable({ path: '/api/pods', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -42,11 +42,11 @@ const switchContainerShipEpic = (action$: ActionsObservable<any>, store$: StateO
             return loadPod(payload);
         })
     );
-const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const deletePodEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_POD),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/containerships/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/pods/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -55,11 +55,11 @@ const sinkContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObs
             return initPodPage();
         })
     );
-const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const createPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_POD),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/containerships', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/pods', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
@@ -82,4 +82,4 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
         })
     );
 
-export default [initContainerShipEpic, switchContainerShipEpic, sinkContainerShipEpic, constructContainerShipEpic, initServiceAccountDropdownListEpic];
+export default [initPodEpic, switchPodEpic, deletePodEpic, createPodEpic, initServiceAccountDropdownListEpic];

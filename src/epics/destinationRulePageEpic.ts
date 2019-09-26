@@ -11,10 +11,10 @@ const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: St
         ofType(ActionTypes.INIT_DESTINATIONRULE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/stackpolicies/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/destinationrules/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/stackpolicies', method: 'GET' });
+                return AjaxObservable({ path: '/api/destinationrules', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -29,10 +29,10 @@ const switchStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/stackpolicies/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/destinationrules/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/stackpolicies', method: 'GET' });
+                return AjaxObservable({ path: '/api/destinationrules', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -46,7 +46,7 @@ const draftStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObse
     action$.pipe(
         ofType(ActionTypes.CREATE_DESTINATIONRULE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/stackpolicies', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/destinationrules', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
@@ -59,7 +59,7 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
     action$.pipe(
         ofType(ActionTypes.DELETE_DESTINATIONRULE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/destinationrules/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -68,11 +68,11 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
             return initDestinationRulePage();
         })
     );
-const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const changeDestinationRuleSubsetEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CHANGE_DESTINATIONRULE_SUBSET),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
+            return AjaxObservable({ path: '/api/destinationrules/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
         }),
         map((payload) => {
             if (payload.type) {
@@ -81,11 +81,11 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
             return initDestinationRulePage();
         })
     );
-const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initServiceDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_DESTINATIONRULE_SERVICE_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/services', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {
@@ -111,7 +111,7 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
     action$.pipe(
         ofType(ActionTypes.SELECT_DESTINATIONRULE),
         switchMap((action) => {
-            return zip(AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/stackpolicies/' + action.value.name, method: 'GET' }),
+            return zip(AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/destinationrules/' + action.value.name, method: 'GET' }),
                 AjaxObservable({ path: '/api/deployments?labels=app=' + action.value.name, method: 'GET' }));
         }),
         map((payloads) => {
@@ -124,4 +124,4 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
         })
     );
 
-export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initDeploymentDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];
+export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic, selectStackPolicyEpic, changeDestinationRuleSubsetEpic];

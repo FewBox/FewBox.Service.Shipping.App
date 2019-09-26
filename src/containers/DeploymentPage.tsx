@@ -15,9 +15,9 @@ export interface IDeploymentPageProps {
     secrets: Secret[];
     initDeploymentPage: () => void;
     initNamespaceDropdownList: () => void;
-    scaleContainerShipQuantity: (any) => void;
-    constructContainerShip: (any) => void;
-    scrapContainerShip: (any) => void;
+    scalePodReplicas: (any) => void;
+    createDeployment: (any) => void;
+    deleteDeployment: (any) => void;
     showDrawer: (drawerType: any) => void;
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
@@ -33,7 +33,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <DeploymentCreation isHelp={this.props.isHelp} construct={this.props.constructContainerShip} reload={this.props.initDeploymentPage}
+                    <DeploymentCreation isHelp={this.props.isHelp} construct={this.props.createDeployment} reload={this.props.initDeploymentPage}
                         namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
                         refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />
                 </Row>
@@ -42,8 +42,8 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                         renderItem={(item: Deployment) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.scrapContainerShip({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <InputNumber size="small" min={1} max={10} defaultValue={item.replias} onBlur={(value) => { this.props.scaleContainerShipQuantity({ namespace: item.namespace, name: item.name, quantity: value.target.value }); }} />,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <InputNumber size="small" min={1} max={10} defaultValue={item.replias} onBlur={(value) => { this.props.scalePodReplicas({ namespace: item.namespace, name: item.name, quantity: value.target.value }); }} />,
                                     <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name, cargos: item.images })} />]}>
                                     <Card.Meta title={item.name} description={
                                         <Collapse bordered={false} defaultActiveKey={['1']}>
@@ -104,9 +104,9 @@ const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
     initDeploymentPage,
-    constructContainerShip: createDeployment,
-    scaleContainerShipQuantity: scalePodReplicas,
-    scrapContainerShip: deleteDeployment,
+    createDeployment,
+    scalePodReplicas,
+    deleteDeployment,
     showDrawer,
     initDeploymentServiceAccountDropdownList,
     initDeploymentSecretDropdownList
