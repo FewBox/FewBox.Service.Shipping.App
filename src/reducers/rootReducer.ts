@@ -19,7 +19,7 @@ import serviceEntryPage from './serviceEntryReducer';
 
 const appReducer = combineReducers({
     masterPage, signinPage, landingPage, settingPage, countryPage: nodePage, namespacePage, containerShipPage: podPage, shipyardPage: deploymentPage, quayAreaPage: servicePage,
-    gateAreaPage: gatewayPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage: virtualServicePage, stackPolicyPage: destinationRulePage, freeTradeAreaPage: serviceEntryPage, routing
+    gateAreaPage: gatewayPage, logBookPage, serviceAccountPage, secretPage, yardAreaPage: virtualServicePage, destinationRulePage, freeTradeAreaPage: serviceEntryPage, routing
 });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {

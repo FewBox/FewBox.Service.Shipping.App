@@ -249,27 +249,27 @@ export const deleteSecret = (dismission): IAction<any> => ({
     value: dismission
 });
 
-export const initStackPolicyPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_STACKPOLICYPAGE
+export const initDestinationRulePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_DESTINATIONRULEPAGE
 });
 
-export const loadStackPolicy = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_STACKPOLICY,
+export const loadDestinationRule = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_DESTINATIONRULE,
     payload: payload
 });
 
-export const draftStackPolicy = (stackPolicy): IAction<any> => ({
-    type: ActionTypes.DRAFT_STACKPOLICY,
-    value: stackPolicy
+export const createDestinationRule = (destinationRule): IAction<any> => ({
+    type: ActionTypes.CREATE_DESTINATIONRULE,
+    value: destinationRule
 });
 
-export const abolishStackPolicy = (dismission): IAction<any> => ({
-    type: ActionTypes.ABOLISH_STACKPOLICY,
-    value: dismission
+export const deleteDestinationRule = (destinationRule): IAction<any> => ({
+    type: ActionTypes.DELETE_DESTINATIONRULE,
+    value: destinationRule
 });
 
 export const changeStackPolicySubset = (subsets): IAction<any> => ({
-    type: ActionTypes.CHANGE_STACKPOLICYSUBSET,
+    type: ActionTypes.CHANGE_DESTINATIONRULESUBSET,
     value: subsets
 });
 

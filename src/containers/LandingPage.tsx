@@ -6,7 +6,7 @@ import { Row, Col, Statistic, Button, List, Card, Descriptions, Badge } from 'an
 
 export interface ILandingPageProps {
   initLandingPage: any;
-  shippingIndustryStatuses: ComponentStatus[];
+  componentStatuses: ComponentStatus[];
 }
 
 class LandingPage extends React.Component<ILandingPageProps, any> {
@@ -17,7 +17,7 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
     return (
       <div>
         <Row gutter={16}>
-          <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.shippingIndustryStatuses}
+          <List grid={{ gutter: 16, column: 4 }} dataSource={this.props.componentStatuses}
             renderItem={(item: ComponentStatus) => (
               <List.Item>
                 <Card>
@@ -36,7 +36,7 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
 }
 
 const mapStateToProps = ({ landingPage }: Store) => ({
-  shippingIndustryStatuses: landingPage.componentStatuses
+  componentStatuses: landingPage.componentStatuses
 });
 
 const mapDispatchToProps = {

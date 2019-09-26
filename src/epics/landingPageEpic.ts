@@ -10,7 +10,7 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
     action$.pipe(
         ofType(ActionTypes.INIT_LANDINGPAGE),
         switchMap(() => {
-            return zip(AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' }), AjaxObservable({ path: '/api/shippingindustrystatus', method: 'GET' }));
+            return zip(AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }), AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }));
         }),
         map((payloads) => {
             for (var key in payloads) {
@@ -18,7 +18,7 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
                     return payloads[key];
                 }
             }
-            return loadLanding({ shippingIndustryStatuses: payloads[0] });
+            return loadLanding({ componentStatuses: payloads[0] });
         })
     );
 

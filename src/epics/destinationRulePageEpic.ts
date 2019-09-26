@@ -4,11 +4,11 @@ import { mergeMap, map, switchMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initStackPolicyPage, loadStackPolicy, fillStackPolicyServiceDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
+import { initDestinationRulePage, loadDestinationRule, fillStackPolicyServiceDropdownList, fillStackPolicyShipyardDropdownList, fillSelectedStackPolicyShipyardDropdownList } from '../actions';
 
-const initStackPolicyPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_STACKPOLICYPAGE),
+        ofType(ActionTypes.INIT_DESTINATIONRULEPAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/stackpolicies/fewbox', method: 'GET' });
@@ -21,7 +21,7 @@ const initStackPolicyPageEpic = (action$: ActionsObservable<any>, store$: StateO
             if (payload.type) {
                 return payload;
             }
-            return loadStackPolicy(payload);
+            return loadDestinationRule(payload);
         })
     );
 const switchStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -39,12 +39,12 @@ const switchStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
             if (payload.type) {
                 return payload;
             }
-            return loadStackPolicy(payload);
+            return loadDestinationRule(payload);
         })
     );
 const draftStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.DRAFT_STACKPOLICY),
+        ofType(ActionTypes.CREATE_DESTINATIONRULE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/stackpolicies', method: 'POST', body: action.value });
         }),
@@ -52,12 +52,12 @@ const draftStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObse
             if (payload.type) {
                 return payload;
             }
-            return initStackPolicyPage();
+            return initDestinationRulePage();
         })
     );
 const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.ABOLISH_STACKPOLICY),
+        ofType(ActionTypes.DELETE_DESTINATIONRULE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
@@ -65,12 +65,12 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
             if (payload.type) {
                 return payload;
             }
-            return initStackPolicyPage();
+            return initDestinationRulePage();
         })
     );
 const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CHANGE_STACKPOLICYSUBSET),
+        ofType(ActionTypes.CHANGE_DESTINATIONRULESUBSET),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
         }),
@@ -78,7 +78,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
             if (payload.type) {
                 return payload;
             }
-            return initStackPolicyPage();
+            return initDestinationRulePage();
         })
     );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -124,4 +124,4 @@ const selectStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateObs
         })
     );
 
-export default [initStackPolicyPageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];
+export default [initDestinationRulePageEpic, draftStackPolicyEpic, switchStackPolicyEpic, abolishStackPolicyEpic, initQuayAreaDropdownListEpic, initShipyardDropdownListEpic, selectStackPolicyEpic, changeContainerShipNumberingEpic];

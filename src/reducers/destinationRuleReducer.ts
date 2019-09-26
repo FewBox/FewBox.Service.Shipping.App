@@ -10,7 +10,7 @@ const destinationRuleState = {
 };
 export default (state: DestinationRulePage = destinationRuleState, action: IPayloadAction<any>): DestinationRulePage => {
     switch (action.type) {
-        case ActionTypes.LOAD_STACKPOLICY:
+        case ActionTypes.LOAD_DESTINATIONRULE:
             return { ...state, destinationRules: action.payload };
         case ActionTypes.FILL_STACKPOLICYSERVICEDROPDOWNLIST:
             return { ...state, services: action.payload };

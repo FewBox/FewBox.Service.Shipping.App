@@ -231,7 +231,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage, destinationRulePage: stackPolicyPage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, destinationRulePage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -241,7 +241,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage: stackPo
     isDrawerVisible: masterPage.isDrawerVisible,
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
-    selectedStackPolicy: stackPolicyPage.selectedDestinationRule,
+    selectedStackPolicy: destinationRulePage.selectedDestinationRule,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })

@@ -8,7 +8,7 @@ const landingState = {
 export default (state: LandingPage = landingState, action: IPayloadAction<any>): LandingPage => {
     switch (action.type) {
         case ActionTypes.LOAD_LANDING:
-            return { ...state, componentStatuses: action.payload.shippingIndustryStatuses };
+            return { ...state, componentStatuses: action.payload.componentStatuses };
         default:
             return state;
     }
