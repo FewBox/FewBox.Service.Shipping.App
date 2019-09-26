@@ -22,11 +22,11 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let stamps = {};
+                let datas = {};
                 values.dataKeys ? values.dataKeys.map((dataKey, index) => {
-                    stamps[dataKey] = btoa(values.dataContents[index]);
+                    datas[dataKey] = btoa(values.dataContents[index]);
                 }) : null;
-                this.props.create({ namespace: values.namespace, name: values.name.toLowerCase(), type: values.type, stamps: stamps });
+                this.props.create({ namespace: values.namespace, name: values.name.toLowerCase(), type: values.type, datas: datas });
             }
         });
     };
