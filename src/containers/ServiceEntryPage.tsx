@@ -11,17 +11,17 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IServiceEntryPageProps {
     namespaces: Namespace[];
-    freeTradeAreas: ServiceEntry[];
-    initFreeTradeAreaPage: () => void;
+    serviceEntries: ServiceEntry[];
+    initServiceEntryPage: () => void;
     initNamespaceDropdownList: () => void;
-    constructFreeTradeArea: (any) => void;
-    demolishFreeTradeArea: (any) => void;
+    createServiceEntry: (any) => void;
+    deleteServiceEntry: (any) => void;
     isHelp: boolean;
 }
 
 class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
     componentDidMount() {
-        this.props.initFreeTradeAreaPage();
+        this.props.initServiceEntryPage();
         this.props.initNamespaceDropdownList();
     }
     render() {
@@ -29,14 +29,14 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
             <div>
                 <Row gutter={16}>
                     <ServiceEntryCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} protocolOptions={ProtocolOptions} locationOptions={LocationOptions} resolutionOptions={ResolutionOptions}
-                        reload={this.props.initFreeTradeAreaPage} construct={this.props.constructFreeTradeArea} />
+                        reload={this.props.initServiceEntryPage} create={this.props.createServiceEntry} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.freeTradeAreas}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.serviceEntries}
                         renderItem={(item: ServiceEntry) => (
                             <List.Item>
                                 <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.demolishFreeTradeArea({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceEntry({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
@@ -70,17 +70,17 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ serviceEntryPage: freeTradeAreaPage, masterPage, settingPage }: Store) => ({
-    freeTradeAreas: freeTradeAreaPage.serviceEntries,
+const mapStateToProps = ({ serviceEntryPage, masterPage, settingPage }: Store) => ({
+    serviceEntries: serviceEntryPage.serviceEntries,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
-    initFreeTradeAreaPage: initServiceEntryPage,
+    initServiceEntryPage,
     initNamespaceDropdownList,
-    constructFreeTradeArea: createServiceEntry,
-    demolishFreeTradeArea: deleteServiceEntry
+    createServiceEntry,
+    deleteServiceEntry
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServiceEntryPage);
