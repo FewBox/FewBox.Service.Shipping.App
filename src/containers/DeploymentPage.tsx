@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initDeploymentPage, constructContainerShip, scaleContainerShipQuantity, scrapContainerShip, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList, initDeploymentSecretDropdownList } from '../actions';
+import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList, initDeploymentSecretDropdownList } from '../actions';
 import { Store, Deployment, Namespace, ServiceAccount, Secret } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -104,9 +104,9 @@ const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
     initDeploymentPage,
-    constructContainerShip,
-    scaleContainerShipQuantity,
-    scrapContainerShip,
+    constructContainerShip: createDeployment,
+    scaleContainerShipQuantity: scalePodReplicas,
+    scrapContainerShip: deleteDeployment,
     showDrawer,
     initDeploymentServiceAccountDropdownList,
     initDeploymentSecretDropdownList

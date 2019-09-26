@@ -8,7 +8,7 @@ import { loadLanding, beginLoading, endLoading } from '../actions';
 
 const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_LANDINGPAGE),
+        ofType(ActionTypes.INIT_LANDING_PAGE),
         switchMap(() => {
             return zip(AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }), AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }));
         }),

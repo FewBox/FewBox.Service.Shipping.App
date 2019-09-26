@@ -9,7 +9,7 @@ const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changeContainerShipNumbering, changeStackPolicySubset } from '../actions';
+import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset } from '../actions';
 const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -253,8 +253,8 @@ const mapDispatchToProps = {
     switchFewBoxDelivery,
     switchHelp,
     hideDrawer,
-    changeContainerShipNumbering,
-    changeStackPolicySubset
+    changeContainerShipNumbering: changePodVersion,
+    changeStackPolicySubset: changeDestinationRuleSubset
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));

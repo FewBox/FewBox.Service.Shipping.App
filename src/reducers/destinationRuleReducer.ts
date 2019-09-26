@@ -14,7 +14,7 @@ export default (state: DestinationRulePage = destinationRuleState, action: IPayl
             return { ...state, destinationRules: action.payload };
         case ActionTypes.FILL_DESTINATIONRULE_SERVICE_DROPDOWNLIST:
             return { ...state, services: action.payload };
-        case ActionTypes.FILL_SELECTEDDESTINATIONRULE:
+        case ActionTypes.FILL_SELECTED_DESTINATIONRULE:
             return { ...state, selectedDestinationRule: action.payload };
         case ActionTypes.HIDE_DRAWER:
             return { ...state, selectedDestinationRule: { subsets: [], deployments: [] } };

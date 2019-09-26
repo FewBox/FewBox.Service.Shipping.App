@@ -7,7 +7,7 @@ import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdow
 
 const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_DEPLOYMENTPAGE),
+        ofType(ActionTypes.INIT_DEPLOYMENT_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/deployments/fewbox', method: 'GET' });
@@ -44,7 +44,7 @@ const switchDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
     );
 const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CHANGE_CONTAINERSHIPNUMBERING),
+        ofType(ActionTypes.CHANGE_POD_VERSION),
         mergeMap((action) => {
             let operations = action.value.cargos.map((cargo, index) => {
                 return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
@@ -61,7 +61,7 @@ const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store
 
 const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CONSTRUCT_CONTAINERSHIP),
+        ofType(ActionTypes.CREATE_DEPLOYMENT),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/deployments/oncontainer', method: 'POST', body: action.value });
         }),
@@ -75,7 +75,7 @@ const constructContainerShipEpic = (action$: ActionsObservable<any>, store$: Sta
 
 const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.SCALE_CONTAINERSHIPQUANTITY),
+        ofType(ActionTypes.SCALE_POD_REPLICAS),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/deployments/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
         }),
@@ -89,7 +89,7 @@ const scaleContainerShipQuantityEpic = (action$: ActionsObservable<any>, store$:
 
 const scrapContainerShipEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.SCRAP_CONTAINERSHIP),
+        ofType(ActionTypes.DELETE_DEPLOYMENT),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),

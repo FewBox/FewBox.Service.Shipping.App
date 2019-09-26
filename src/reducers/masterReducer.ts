@@ -21,7 +21,7 @@ export default (state: MasterPage = master, action: any): MasterPage => {
             return { ...state, path: action.value };
         case ActionTypes.CLEAR_PATH:
             return { ...state, path: undefined };
-        case ActionTypes.FILL_NAMESPACEDROPDOWNLIST:
+        case ActionTypes.FILL_NAMESPACE_DROPDOWNLIST:
             return { ...state, namespaces: action.payload };
         default:
             return state;

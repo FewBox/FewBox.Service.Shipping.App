@@ -3,11 +3,11 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initYardAreaPage, loadYardArea, fillYardAreaGateAreaDropdownList, fillYardAreaServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
+import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
 
 const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_YARDAREAPAGE),
+        ofType(ActionTypes.INIT_VIRTUALSERVICE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/yardareas/fewbox', method: 'GET' });
@@ -20,7 +20,7 @@ const initYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObse
             if (payload.type) {
                 return payload;
             }
-            return loadYardArea(payload);
+            return loadVirtualService(payload);
         })
     );
 const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -38,12 +38,12 @@ const switchYardAreaEpic = (action$: ActionsObservable<any>, store$: StateObserv
             if (payload.type) {
                 return payload;
             }
-            return loadYardArea(payload);
+            return loadVirtualService(payload);
         })
     );
 const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CONSTRUCT_YARDAREA),
+        ofType(ActionTypes.CREATE_VIRTUALSERVICE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/yardareas', method: 'POST', body: action.value });
         }),
@@ -51,12 +51,12 @@ const constructYardAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
             if (payload.type) {
                 return payload;
             }
-            return initYardAreaPage();
+            return initVirtualServicePage();
         })
     );
 const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.DEMOLISH_YARDAREA),
+        ofType(ActionTypes.DELETE_VIRTUALSERVICE),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/yardareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
@@ -64,12 +64,12 @@ const demolishYardAreaPageEpic = (action$: ActionsObservable<any>, store$: State
             if (payload.type) {
                 return payload;
             }
-            return initYardAreaPage();
+            return initVirtualServicePage();
         })
     );
 const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST),
+        ofType(ActionTypes.INIT_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateareas', method: 'GET' });
         }),
@@ -77,12 +77,12 @@ const initGateAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             if (payload.type) {
                 return payload;
             }
-            return fillYardAreaGateAreaDropdownList(payload);
+            return fillVirtualServiceGatewayDropdownList(payload);
         })
     );
 const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_YARDAREASERVICEDROPDOWNLIST),
+        ofType(ActionTypes.INIT_VIRTUALSERVICE_SERVICE_DROPDOWNLIST),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/namespaces/' + action.value + '/quayareas', method: 'GET' });
         }),
@@ -90,7 +90,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             if (payload.type) {
                 return payload;
             }
-            return fillYardAreaServiceDropdownList(payload);
+            return fillVirtualServiceServiceDropdownList(payload);
         })
     );
 const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>

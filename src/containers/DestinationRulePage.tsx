@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initStackPolicyServiceDropdownList, initDestinationRuleDeploymentDropdownList,
+import { initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initDestinationRuleServiceDropdownList, initDestinationRuleDeploymentDropdownList,
     showDrawer, selectDestinationRule } from '../actions';
 import { DestinationRule, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import DestinationRuleCreation from '../components/DestinationRuleCreation';
@@ -82,7 +82,7 @@ const mapDispatchToProps = {
     initNamespaceDropdownList,
     draftStackPolicy: createDestinationRule,
     abolishStackPolicy: deleteDestinationRule,
-    initStackPolicyServiceDropdownList,
+    initStackPolicyServiceDropdownList: initDestinationRuleServiceDropdownList,
     initDestinationRuleDeploymentDropdownList,
     showDrawer,
     selectStackPolicy: selectDestinationRule

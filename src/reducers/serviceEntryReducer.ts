@@ -6,7 +6,7 @@ const serviceEntryState = {
 };
 export default (state: ServiceEntryPage = serviceEntryState, action: any): ServiceEntryPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_FREETRADEAREA:
+        case ActionTypes.LOAD_SERVICEENTRY:
             return { ...state, serviceEntries: action.payload };
         default:
             return state;

@@ -15,7 +15,7 @@ const changeLanguageEric = (action$: ActionsObservable<any>) =>
 
 const initNamespaceDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_NAMESPACEDROPDOWNLIST),
+        ofType(ActionTypes.INIT_NAMESPACE_DROPDOWNLIST),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/namespaces/fewbox', method: 'GET' });

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initFreeTradeAreaPage, initNamespaceDropdownList, constructFreeTradeArea, demolishFreeTradeArea } from '../actions';
+import { initServiceEntryPage, initNamespaceDropdownList, createServiceEntry, deleteServiceEntry } from '../actions';
 import { ServiceEntry, Store, Namespace } from '../reducers/State';
 import ServiceEntryCreation from '../components/ServiceEntryCreation';
 import { ProtocolOptions, LocationOptions, ResolutionOptions } from '../jsons';
@@ -77,10 +77,10 @@ const mapStateToProps = ({ serviceEntryPage: freeTradeAreaPage, masterPage, sett
 });
 
 const mapDispatchToProps = {
-    initFreeTradeAreaPage,
+    initFreeTradeAreaPage: initServiceEntryPage,
     initNamespaceDropdownList,
-    constructFreeTradeArea,
-    demolishFreeTradeArea
+    constructFreeTradeArea: createServiceEntry,
+    demolishFreeTradeArea: deleteServiceEntry
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServiceEntryPage);

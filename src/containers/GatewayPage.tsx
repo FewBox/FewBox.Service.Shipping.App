@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initGateAreaPage, initNamespaceDropdownList, constructGateArea, demolishGateArea } from '../actions';
+import { initGatewayPage, initNamespaceDropdownList, createGateway, deleteGateway } from '../actions';
 import { Gateway, Store, Namespace } from '../reducers/State';
 import GatewayCreation from '../components/GatewayCreation';
 import { ProtocolOptions } from '../jsons';
@@ -66,10 +66,10 @@ const mapStateToProps = ({ gatewayPage: gateAreaPage, masterPage, settingPage }:
 });
 
 const mapDispatchToProps = {
-    initGateAreaPage,
+    initGateAreaPage: initGatewayPage,
     initNamespaceDropdownList,
-    constructGateArea,
-    demolishGateArea
+    constructGateArea: createGateway,
+    demolishGateArea: deleteGateway
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GatewayPage);

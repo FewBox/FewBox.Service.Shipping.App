@@ -4,11 +4,11 @@ import { mergeMap, map, switchMap } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initDestinationRulePage, loadDestinationRule, fillStackPolicyServiceDropdownList, fillDestinationRuleDeploymentDropdownList, fillSelectedDestinationRuleDeploymentDropdownList } from '../actions';
+import { initDestinationRulePage, loadDestinationRule, fillDestinationRuleServiceDropdownList, fillDestinationRuleDeploymentDropdownList, fillSelectedDestinationRuleDeploymentDropdownList } from '../actions';
 
 const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_DESTINATIONRULEPAGE),
+        ofType(ActionTypes.INIT_DESTINATIONRULE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/stackpolicies/fewbox', method: 'GET' });
@@ -70,7 +70,7 @@ const abolishStackPolicyEpic = (action$: ActionsObservable<any>, store$: StateOb
     );
 const changeContainerShipNumberingEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CHANGE_DESTINATIONRULESUBSET),
+        ofType(ActionTypes.CHANGE_DESTINATIONRULE_SUBSET),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/stackpolicies/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/subsets", "value": action.value.subsets }] });
         }),
@@ -91,7 +91,7 @@ const initQuayAreaDropdownListEpic = (action$: ActionsObservable<any>, store$: S
             if (payload.type) {
                 return payload;
             }
-            return fillStackPolicyServiceDropdownList(payload);
+            return fillDestinationRuleServiceDropdownList(payload);
         })
     );
 const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>

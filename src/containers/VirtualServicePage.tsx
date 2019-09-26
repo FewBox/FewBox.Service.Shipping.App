@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
-import { initYardAreaPage, initNamespaceDropdownList, constructYardArea, demolishYardArea, initYardAreaGateAreaDropdownList, initVirtualServiceServiceDropdownList, initVirtualServiceDeploymentDropdownList } from '../actions';
+import { initVirtualServicePage, initNamespaceDropdownList, createVirtualService, deleteVirtualService, initVirtualServiceGatewayDropdownList, initVirtualServiceServiceDropdownList, initVirtualServiceDeploymentDropdownList } from '../actions';
 import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -97,11 +97,11 @@ const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store)
 });
 
 const mapDispatchToProps = {
-    initYardAreaPage,
+    initYardAreaPage: initVirtualServicePage,
     initNamespaceDropdownList,
-    constructYardArea,
-    demolishYardArea,
-    initYardAreaGateAreaDropdownList,
+    constructYardArea: createVirtualService,
+    demolishYardArea: deleteVirtualService,
+    initYardAreaGateAreaDropdownList: initVirtualServiceGatewayDropdownList,
     initYardAreaServiceDropdownList: initVirtualServiceServiceDropdownList,
     initVirtualServiceDeploymentDropdownList
 };

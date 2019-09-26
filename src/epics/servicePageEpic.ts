@@ -7,7 +7,7 @@ import { initServicePage, loadService } from '../actions';
 
 const initServiePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SERVICEPAGE),
+        ofType(ActionTypes.INIT_SERVICE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/services/fewbox', method: 'GET' });

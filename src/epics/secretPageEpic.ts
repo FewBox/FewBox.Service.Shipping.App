@@ -7,7 +7,7 @@ import { initSecretPage, loadSecret } from '../actions';
 
 const initSecretPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_SECRETPAGE),
+        ofType(ActionTypes.INIT_SECRET_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/secrets/fewbox', method: 'GET' });

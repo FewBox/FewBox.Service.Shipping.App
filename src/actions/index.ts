@@ -30,7 +30,7 @@ export const changeLanguage = (lang): IAction<string> => ({
     value: lang
 });
 export const initLandingPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_LANDINGPAGE
+    type: ActionTypes.INIT_LANDING_PAGE
 });
 
 export const loadLanding = (payload): IPayloadAction<any> => ({
@@ -39,7 +39,7 @@ export const loadLanding = (payload): IPayloadAction<any> => ({
 });
 
 export const initNamespacePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_NAMESPACEPAGE
+    type: ActionTypes.INIT_NAMESPACE_PAGE
 });
 
 export const loadNamespace = (payload): IPayloadAction<any> => ({
@@ -77,17 +77,17 @@ export const disableIstioStatus = (namespaceName): IAction<string> => ({
     value: namespaceName
 });
 
-export const initContainerShipPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_CONTAINERSHIPPAGE
+export const initPodPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_POD_PAGE
 });
 
-export const loadContainerShip = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_CONTAINERSHIP,
+export const loadPod = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_POD,
     payload: payload
 });
 
 export const initDeploymentPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_DEPLOYMENTPAGE
+    type: ActionTypes.INIT_DEPLOYMENT_PAGE
 });
 
 export const loadDeployment = (payload): IPayloadAction<any> => ({
@@ -105,38 +105,38 @@ export const switchHelp = (isHelp): IAction<boolean> => ({
     value: isHelp
 });
 
-export const constructContainerShip = (designBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_CONTAINERSHIP,
-    value: designBill
+export const createDeployment = (deployment): IAction<any> => ({
+    type: ActionTypes.CREATE_DEPLOYMENT,
+    value: deployment
 });
 
-export const constructTemporaryContainerShip = (designBill): IAction<any> => ({
-    type: ActionTypes.BUILD_TEMPORARYCONTAINERSHIP,
-    value: designBill
+export const createPod = (pod): IAction<any> => ({
+    type: ActionTypes.CREATE_POD,
+    value: pod
 });
 
-export const scrapContainerShip = (demolitionBill): IAction<any> => ({
-    type: ActionTypes.SCRAP_CONTAINERSHIP,
-    value: demolitionBill
+export const deleteDeployment = (deployment): IAction<any> => ({
+    type: ActionTypes.DELETE_DEPLOYMENT,
+    value: deployment
 });
 
-export const sinkContainerShip = (artificialReefBill): IAction<any> => ({
-    type: ActionTypes.SINK_CONTAINERSHIP,
-    value: artificialReefBill
+export const deletePod = (pod): IAction<any> => ({
+    type: ActionTypes.DELETE_POD,
+    value: pod
 });
 
-export const changeContainerShipNumbering = (renewBill): IAction<any> => ({
-    type: ActionTypes.CHANGE_CONTAINERSHIPNUMBERING,
-    value: renewBill
+export const changePodVersion = (pod): IAction<any> => ({
+    type: ActionTypes.CHANGE_POD_VERSION,
+    value: pod
 });
 
-export const scaleContainerShipQuantity = (renewBill): IAction<any> => ({
-    type: ActionTypes.SCALE_CONTAINERSHIPQUANTITY,
-    value: renewBill
+export const scalePodReplicas = (pod): IAction<any> => ({
+    type: ActionTypes.SCALE_POD_REPLICAS,
+    value: pod
 });
 
 export const initServicePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SERVICEPAGE
+    type: ActionTypes.INIT_SERVICE_PAGE
 });
 
 export const loadService = (payload): IPayloadAction<any> => ({
@@ -154,42 +154,42 @@ export const deleteService = (service): IAction<string> => ({
     value: service
 });
 
-export const initYardAreaPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_YARDAREAPAGE
+export const initVirtualServicePage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_VIRTUALSERVICE_PAGE
 });
 
-export const loadYardArea = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_YARDAREA,
+export const loadVirtualService = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_VIRTUALSERVICE,
     payload: payload
 });
 
-export const constructYardArea = (constructBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_YARDAREA,
-    value: constructBill
+export const createVirtualService = (virtualService): IAction<any> => ({
+    type: ActionTypes.CREATE_VIRTUALSERVICE,
+    value: virtualService
 });
 
-export const demolishYardArea = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_YARDAREA,
-    value: demolishBill
+export const deleteVirtualService = (virtualService): IAction<string> => ({
+    type: ActionTypes.DELETE_VIRTUALSERVICE,
+    value: virtualService
 });
 
-export const initGateAreaPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_GATEAREAPAGE
+export const initGatewayPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_GATEWAY_PAGE
 });
 
-export const loadGateArea = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_GATEAREA,
+export const loadGateway = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_GATEWAY,
     payload: payload
 });
 
-export const constructGateArea = (bluePrint): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_GATEAREA,
-    value: bluePrint
+export const createGateway = (gateway): IAction<any> => ({
+    type: ActionTypes.CREATE_GATEWAY,
+    value: gateway
 });
 
-export const demolishGateArea = (bluePrint): IAction<any> => ({
-    type: ActionTypes.DEMOLISH_GATEAREA,
-    value: bluePrint
+export const deleteGateway = (gateway): IAction<any> => ({
+    type: ActionTypes.DELETE_GATEWAY,
+    value: gateway
 });
 
 export const initLogBook = (identification): IAction<any> => ({
@@ -212,7 +212,7 @@ export const loadNode = (payload): IPayloadAction<any> => ({
 });
 
 export const initServiceAccountPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SERVICEACCOUNTPAGE
+    type: ActionTypes.INIT_SERVICEACCOUNT_PAGE
 });
 
 export const loadServiceAccount = (payload): IPayloadAction<any> => ({
@@ -231,7 +231,7 @@ export const deleteServiceAccount = (serviceAccount): IAction<any> => ({
 });
 
 export const initSecretPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_SECRETPAGE
+    type: ActionTypes.INIT_SECRET_PAGE
 });
 
 export const loadSecret = (payload): IPayloadAction<any> => ({
@@ -250,7 +250,7 @@ export const deleteSecret = (dismission): IAction<any> => ({
 });
 
 export const initDestinationRulePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_DESTINATIONRULEPAGE
+    type: ActionTypes.INIT_DESTINATIONRULE_PAGE
 });
 
 export const loadDestinationRule = (payload): IPayloadAction<any> => ({
@@ -268,28 +268,28 @@ export const deleteDestinationRule = (destinationRule): IAction<any> => ({
     value: destinationRule
 });
 
-export const changeStackPolicySubset = (subsets): IAction<any> => ({
-    type: ActionTypes.CHANGE_DESTINATIONRULESUBSET,
+export const changeDestinationRuleSubset = (subsets): IAction<any> => ({
+    type: ActionTypes.CHANGE_DESTINATIONRULE_SUBSET,
     value: subsets
 });
 
-export const initFreeTradeAreaPage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_FREETRADEAREAPAGE
+export const initServiceEntryPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SERVICEENTRY_PAGE
 });
 
-export const loadFreeTradeArea = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.LOAD_FREETRADEAREA,
+export const loadServiceEntry = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_SERVICEENTRY,
     payload: payload
 });
 
-export const constructFreeTradeArea = (constructBill): IAction<any> => ({
-    type: ActionTypes.CONSTRUCT_FREETRADEAREA,
-    value: constructBill
+export const createServiceEntry = (serviceEntry): IAction<any> => ({
+    type: ActionTypes.CREATE_SERVICEENTRY,
+    value: serviceEntry
 });
 
-export const demolishFreeTradeArea = (demolishBill): IAction<string> => ({
-    type: ActionTypes.DEMOLISH_FREETRADEAREA,
-    value: demolishBill
+export const deleteServiceEntry = (serviceEntry): IAction<string> => ({
+    type: ActionTypes.DELETE_SERVICEENTRY,
+    value: serviceEntry
 });
 
 /* UI */
@@ -314,18 +314,18 @@ export const hideDrawer = (): IEmptyAction => ({
     type: ActionTypes.HIDE_DRAWER
 });
 export const initNamespaceDropdownList = (): IEmptyAction => ({
-    type: ActionTypes.INIT_NAMESPACEDROPDOWNLIST
+    type: ActionTypes.INIT_NAMESPACE_DROPDOWNLIST
 });
 export const fillNamespaceDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_NAMESPACEDROPDOWNLIST,
+    type: ActionTypes.FILL_NAMESPACE_DROPDOWNLIST,
     payload: payload
 });
-export const initContainerShipServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST,
+export const initPodServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_POD_SERVICEACCOUNT_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillContainerShipServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_CONTAINERSHIPSERVICEACCOUNTDROPDOWNLIST,
+export const fillPodServiceAccountDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_POD_SERVICEACCOUNT_DROPDOWNLIST,
     payload: payload
 });
 export const initDeploymentServiceAccountDropdownList = (namespaceName: string): IAction<string> => ({
@@ -344,28 +344,28 @@ export const fillDeploymentSecretDropdownList = (payload): IPayloadAction<any> =
     type: ActionTypes.FILL_DEPLOYMENT_SECRET_DROPDOWNLIST,
     payload: payload
 });
-export const initYardAreaGateAreaDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_YARDAREAGATEAREADROPDOWNLIST,
+export const initVirtualServiceGatewayDropdownList = (namespaceName: string): IAction<string> => ({
+    type: ActionTypes.INIT_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillYardAreaGateAreaDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST,
+export const fillVirtualServiceGatewayDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST,
     payload: payload
 });
-export const initStackPolicyServiceDropdownList = (namespaceName: string): IAction<string> => ({
+export const initDestinationRuleServiceDropdownList = (namespaceName: string): IAction<string> => ({
     type: ActionTypes.INIT_DESTINATIONRULE_SERVICE_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillStackPolicyServiceDropdownList = (payload): IPayloadAction<any> => ({
+export const fillDestinationRuleServiceDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_DESTINATIONRULE_SERVICE_DROPDOWNLIST,
     payload: payload
 });
 export const initVirtualServiceServiceDropdownList = (namespaceName: string): IAction<string> => ({
-    type: ActionTypes.INIT_YARDAREASERVICEDROPDOWNLIST,
+    type: ActionTypes.INIT_VIRTUALSERVICE_SERVICE_DROPDOWNLIST,
     value: namespaceName
 });
-export const fillYardAreaServiceDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_YARDAREASERVICEDROPDOWNLIST,
+export const fillVirtualServiceServiceDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST,
     payload: payload
 });
 export const initDestinationRuleDeploymentDropdownList = (identificationCode: string): IAction<string> => ({
@@ -381,7 +381,7 @@ export const selectDestinationRule = (namespaceName: string, name: string): IAct
     value: { namespaceName: namespaceName, name: name }
 });
 export const fillSelectedDestinationRuleDeploymentDropdownList = (payload: SelectedDestinationRule): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_SELECTEDDESTINATIONRULE,
+    type: ActionTypes.FILL_SELECTED_DESTINATIONRULE,
     payload: payload
 });
 export const initVirtualServiceDeploymentDropdownList = (identificationCode: string): IAction<string> => ({

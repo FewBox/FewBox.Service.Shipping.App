@@ -9,11 +9,11 @@ const virtualServiceState = {
 };
 export default (state: VirtualServicePage = virtualServiceState, action: any): VirtualServicePage => {
     switch (action.type) {
-        case ActionTypes.LOAD_YARDAREA:
+        case ActionTypes.LOAD_VIRTUALSERVICE:
             return { ...state, virtualServices: action.payload };
-        case ActionTypes.FILL_YARDAREAGATEAREADROPDOWNLIST:
+        case ActionTypes.FILL_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST:
             return { ...state, gateways: action.payload };
-        case ActionTypes.FILL_YARDAREASERVICEDROPDOWNLIST:
+        case ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST:
             return { ...state, services: action.payload };
             case ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST:
                     return { ...state, deployments: action.payload };

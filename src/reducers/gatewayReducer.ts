@@ -6,7 +6,7 @@ const gatewayState = {
 };
 export default (state: GatewayPage = gatewayState, action: any): GatewayPage => {
     switch (action.type) {
-        case ActionTypes.LOAD_GATEAREA:
+        case ActionTypes.LOAD_GATEWAY:
             return { ...state, gateways: action.payload };
         default:
             return state;

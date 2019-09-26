@@ -8,7 +8,7 @@ import { IAction } from '../actions/Action';
 
 const initNamespacePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_NAMESPACEPAGE),
+        ofType(ActionTypes.INIT_NAMESPACE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/namespaces/fewbox', method: 'GET' });

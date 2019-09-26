@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm, Button, Descriptions, Badge, Popover, Collapse } from 'antd';
-import { initContainerShipPage, sinkContainerShip, constructTemporaryContainerShip, initNamespaceDropdownList, showDrawer, initContainerShipServiceAccountDropdownList } from '../actions';
+import { initPodPage, deletePod, createPod, initNamespaceDropdownList, showDrawer, initPodServiceAccountDropdownList } from '../actions';
 import { Store, Pod, Namespace, ServiceAccount } from '../reducers/State';
 import { Link } from 'react-router-dom';
 import ShipBuilding from '../components/PodCreation';
@@ -130,11 +130,11 @@ const mapStateToProps = ({ podPage: containerShipPage, masterPage, settingPage }
 
 const mapDispatchToProps = {
     initNamespaceDropdownList,
-    initContainerShipPage,
-    sinkContainerShip,
-    constructTemporaryContainerShip,
+    initContainerShipPage: initPodPage,
+    sinkContainerShip: deletePod,
+    constructTemporaryContainerShip: createPod,
     showDrawer,
-    initContainerShipServiceAccountDropdownList
+    initContainerShipServiceAccountDropdownList: initPodServiceAccountDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PodPage);

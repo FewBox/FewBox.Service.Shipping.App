@@ -3,11 +3,11 @@ import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
-import { initFreeTradeAreaPage, loadFreeTradeArea } from '../actions';
+import { initServiceEntryPage, loadServiceEntry } from '../actions';
 
 const initFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_FREETRADEAREAPAGE),
+        ofType(ActionTypes.INIT_SERVICEENTRY_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
                 return AjaxObservable({ path: '/api/freetradeareas/fewbox', method: 'GET' });
@@ -20,7 +20,7 @@ const initFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: Stat
             if (payload.type) {
                 return payload;
             }
-            return loadFreeTradeArea(payload);
+            return loadServiceEntry(payload);
         })
     );
 const switchFreeTradeAreaEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -38,12 +38,12 @@ const switchFreeTradeAreaEpic = (action$: ActionsObservable<any>, store$: StateO
             if (payload.type) {
                 return payload;
             }
-            return loadFreeTradeArea(payload);
+            return loadServiceEntry(payload);
         })
     );
 const constructFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.CONSTRUCT_FREETRADEAREA),
+        ofType(ActionTypes.CREATE_SERVICEENTRY),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/freetradeareas', method: 'POST', body: action.value });
         }),
@@ -51,12 +51,12 @@ const constructFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$:
             if (payload.type) {
                 return payload;
             }
-            return initFreeTradeAreaPage();
+            return initServiceEntryPage();
         })
     );
 const demolishFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.DEMOLISH_FREETRADEAREA),
+        ofType(ActionTypes.DELETE_SERVICEENTRY),
         mergeMap((action) => {
             return AjaxObservable({ path: '/api/freetradeareas/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
@@ -64,7 +64,7 @@ const demolishFreeTradeAreaPageEpic = (action$: ActionsObservable<any>, store$: 
             if (payload.type) {
                 return payload;
             }
-            return initFreeTradeAreaPage();
+            return initServiceEntryPage();
         })
     );
 
