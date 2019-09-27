@@ -107,7 +107,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                                 {getFieldDecorator('image', {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
                                 })(
-                                    <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Cargo" />
+                                    <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
                                 )}
                             </HelpComponent>
                         </Form.Item>

@@ -46,8 +46,8 @@ const changeDeploymentVersionEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.CHANGE_DEPLOYMENT_VERSION),
         mergeMap((action) => {
-            let operations = action.value.cargos.map((cargo, index) => {
-                return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": cargo };
+            let operations = action.value.images.map((image, index) => {
+                return { "op": "replace", "path": "/spec/template/spec/containers/" + index + "/image", "value": image };
             });
             return AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: operations });
         }),

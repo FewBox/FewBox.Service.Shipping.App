@@ -6,7 +6,7 @@ import { ImageIcon } from '../Icon';
 
 export interface IDeploymentDrawerProps {
     images: string[];
-    namespaceName: string;
+    namespace: string;
     name: string;
     changePodVersion: (any) => void;
     form: any;
@@ -17,7 +17,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.props.changePodVersion({ namespace: this.props.namespaceName, name: this.props.name, images: values.images });
+                this.props.changePodVersion({ namespace: this.props.namespace, name: this.props.name, images: values.images });
             }
         });
     };
@@ -26,13 +26,13 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    {this.props.images.map((cargo, index) => {
+                    {this.props.images.map((image, index) => {
                         return <Row gutter={16} key={'imageRow' + index}>
                             <Col span={24}>
                                 <Form.Item>
                                     {getFieldDecorator(`images[${index}]`, {
                                         rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }],
-                                        initialValue: this.props.images[index]
+                                        initialValue: image
                                     })(
                                         <Input prefix={<ImageIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
                                     )}

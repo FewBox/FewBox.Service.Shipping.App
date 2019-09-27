@@ -49,12 +49,12 @@ class NodePage extends React.Component<INodePageProps, any> {
                                             </Descriptions>
                                         </Collapse.Panel>
                                         <Collapse.Panel header={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Images" helpId="Help.Image" />} key='3'>
-                                            {item.images.map((cargo, index) => {
-                                                return <div key={'cargo' + index}>
-                                                    {cargo.names.map((name, index) => {
+                                            {item.images.map((image, index) => {
+                                                return <div key={'image' + index}>
+                                                    {image.names.map((name, index) => {
                                                         return <p key={'name' + index}>{name}</p>
                                                     })}
-                                                    {cargo.size}
+                                                    {image.size}
                                                 </div>
                                             })}
                                         </Collapse.Panel>

@@ -129,10 +129,10 @@ export interface Node {
     containerRuntime: string;
     kubelet: string;
     kubeProxy: string;
-    images: Cargo[];
+    images: Image[];
     age: string;
 }
-export interface Cargo {
+export interface Image {
     names: string[];
     size: string;
 }

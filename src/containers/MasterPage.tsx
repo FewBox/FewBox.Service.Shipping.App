@@ -83,7 +83,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Deployment':
-                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} cargos={this.props.drawer.cargos} changePodVersion={this.props.changePodVersion} /></Suspense>
+                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} images={this.props.drawer.images} changePodVersion={this.props.changePodVersion} /></Suspense>
                 case 'DestinationRule':
                     return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} /></Suspense>
                 default:
