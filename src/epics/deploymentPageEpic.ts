@@ -77,7 +77,7 @@ const scaleDeploymentReplicasEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.SCALE_DEPLOYMENT_REPLICAS),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/deployments/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.quantity } } });
+            return AjaxObservable({ path: '/api/deployments/merge/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: { spec: { replicas: action.value.replicas } } });
         }),
         map((payload) => {
             if (payload.type) {

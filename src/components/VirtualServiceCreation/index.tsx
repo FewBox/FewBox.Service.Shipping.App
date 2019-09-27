@@ -12,7 +12,7 @@ export interface IVirtualServiceCreationProps {
     namespaces: Namespace[];
     gateways: Gateway[];
     services: Service[];
-    deplyments: Deployment[];
+    deployments: Deployment[];
     matchOptions: Option[];
     refreshGateways: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
@@ -60,7 +60,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList onChange={this.changeNamespace} isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -172,7 +172,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                         </HelpComponent>
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.TagTarget" />} />
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} />
                             <DynamicFieldList fieldName={'http' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
@@ -207,7 +207,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: false, message: <FormattedMessage id='Message.DeploymentRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.deplyments ? this.props.deplyments.map((item, index) => {
+                                                    {this.props.deployments ? this.props.deployments.map((item, index) => {
                                                         return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
                                                     }) : null}
                                                 </Select>

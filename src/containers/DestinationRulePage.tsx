@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
 import {
     initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initDestinationRuleServiceDropdownList, initDestinationRuleDeploymentDropdownList,
-    showDrawer, selectDestinationRule
-} from '../actions';
+    showDrawer, selectDestinationRule } from '../actions';
 import { DestinationRule, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
 import DestinationRuleCreation from '../components/DestinationRuleCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -36,7 +35,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
         return (
             <div>
                 <Row gutter={16}>
-                    <DestinationRuleCreation isHelp={this.props.isHelp} tlsModeOptions={TLSModeOptions} namespaces={this.props.namespaces} services={this.props.services} refreshVirtualServices={this.props.initDestinationRuleServiceDropdownList}
+                    <DestinationRuleCreation isHelp={this.props.isHelp} tlsModeOptions={TLSModeOptions} namespaces={this.props.namespaces} services={this.props.services} refreshServices={this.props.initDestinationRuleServiceDropdownList}
                         deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} create={this.props.createDestinationRule} />
                 </Row>
                 <Row gutter={16}>
@@ -73,7 +72,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
 }
 
 const mapStateToProps = ({ destinationRulePage, masterPage, settingPage }: Store) => ({
-    stackPolicies: destinationRulePage.destinationRules,
+    destinationRules: destinationRulePage.destinationRules,
     services: destinationRulePage.services,
     deployments: destinationRulePage.deployments,
     namespaces: masterPage.namespaces,

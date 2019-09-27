@@ -160,5 +160,7 @@ export default {
     'Label.App': 'App',
     'Label.ImagePackagePolicy': 'Pull Policy',
     'Label.Phase': 'Phase',
-    'Label.Server': 'Server'
+    'Label.Server': 'Server',
+    'Label.Header': 'Header',
+    'Label.TLSMode': 'Tls Mode'
 }

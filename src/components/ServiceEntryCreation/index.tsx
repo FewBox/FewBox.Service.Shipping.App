@@ -27,10 +27,10 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let passes = values.portNames.map((passName, index) => {
-                    return { name: passName, number: values.portNumbers[index], protocol: values.portProtocols[index] };
+                let ports = values.portNames.map((portName, index) => {
+                    return { name: portName, number: values.portNumbers[index], protocol: values.portProtocols[index] };
                 });
-                this.props.create({ namespace: values.namespace, name: values.name, location: values.location, resolution: values.resolution, hosts: values.hosts, positins: values.addresses, passes: passes });
+                this.props.create({ namespace: values.namespace, name: values.name, location: values.location, resolution: values.resolution, hosts: values.hosts, positins: values.addresses, ports: ports });
             }
         });
     };
@@ -73,8 +73,7 @@ class ServiceEntryCreation extends React.PureComponent<IServiceEntryCreationProp
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Resolution' />}>
                                 {getFieldDecorator('resolution', {
-                                    rules: [{ required: false, message: <FormattedMessage id='Message.ResolutionRequired' /> }],
-                                    initialValue: 'DNS'
+                                    rules: [{ required: false, message: <FormattedMessage id='Message.ResolutionRequired' /> }]
                                 })(
                                     <Select showSearch allowClear placeholder="Resolution" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                         {this.props.resolutionOptions.map((item, index) => {

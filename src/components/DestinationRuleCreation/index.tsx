@@ -35,7 +35,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                 let subsets = values.subsets.map((subset, index) => {
                     return { name: subset, labels: { version: subset } }
                 });
-                this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, tLSMode: values.tLSMode, subsets: subsets });
+                this.props.create({ namespace: values.namespace, name: values.name, host: values.service, tLSMode: values.tLSMode, subsets: subsets });
             }
         });
     };
@@ -46,7 +46,7 @@ class DestinationRuleCreation extends React.PureComponent<IDestinationRuleCreati
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList onChange={this.changeNamespace} isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>

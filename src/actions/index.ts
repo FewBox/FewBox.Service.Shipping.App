@@ -376,9 +376,9 @@ export const fillDestinationRuleDeploymentDropdownList = (payload): IPayloadActi
     type: ActionTypes.FILL_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST,
     payload: payload
 });
-export const selectDestinationRule = (namespaceName: string, name: string): IAction<any> => ({
+export const selectDestinationRule = (namespace: string, name: string): IAction<any> => ({
     type: ActionTypes.SELECT_DESTINATIONRULE,
-    value: { namespaceName: namespaceName, name: name }
+    value: { namespace: namespace, name: name }
 });
 export const fillSelectedDestinationRuleDeploymentDropdownList = (payload: SelectedDestinationRule): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SELECTED_DESTINATIONRULE,

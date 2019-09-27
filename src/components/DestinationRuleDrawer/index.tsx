@@ -8,7 +8,7 @@ import DynamicFieldList from '../DynamicFieldList';
 
 export interface IDestinationRuleDrawerProps {
     selectedDestinationRule: SelectedDestinationRule;
-    namespaceName: string;
+    namespace: string;
     name: string;
     changeDestinationRuleSubset: (any) => void;
     form: any;
@@ -22,7 +22,7 @@ class DestinationRuleDrawer extends React.PureComponent<IDestinationRuleDrawerPr
                 let subsets = values.subsets.map((subset, index) => {
                     return { "labels": { "version": subset }, "name": subset };
                 });
-                this.props.changeDestinationRuleSubset({ namespace: this.props.namespaceName, name: this.props.name, subsets: subsets });
+                this.props.changeDestinationRuleSubset({ namespace: this.props.namespace, name: this.props.name, subsets: subsets });
             }
         });
     };
