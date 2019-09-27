@@ -58,6 +58,8 @@ export default {
     'Help.PortNumber': 'PortNumber',
     'Help.Header': 'Header',
     'Navigation.Landing': 'Landing',
+    'Navigation.Kubernetes': 'Kubernetes',
+    'Navigation.Istio': 'Istio',
     'Navigation.Terminal': 'Terminal',
     'Navigation.Pod': 'Pod',
     'Navigation.Deployment': 'Deployment',
@@ -162,5 +164,8 @@ export default {
     'Label.Phase': 'Phase',
     'Label.Server': 'Server',
     'Label.Header': 'Header',
-    'Label.TLSMode': 'Tls Mode'
+    'Label.TLSMode': 'Tls Mode',
+    'Label.Previous': 'Previous',
+    'Label.Next': 'Next',
+    'Label.Done': 'Done'
 }

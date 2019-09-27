@@ -30,7 +30,7 @@ module.exports = merge(common, {
                     {
                         loader: 'less-loader',
                         options: {
-                            'modifyVars': { 'primary-color': '#1DA57A', 'layout-header-background': '#147465', 'tooltip-bg': 'rgba(202, 255, 247, 0.75);', 'tooltip-color': '#147465' }, // #1DA57A #147465 #CAFFF7 #96FFEF #FFFFFF
+                            'modifyVars': { 'menu-dark-submenu-bg':'#147465', 'primary-color': '#1DA57A', 'layout-header-background': '#147465', 'tooltip-bg': 'rgba(20, 116, 101, 0.75);', 'tooltip-color': '#147465' }, // #1DA57A #147465 #CAFFF7 #96FFEF #FFFFFF
                             javascriptEnabled: true
                         }
                     }]

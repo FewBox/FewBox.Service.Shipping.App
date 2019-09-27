@@ -22,8 +22,14 @@ import CargoSvg from '../../../assets/images/cargo.svg';
 import SleepSvg from '../../../assets/images/sleep.svg';
 import CaptainSvg from '../../../assets/images/captain.svg';
 import CredentialSvg from '../../../assets/images/credential.svg';
+import ForkliftSvg from '../../../assets/images/forklift.svg';
+import TrafficLightSvg from '../../../assets/images/traffic-light.svg';
+import WarehouseSvg from '../../../assets/images/warehouse.svg';
+import KubernetesSvg from '../../../assets/images/kubernetes.svg';
 
 const fontSize = { fontSize: '20px' };
+export const KubernetesIcon = props => <Icon style={fontSize} component={KubernetesSvg} {...props} />;
+export const IstioIcon = props => <Icon style={fontSize} component={IstioSvg} {...props} />;
 export const NamespaceIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
 export const ServiceIcon = props => <Icon style={fontSize} component={QuayAreaSvg} {...props} />;
 export const DeploymentIcon = props => <Icon style={fontSize} component={ShipyardSvg} {...props} />;
@@ -38,13 +44,14 @@ export const ContainerIcon = props => <Icon style={fontSize} component={Containe
 export const DoorIcon = props => <Icon style={fontSize} component={DoorSvg} {...props} />;
 export const VersionIcon = props => <Icon style={fontSize} component={NumberingSvg} {...props} />;
 export const NodeIcon = props => <Icon style={fontSize} component={CountrySvg} {...props} />;
-export const IstioIcon = props => <Icon style={fontSize} component={IstioSvg} {...props} />;
 export const BrandIcon = props => <Icon style={fontSize} component={BrandSvg} {...props} />;
 export const ImageIcon = props => <Icon style={fontSize} component={CargoSvg} {...props} />;
 export const SleepIcon = props => <Icon style={fontSize} component={SleepSvg} {...props} />;
 export const ServiceAccountIcon = props => <Icon style={fontSize} component={CaptainSvg} {...props} />;
 export const SecretIcon = props => <Icon style={fontSize} component={CredentialSvg} {...props} />;
-export const ServiceEntryIcon = props => <Icon style={fontSize} component={BrandIcon} {...props} />
+export const ServiceEntryIcon = props => <Icon style={fontSize} component={WarehouseSvg} {...props} />
+export const VirtualServiceIcon = props => <Icon style={fontSize} component={ForkliftSvg} {...props} />
+export const DestinationRuleIcon = props => <Icon style={fontSize} component={TrafficLightSvg} {...props} />
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;
