@@ -11,7 +11,7 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 
 export interface IGatewayPageProps {
     namespaces: Namespace[];
-    gatewaies: Gateway[];
+    gateways: Gateway[];
     initGatewayPage: () => void;
     initNamespaceDropdownList: () => void;
     createGateway: (any) => void;
@@ -32,7 +32,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
                         reload={this.props.initGatewayPage} create={this.props.createGateway} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gatewaies}
+                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateways}
                         renderItem={(item: Gateway) => (
                             <List.Item>
                                 <Card actions={[

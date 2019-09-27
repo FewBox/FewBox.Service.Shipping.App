@@ -159,5 +159,6 @@ export default {
     'Label.ClusterIP': 'ClusterIP',
     'Label.App': 'App',
     'Label.ImagePackagePolicy': 'Pull Policy',
-    'Label.Phase': 'Phase'
+    'Label.Phase': 'Phase',
+    'Label.Server': 'Server'
 }

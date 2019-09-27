@@ -11,7 +11,7 @@ import { MatchOptions } from '../jsons';
 export interface IVirtualServicePageProps {
     namespaces: Namespace[];
     virtualServices: VirtualService[];
-    gatewaies: Gateway[];
+    gateways: Gateway[];
     services: Service[];
     deployments: Deployment[];
     initVirtualServicePage: () => void;
@@ -33,9 +33,9 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
         return (
             <div>
                 <Row gutter={16}>
-                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gatewaies={this.props.gatewaies} services={this.props.services}
+                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateways={this.props.gateways} services={this.props.services}
                         deployments={this.props.deployments} refreshDeployments={this.props.initVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions}
-                        refreshGatewaies={this.props.initVirtualServiceGatewayDropdownList} refreshServices={this.props.initVirtualServiceServiceDropdownList}
+                        refreshGateways={this.props.initVirtualServiceGatewayDropdownList} refreshServices={this.props.initVirtualServiceServiceDropdownList}
                         reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />
                 </Row>
                 <Row gutter={16}>

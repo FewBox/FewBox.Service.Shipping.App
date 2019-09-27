@@ -71,7 +71,7 @@ const initGatewayDropdownListEpic = (action$: ActionsObservable<any>, store$: St
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gatewaies', method: 'GET' });
+            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateways', method: 'GET' });
         }),
         map((payload) => {
             if (payload.type) {

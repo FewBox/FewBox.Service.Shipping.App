@@ -66,7 +66,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                 {getFieldDecorator(`portNames[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortNameRequired' /> }],
                                 })(
-                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Gateway' })} />
+                                    <Input prefix={<GatewayIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.PortName' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -77,7 +77,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                                 {getFieldDecorator(`portNumbers[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortNumberRequired' /> }],
                                 })(
-                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
+                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder={this.props.intl.formatMessage({ id: 'Label.Port' })} />
                                 )}
                             </HelpComponent>
                         </Form.Item>
@@ -113,7 +113,7 @@ class GatewayCreation extends React.PureComponent<IGatewayCreationProps> {
                         </Form.Item>
                     </Col>
                     ]
-                } form={this.props.form} addCaption={<FormattedMessage id="Label.Secret" />} />
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Server" />} />
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>

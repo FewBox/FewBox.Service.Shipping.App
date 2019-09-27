@@ -39,7 +39,7 @@ const config = {
         new CopyWebpackPlugin([
             { from: './assets', to: './assets' }
         ]),
-        new HtmlWebpackPlugin({ template: './src/index.tmpl.html', title: 'FewBox' })
+        new HtmlWebpackPlugin({ template: './src/index.tmpl.html', title: 'FewBox Shipping' })
     ]
 }
 module.exports = config;

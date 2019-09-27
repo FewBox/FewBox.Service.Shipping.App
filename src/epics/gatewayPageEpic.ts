@@ -10,10 +10,10 @@ const initGatewayPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         ofType(ActionTypes.INIT_GATEWAY_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gatewaies/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gatewaies', method: 'GET' });
+                return AjaxObservable({ path: '/api/gateways', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -28,10 +28,10 @@ const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gatewaies/fewbox', method: 'GET' });
+                return AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gatewaies', method: 'GET' });
+                return AjaxObservable({ path: '/api/gateways', method: 'GET' });
             }
         }),
         map((payload) => {
@@ -45,7 +45,7 @@ const createGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
     action$.pipe(
         ofType(ActionTypes.CREATE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gatewaies', method: 'POST', body: action.value });
+            return AjaxObservable({ path: '/api/gateways', method: 'POST', body: action.value });
         }),
         map((payload) => {
             if (payload.type) {
@@ -58,7 +58,7 @@ const deleteGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
     action$.pipe(
         ofType(ActionTypes.DELETE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gatewaies/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return AjaxObservable({ path: '/api/gateways/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
             if (payload.type) {

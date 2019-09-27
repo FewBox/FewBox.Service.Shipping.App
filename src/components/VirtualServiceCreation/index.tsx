@@ -10,11 +10,11 @@ import NamespaceDropdownList from '../NamespaceDropdownList';
 
 export interface IVirtualServiceCreationProps {
     namespaces: Namespace[];
-    gatewaies: Gateway[];
+    gateways: Gateway[];
     services: Service[];
     deplyments: Deployment[];
     matchOptions: Option[];
-    refreshGatewaies: (namespaceName: string) => void;
+    refreshGateways: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
     refreshDeployments: (app: string) => void;
     create: (string) => void;
@@ -25,7 +25,7 @@ export interface IVirtualServiceCreationProps {
 
 class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreationProps> {
     changeNamespace = (namespaceName: string) => {
-        this.props.refreshGatewaies(namespaceName);
+        this.props.refreshGateways(namespaceName);
         this.props.refreshServices(namespaceName);
     };
     changeDeployment = (app: string) => {
@@ -49,7 +49,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     }) : null;
                     return { uris: uris, headers: headers, routes: routes };
                 });
-                this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, gatewaies: values.gatewaies, https: https });
+                this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, gateways: values.gateways, https: https });
             }
         });
     };
@@ -90,11 +90,11 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
-                                {getFieldDecorator(`gatewaies[${k}]`, {
+                                {getFieldDecorator(`gateways[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.GatewayRequired' /> }],
                                 })(
                                     <Select showSearch placeholder={<FormattedMessage id='Label.Gateway' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.gatewaies ? this.props.gatewaies.map((item, index) => {
+                                        {this.props.gateways ? this.props.gateways.map((item, index) => {
                                             return <Select.Option key={'gateway' + index} value={item.name}>{item.name}</Select.Option>
                                         }) : null}
                                     </Select>

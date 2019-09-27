@@ -168,7 +168,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             </Menu.Item>
                             <Menu.Item key="10">
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.VirtualService" />}>
-                                    <Link to='/master/virtualservcie'><BrandIcon />
+                                    <Link to='/master/virtualservice'><BrandIcon />
                                         <FormattedMessage id="Navigation.VirtualService" /></Link>
                                 </HelpComponent>
                             </Menu.Item>
@@ -214,7 +214,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/service" render={props => <ServicePage {...props} />} />
                                     <Route path="/master/gateway" render={props => <GatewayPage {...props} />} />
                                     <Route path="/master/virtualservice" render={props => <VirtualServicePage {...props} />} />
-                                    <Route path="/master/destinationrul" render={props => <DestinationRulePage {...props} />} />
+                                    <Route path="/master/destinationrule" render={props => <DestinationRulePage {...props} />} />
                                     <Route path="/master/serviceentry" render={props => <ServiceEntryPage {...props} />} />
                                     <Route path="/master/about" render={props => <AboutPage {...props} />} />
                                     <Route path="/master/terminal/:namespace/:pod/:container/:command" render={props => <TerminalPage {...props} />} />
