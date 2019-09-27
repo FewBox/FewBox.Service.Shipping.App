@@ -95,17 +95,17 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                                     {item.containers.map((container, index) => {
                                                         return <Descriptions.Item key={'container' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Image' id="Label.ImageItem" values={{ key: index + 1 }} />}>{container}</Descriptions.Item>
                                                     })}
-                                                    {item.volumns ? item.volumns.map((volumn, index) => {
-                                                        return <Descriptions.Item key={'volumn' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volumn' id="Label.VolumeItem" values={{ key: volumn.name }} />}>
-                                                            <Popover title={volumn.name} trigger="click" content={JSON.stringify(volumn)}>
+                                                    {item.volumes ? item.volumes.map((volume, index) => {
+                                                        return <Descriptions.Item key={'volume' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Volume' id="Label.VolumeItem" values={{ key: volume.name }} />}>
+                                                            <Popover title={volume.name} trigger="click" content={JSON.stringify(volume)}>
                                                                 <Button type="primary" icon='eye'></Button>
                                                             </Popover>
                                                         </Descriptions.Item>
                                                     }) : null}
-                                                    {item.volumnMounts ? item.volumnMounts.map((volumnMount, index) => {
-                                                        return <Descriptions.Item key={'volumnMount' + index} label={<Badge color={volumnMount.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumnMount' id="Label.VolumeMountItem" values={{ key: volumnMount.name }} />} />}>
-                                                            <p>{volumnMount.mountPath}</p>
-                                                            <p>{volumnMount.mountSubPath}</p>
+                                                    {item.volumeMounts ? item.volumeMounts.map((volumeMount, index) => {
+                                                        return <Descriptions.Item key={'volumeMount' + index} label={<Badge color={volumeMount.isReadOnly ? 'red' : 'green'} text={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.VolumeMount' id="Label.VolumeMountItem" values={{ key: volumeMount.name }} />} />}>
+                                                            <p>{volumeMount.mountPath}</p>
+                                                            <p>{volumeMount.mountSubPath}</p>
                                                         </Descriptions.Item>
                                                     }) : null}
                                                 </Descriptions>

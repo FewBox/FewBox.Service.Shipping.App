@@ -148,8 +148,8 @@ export interface Pod {
     name: string;
     serviceAccount: string;
     containers: string[];
-    volumns: any[];
-    volumnMounts: DocumentDefinition[];
+    volumes: any[];
+    volumeMounts: VolumeMount[];
     app: string;
     version: string;
     phase: string;
@@ -166,8 +166,8 @@ export interface Deployment {
     app: string;
     replias: number;
     images: string[];
-    volumns: any[];
-    volumnMounts: DocumentDefinition[];
+    volumes: any[];
+    volumeMounts: VolumeMount[];
     age: string;
 }
 export interface Service {
@@ -224,7 +224,7 @@ export interface Secret {
     datas: any[];
     age: string;
 }
-export interface DocumentDefinition {
+export interface VolumeMount {
     name: string;
     mountPath: string;
     mountSubPath: string;

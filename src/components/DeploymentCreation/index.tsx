@@ -43,17 +43,18 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 let portNames = values.portNames ? values.portNames.map((portName, index) => {
                     return { name: portName, port: values.ports[index] };
                 }) : null;
-                let volumns = values.volumns ? values.volumns.map((volumn, index) => {
-                    return { name: volumn, secret: { secretName: values.secretKeys[index] } };
+                let Volumes = values.volumes ? values.volumes.map((volume, index) => {
+                    return { name: volume, secret: { secretName: values.secretKeys[index] } };
                 }) : null;
-                let volumnMounts = values.volumns ? values.volumns.map((volumn, index) => {
+                let volumeMounts = values.volumes ? values.volumes.map((volume, index) => {
                     return {
-                        name: volumn,
+                        name: volume,
                         mountPath: values.mountPathes[index],
                         subPath: values.mountSubPathes ? values.mountSubPathes[index] : null,
                         readOnly: values.readonlies[index]
                     };
                 }) : null;
+                debugger;
                 this.props.create({
                     namespace: values.namespace,
                     name: values.name,
@@ -63,8 +64,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     image: values.image,
                     imagePackagePolicy: values.imagePackagePolicy,
                     portNames: portNames,
-                    volumns: volumns,
-                    volumnMounts: volumnMounts
+                    Volumes: Volumes,
+                    volumeMounts: volumeMounts
                 });
             }
         });
@@ -181,8 +182,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     [<Col span={3} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.SecretName' />}>
-                                {getFieldDecorator(`volumns[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.VolumnRequired' /> }]
+                                {getFieldDecorator(`volumes[${k}]`, {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.VolumeRequired' /> }]
                                 })(
                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Name" />
                                 )}
