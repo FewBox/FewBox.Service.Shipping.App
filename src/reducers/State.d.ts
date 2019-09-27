@@ -164,7 +164,7 @@ export interface Deployment {
     version: string;
     serviceAccount: string;
     app: string;
-    replias: number;
+    replicas: number;
     images: string[];
     volumes: any[];
     volumeMounts: VolumeMount[];

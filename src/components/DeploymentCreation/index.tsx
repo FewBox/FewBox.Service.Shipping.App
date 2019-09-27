@@ -40,8 +40,8 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let portNames = values.portNames ? values.portNames.map((portName, index) => {
-                    return { name: portName, port: values.ports[index] };
+                let ports = values.ports ? values.ports.map((port, index) => {
+                    return { containerPort: port };
                 }) : null;
                 let Volumes = values.volumes ? values.volumes.map((volume, index) => {
                     return { name: volume, secret: { secretName: values.secretKeys[index] } };
@@ -63,7 +63,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     replicas: values.replicas,
                     image: values.image,
                     imagePackagePolicy: values.imagePackagePolicy,
-                    portNames: portNames,
+                    ports: ports,
                     Volumes: Volumes,
                     volumeMounts: volumeMounts
                 });
@@ -151,28 +151,12 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 <DynamicFieldList fieldName='containerPort' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.PortName' />}>
-                                {getFieldDecorator(`portNames[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.PortNameRequired' /> }],
-                                    initialValue: 'Http'
-                                })(
-                                    <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} style={{ width: '100%' }} placeholder="Door Name">
-                                        {this.props.protocolOptions.map((protocolOption, index) => {
-                                            return <Select.Option key={'protocolOption' + index} value={protocolOption.value}>{protocolOption.name}</Select.Option>
-                                        })}
-                                    </Select>
-                                )}
-                            </HelpComponent>
-                        </Form.Item>
-                    </Col>,
-                    <Col span={6} key={2}>
-                        <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
                                 {getFieldDecorator(`ports[${k}]`, {
                                     rules: [{ required: true, message: <FormattedMessage id='Message.PortRequired' /> }],
                                     initialValue: 80
                                 })(
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Leaf" />
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
                                 )}
                             </HelpComponent>
                         </Form.Item>

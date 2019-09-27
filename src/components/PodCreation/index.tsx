@@ -8,9 +8,11 @@ import { DeploymentIcon, VersionIcon, ImageIcon, SleepIcon, IstioIcon, DoorIcon,
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
+import DynamicFieldList from '../DynamicFieldList';
 
 export interface IPodCreationProps {
     imagePackagePolicyOptions: Option[];
+    protocolOptions: Option[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
     create: (any) => void;
@@ -28,25 +30,14 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let ports;
-                if (values.ports && values.ports.length > 0) {
-                    if (typeof (values.ports) == 'object') {
-                        ports = values.ports.map((item, index) => {
-                            let door = _.split(item, '|');
-                            return { name: door[0], leaf: door[1] };
-                        });
-                    }
-                    else {
-                        let door = _.split(values.ports, '|');
-                        ports = [{ name: door[0], leaf: door[1] }];
-                    }
-                }
+                let ports = values.ports ? values.ports.map((port, index) => {
+                    return { containerPort: port };
+                }) : null;
                 this.props.create({
                     namespace: values.namespace,
                     serviceAccount: values.serviceAccount,
                     name: values.name,
                     version: values.version,
-                    replicas: values.replicas,
                     image: values.image,
                     imagePackagePolicy: values.imagePackagePolicy,
                     ports: ports,
@@ -63,7 +54,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                 <Row gutter={16}>
                     <Col span={6}>
                         <Form.Item>
-                            <NamespaceDropdownList isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
+                            <NamespaceDropdownList onChange={this.props.refreshServiceAccounts} isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
                     <Col span={6}>
@@ -105,32 +96,6 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                             <ServiceAccountDropdownList isHelp={this.props.isHelp} serviceAccounts={this.props.serviceAccounts} form={this.props.form} />
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
-                        <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
-                                {getFieldDecorator('ports', {
-                                    initialValue: 'http|80'
-                                })(
-                                    <Select suffixIcon={<DoorIcon style={{ color: 'rgba(0,0,0,.25)' }} />} mode="tags" style={{ width: '100%' }} placeholder="Doors">
-                                        <Select.Option value="http|80">http|80</Select.Option>
-                                        <Select.Option value="https|443">https|443</Select.Option>
-                                    </Select>
-                                )}
-                            </HelpComponent>
-                        </Form.Item>
-                    </Col>
-                    <Col span={3}>
-                        <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Replica' />}>
-                                {getFieldDecorator('replicas', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.ReplicasRequired' /> }],
-                                    initialValue: '2'
-                                })(
-                                    <InputNumber min={1} max={10} />
-                                )}
-                            </HelpComponent>
-                        </Form.Item>
-                    </Col>
                     <Col span={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
@@ -165,6 +130,21 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                             )}
                         </Form.Item>
                     </Col>
+                </Row>
+                <DynamicFieldList fieldName='containerPort' itemComponents={(k) =>
+                    [<Col span={6} key={1}>
+                        <Form.Item>
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
+                                {getFieldDecorator(`ports[${k}]`, {
+                                    rules: [{ required: false, message: <FormattedMessage id='Message.PortRequired' /> }]
+                                })(
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
+                                )}
+                            </HelpComponent>
+                        </Form.Item>
+                    </Col>]
+                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
+                <Row>
                     <Col span={3}>
                         <Form.Item>
                             <Button type="primary" shape="circle" icon="plus" htmlType="submit" />
