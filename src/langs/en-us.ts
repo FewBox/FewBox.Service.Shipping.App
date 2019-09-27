@@ -60,6 +60,7 @@ export default {
     'Navigation.Landing': 'Landing',
     'Navigation.Kubernetes': 'Kubernetes',
     'Navigation.Istio': 'Istio',
+    'Navigation.ShippingLane': 'ShippingLane',
     'Navigation.Terminal': 'Terminal',
     'Navigation.Pod': 'Pod',
     'Navigation.Deployment': 'Deployment',

@@ -26,10 +26,12 @@ import ForkliftSvg from '../../../assets/images/forklift.svg';
 import TrafficLightSvg from '../../../assets/images/traffic-light.svg';
 import WarehouseSvg from '../../../assets/images/warehouse.svg';
 import KubernetesSvg from '../../../assets/images/kubernetes.svg';
+import ShippingLaneSvg from '../../../assets/images/shipping-lane.svg';
 
 const fontSize = { fontSize: '20px' };
 export const KubernetesIcon = props => <Icon style={fontSize} component={KubernetesSvg} {...props} />;
 export const IstioIcon = props => <Icon style={fontSize} component={IstioSvg} {...props} />;
+export const ShippingLaneIcon = props => <Icon style={fontSize} component={ShippingLaneSvg} {...props} />
 export const NamespaceIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
 export const ServiceIcon = props => <Icon style={fontSize} component={QuayAreaSvg} {...props} />;
 export const DeploymentIcon = props => <Icon style={fontSize} component={ShipyardSvg} {...props} />;

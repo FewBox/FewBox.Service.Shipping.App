@@ -13,6 +13,7 @@ import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hide
 const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
+const ShippingLanePage = lazy(() => import('./ShippingLanePage'));
 const TerminalPage = lazy(() => import('./TerminalPage'));
 const NamespacePage = lazy(() => import('./NamespacePage'));
 const PodPage = lazy(() => import('./PodPage'));
@@ -29,7 +30,7 @@ const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDr
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
-import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon } from '../components/Icon';
 
 
 export interface IMasterPageProps {
@@ -117,6 +118,10 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Menu.Item key="1">
                                 <Link to='/master/landing'><LandingIcon />
                                     <FormattedMessage id="Navigation.Landing" /></Link>
+                            </Menu.Item>
+                            <Menu.Item key="0">
+                                <Link to='/master/shippinglane'><ShippingLaneIcon />
+                                    <FormattedMessage id="Navigation.ShippingLane" /></Link>
                             </Menu.Item>
                             <Menu.SubMenu key='sub1' title={<span><KubernetesIcon /><FormattedMessage id="Navigation.Kubernetes" /></span>}>
                                 <Menu.Item key="2">
@@ -209,6 +214,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Suspense fallback={<Skeleton active />}>
                                 <Switch>
                                     <Route path="/master/landing" render={props => <LandingPage {...props} />} />
+                                    <Route path="/master/shippinglane" render={props => <ShippingLanePage {...props} />} />
                                     <Route path="/master/node" render={props => <NodePage {...props} />} />
                                     <Route path="/master/namespace" render={props => <NamespacePage {...props} />} />
                                     <Route path="/master/serviceaccount" render={props => <ServiceAccountPage {...props} />} />
