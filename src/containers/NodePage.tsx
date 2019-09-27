@@ -1,10 +1,12 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Descriptions, Collapse } from 'antd';
 import { initNodePage } from '../actions';
 import { Store, Node } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import NodeChart from '../components/NodeChart';
 
 export interface INodePageProps {
     nodes: Node[];
@@ -28,9 +30,17 @@ class NodePage extends React.Component<INodePageProps, any> {
                                     <Icon type="help" />,
                                     <Icon type="ellipsis" />]}>
                                     <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false}>
+                                        <NodeChart sourceData={[
+                                            { type: 'Used', resource: 'CPU', value: _.parseInt(item.cpu) - _.parseInt(item.allocatableCPU) },
+                                            { type: 'Allocatable', resource: 'CPU', value: _.parseInt(item.allocatableCPU) },
+                                            { type: 'Used', resource: 'HD', value: _.parseInt(_.trimEnd(item.hd, 'Mi') + '000000') - _.parseInt(item.allocatableCPU) },
+                                            { type: 'Allocatable', resource: 'HD', value: _.parseInt(item.allocatableHD) },
+                                            { type: 'Used', resource: 'Memory', value: _.parseInt(_.trimEnd(item.memory, 'Ki')) - _.parseInt(_.trimEnd(item.allocatableMemory, 'Ki')) },
+                                            { type: 'Allocatable', resource: 'Memory', value: _.parseInt(_.trimEnd(item.allocatableMemory, 'Ki')) }
+                                        ]} />
                                         <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                             <Descriptions size='small' bordered layout="vertical">
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.IP"  />}>{item.ip}</Descriptions.Item>
+                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IP" helpId="Help.IP" />}>{item.ip}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Host" helpId="Help.Host" />}>{item.hostname}</Descriptions.Item>
                                                 <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                                             </Descriptions>
