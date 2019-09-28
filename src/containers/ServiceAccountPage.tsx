@@ -6,6 +6,7 @@ import { initNamespaceDropdownList, initServiceAccountPage, createServiceAccount
 import ServiceAccountCreation from '../components/ServiceAccountCreation';
 import { Store, ServiceAccount, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import ResourcesCard from '../components/ResourcesCard';
 
 export interface IServiceAccountPageProps {
     namespaces: Namespace[];
@@ -29,25 +30,18 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
                     <ServiceAccountCreation isHelp={this.props.isHelp} create={this.props.createServiceAccount} reload={this.props.initServiceAccountPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.serviceAccounts}
-                        renderItem={(item: ServiceAccount) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceAccount({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Icon type="help" />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
-                                        <Descriptions size='small' column={1} bordered>
-                                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                            {item.secrets.map((secret, index) => {
-                                                return <Descriptions.Item key={'secret' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SecretItem" helpId="Help.Secret" values={{ key: index }} />}>{secret.name}</Descriptions.Item>
-                                            })}
-                                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>>{item.age}</Descriptions.Item>
-                                        </Descriptions>
-                                    } />
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.serviceAccounts}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceAccount({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Icon type="help" />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
+                            {item.secrets.map((secret, index) => {
+                                return <Descriptions.Item key={'secret' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SecretItem" helpId="Help.Secret" values={{ key: index }} />}>{secret.name}</Descriptions.Item>
+                            })}
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>>{item.age}</Descriptions.Item>
+                        </Descriptions>}
                     />
                 </Row>
             </div>

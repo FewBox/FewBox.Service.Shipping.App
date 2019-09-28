@@ -7,6 +7,7 @@ import { Namespace, Store } from '../reducers/State';
 import NamespaceCreation from '../components/NamespaceCreation';
 import { IstioIcon } from '../components/Icon';
 import Search from 'antd/lib/input/Search';
+import ResourcesCard from '../components/ResourcesCard';
 
 
 export interface INamespacePagePageProps {
@@ -35,20 +36,15 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
                     <NamespaceCreation create={this.props.createNamespace} reload={this.props.initNamespacePage} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.namespaces}
-                        renderItem={(item: Namespace) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteNamespace(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Switch checkedChildren={<IstioIcon />} unCheckedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Descriptions title={item.name} size='small' column={1} bordered>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
-                                        <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                    </Descriptions>
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.namespaces}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteNamespace(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Switch checkedChildren={<IstioIcon />} unCheckedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions title={item.name} size='small' column={1} bordered>
+                            <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
+                            <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
+                        </Descriptions>}
                     />
                 </Row>
             </div>

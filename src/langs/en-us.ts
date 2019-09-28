@@ -87,6 +87,7 @@ export default {
     'Message.UsernameRequired': 'Please input the username!',
     'Message.PasswordRequired': 'Please input the name!',
     'Message.ImageRequired': 'Please input the image!',
+    'Message.TypeRequired': 'Please input teh type!',
     'Confirm.Delete': 'Are you sure to delete "{name}"? It cannot be recovered!',
     'Label.Brand': 'FewBox',
     'Label.OK': 'OK',

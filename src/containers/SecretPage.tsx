@@ -6,6 +6,7 @@ import { initNamespaceDropdownList, initSecretPage, createSecret, deleteSecret }
 import SecretCreation from '../components/SecretCreation';
 import { Store, Secret, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import ResourcesCard from '../components/ResourcesCard';
 
 export interface ISecretPageProps {
     namespaces: Namespace[];
@@ -29,38 +30,25 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                     <SecretCreation isHelp={this.props.isHelp} create={this.props.createSecret} reload={this.props.initSecretPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.secrets}
-                        renderItem={(item: Secret) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Icon type="help" />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={
-                                        <Collapse bordered={false} defaultActiveKey={['1']}>
-                                            <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
-                                                <Descriptions size='small' column={1} bordered>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
-                                                    <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
-                                                </Descriptions>
-                                            </Collapse.Panel>
-                                            <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
-                                                <Descriptions size='small' column={1} bordered>
-                                                    {Object.keys(item.datas).map((key, index) => {
-                                                        return <Descriptions.Item key={'data' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{ key: key }} />}>
-                                                            <Popover title={key} trigger="click" content={atob(item.datas[key])}>
-                                                                <Button type="primary" icon='eye'></Button>
-                                                            </Popover>
-                                                        </Descriptions.Item>
-                                                    })}
-                                                </Descriptions>
-                                            </Collapse.Panel>
-                                        </Collapse>
-                                    } />
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.secrets}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Icon type="help" />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
+                        </Descriptions>}
+                        renderMore={(item) => <Descriptions size='small' column={1} bordered>
+                            {Object.keys(item.datas).map((key, index) => {
+                                return <Descriptions.Item key={'data' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{ key: key }} />}>
+                                    <Popover title={key} trigger="click" content={atob(item.datas[key])}>
+                                        <Button type="primary" icon='eye'></Button>
+                                    </Popover>
+                                </Descriptions.Item>
+                            })}
+                        </Descriptions>}
                     />
                 </Row>
             </div>
