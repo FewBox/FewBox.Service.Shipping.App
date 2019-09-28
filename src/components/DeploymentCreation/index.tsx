@@ -54,7 +54,6 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                         readOnly: values.readonlies[index]
                     };
                 }) : null;
-                debugger;
                 this.props.create({
                     namespace: values.namespace,
                     name: values.name,

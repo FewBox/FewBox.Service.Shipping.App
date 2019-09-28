@@ -7,6 +7,7 @@ import { ServiceEntry, Store, Namespace } from '../reducers/State';
 import ServiceEntryCreation from '../components/ServiceEntryCreation';
 import { ProtocolOptions, LocationOptions, ResolutionOptions } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import ResourcesCard from '../components/ResourcesCard';
 
 
 export interface IServiceEntryPageProps {
@@ -32,37 +33,26 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                         reload={this.props.initServiceEntryPage} create={this.props.createServiceEntry} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.serviceEntries}
-                        renderItem={(item: ServiceEntry) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceEntry({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Icon type="help" />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
-                                            <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                            </Descriptions>
-                                        </Collapse.Panel>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
-                                            <Descriptions size='small' column={1} bordered>
-                                                {item.hosts ? item.hosts.map((host, index) => {
-                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{host}</Descriptions.Item>
-                                                }) : null}
-                                                {item.addresses ? item.addresses.map((address, index) => {
-                                                    return <Descriptions.Item key={'address' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{address}</Descriptions.Item>
-                                                }) : null}
-                                                {item.ports ? item.ports.map((port, index) => {
-                                                    return <Descriptions.Item key={'port' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: port.name }} />}>{port.protocol}:{port.number}</Descriptions.Item>
-                                                }) : null}
-                                            </Descriptions>
-                                        </Collapse.Panel>
-                                    </Collapse>} />
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.serviceEntries}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceEntry({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Icon type="help" />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
+                        </Descriptions>}
+                        renderMore={(item) => <Descriptions size='small' column={1} bordered>
+                            {item.hosts ? item.hosts.map((host, index) => {
+                                return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.HostItem" helpId="Help.Host" values={{ key: index }} />}>{host}</Descriptions.Item>
+                            }) : null}
+                            {item.addresses ? item.addresses.map((address, index) => {
+                                return <Descriptions.Item key={'address' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.IPItem" helpId="Help.Address" values={{ key: index }} />}>{address}</Descriptions.Item>
+                            }) : null}
+                            {item.ports ? item.ports.map((port, index) => {
+                                return <Descriptions.Item key={'port' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.PortItem" helpId="Help.Port" values={{ key: port.name }} />}>{port.protocol}:{port.number}</Descriptions.Item>
+                            }) : null}
+                        </Descriptions>}
                     />
                 </Row>
             </div>

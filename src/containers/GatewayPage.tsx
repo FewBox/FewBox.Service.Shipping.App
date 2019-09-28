@@ -7,6 +7,7 @@ import { Gateway, Store, Namespace } from '../reducers/State';
 import GatewayCreation from '../components/GatewayCreation';
 import { ProtocolOptions } from '../jsons';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
+import ResourcesCard from '../components/ResourcesCard';
 
 
 export interface IGatewayPageProps {
@@ -32,26 +33,15 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
                         reload={this.props.initGatewayPage} create={this.props.createGateway} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.gateways}
-                        renderItem={(item: Gateway) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteGateway({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Icon type="help" />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
-                                            <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                            </Descriptions>
-                                        </Collapse.Panel>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
-                                        </Collapse.Panel>
-                                    </Collapse>} />
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.gateways}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteGateway({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Icon type="help" />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
+                        </Descriptions>}
                     />
                 </Row>
             </div>

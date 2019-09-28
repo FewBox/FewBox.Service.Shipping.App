@@ -7,6 +7,7 @@ import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '
 import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { MatchOptions } from '../jsons';
+import ResourcesCard from '../components/ResourcesCard';
 
 export interface IVirtualServicePageProps {
     namespaces: Namespace[];
@@ -39,47 +40,36 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                         reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />
                 </Row>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.virtualServices}
-                        renderItem={(item: VirtualService) => (
-                            <List.Item>
-                                <Card actions={[
-                                    <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
-                                    <Icon type="help" />,
-                                    <Icon type="ellipsis" />]}>
-                                    <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
-                                            <Descriptions size='small' column={1} bordered>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
-                                                <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
-                                            </Descriptions>
-                                        </Collapse.Panel>
-                                        <Collapse.Panel header={<FormattedMessage id="Label.More" />} key='2'>
-                                            <Descriptions size='small' column={1} bordered>
-                                                {item.hosts.map((host, index) => {
-                                                    return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{host}</Descriptions.Item>
-                                                })}
-                                                {item.gateways.map((gateway, index) => {
-                                                    return <Descriptions.Item key={'gateway' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateway}</Descriptions.Item>
-                                                })}
-                                                {item.https.map((http, index) => {
-                                                    return <Descriptions.Item key={'http' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
-                                                        {http.uris != null ? http.uris.map((uri, index) => {
-                                                            return <p key={'uri' + index}>{JSON.stringify(uri)}</p>
-                                                        }) : null}
-                                                        {http.headers != null ? http.headers.map((header, index) => {
-                                                            return <p key={'header' + index}>{JSON.stringify(header)}</p>
-                                                        }) : null}
-                                                        {http.routes.map((route, index) => {
-                                                            return <p key={'route' + index}>{route.host} : {route.subset ? route.subset : route.port}</p>
-                                                        })}
-                                                    </Descriptions.Item>
-                                                })}
-                                            </Descriptions>
-                                        </Collapse.Panel>
-                                    </Collapse>} />
-                                </Card>
-                            </List.Item>
-                        )}
+                    <ResourcesCard resources={this.props.virtualServices}
+                        renderActions={(item) => [
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Icon type="help" />,
+                            <Icon type="ellipsis" />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
+                        </Descriptions>}
+                        renderMore={(item) => <Descriptions size='small' column={1} bordered>
+                            {item.hosts.map((host, index) => {
+                                return <Descriptions.Item key={'host' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Host' id="Label.HostItem" values={{ key: index }} />}>{host}</Descriptions.Item>
+                            })}
+                            {item.gateways.map((gateway, index) => {
+                                return <Descriptions.Item key={'gateway' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Gateway' id="Label.GatewayItem" values={{ key: index }} />}>{gateway}</Descriptions.Item>
+                            })}
+                            {item.https.map((http, index) => {
+                                return <Descriptions.Item key={'http' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Match' id="Label.HttpItem" values={{ key: index }} />}>
+                                    {http.uris != null ? http.uris.map((uri, index) => {
+                                        return <p key={'uri' + index}>{JSON.stringify(uri)}</p>
+                                    }) : null}
+                                    {http.headers != null ? http.headers.map((header, index) => {
+                                        return <p key={'header' + index}>{JSON.stringify(header)}</p>
+                                    }) : null}
+                                    {http.routes.map((route, index) => {
+                                        return <p key={'route' + index}>{route.host} : {route.subset ? route.subset : route.port}</p>
+                                    })}
+                                </Descriptions.Item>
+                            })}
+                        </Descriptions>}
                     />
                 </Row>
             </div>
