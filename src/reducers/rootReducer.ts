@@ -16,10 +16,12 @@ import secretPage from './secretReducer';
 import virtualServicePage from './virtualServiceReducer';
 import destinationRulePage from './destinationRuleReducer';
 import serviceEntryPage from './serviceEntryReducer';
+import jobPage from './jobReducer';
 
 const appReducer = combineReducers({
     masterPage, signinPage, landingPage, settingPage, nodePage, namespacePage, podPage, deploymentPage, servicePage,
-    gatewayPage, logBookPage, serviceAccountPage, secretPage, virtualServicePage, destinationRulePage, serviceEntryPage, routing
+    gatewayPage, logBookPage, serviceAccountPage, secretPage, virtualServicePage, destinationRulePage, serviceEntryPage,
+    jobPage, routing
 });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {

@@ -29,6 +29,7 @@ export interface Store {
     virtualServicePage: VirtualServicePage;
     destinationRulePage: DestinationRulePage;
     serviceEntryPage: ServiceEntryPage;
+    jobPage: JobPage;
 }
 /** UI **/
 export interface SignInPage {
@@ -98,6 +99,9 @@ export interface DestinationRulePage {
 }
 export interface ServiceEntryPage {
     serviceEntries: ServiceEntry[];
+}
+export interface JobPage{
+    jobs: Job[];
 }
 /** Biz **/
 export interface ComponentStatus {
@@ -261,6 +265,10 @@ export interface Port {
     name: string;
     number: string;
     protocol: string;
+}
+export interface Job{
+    namespace: string;
+    name: string;
 }
 /* UI */
 export interface Option {

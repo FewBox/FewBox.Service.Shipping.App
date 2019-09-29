@@ -57,6 +57,7 @@ export default {
     'Help.Location': 'Location',
     'Help.PortNumber': 'PortNumber',
     'Help.Header': 'Header',
+    'Help.Job': 'Job',
     'Navigation.Landing': 'Landing',
     'Navigation.Kubernetes': 'Kubernetes',
     'Navigation.Istio': 'Istio',
@@ -67,6 +68,7 @@ export default {
     'Navigation.ServiceAccount': 'ServiceAccount',
     'Navigation.Secret': 'Secret',
     'Navigation.Service': 'Service',
+    'Navigation.Job': 'Job',
     'Navigation.VirtualService': 'VirtualService',
     'Navigation.About': 'About',
     'Navigation.Node': 'Node',
@@ -170,5 +172,6 @@ export default {
     'Label.Previous': 'Previous',
     'Label.Next': 'Next',
     'Label.Done': 'Done',
-    'Label.Protocol': 'Protocol'
+    'Label.Protocol': 'Protocol',
+    'Label.Job': 'Job'
 }

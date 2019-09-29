@@ -26,6 +26,7 @@ const SecretPage = lazy(() => import('./SecretPage'));
 const VirtualServicePage = lazy(() => import('./VirtualServicePage'));
 const DestinationRulePage = lazy(() => import('./DestinationRulePage'));
 const ServiceEntryPage = lazy(() => import('./ServiceEntryPage'));
+const JobPage = lazy(() => import('./JobPage'));
 const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDrawer'));
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
@@ -166,6 +167,12 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                             <FormattedMessage id="Navigation.Pod" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
+                                <Menu.Item key="8">
+                                    <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Job" />}>
+                                        <Link to='/master/job'><BrandIcon />
+                                            <FormattedMessage id="Navigation.Job" /></Link>
+                                    </HelpComponent>
+                                </Menu.Item>
                             </Menu.SubMenu>
                             <Menu.SubMenu key='sub2' title={<span><IstioIcon /><FormattedMessage id="Navigation.Istio" /></span>}>
                                 <Menu.Item key="9">
@@ -222,6 +229,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                     <Route path="/master/pod" render={props => <PodPage {...props} />} />
                                     <Route path="/master/deployment" render={props => <DeploymentPage {...props} />} />
                                     <Route path="/master/service" render={props => <ServicePage {...props} />} />
+                                    <Route path="/master/job" render={props => <JobPage {...props} />} />
                                     <Route path="/master/gateway" render={props => <GatewayPage {...props} />} />
                                     <Route path="/master/virtualservice" render={props => <VirtualServicePage {...props} />} />
                                     <Route path="/master/destinationrule" render={props => <DestinationRulePage {...props} />} />

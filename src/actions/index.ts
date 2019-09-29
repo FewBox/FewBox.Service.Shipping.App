@@ -292,6 +292,25 @@ export const deleteServiceEntry = (serviceEntry): IAction<string> => ({
     value: serviceEntry
 });
 
+export const initJobPage = (): IEmptyAction => ({
+    type: ActionTypes.INIT_JOB_PAGE
+});
+
+export const loadJob = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.LOAD_JOB,
+    payload: payload
+});
+
+export const createJob = (job): IAction<any> => ({
+    type: ActionTypes.CREATE_JOB,
+    value: job
+});
+
+export const deleteJob = (job): IAction<string> => ({
+    type: ActionTypes.DELETE_JOB,
+    value: job
+});
+
 /* UI */
 export const beginLoading = (): IEmptyAction => ({
     type: ActionTypes.BEGIN_LOADING
