@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Row, List, Col, Button, Form, Input } from 'antd';
+import { Row, List, Col, Button, Form, Input, Card, Icon } from 'antd';
 
 export interface IDynamicFieldListProps {
   fieldName: string;
   initialItems?: any[];
-  itemComponents: (k, i) => React.ReactElement[];
+  itemComponents: (k, i) => React.ReactNode[];
   form: any;
-  addCaption: string | React.ReactElement;
+  addCaption: string | React.ReactNode;
 }
 
 let id = 0;
@@ -58,8 +58,10 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
         item = this.props.initialItems[k];
       }
       return <Row gutter={16} key={'item' + index}>
-        {this.props.itemComponents(index, item)}
-        <Col span={1}><Button type="link" icon="minus" onClick={() => { this.remove(k); }} /></Col>
+        <Card>
+          <Row type="flex" justify="end"><Icon type="close" style={{ fontSize: '16px', color: '#E8E8E8' }} onClick={() => { this.remove(k); }} /></Row>
+          {this.props.itemComponents(index, item)}
+        </Card>
       </Row>
     });
     return (

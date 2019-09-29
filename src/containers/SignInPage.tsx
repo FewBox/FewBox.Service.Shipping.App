@@ -27,7 +27,7 @@ class SignIn extends React.Component<ISignInProps, any> {
         super(props);
     }
     componentDidMount() {
-        this.props.form.validateFields();
+        //this.props.form.validateFields();
     }
     @autobind
     signIn(e) {

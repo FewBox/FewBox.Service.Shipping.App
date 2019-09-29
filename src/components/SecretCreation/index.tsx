@@ -62,28 +62,32 @@ class SecretCreation extends React.PureComponent<ISecretCreationProps> {
                     </Col>
                 </Row>
                 <DynamicFieldList fieldName='data' itemComponents={(k) =>
-                    [<Col span={6} key={1}>
-                        <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
-                                {getFieldDecorator(`dataKeys[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.KeyRequired' /> }],
-                                })(
-                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
-                                )}
-                            </HelpComponent>
-                        </Form.Item>
-                    </Col>,
-                    <Col span={12} key={2}>
-                        <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
-                                {getFieldDecorator(`dataContents[${k}]`, {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.ContentRequired' /> }],
-                                })(
-                                    <Input.TextArea rows={4} placeholder="Content" />
-                                )}
-                            </HelpComponent>
-                        </Form.Item>
-                    </Col>
+                    [<Row>
+                        <Col span={12}>
+                            <Form.Item>
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
+                                    {getFieldDecorator(`dataKeys[${k}]`, {
+                                        rules: [{ required: true, message: <FormattedMessage id='Message.KeyRequired' /> }],
+                                    })(
+                                        <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Key" />
+                                    )}
+                                </HelpComponent>
+                            </Form.Item>
+                        </Col>
+                    </Row>,
+                    <Row>
+                        <Col span={12}>
+                            <Form.Item>
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Data" />}>
+                                    {getFieldDecorator(`dataContents[${k}]`, {
+                                        rules: [{ required: true, message: <FormattedMessage id='Message.ContentRequired' /> }],
+                                    })(
+                                        <Input.TextArea rows={18} placeholder="Content" />
+                                    )}
+                                </HelpComponent>
+                            </Form.Item>
+                        </Col>
+                    </Row>
                     ]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Data" />} />
                 <Row gutter={16}>

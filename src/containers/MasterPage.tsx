@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Store, SelectedDestinationRule } from '../reducers/State';
-import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result } from 'antd';
+import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result, Button } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
@@ -74,7 +74,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         const menu = (
             <Menu>
                 <Menu.Item>
-                    <Link to="/" onClick={this.props.signOut} ><FormattedMessage id="Label.SignOut" /></Link>
+                    <Button type='link' onClick={this.props.signOut}><FormattedMessage id="Label.SignOut" /></Button>
                 </Menu.Item>
                 <Menu.Item>
                     <ANTD_Switch checkedChildren={<Icon type="question-circle" />} checked={this.props.isHelp} unCheckedChildren={<Icon type="question-circle" />} defaultChecked onChange={(isHelp) => { this.props.switchHelp(isHelp); }} />

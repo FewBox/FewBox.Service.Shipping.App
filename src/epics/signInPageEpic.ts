@@ -1,5 +1,5 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { of, empty } from 'rxjs';
+import { of } from 'rxjs';
 import { mergeMap, map } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
@@ -10,24 +10,15 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
     action$.pipe(
         ofType(ActionTypes.SIGNIN),
         mergeMap((action) => {
-            //return AjaxObservable({ path: '/api/signin', method: 'POST', body: { username: action.value.username, password: action.value.password } }, store$);
-            if(action.value.password == '401' || action.value.password == '403' || action.value.password == '500'){
-                return AjaxObservable({ path: '/status/'+action.value.password, method: 'POST', body: { username: action.value.username, password: action.value.password } });
-            }
-            else if(action.value.password=='200')
-            {
-                window.localStorage.setItem('token', '');
-                return of(redirect('/master/landing'));
-            }
-            else{
-                return of({ isValid:true, token:'Bearer {token}' });
-            }
+            return of({token: 'FewBox'});
+            return AjaxObservable({ path: '/graphql', method: 'POST', body: { username: action.value.username, password: action.value.password } });
         }),
-        mergeMap((payload) => {
+        map((payload) => {
             if (payload.type) {
-                return of(payload);
+                return payload;
             }
-            return empty();
+            window.localStorage.setItem('token', payload.token);
+            return redirect('/master/landing');
         })
     );
 
@@ -36,7 +27,7 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
         ofType(ActionTypes.SIGNOUT),
         map(() => {
             window.localStorage.removeItem('token');
-            return empty();
+            return redirect('/');
         })
     );
 

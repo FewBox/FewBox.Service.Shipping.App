@@ -169,5 +169,6 @@ export default {
     'Label.TLSMode': 'Tls Mode',
     'Label.Previous': 'Previous',
     'Label.Next': 'Next',
-    'Label.Done': 'Done'
+    'Label.Done': 'Done',
+    'Label.Protocol': 'Protocol'
 }
