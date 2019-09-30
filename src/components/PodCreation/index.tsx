@@ -11,7 +11,7 @@ import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 import DynamicFieldList from '../DynamicFieldList';
 
 export interface IPodCreationProps {
-    imagePackagePolicyOptions: Option[];
+    imagePullPolicyOptions: Option[];
     protocolOptions: Option[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
@@ -39,7 +39,7 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     name: values.name,
                     version: values.version,
                     image: values.image,
-                    imagePackagePolicy: values.imagePackagePolicy,
+                    imagePullPolicy: values.imagePullPolicy,
                     ports: ports,
                     isSleepInfinity: values.isSleepInfinity,
                     isIstioInjected: values.isIstioInjected
@@ -99,13 +99,13 @@ class PodCreation extends React.PureComponent<IPodCreationProps> {
                     <Col span={3}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
-                                {getFieldDecorator('imagePackagePolicy', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePackagePolicyRequired' /> }],
+                                {getFieldDecorator('imagePullPolicy', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePullPolicyRequired' /> }],
                                     initialValue: 'IfNotPresent'
                                 })(
-                                    <Select showSearch placeholder={<FormattedMessage id='Label.ImagePackagePolicy' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.imagePackagePolicyOptions.map((imagePackagePolicyOption, index) => {
-                                            return <Select.Option key={'imagePackagePolicyOption' + index} value={imagePackagePolicyOption.value}>{imagePackagePolicyOption.name}</Select.Option>
+                                    <Select showSearch placeholder={<FormattedMessage id='Label.ImagePullPolicy' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.imagePullPolicyOptions.map((imagePullPolicyOption, index) => {
+                                            return <Select.Option key={'imagePullPolicyOption' + index} value={imagePullPolicyOption.value}>{imagePullPolicyOption.name}</Select.Option>
                                         })}
                                     </Select>
                                 )}

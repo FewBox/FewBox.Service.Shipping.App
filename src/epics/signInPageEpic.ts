@@ -10,8 +10,8 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
     action$.pipe(
         ofType(ActionTypes.SIGNIN),
         mergeMap((action) => {
-            return of({token: 'FewBox'});
-            return AjaxObservable({ path: '/graphql', method: 'POST', body: { username: action.value.username, password: action.value.password } });
+            //return of({token: 'FewBox'});
+            return AjaxObservable({ path: '/auth/graphql', method: 'POST', body: { username: action.value.username, password: action.value.password } });
         }),
         map((payload) => {
             if (payload.type) {

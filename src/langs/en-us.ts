@@ -164,7 +164,7 @@ export default {
     'Label.Data': 'Data',
     'Label.ClusterIP': 'ClusterIP',
     'Label.App': 'App',
-    'Label.ImagePackagePolicy': 'Pull Policy',
+    'Label.ImagePullPolicy': 'Pull Policy',
     'Label.Phase': 'Phase',
     'Label.Server': 'Server',
     'Label.Header': 'Header',

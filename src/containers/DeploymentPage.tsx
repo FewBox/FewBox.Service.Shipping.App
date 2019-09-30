@@ -7,7 +7,7 @@ import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeploymen
 import { Store, Deployment, Namespace, ServiceAccount, Secret } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
-import { ImagePackagePolicyOptions, ProtocolOptions } from '../jsons';
+import { ImagePullPolicyOptions, ProtocolOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
 
 export interface IDeploymentPageProps {
@@ -35,7 +35,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <DeploymentCreation isHelp={this.props.isHelp} imagePackagePolicyOptions={ImagePackagePolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
+                    <DeploymentCreation isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
                         namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
                         refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />
                 </Row>

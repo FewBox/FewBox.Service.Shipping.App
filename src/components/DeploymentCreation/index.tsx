@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Form, Input, Button, Icon, Select, Row, Col, InputNumber, Switch } from 'antd';
 import { Namespace, ServiceAccount, Secret, Option } from '../../reducers/State';
-import { DeploymentIcon, VersionIcon, ContainerIcon, DoorIcon, ImagePackagePolicyIcon, BrandIcon, SecretIcon } from '../Icon';
+import { DeploymentIcon, VersionIcon, ContainerIcon, DoorIcon, ImagePullPolicyIcon, BrandIcon, SecretIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
@@ -12,7 +12,7 @@ import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
 
 export interface IDeploymentCreationProps {
     protocolOptions: Option[];
-    imagePackagePolicyOptions: Option[];
+    imagePullPolicyOptions: Option[];
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
@@ -61,7 +61,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     version: values.version,
                     replicas: values.replicas,
                     image: values.image,
-                    imagePackagePolicy: values.imagePackagePolicy,
+                    imagePullPolicy: values.imagePullPolicy,
                     ports: ports,
                     Volumes: Volumes,
                     volumeMounts: volumeMounts
@@ -121,13 +121,13 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.ImagePullPolicy' />}>
-                                {getFieldDecorator('imagePackagePolicy', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePackagePolicyRequired' /> }],
+                                {getFieldDecorator('imagePullPolicy', {
+                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImagePullPolicyRequired' /> }],
                                     initialValue: 'IfNotPresent'
                                 })(
-                                    <Select suffixIcon={<ImagePackagePolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                        {this.props.imagePackagePolicyOptions.map((imagePackagePolicyOption, index) => {
-                                            return <Select.Option key={'imagePackagePolicyOption' + index} value={imagePackagePolicyOption.value}>{imagePackagePolicyOption.name}</Select.Option>
+                                    <Select suffixIcon={<ImagePullPolicyIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                        {this.props.imagePullPolicyOptions.map((imagePullPolicyOption, index) => {
+                                            return <Select.Option key={'imagePullPolicyOption' + index} value={imagePullPolicyOption.value}>{imagePullPolicyOption.name}</Select.Option>
                                         })}
                                     </Select>
                                 )}

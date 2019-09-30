@@ -37,7 +37,7 @@ export const ServiceIcon = props => <Icon style={fontSize} component={QuayAreaSv
 export const DeploymentIcon = props => <Icon style={fontSize} component={ShipyardSvg} {...props} />;
 export const PodIcon = props => <Icon style={fontSize} component={ContainerShipSvg} {...props} />;
 export const GatewayIcon = props => <Icon style={fontSize} component={GateAreaSvg} {...props} />;
-export const ImagePackagePolicyIcon = props => <Icon style={fontSize} component={CargoPackagePolicySvg} {...props} />;
+export const ImagePullPolicyIcon = props => <Icon style={fontSize} component={CargoPackagePolicySvg} {...props} />;
 export const LandingIcon = props => <Icon style={fontSize} component={LandingSvg} {...props} />;
 export const PortNameIcon = props => <Icon style={fontSize} component={BerthSvg} {...props} />;
 export const PortIcon = props => <Icon style={fontSize} component={CraneSvg} {...props} />;
