@@ -5,13 +5,28 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/ajaxObservable';
 import { redirect } from '../actions';
+import { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT } from '../config';
 
 const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SIGNIN),
         mergeMap((action) => {
             //return of({token: 'FewBox'});
-            return AjaxObservable({ path: '/auth/graphql', method: 'POST', body: { username: action.value.username, password: action.value.password } });
+            let graphql = `mutation {
+                signin(input: {username: "${action.value.username}", password: "${action.value.password}", userType: "Form"}) {
+                  isSuccessful
+                  errorCode
+                  errorMessage
+                  payload {
+                    isValid
+                    token
+                  }
+                }
+              }`;
+            let body = {
+                query: graphql
+            };
+            return AjaxObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, method: 'POST', path: '/graphql', body: body });
         }),
         map((payload) => {
             if (payload.type) {

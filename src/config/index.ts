@@ -1,6 +1,9 @@
 export const PROTOCOL = 'https';
 export const HOST = 'localhost';
-export const PORT = '5001';
+export const PORT = 5001;
+export const AUTH_PROTOCOL = 'http';
+export const AUTH_HOST = '116.196.120.216';
+export const AUTH_PORT = 80;
 export const HEADER = { 'Content-Type': 'application/json' };
 export const METHOD = 'Get';
 export const RESPONSETYPE = 'json';

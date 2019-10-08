@@ -1,4 +1,7 @@
 export interface IAjaxSetting {
+    protocol?: string;
+    host?: string;
+    port?: number;
     path?: string;
     queryParams?: object;
     body?: object;
@@ -12,5 +15,5 @@ export interface IAjaxSetting {
     requestAction?: string;
 }
 export interface IJsonSetting {
-    path : string;
+    path: string;
 }

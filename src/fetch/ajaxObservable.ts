@@ -9,7 +9,7 @@ import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting): AjaxRequest => {
     return {
-        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': PROTOCOL, 'host': HOST, 'port': PORT, 'path': ajaxSetting.path }),
+        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'path': ajaxSetting.path }),
         body: ajaxSetting.body ? JSON.stringify(ajaxSetting.body) : undefined,
         crossDomain: ajaxSetting.crossDomain ? ajaxSetting.crossDomain : true,
         headers: { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') },
