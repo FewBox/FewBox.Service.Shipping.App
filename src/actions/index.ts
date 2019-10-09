@@ -318,7 +318,7 @@ export const beginLoading = (): IEmptyAction => ({
 export const endLoading = (): IEmptyAction => ({
     type: ActionTypes.END_LOADING
 });
-export const showMessage = (messageType: MessageType, messageIntlId: string, messageValues: any): IAction<any> => ({
+export const showMessage = (messageType: MessageType, messageIntlId: string, messageValues?: any): IAction<any> => ({
     type: ActionTypes.SHOW_MESSAGE,
     value: { type: messageType, intlId: messageIntlId, values: messageValues }
 });

@@ -1,10 +1,8 @@
 import * as _ from 'lodash';
-import { Observable, of, empty } from 'rxjs';
-import { ajax, AjaxResponse, AjaxRequest } from 'rxjs/ajax';
-import { showMessage, redirect, beginLoading, endLoading } from '../actions';
+import { Observable, of } from 'rxjs';
 import { IAjaxSetting } from './Fetch';
 import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
-import { map, catchError, retry, startWith, endWith, mergeMap } from 'rxjs/operators';
+import { showMessage, redirect } from '../actions';
 import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
@@ -19,7 +17,7 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
     }
 };
 
-class AjaxObservable extends Observable<any>{
+class GraphQLObservable extends Observable<any>{
     constructor(ajaxSetting: IAjaxSetting) {
         var options = initAjaxSetting(ajaxSetting);
         super(subscriber => {
@@ -27,7 +25,7 @@ class AjaxObservable extends Observable<any>{
                 .then(r => r.json())
                 .then(response => {
                     if (response.isSuccessful) {
-                        subscriber.next(response.payload);
+                        subscriber.next(response.data);
                     }
                     else {
                         subscriber.error(of(showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: response.errorMessage })));
@@ -43,4 +41,4 @@ class AjaxObservable extends Observable<any>{
     }
 }
 
-export default AjaxObservable;
+export default GraphQLObservable;

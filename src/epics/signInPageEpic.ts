@@ -1,11 +1,11 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { of } from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
-import AjaxObservable from '../fetch/ajaxObservable';
-import { redirect } from '../actions';
+import GraphQLObservable from '../fetch/GraphQLObservable';
+import { redirect, showMessage, endLoading, beginLoading } from '../actions';
 import { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT } from '../config';
+import { MessageType } from '@fewbox/react-components';
 
 const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -26,14 +26,22 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
             let body = {
                 query: graphql
             };
-            return AjaxObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, method: 'POST', path: '/graphql', body: body });
+            return new GraphQLObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, method: 'POST', path: '/graphql', body: body });
         }),
-        map((payload) => {
-            if (payload.type) {
-                return payload;
+        map((data) => {
+            let payload = data.signin[0].payload;
+            if (payload.isValid) {
+                window.localStorage.setItem('token', payload.token);
+                return redirect('/master/landing');
             }
-            window.localStorage.setItem('token', payload.token);
-            return redirect('/master/landing');
+            else {
+                return showMessage(MessageType.Error, 'Message.UsernameOrPasswordIsNotValid');
+            }
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 
@@ -43,6 +51,11 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
         map(() => {
             window.localStorage.removeItem('token');
             return redirect('/');
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 

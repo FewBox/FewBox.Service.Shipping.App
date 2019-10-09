@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { MasterPage } from './State';
 import { MessageType } from '@fewbox/react-components';
 
-const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, namespaces: [], drawer: { type: '' } };
+const master = { messageDuration: 5, messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, namespaces: [], drawer: { type: '' } };
 export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
@@ -10,7 +10,7 @@ export default (state: MasterPage = master, action: any): MasterPage => {
         case ActionTypes.END_LOADING:
             return { ...state, isLoadingVisible: false };
         case ActionTypes.SHOW_MESSAGE:
-            return { ...state, isMessageVisible: true, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
+            return { ...state, isMessageVisible: true, isLoadingVisible: false, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
         case ActionTypes.HIDE_MESSAGE:
             return { ...state, isMessageVisible: false };
         case ActionTypes.SHOW_DRAWER:

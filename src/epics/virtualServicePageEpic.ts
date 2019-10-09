@@ -1,26 +1,28 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
-import AjaxObservable from '../fetch/ajaxObservable';
-import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
+import AjaxObservable from '../fetch/AjaxObservable';
+import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList, endLoading, beginLoading } from '../actions';
 
 const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
+                return new AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
+                return new AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
             }
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return loadVirtualService(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const switchVirtualServiceEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -28,82 +30,94 @@ const switchVirtualServiceEpic = (action$: ActionsObservable<any>, store$: State
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
+                return new AjaxObservable({ path: '/api/virtualservices/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
+                return new AjaxObservable({ path: '/api/virtualservices', method: 'GET' });
             }
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return loadVirtualService(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const createVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_VIRTUALSERVICE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/virtualservices', method: 'POST', body: action.value });
+            return new AjaxObservable({ path: '/api/virtualservices', method: 'POST', body: action.value });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return initVirtualServicePage();
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const deleteVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_VIRTUALSERVICE),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return initVirtualServicePage();
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const initGatewayDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateways', method: 'GET' });
+            return new AjaxObservable({ path: '/api/namespaces/' + action.value + '/gateways', method: 'GET' });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return fillVirtualServiceGatewayDropdownList(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const initServiceDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_SERVICE_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/namespaces/' + action.value + '/services', method: 'GET' });
+            return new AjaxObservable({ path: '/api/namespaces/' + action.value + '/services', method: 'GET' });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return fillVirtualServiceServiceDropdownList(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
+            return new AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return fillVirtualServiceDeploymentDropdownList(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 

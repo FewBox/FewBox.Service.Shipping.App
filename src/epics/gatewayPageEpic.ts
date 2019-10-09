@@ -1,26 +1,28 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
-import AjaxObservable from '../fetch/ajaxObservable';
-import { loadGateway, initGatewayPage } from '../actions';
+import AjaxObservable from '../fetch/AjaxObservable';
+import { loadGateway, initGatewayPage, beginLoading, endLoading } from '../actions';
 
 const initGatewayPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_GATEWAY_PAGE),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
+                return new AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gateways', method: 'GET' });
+                return new AjaxObservable({ path: '/api/gateways', method: 'GET' });
             }
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return loadGateway(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -28,43 +30,49 @@ const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
         mergeMap((action) => {
             if (store$.value.settingPage.isFewBoxDelivery) {
-                return AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
+                return new AjaxObservable({ path: '/api/gateways/fewbox', method: 'GET' });
             }
             else {
-                return AjaxObservable({ path: '/api/gateways', method: 'GET' });
+                return new AjaxObservable({ path: '/api/gateways', method: 'GET' });
             }
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return loadGateway(payload);
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const createGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.CREATE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gateways', method: 'POST', body: action.value });
+            return new AjaxObservable({ path: '/api/gateways', method: 'POST', body: action.value });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return initGatewayPage();
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 const deleteGatewayEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.DELETE_GATEWAY),
         mergeMap((action) => {
-            return AjaxObservable({ path: '/api/gateways/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
+            return new AjaxObservable({ path: '/api/gateways/' + action.value.namespace + '/' + action.value.name, method: 'DELETE' });
         }),
         map((payload) => {
-            if (payload.type) {
-                return payload;
-            }
             return initGatewayPage();
+        }),
+        startWith(beginLoading()),
+        endWith(endLoading()),
+        catchError((errorAction) => {
+            return errorAction;
         })
     );
 
