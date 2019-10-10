@@ -11,9 +11,22 @@ export interface IAjaxSetting {
     crossDomain?: boolean;
     withCredentials?: boolean;
     responseType?: string;
-    hiddenLoading?: boolean;
-    requestAction?: string;
 }
 export interface IJsonSetting {
     path: string;
+}
+export interface IGraphQLSetting {
+    prop: string;
+    protocol?: string;
+    host?: string;
+    port?: number;
+    path?: string;
+    queryParams?: object;
+    body?: object;
+    method?: 'GET' | 'POST';
+    headers?: object;
+    timeout?: number;
+    crossDomain?: boolean;
+    withCredentials?: boolean;
+    responseType?: string;
 }

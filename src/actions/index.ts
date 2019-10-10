@@ -2,9 +2,11 @@ import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
 import { SelectedDestinationRule } from '../reducers/State';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 // Common
+export const empty = (): IEmptyAction => ({
+    type: ActionTypes.EMPTY
+});
 export const redirect = (path: string): IAction<string> => ({
     type: ActionTypes.REDIRECT,
     value: path
@@ -324,6 +326,12 @@ export const showMessage = (messageType: MessageType, messageIntlId: string, mes
 });
 export const hideMessage = (): IEmptyAction => ({
     type: ActionTypes.HIDE_MESSAGE
+});
+export const showLockWindow = ()=>({
+    type: ActionTypes.SHOW_LOCKWINDOW
+});
+export const hideLockWindow = ()=>({
+    type: ActionTypes.HIDE_LOCKWINDOW
 });
 export const showDrawer = (drawer: any): IAction<any> => ({
     type: ActionTypes.SHOW_DRAWER,

@@ -43,7 +43,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                         renderMore={(item) => <Descriptions size='small' column={1} bordered>
                             {Object.keys(item.datas).map((key, index) => {
                                 return <Descriptions.Item key={'data' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.DataItem" helpId="Help.Data" values={{ key: key }} />}>
-                                    <Popover title={key} trigger="click" content={atob(item.datas[key])}>
+                                    <Popover title={key} trigger="click" content={<pre style={{ whiteSpace: 'pre', maxHeight: '800px' }}>{atob(item.datas[key])}</pre>}>
                                         <Button type="primary" icon='eye'></Button>
                                     </Popover>
                                 </Descriptions.Item>

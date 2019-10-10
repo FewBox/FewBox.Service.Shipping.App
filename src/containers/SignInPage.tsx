@@ -3,19 +3,25 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Alert, Row, Col, Input, Button, Form, Icon, Checkbox, Avatar } from 'antd';
 import { autobind } from 'core-decorators';
-import { Redirect } from '@fewbox/react-components';
+import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import { Store } from '../reducers/State';
-import { signIn, clearPath } from '../actions';
+import { signIn, clearPath, hideMessage } from '../actions';
 import './SignInPage.scss';
 
 export interface ISignInProps {
     form: any;
     username: string;
     isUsernameAndPasswordValid: boolean;
-    signIn: any;
-    clearPath: any;
+    signIn: (username, password) => void;
+    clearPath: () => void;
     changeUserType: any;
     redirectPath: string;
+    messageType: MessageType;
+    messageIntlId: string;
+    messageValues: any;
+    messageDuration: number;
+    isMessageVisible: boolean;
+    hideMessage: () => void;
 }
 
 function hasErrors(fieldsError) {
@@ -56,6 +62,7 @@ class SignIn extends React.Component<ISignInProps, any> {
         const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
             <div className="signInPage" onKeyDown={this.enter}>
+                <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
                 <Row type="flex" justify="center" align="top">
                     <Form layout="inline" onSubmit={this.signIn}>
                         <Form.Item>
@@ -104,12 +111,18 @@ class SignIn extends React.Component<ISignInProps, any> {
 
 const mapStateToProps = ({ signinPage, masterPage }: Store) => ({
     isUsernameAndPasswordValid: signinPage.isUsernameAndPasswordValid,
-    redirectPath: masterPage.path
+    redirectPath: masterPage.path,
+    messageType: masterPage.messageType,
+    messageIntlId: masterPage.messageIntlId,
+    messageValues: masterPage.messageValues,
+    messageDuration: masterPage.messageDuration,
+    isMessageVisible: masterPage.isMessageVisible
 })
 
 const mapDispatchToProps = {
     signIn,
-    clearPath
+    clearPath,
+    hideMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(SignIn));

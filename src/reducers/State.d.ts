@@ -43,6 +43,7 @@ export interface MasterPage {
     isMessageVisible: boolean;
     isLoadingVisible: boolean;
     isDrawerVisible: boolean;
+    isLockWindowVisible: boolean;
     drawer: any;
     path?: string;
     namespaces: Namespace[];

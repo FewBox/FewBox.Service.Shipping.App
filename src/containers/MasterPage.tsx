@@ -9,7 +9,7 @@ const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset } from '../actions';
+import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset, showLockWindow, hideLockWindow } from '../actions';
 const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -32,6 +32,7 @@ const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
 import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon } from '../components/Icon';
+import LockWindow from '../components/LockWindow';
 
 
 export interface IMasterPageProps {
@@ -45,11 +46,14 @@ export interface IMasterPageProps {
     isMessageVisible: boolean;
     isLoadingVisible: boolean;
     isDrawerVisible: boolean;
+    isLockWindowVisible: boolean;
     drawer: any;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
     hideMessage: () => void;
     hideDrawer: () => void;
+    signIn: (username, password) => void;
+    hideLockWindow: () => void;
     switchFewBoxDelivery: (isFewBox: boolean) => void;
     switchHelp: (isHelp: boolean) => void;
     changePodVersion: (any) => void;
@@ -104,6 +108,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         };
         return (
             <div className="masterPage">
+                <LockWindow isVisiable={this.props.isLockWindowVisible} signIn={this.props.signIn} close={this.props.hideLockWindow} />
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
                 <Loading isVisable={this.props.isLoadingVisible} />
                 <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
@@ -257,6 +262,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage }: Store
     isMessageVisible: masterPage.isMessageVisible,
     isLoadingVisible: masterPage.isLoadingVisible,
     isDrawerVisible: masterPage.isDrawerVisible,
+    isLockWindowVisible: masterPage.isLockWindowVisible,
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
     selectedDestinationRule: destinationRulePage.selectedDestinationRule,
@@ -272,7 +278,9 @@ const mapDispatchToProps = {
     switchHelp,
     hideDrawer,
     changePodVersion,
-    changeDestinationRuleSubset
+    changeDestinationRuleSubset,
+    hideLockWindow,
+    showLockWindow
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));

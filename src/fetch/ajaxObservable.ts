@@ -1,10 +1,8 @@
 import * as _ from 'lodash';
 import { Observable, of, empty } from 'rxjs';
-import { ajax, AjaxResponse, AjaxRequest } from 'rxjs/ajax';
-import { showMessage, redirect, beginLoading, endLoading } from '../actions';
+import { showMessage, showLockWindow } from '../actions';
 import { IAjaxSetting } from './Fetch';
 import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
-import { map, catchError, retry, startWith, endWith, mergeMap } from 'rxjs/operators';
 import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
@@ -24,20 +22,33 @@ class AjaxObservable extends Observable<any>{
         var options = initAjaxSetting(ajaxSetting);
         super(subscriber => {
             fetch(options.url, options)
-                .then(r => r.json())
-                .then(response => {
-                    if (response.isSuccessful) {
-                        subscriber.next(response.payload);
+                .then(r => {
+                    if (r.ok) {
+                        return r.json();
+                    } else {
+                        if (r.status == 401 || r.status == 403) {
+                            subscriber.error(of(showLockWindow()));
+                        }
+                        else {
+                            return { isSuccessful: false, errorMessage: r.statusText };
+                        }
+                    }
+                })
+                .then(result => {
+                    if (result.isSuccessful) {
+                        subscriber.next(result.payload);
                     }
                     else {
-                        subscriber.error(of(showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: response.errorMessage })));
+                        subscriber.error(of(showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: result.errorMessage })));
                     }
                 })
                 .catch(error => {
-                    if (error.status == 401 || error.status == 403) {
-                        subscriber.error(of(redirect('/signin')));
+                    if (error.message) {
+                        subscriber.error(of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.message })));
                     }
-                    subscriber.error(of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.message })));
+                    else {
+                        subscriber.error(of(showMessage(MessageType.Error, 'Message.SystemException', { errorMessage: error })));
+                    }
                 });
         });
     }

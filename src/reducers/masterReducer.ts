@@ -2,17 +2,17 @@ import ActionTypes from '../actions/ActionTypes';
 import { MasterPage } from './State';
 import { MessageType } from '@fewbox/react-components';
 
-const master = { messageDuration: 5, messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, namespaces: [], drawer: { type: '' } };
+const master = { messageType: MessageType.Info, messageIntlId: '', isMessageVisible: false, isLoadingVisible: false, isDrawerVisible: false, isLockWindowVisible: false, namespaces: [], drawer: { type: '' } };
 export default (state: MasterPage = master, action: any): MasterPage => {
     switch (action.type) {
         case ActionTypes.BEGIN_LOADING:
             return { ...state, isLoadingVisible: true };
         case ActionTypes.END_LOADING:
             return { ...state, isLoadingVisible: false };
-        case ActionTypes.SHOW_MESSAGE:
-            return { ...state, isMessageVisible: true, isLoadingVisible: false, messageType: action.value.type, messageIntlId: action.value.intlId, messageValues: action.value.values };
-        case ActionTypes.HIDE_MESSAGE:
-            return { ...state, isMessageVisible: false };
+        case ActionTypes.SHOW_LOCKWINDOW:
+            return { ...state, isLockWindowVisible: true };
+        case ActionTypes.HIDE_LOCKWINDOW:
+            return { ...state, isLockWindowVisible: false };
         case ActionTypes.SHOW_DRAWER:
             return { ...state, isDrawerVisible: true, drawer: action.value };
         case ActionTypes.HIDE_DRAWER:

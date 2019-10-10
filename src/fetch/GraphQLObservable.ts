@@ -1,41 +1,50 @@
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
-import { IAjaxSetting } from './Fetch';
+import { IGraphQLSetting } from './Fetch';
 import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
 import { showMessage, redirect } from '../actions';
 import { MessageType } from '@fewbox/react-components';
 
-const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
+const initGraphQLSetting = (graphQLSetting: IGraphQLSetting) => {
     return {
-        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'path': ajaxSetting.path }),
-        body: ajaxSetting.body ? JSON.stringify(ajaxSetting.body) : undefined,
-        crossDomain: ajaxSetting.crossDomain ? ajaxSetting.crossDomain : true,
-        headers: { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') },
-        method: String(ajaxSetting.method ? ajaxSetting.method : METHOD),
-        responseType: ajaxSetting.responseType ? ajaxSetting.responseType : RESPONSETYPE,
-        withCredentials: !!ajaxSetting.withCredentials
+        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'path': graphQLSetting.path }),
+        body: graphQLSetting.body ? JSON.stringify(graphQLSetting.body) : undefined,
+        crossDomain: graphQLSetting.crossDomain ? graphQLSetting.crossDomain : true,
+        headers: { ...(graphQLSetting.headers ? graphQLSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') },
+        method: String(graphQLSetting.method ? graphQLSetting.method : METHOD),
+        responseType: graphQLSetting.responseType ? graphQLSetting.responseType : RESPONSETYPE,
+        withCredentials: !!graphQLSetting.withCredentials
     }
 };
 
 class GraphQLObservable extends Observable<any>{
-    constructor(ajaxSetting: IAjaxSetting) {
-        var options = initAjaxSetting(ajaxSetting);
+    constructor(graphQLSetting: IGraphQLSetting) {
+        var options = initGraphQLSetting(graphQLSetting);
         super(subscriber => {
             fetch(options.url, options)
-                .then(r => r.json())
-                .then(response => {
+                .then(r => {
+                    if (r.ok) {
+                        return r.json();
+                    } else {
+                        return { isSuccessful: false, errorMessage: r.statusText };
+                    }
+                })
+                .then(result => {
+                    let response = result.data[`${graphQLSetting.prop}`][0];
                     if (response.isSuccessful) {
-                        subscriber.next(response.data);
+                        subscriber.next(response.payload);
                     }
                     else {
                         subscriber.error(of(showMessage(MessageType.Error, 'Message.BusinessException', { errorMessage: response.errorMessage })));
                     }
                 })
                 .catch(error => {
-                    if (error.status == 401 || error.status == 403) {
-                        subscriber.error(of(redirect('/signin')));
+                    if (error.message) {
+                        subscriber.error(of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.message })));
                     }
-                    subscriber.error(of(showMessage(MessageType.Error, 'Message.NetworkException', { errorMessage: error.message })));
+                    else {
+                        subscriber.error(of(showMessage(MessageType.Error, 'Message.SystemException', { errorMessage: error })));
+                    }
                 });
         });
     }
