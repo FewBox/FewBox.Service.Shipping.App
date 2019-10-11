@@ -10,6 +10,7 @@ const ActionTypes = {
     // Auth
     SIGNIN: 'SIGNIN',
     SIGNOUT: 'SIGNOUT',
+    RESIGNIN: 'RESIGNIN',
     // Setting
     CHANGE_LANGUAGE: 'CHANGE_LANGUAGE',
     // Biz

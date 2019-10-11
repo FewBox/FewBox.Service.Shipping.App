@@ -23,6 +23,10 @@ export const signIn = (username, password): IAction<any> => ({
     type: ActionTypes.SIGNIN,
     value: { username: username, password: password }
 });
+export const reSignIn = (username, password): IAction<any> => ({
+    type: ActionTypes.RESIGNIN,
+    value: { username: username, password: password }
+});
 export const signOut = (): IEmptyAction => ({
     type: ActionTypes.SIGNOUT
 });

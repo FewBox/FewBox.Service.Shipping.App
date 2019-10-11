@@ -33,7 +33,7 @@ class SignIn extends React.Component<ISignInProps, any> {
         super(props);
     }
     componentDidMount() {
-        //this.props.form.validateFields();
+        this.props.form.validateFields();
     }
     @autobind
     signIn(e) {
@@ -51,10 +51,6 @@ class SignIn extends React.Component<ISignInProps, any> {
         }
     }
     public render() {
-        let erorrMessageControl;
-        if (!this.props.isUsernameAndPasswordValid) {
-            erorrMessageControl = <Alert message={<FormattedMessage id="Message.UsernameOrPasswordIsNotValid" />} type="error" />;
-        }
         const {
             getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
         } = this.props.form;
@@ -82,7 +78,6 @@ class SignIn extends React.Component<ISignInProps, any> {
                             )}
                         </Form.Item>
                         <Form.Item>
-                            {erorrMessageControl}
                             {getFieldDecorator('remember', {
                                 valuePropName: 'checked',
                                 initialValue: true,
