@@ -19,7 +19,7 @@ const initSecretPageEpic = (action$: ActionsObservable<any>, store$: StateObserv
         map((payload) => {
             return loadSecret(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -35,7 +35,7 @@ const createSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return initSecretPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -51,7 +51,7 @@ const deleteSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return initSecretPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -72,7 +72,7 @@ const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return loadSecret(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

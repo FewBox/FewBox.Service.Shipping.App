@@ -175,5 +175,6 @@ export default {
     'Label.Next': 'Next',
     'Label.Done': 'Done',
     'Label.Protocol': 'Protocol',
-    'Label.Job': 'Job'
+    'Label.Job': 'Job',
+    'Label.ComingSoon': 'Coming Soon'
 }

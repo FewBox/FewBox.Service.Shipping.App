@@ -19,7 +19,7 @@ const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return loadVirtualService(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -39,7 +39,7 @@ const switchVirtualServiceEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return loadVirtualService(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -54,7 +54,7 @@ const createVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: S
         map((payload) => {
             return initVirtualServicePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -69,7 +69,7 @@ const deleteVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: S
         map((payload) => {
             return initVirtualServicePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -84,7 +84,7 @@ const initGatewayDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return fillVirtualServiceGatewayDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -99,7 +99,7 @@ const initServiceDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return fillVirtualServiceServiceDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -114,7 +114,7 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
         map((payload) => {
             return fillVirtualServiceDeploymentDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

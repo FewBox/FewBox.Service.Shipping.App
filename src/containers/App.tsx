@@ -11,6 +11,7 @@ import MasterPage from './MasterPage';
 import { Store } from '../reducers/State';
 //import "antd/dist/antd.css";
 import "antd/dist/antd.less";
+import IntlWrapper from '../components/IntlWrapper';
 
 export interface AppProps {
   lang: string,
@@ -21,16 +22,7 @@ class App extends React.Component<AppProps, any> {
   public render() {
     return (
       <IntlProvider locale={'en'} messages={langs(this.props.lang)}>
-        <Router>
-          <div>
-            <Switch>
-              <Route exact path="/" component={SignInPage} />
-              <Route exact path="/signin" component={SignInPage} />
-              <Route path="/master" component={MasterPage} />
-              <Route component={ComingSoonPage} />
-            </Switch>
-          </div>
-        </Router>
+        <IntlWrapper />
       </IntlProvider>
     );
   }

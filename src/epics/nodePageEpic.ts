@@ -16,7 +16,7 @@ const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return loadNode(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

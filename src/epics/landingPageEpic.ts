@@ -15,7 +15,7 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
         map((payloads) => {
             return loadLanding({ componentStatuses: payloads[0] });
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

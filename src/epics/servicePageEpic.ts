@@ -19,7 +19,7 @@ const initServiePageEpic = (action$: ActionsObservable<any>, store$: StateObserv
         map((payload) => {
             return loadService(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -39,7 +39,7 @@ const switchServiceEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return loadService(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -54,7 +54,7 @@ const createServicePageEpic = (action$: ActionsObservable<any>, store$: StateObs
         map((payload) => {
             return initServicePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -69,7 +69,7 @@ const deleteServicePageEpic = (action$: ActionsObservable<any>, store$: StateObs
         map((payload) => {
             return initServicePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

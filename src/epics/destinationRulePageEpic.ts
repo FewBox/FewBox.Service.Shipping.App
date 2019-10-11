@@ -20,7 +20,7 @@ const initDestinationRulePageEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return loadDestinationRule(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -40,7 +40,7 @@ const switchDestinationRuleEpic = (action$: ActionsObservable<any>, store$: Stat
         map((payload) => {
             return loadDestinationRule(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -55,7 +55,7 @@ const createDestinationRuleEpic = (action$: ActionsObservable<any>, store$: Stat
         map((payload) => {
             return initDestinationRulePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -70,7 +70,7 @@ const deleteDestinationRuleEpic = (action$: ActionsObservable<any>, store$: Stat
         map((payload) => {
             return initDestinationRulePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -85,7 +85,7 @@ const changeDestinationRuleSubsetEpic = (action$: ActionsObservable<any>, store$
         map((payload) => {
             return initDestinationRulePage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -100,7 +100,7 @@ const initServiceDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return fillDestinationRuleServiceDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -115,7 +115,7 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
         map((payload) => {
             return fillDestinationRuleDeploymentDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -131,7 +131,7 @@ const selectDestinationRuleEpic = (action$: ActionsObservable<any>, store$: Stat
         map((payloads) => {
             return fillSelectedDestinationRuleDeploymentDropdownList({ subsets: payloads[0].subsets, deployments: payloads[1] });
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

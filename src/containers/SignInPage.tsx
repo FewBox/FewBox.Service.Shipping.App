@@ -62,7 +62,6 @@ class SignIn extends React.Component<ISignInProps, any> {
         const passwordError = isFieldTouched('password') && getFieldError('password');
         return (
             <div className="signInPage" onKeyDown={this.enter}>
-                <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
                 <Row type="flex" justify="center" align="top">
                     <Form layout="inline" onSubmit={this.signIn}>
                         <Form.Item>
@@ -95,8 +94,6 @@ class SignIn extends React.Component<ISignInProps, any> {
                             </Button>
                         </Form.Item>
                     </Form>
-                </Row>
-                <Row>
                 </Row>
                 <Row>
                     <div className="copyright">

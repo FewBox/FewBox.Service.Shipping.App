@@ -3,33 +3,40 @@ import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/AjaxObservable';
 import { Store } from '../reducers/State';
-import { changeLanguage, fillNamespaceDropdownList, endLoading, beginLoading, empty } from '../actions';
+import { fillNamespaceDropdownList, endLoading, beginLoading, empty } from '../actions';
 import { message } from 'antd';
 import { MessageType } from '@fewbox/react-components';
-//import { useIntl } from 'react-intl';
+import { createIntlCache, createIntl } from 'react-intl';
+import langs from '../langs';
 
 const showMessageEpic = (action$: ActionsObservable<any>) =>
     action$.pipe(
         ofType(ActionTypes.SHOW_MESSAGE),
         map((action) => {
-            /*const intl = useIntl();
+            const cache = createIntlCache();
+            let messages = langs(window.localStorage.getItem('lang') ? window.localStorage.getItem('lang') : 'en-us');
+            const intl = createIntl({
+                locale: 'en',
+                messages: messages
+            }, cache);
+
             let messageContent = intl.formatMessage({ id: action.value.intlId }, action.value.values);
-            switch (action.value.messageType) {
+            switch (action.value.type) {
                 case MessageType.Error:
-                    message.error(messageContent, action.value);
+                    message.error(messageContent);
                     break;
                 case MessageType.Info:
-                    message.info(messageContent, action.value);
+                    message.info(messageContent);
                     break;
                 case MessageType.Success:
-                    message.success(messageContent, action.value);
+                    message.success(messageContent);
                     break;
                 case MessageType.Warning:
-                    message.warning(messageContent, action.value);
+                    message.warning(messageContent);
                     break;
                 default:
                     break;
-            }*/
+            }
             return empty();
         })
     );
@@ -38,7 +45,8 @@ const changeLanguageEpic = (action$: ActionsObservable<any>) =>
     action$.pipe(
         ofType(ActionTypes.CHANGE_LANGUAGE),
         map((action) => {
-            return changeLanguage(action.lang);
+            window.localStorage.setItem('lang', action.lang);
+            return empty();
         })
     );
 
@@ -56,7 +64,7 @@ const initNamespaceDropdownListEpic = (action$: ActionsObservable<any>, store$: 
         map((payload) => {
             return fillNamespaceDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

@@ -19,7 +19,7 @@ const initServiceAccountPageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return loadServiceAccount(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -35,7 +35,7 @@ const createServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return initServiceAccountPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -51,7 +51,7 @@ const deleteServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return initServiceAccountPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -72,7 +72,7 @@ const switchServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return loadServiceAccount(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

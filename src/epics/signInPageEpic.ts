@@ -37,7 +37,7 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
                 return showMessage(MessageType.Error, 'Message.UsernameOrPasswordIsNotValid');
             }
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -51,7 +51,7 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
             window.localStorage.removeItem('token');
             return redirect('/');
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

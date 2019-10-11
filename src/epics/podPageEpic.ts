@@ -19,7 +19,7 @@ const initPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
         map((payload) => {
             return loadPod(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -40,7 +40,7 @@ const switchPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return loadPod(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -55,7 +55,7 @@ const deletePodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initPodPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -70,7 +70,7 @@ const createPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initPodPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -85,7 +85,7 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
         map((payload) => {
             return fillPodServiceAccountDropdownList(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

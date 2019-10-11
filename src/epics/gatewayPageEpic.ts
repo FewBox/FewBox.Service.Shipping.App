@@ -19,7 +19,7 @@ const initGatewayPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         map((payload) => {
             return loadGateway(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -39,7 +39,7 @@ const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return loadGateway(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -54,7 +54,7 @@ const createGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return initGatewayPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
@@ -69,7 +69,7 @@ const deleteGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return initGatewayPage();
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;

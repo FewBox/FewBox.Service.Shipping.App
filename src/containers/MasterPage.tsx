@@ -58,7 +58,7 @@ export interface IMasterPageProps {
     switchHelp: (isHelp: boolean) => void;
     changePodVersion: (any) => void;
     changeDestinationRuleSubset: (any) => void;
-    intl: any;
+    intl?: any;
     selectedDestinationRule: SelectedDestinationRule;
 }
 
@@ -89,9 +89,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Deployment':
-                    return <Suspense fallback={<Skeleton active />}><DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} images={this.props.drawer.images} changePodVersion={this.props.changePodVersion} /></Suspense>
+                    return <DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} images={this.props.drawer.images} changePodVersion={this.props.changePodVersion} />;
                 case 'DestinationRule':
-                    return <Suspense fallback={<Skeleton active />}><DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} /></Suspense>
+                    return <DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} />;
                 default:
                     return <div></div>
             }
@@ -99,11 +99,11 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawerTitle = () => {
             switch (this.props.drawer.type) {
                 case 'Deployment':
-                    return this.props.intl.formatMessage({ id: 'Label.Deployment' });
+                    return <FormattedMessage id="Label.Deployment" />;
                 case 'DestinationRule':
-                    return this.props.intl.formatMessage({ id: 'Label.DestinationRule' });
+                    return <FormattedMessage id="Label.DestinationRule" />;
                 default:
-                    return this.props.intl.formatMessage({ id: 'Label.None' });
+                    return <FormattedMessage id="Label.None" />;
             }
         };
         return (
@@ -111,21 +111,22 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 <LockWindow isVisiable={this.props.isLockWindowVisible} signIn={this.props.signIn} close={this.props.hideLockWindow} />
                 <Redirect path={this.props.redirectPath} clearPath={this.props.clearPath} />
                 <Loading isVisable={this.props.isLoadingVisible} />
-                <MessageBox isVisable={this.props.isMessageVisible} type={this.props.messageType} intlId={this.props.messageIntlId} duration={this.props.messageDuration} values={this.props.messageValues} onClose={() => { this.props.hideMessage(); }} />
                 <Drawer title={drawerTitle()} width='50%' placement="right" closable={false} visible={this.props.isDrawerVisible} onClose={this.props.hideDrawer}>
-                    {drawer()}
+                    <Suspense fallback={<Skeleton active />}>
+                        {drawer()}
+                    </Suspense>
                 </Drawer>
                 <Layout style={{ minHeight: '100vh' }}>
                     <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                         <div className='logo'>
                             <Avatar size={64} src="/assets/images/logo-green.svg" />
                         </div>
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                            <Menu.Item key="1">
+                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
+                            <Menu.Item key="0">
                                 <Link to='/master/landing'><LandingIcon />
                                     <FormattedMessage id="Navigation.Landing" /></Link>
                             </Menu.Item>
-                            <Menu.Item key="0">
+                            <Menu.Item key="1">
                                 <Link to='/master/shippinglane'><ShippingLaneIcon />
                                     <FormattedMessage id="Navigation.ShippingLane" /></Link>
                             </Menu.Item>
@@ -283,4 +284,4 @@ const mapDispatchToProps = {
     showLockWindow
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MasterPage));
+export default connect(mapStateToProps, mapDispatchToProps)(MasterPage);

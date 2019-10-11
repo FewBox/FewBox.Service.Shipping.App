@@ -14,7 +14,7 @@ const initLogBookPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         map((payload) => {
             return loadLogBook(payload);
         }),
-        startWith(beginLoading()),
+        //startWith(beginLoading()),
         endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
