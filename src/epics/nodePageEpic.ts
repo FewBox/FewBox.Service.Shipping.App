@@ -4,8 +4,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
 import { loadNode } from '../actions';
-import { beginLoading } from '../../dist/dist/src/actions';
-import { endLoading } from '../../dist/src/actions';
+import { beginLoading, endLoading } from '../actions';
 
 const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
