@@ -2,15 +2,15 @@ import ActionTypes from '../actions/ActionTypes';
 import { NodePage } from './State';
 
 const nodeState = {
-    nodes: [],
+    items: [],
     isListLoading: false
 };
 export default (state: NodePage = nodeState, action: any): NodePage => {
     switch (action.type) {
-        case ActionTypes.INIT_JOB_PAGE:
+        case ActionTypes.INIT_NODE_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_NODE:
-            return { ...state, nodes: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         default:
             return state;
     }

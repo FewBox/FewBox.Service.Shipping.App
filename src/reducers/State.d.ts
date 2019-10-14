@@ -32,6 +32,10 @@ export interface Store {
     jobPage: JobPage;
 }
 /** UI **/
+export interface ResourcePage<T> {
+    items: T[];
+    isListLoading: boolean;
+}
 export interface SignInPage {
     isUsernameAndPasswordValid: boolean;
     isSignInButtonLoading: boolean;
@@ -57,65 +61,41 @@ export interface SettingPage {
     isFewBoxDelivery: boolean;
     isHelp: boolean;
 }
-export interface NodePage {
-    nodes: Node[];
-    isListLoading: boolean;
+export interface NodePage extends ResourcePage<Node> {
 }
-export interface NamespacePage {
-    namespaces: Namespace[];
-    isListLoading: boolean;
+export interface NamespacePage extends ResourcePage<Namespace> {
 }
-export interface ServicePage {
-    services: Service[];
-    isListLoading: boolean;
+export interface ServicePage extends ResourcePage<Service> {
 }
-export interface PodPage {
-    pods: Pod[];
+export interface PodPage extends ResourcePage<Pod> {
     serviceAccounts: ServiceAccount[];
-    isListLoading: boolean;
 }
-export interface DeploymentPage {
-    deployments: Deployment[];
+export interface DeploymentPage extends ResourcePage<Deployment> {
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
-    isListLoading: boolean;
 }
-export interface GatewayPage {
-    gateways: Gateway[];
-    isListLoading: boolean;
+export interface GatewayPage extends ResourcePage<Gateway> {
 }
 export interface LogBookPage {
     logBook: LogBook;
 }
-export interface ServiceAccountPage {
-    serviceAccounts: ServiceAccount[];
-    isListLoading: boolean;
+export interface ServiceAccountPage extends ResourcePage<ServiceAccount> {
 }
-export interface SecretPage {
-    secrets: Secret[];
-    isListLoading: boolean;
+export interface SecretPage extends ResourcePage<Secret> {
 }
-export interface VirtualServicePage {
-    virtualServices: VirtualService[];
+export interface VirtualServicePage extends ResourcePage<VirtualService> {
     gateways: Gateway[];
     services: Service[];
     deployments: Deployment[];
-    isListLoading: boolean;
 }
-export interface DestinationRulePage {
+export interface DestinationRulePage extends ResourcePage<DestinationRule> {
     selectedDestinationRule: SelectedDestinationRule;
-    destinationRules: DestinationRule[];
     services: Service[];
     deployments: Deployment[];
-    isListLoading: boolean;
 }
-export interface ServiceEntryPage {
-    serviceEntries: ServiceEntry[];
-    isListLoading: boolean;
+export interface ServiceEntryPage extends ResourcePage<ServiceEntry> {
 }
-export interface JobPage{
-    jobs: Job[];
-    isListLoading: boolean;
+export interface JobPage extends ResourcePage<Job> {
 }
 /** Biz **/
 export interface ComponentStatus {
@@ -280,7 +260,7 @@ export interface Port {
     number: string;
     protocol: string;
 }
-export interface Job{
+export interface Job {
     namespace: string;
     name: string;
 }

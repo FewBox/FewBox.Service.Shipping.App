@@ -82,7 +82,7 @@ class NodePage extends React.Component<INodePageProps, any> {
 }
 
 const mapStateToProps = ({ nodePage, settingPage }: Store) => ({
-    nodes: nodePage.nodes,
+    nodes: nodePage.items,
     isListLoading: nodePage.isListLoading,
     isHelp: settingPage.isHelp
 });

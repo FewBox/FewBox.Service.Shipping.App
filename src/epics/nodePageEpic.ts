@@ -7,7 +7,7 @@ import { loadNode } from '../actions';
 
 const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_NODEPAGE),
+        ofType(ActionTypes.INIT_NODE_PAGE),
         mergeMap((action) => {
             return new AjaxObservable({ path: '/api/nodes', method: 'GET' });
         }),

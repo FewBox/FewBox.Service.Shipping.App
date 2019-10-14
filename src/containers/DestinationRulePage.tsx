@@ -64,7 +64,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
 }
 
 const mapStateToProps = ({ destinationRulePage, masterPage, settingPage }: Store) => ({
-    destinationRules: destinationRulePage.destinationRules,
+    destinationRules: destinationRulePage.items,
     isListLoading: destinationRulePage.isListLoading,
     services: destinationRulePage.services,
     deployments: destinationRulePage.deployments,

@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { VirtualServicePage } from './State';
 
 const virtualServiceState = {
-    virtualServices: [],
+    items: [],
     gateways: [],
     services: [],
     deployments: [],
@@ -13,7 +13,7 @@ export default (state: VirtualServicePage = virtualServiceState, action: any): V
         case ActionTypes.INIT_VIRTUALSERVICE_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_VIRTUALSERVICE:
-            return { ...state, virtualServices: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         case ActionTypes.FILL_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST:
             return { ...state, gateways: action.payload };
         case ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST:

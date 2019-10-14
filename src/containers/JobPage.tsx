@@ -50,7 +50,7 @@ class JobPage extends React.Component<ISecretPageProps, any> {
 }
 
 const mapStateToProps = ({ jobPage, masterPage, settingPage }: Store) => ({
-    jobs: jobPage.jobs,
+    jobs: jobPage.items,
     isListLoading: jobPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

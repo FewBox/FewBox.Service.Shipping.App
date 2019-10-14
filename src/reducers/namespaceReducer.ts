@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { NamespacePage } from './State';
 
 const namespaceState = {
-    namespaces: [],
+    items: [],
     isListLoading: false
 };
 export default (state: NamespacePage = namespaceState, action: any): NamespacePage => {
@@ -10,9 +10,9 @@ export default (state: NamespacePage = namespaceState, action: any): NamespacePa
         case ActionTypes.INIT_NAMESPACE_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_NAMESPACE:
-            return { ...state, namespaces: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         case ActionTypes.ENABLE_ISTIOSTATUS:
-            var namespaces = state.namespaces.map((item, index) => {
+            var namespaces = state.items.map((item, index) => {
                 if (item.name == action.value) {
                     return { ...item, isIstioInjected: true };
                 }
@@ -20,9 +20,9 @@ export default (state: NamespacePage = namespaceState, action: any): NamespacePa
                     return item;
                 }
             });
-            return { ...state, namespaces: namespaces };
+            return { ...state, items: namespaces };
         case ActionTypes.DISABLE_ISTIO:
-            var namespaces = state.namespaces.map((item, index) => {
+            var namespaces = state.items.map((item, index) => {
                 if (item.name == action.value) {
                     return { ...item, isIstioInjected: false };
                 }
@@ -30,7 +30,7 @@ export default (state: NamespacePage = namespaceState, action: any): NamespacePa
                     return item;
                 }
             });
-            return { ...state, namespaces: namespaces };
+            return { ...state, items: namespaces };
         default:
             return state;
     }

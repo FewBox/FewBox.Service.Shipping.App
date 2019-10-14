@@ -209,7 +209,7 @@ export const loadLogBook = (logBook): IPayloadAction<any> => ({
 });
 
 export const initNodePage = (): IEmptyAction => ({
-    type: ActionTypes.INIT_NODEPAGE
+    type: ActionTypes.INIT_NODE_PAGE
 });
 
 export const loadNode = (payload): IPayloadAction<any> => ({

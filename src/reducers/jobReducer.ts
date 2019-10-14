@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { JobPage } from './State';
 
 const jobState = {
-    jobs: [],
+    items: [],
     isListLoading: false
 };
 export default (state: JobPage = jobState, action: any): JobPage => {
@@ -10,7 +10,7 @@ export default (state: JobPage = jobState, action: any): JobPage => {
         case ActionTypes.INIT_JOB_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_JOB:
-            return { ...state, jobs: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         default:
             return state;
     }

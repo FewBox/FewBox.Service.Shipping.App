@@ -84,7 +84,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
 }
 
 const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => ({
-    deployments: deploymentPage.deployments,
+    deployments: deploymentPage.items,
     isListLoading: deploymentPage.isListLoading,
     serviceAccounts: deploymentPage.serviceAccounts,
     secrets: deploymentPage.secrets,

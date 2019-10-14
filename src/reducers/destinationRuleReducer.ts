@@ -3,8 +3,8 @@ import { DestinationRulePage } from './State';
 import { IPayloadAction } from '../actions/Action';
 
 const destinationRuleState = {
+    items: [],
     selectedDestinationRule: { subsets: [], deployments: [] },
-    destinationRules: [],
     services: [],
     deployments: [],
     isListLoading: false
@@ -14,7 +14,7 @@ export default (state: DestinationRulePage = destinationRuleState, action: IPayl
         case ActionTypes.INIT_DESTINATIONRULE_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_DESTINATIONRULE:
-            return { ...state, destinationRules: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         case ActionTypes.FILL_DESTINATIONRULE_SERVICE_DROPDOWNLIST:
             return { ...state, services: action.payload };
         case ActionTypes.FILL_SELECTED_DESTINATIONRULE:

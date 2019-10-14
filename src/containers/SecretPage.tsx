@@ -58,7 +58,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
 }
 
 const mapStateToProps = ({ secretPage, masterPage, settingPage }: Store) => ({
-    secrets: secretPage.secrets,
+    secrets: secretPage.items,
     isListLoading: secretPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

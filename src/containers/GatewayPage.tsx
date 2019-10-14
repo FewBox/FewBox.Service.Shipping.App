@@ -51,7 +51,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
 }
 
 const mapStateToProps = ({ gatewayPage, masterPage, settingPage }: Store) => ({
-    gateways: gatewayPage.gateways,
+    gateways: gatewayPage.items,
     isListLoading: gatewayPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

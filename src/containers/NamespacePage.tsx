@@ -54,7 +54,7 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
 }
 
 const mapStateToProps = ({ namespacePage }: Store) => ({
-    namespaces: namespacePage.namespaces,
+    namespaces: namespacePage.items,
     isListLoading: namespacePage.isListLoading
 });
 

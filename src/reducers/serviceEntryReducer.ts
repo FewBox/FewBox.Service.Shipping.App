@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { ServiceEntryPage } from './State';
 
 const serviceEntryState = {
-    serviceEntries: [],
+    items: [],
     isListLoading: false
 };
 export default (state: ServiceEntryPage = serviceEntryState, action: any): ServiceEntryPage => {
@@ -10,7 +10,7 @@ export default (state: ServiceEntryPage = serviceEntryState, action: any): Servi
         case ActionTypes.INIT_SERVICEENTRY_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_SERVICEENTRY:
-            return { ...state, serviceEntries: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         default:
             return state;
     }

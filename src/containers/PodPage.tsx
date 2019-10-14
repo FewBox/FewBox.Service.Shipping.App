@@ -111,7 +111,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
 }
 
 const mapStateToProps = ({ podPage, masterPage, settingPage }: Store) => ({
-    pods: podPage.pods,
+    pods: podPage.items,
     isListLoading: podPage.isListLoading,
     serviceAccounts: podPage.serviceAccounts,
     namespaces: masterPage.namespaces,

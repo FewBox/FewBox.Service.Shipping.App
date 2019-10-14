@@ -2,7 +2,7 @@ import ActionTypes from '../actions/ActionTypes';
 import { SecretPage } from './State';
 
 const secretState = {
-    secrets: [],
+    items: [],
     isListLoading: false
 };
 export default (state: SecretPage = secretState, action: any): SecretPage => {
@@ -10,7 +10,7 @@ export default (state: SecretPage = secretState, action: any): SecretPage => {
         case ActionTypes.INIT_SECRET_PAGE:
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_SECRET:
-            return { ...state, secrets: action.payload, isListLoading: false };
+            return { ...state, items: action.payload, isListLoading: false };
         default:
             return state;
     }

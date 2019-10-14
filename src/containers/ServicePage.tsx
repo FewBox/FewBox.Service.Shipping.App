@@ -60,7 +60,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
 }
 
 const mapStateToProps = ({ servicePage, masterPage, settingPage }: Store) => ({
-    services: servicePage.services,
+    services: servicePage.items,
     isListLoading: servicePage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

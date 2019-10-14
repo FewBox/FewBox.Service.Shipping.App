@@ -79,7 +79,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
 }
 
 const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store) => ({
-    virtualServices: virtualServicePage.virtualServices,
+    virtualServices: virtualServicePage.items,
     isListLoading: virtualServicePage.isListLoading,
     gateways: virtualServicePage.gateways,
     services: virtualServicePage.services,
