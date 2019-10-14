@@ -16,6 +16,7 @@ export interface ISecretPageProps {
     deleteSecret: (any) => void;
     initNamespaceDropdownList: () => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class SecretPage extends React.Component<ISecretPageProps, any> {
@@ -30,7 +31,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                     <SecretCreation isHelp={this.props.isHelp} create={this.props.createSecret} reload={this.props.initSecretPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.secrets}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.secrets}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -58,6 +59,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
 
 const mapStateToProps = ({ secretPage, masterPage, settingPage }: Store) => ({
     secrets: secretPage.secrets,
+    isListLoading: secretPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

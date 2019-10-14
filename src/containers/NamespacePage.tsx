@@ -18,6 +18,7 @@ export interface INamespacePagePageProps {
     enableIstio: (name: string) => void;
     disableIstio: (name: string) => void;
     intl: any;
+    isListLoading: boolean;
 }
 
 class NamespacePage extends React.Component<INamespacePagePageProps, any> {
@@ -36,7 +37,7 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
                     <NamespaceCreation create={this.props.createNamespace} reload={this.props.initNamespacePage} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.namespaces}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.namespaces}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteNamespace(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Switch checkedChildren={<IstioIcon />} unCheckedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
@@ -53,7 +54,8 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
 }
 
 const mapStateToProps = ({ namespacePage }: Store) => ({
-    namespaces: namespacePage.namespaces
+    namespaces: namespacePage.namespaces,
+    isListLoading: namespacePage.isListLoading
 });
 
 const mapDispatchToProps = {

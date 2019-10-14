@@ -3,12 +3,15 @@ import { IAction } from '../actions/Action';
 import { SignInPage } from './State';
 
 const signInState = {
-    isUsernameAndPasswordValid: true
+    isUsernameAndPasswordValid: true,
+    isSignInButtonLoading: false
 };
 export default (state: SignInPage = signInState, action: IAction<boolean>): SignInPage => {
     switch (action.type) {
+        case ActionTypes.SIGNIN:
+            return { ...state, isSignInButtonLoading: true };
         case ActionTypes.SET_VALIDSTATUS:
-            return { ...state, isUsernameAndPasswordValid: action.value };
+            return { ...state, isUsernameAndPasswordValid: action.value, isSignInButtonLoading: false };
         default:
             return state;
     }

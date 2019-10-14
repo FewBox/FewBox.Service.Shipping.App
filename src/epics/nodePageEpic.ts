@@ -1,10 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
 import { loadNode } from '../actions';
-import { beginLoading, endLoading } from '../actions';
 
 const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -15,8 +14,6 @@ const initNodePageEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return loadNode(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

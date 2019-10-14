@@ -22,6 +22,7 @@ export interface ISignInProps {
     messageDuration: number;
     isMessageVisible: boolean;
     hideMessage: () => void;
+    isSignInButtonLoading: boolean;
 }
 
 function hasErrors(fieldsError) {
@@ -84,7 +85,7 @@ class SignIn extends React.Component<ISignInProps, any> {
                             })(
                                 <Checkbox><FormattedMessage id="Label.RememberMe" /></Checkbox>
                             )}
-                            <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())}>
+                            <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={this.props.isSignInButtonLoading}>
                                 <FormattedMessage id="Label.SignIn" />
                             </Button>
                         </Form.Item>
@@ -103,6 +104,7 @@ class SignIn extends React.Component<ISignInProps, any> {
 
 const mapStateToProps = ({ signinPage, masterPage }: Store) => ({
     isUsernameAndPasswordValid: signinPage.isUsernameAndPasswordValid,
+    isSignInButtonLoading: signinPage.isSignInButtonLoading,
     redirectPath: masterPage.path,
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,

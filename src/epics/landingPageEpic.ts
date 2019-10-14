@@ -1,10 +1,10 @@
 import { ActionsObservable, ofType, StateObservable } from 'redux-observable';
-import { of, zip, empty } from "rxjs";
-import { switchMap, map, mergeMap, startWith, endWith, catchError } from 'rxjs/operators';
+import { zip } from "rxjs";
+import { switchMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadLanding, beginLoading, endLoading } from '../actions';
+import { loadLanding} from '../actions';
 
 const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -15,8 +15,6 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
         map((payloads) => {
             return loadLanding({ componentStatuses: payloads[0] });
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

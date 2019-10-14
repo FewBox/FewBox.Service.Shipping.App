@@ -1,5 +1,5 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, catchError, endWith, startWith } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
@@ -19,8 +19,6 @@ const initJobPageEpic = (action$: ActionsObservable<any>, store$: StateObservabl
         map((payload) => {
             return loadJob(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -35,8 +33,6 @@ const createJobEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initJobPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -51,8 +47,6 @@ const deleteJobEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initJobPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -72,8 +66,6 @@ const switchJobEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return loadJob(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

@@ -1,5 +1,5 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/AjaxObservable';
 import { Store } from '../reducers/State';
@@ -64,8 +64,6 @@ const initNamespaceDropdownListEpic = (action$: ActionsObservable<any>, store$: 
         map((payload) => {
             return fillNamespaceDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

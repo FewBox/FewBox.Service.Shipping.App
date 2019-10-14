@@ -16,6 +16,7 @@ export interface ISecretPageProps {
     deleteJob: (any) => void;
     initNamespaceDropdownList: () => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class JobPage extends React.Component<ISecretPageProps, any> {
@@ -30,7 +31,7 @@ class JobPage extends React.Component<ISecretPageProps, any> {
                     <JobCreation isHelp={this.props.isHelp} create={this.props.createJob} reload={this.props.initJobPage} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.jobs}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.jobs}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteJob({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -50,6 +51,7 @@ class JobPage extends React.Component<ISecretPageProps, any> {
 
 const mapStateToProps = ({ jobPage, masterPage, settingPage }: Store) => ({
     jobs: jobPage.jobs,
+    isListLoading: jobPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

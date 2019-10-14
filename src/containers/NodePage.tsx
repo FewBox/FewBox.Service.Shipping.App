@@ -12,6 +12,7 @@ export interface INodePageProps {
     nodes: Node[];
     isHelp: boolean;
     initNodePage: () => void;
+    isListLoading: boolean;
 }
 
 class NodePage extends React.Component<INodePageProps, any> {
@@ -22,7 +23,7 @@ class NodePage extends React.Component<INodePageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.nodes}
+                    <List loading={this.props.isListLoading} grid={{ gutter: 16, column: 3 }} dataSource={this.props.nodes}
                         renderItem={(item: Node) => (
                             <List.Item>
                                 <Card actions={[
@@ -82,6 +83,7 @@ class NodePage extends React.Component<INodePageProps, any> {
 
 const mapStateToProps = ({ nodePage, settingPage }: Store) => ({
     nodes: nodePage.nodes,
+    isListLoading: nodePage.isListLoading,
     isHelp: settingPage.isHelp
 });
 

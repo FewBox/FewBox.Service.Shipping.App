@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initServiceEntryPage, loadServiceEntry, beginLoading, endLoading } from '../actions';
+import { initServiceEntryPage, loadServiceEntry } from '../actions';
 
 const initServiceEntryPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,8 +19,6 @@ const initServiceEntryPageEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return loadServiceEntry(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -39,8 +37,6 @@ const switchServiceEntryEpic = (action$: ActionsObservable<any>, store$: StateOb
         map((payload) => {
             return loadServiceEntry(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -54,8 +50,6 @@ const createServiceEntryPageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return initServiceEntryPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -69,8 +63,6 @@ const deleteServiceEntryPageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return initServiceEntryPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

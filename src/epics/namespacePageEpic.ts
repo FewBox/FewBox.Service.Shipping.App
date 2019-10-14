@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadNamespace, enableIstioStatus, disableIstioStatus, initNamespacePage, beginLoading, endLoading, empty } from '../actions';
+import { loadNamespace, enableIstioStatus, disableIstioStatus, initNamespacePage } from '../actions';
 import { IAction } from '../actions/Action';
 
 const initNamespacePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
@@ -20,8 +20,6 @@ const initNamespacePageEpic = (action$: ActionsObservable<any>, store$: StateObs
         map((payload) => {
             return loadNamespace(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -41,8 +39,6 @@ const switchNamespacePageEpic = (action$: ActionsObservable<any>, store$: StateO
         map((payload) => {
             return loadNamespace(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -57,8 +53,6 @@ const createNamespaceEpic = (action$: ActionsObservable<any>, store$: StateObser
         map((payload) => {
             return initNamespacePage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -72,8 +66,6 @@ const deleteNamespaceEpic = (action$: ActionsObservable<any>, store$: StateObser
         map((payload) => {
             return initNamespacePage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -87,8 +79,6 @@ const enableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservabl
         map((payload) => {
             return enableIstioStatus(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -102,8 +92,6 @@ const disableIstioEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return disableIstioStatus(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

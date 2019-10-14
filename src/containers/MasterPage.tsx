@@ -31,7 +31,7 @@ const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDr
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
-import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
 
 
@@ -175,7 +175,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                 </Menu.Item>
                                 <Menu.Item key="9">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Job" />}>
-                                        <Link to='/master/job'><BrandIcon />
+                                        <Link to='/master/job'><JobIcon />
                                             <FormattedMessage id="Navigation.Job" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>

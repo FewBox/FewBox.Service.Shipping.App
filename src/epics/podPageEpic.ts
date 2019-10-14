@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadPod, initPodPage, fillPodServiceAccountDropdownList, beginLoading, endLoading } from '../actions';
+import { loadPod, initPodPage, fillPodServiceAccountDropdownList } from '../actions';
 
 const initPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,8 +19,6 @@ const initPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
         map((payload) => {
             return loadPod(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -40,8 +38,6 @@ const switchPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return loadPod(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -55,8 +51,6 @@ const deletePodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initPodPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -70,8 +64,6 @@ const createPodEpic = (action$: ActionsObservable<any>, store$: StateObservable<
         map((payload) => {
             return initPodPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -85,8 +77,6 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
         map((payload) => {
             return fillPodServiceAccountDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

@@ -1,5 +1,5 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
@@ -19,8 +19,6 @@ const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObserv
         map((payload) => {
             return loadDeployment(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -40,8 +38,6 @@ const switchDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
         map((payload) => {
             return loadDeployment(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -58,8 +54,6 @@ const changeDeploymentVersionEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return initDeploymentPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -74,8 +68,6 @@ const createDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
         map((payload) => {
             return initDeploymentPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -90,8 +82,6 @@ const scaleDeploymentReplicasEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return initDeploymentPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -106,8 +96,6 @@ const deleteDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
         map((payload) => {
             return initDeploymentPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -121,8 +109,6 @@ const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, sto
         map((payload) => {
             return fillDeploymentServiceAccountDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -136,8 +122,6 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return fillDeploymentSecretDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

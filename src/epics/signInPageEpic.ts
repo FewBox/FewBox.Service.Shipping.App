@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import GraphQLObservable from '../fetch/GraphQLObservable';
-import { redirect, showMessage, endLoading, beginLoading, hideLockWindow } from '../actions';
+import { redirect, showMessage, hideLockWindow } from '../actions';
 import { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT } from '../config';
 import { MessageType } from '@fewbox/react-components';
 
@@ -37,8 +37,6 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
                 return showMessage(MessageType.Error, 'Message.UsernameOrPasswordIsNotValid');
             }
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -73,8 +71,6 @@ const reSignInEpic = (action$: ActionsObservable<any>, store$: StateObservable<S
                 return showMessage(MessageType.Error, 'Message.UsernameOrPasswordIsNotValid');
             }
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -87,8 +83,6 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
             window.localStorage.removeItem('token');
             return redirect('/');
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

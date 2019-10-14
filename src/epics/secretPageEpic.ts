@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, catchError, startWith, endWith } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initSecretPage, loadSecret, beginLoading, endLoading } from '../actions';
+import { initSecretPage, loadSecret } from '../actions';
 
 const initSecretPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,8 +19,6 @@ const initSecretPageEpic = (action$: ActionsObservable<any>, store$: StateObserv
         map((payload) => {
             return loadSecret(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -35,8 +33,6 @@ const createSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return initSecretPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -51,8 +47,6 @@ const deleteSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return initSecretPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -72,8 +66,6 @@ const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         map((payload) => {
             return loadSecret(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

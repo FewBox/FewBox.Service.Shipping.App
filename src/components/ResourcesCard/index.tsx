@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { List, Card, Collapse } from 'antd';
 
 export interface IResourcesCardProps {
+    isLoading: boolean;
     resources: any[];
     renderActions: (item) => React.ReactNode[];
     renderBasic: (item) => React.ReactNode;
@@ -12,7 +13,7 @@ export interface IResourcesCardProps {
 export default class ResourcesCard extends React.PureComponent<IResourcesCardProps> {
     render() {
         return (
-            <List grid={{ gutter: 16, column: 3 }} dataSource={this.props.resources}
+            <List loading={this.props.isLoading} grid={{ gutter: 16, column: 3 }} dataSource={this.props.resources}
                 renderItem={(item: any) => (
                     <List.Item>
                         <Card actions={this.props.renderActions(item)}>

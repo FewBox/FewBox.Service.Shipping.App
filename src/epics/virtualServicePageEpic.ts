@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList, endLoading, beginLoading } from '../actions';
+import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
 
 const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,8 +19,6 @@ const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return loadVirtualService(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -39,8 +37,6 @@ const switchVirtualServiceEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return loadVirtualService(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -54,8 +50,6 @@ const createVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: S
         map((payload) => {
             return initVirtualServicePage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -69,8 +63,6 @@ const deleteVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: S
         map((payload) => {
             return initVirtualServicePage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -84,8 +76,6 @@ const initGatewayDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return fillVirtualServiceGatewayDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -99,8 +89,6 @@ const initServiceDropdownListEpic = (action$: ActionsObservable<any>, store$: St
         map((payload) => {
             return fillVirtualServiceServiceDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -114,8 +102,6 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
         map((payload) => {
             return fillVirtualServiceDeploymentDropdownList(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

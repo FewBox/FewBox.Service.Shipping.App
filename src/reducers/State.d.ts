@@ -34,6 +34,7 @@ export interface Store {
 /** UI **/
 export interface SignInPage {
     isUsernameAndPasswordValid: boolean;
+    isSignInButtonLoading: boolean;
 }
 export interface MasterPage {
     messageType: MessageType;
@@ -58,51 +59,63 @@ export interface SettingPage {
 }
 export interface NodePage {
     nodes: Node[];
+    isListLoading: boolean;
 }
 export interface NamespacePage {
     namespaces: Namespace[];
+    isListLoading: boolean;
 }
 export interface ServicePage {
     services: Service[];
+    isListLoading: boolean;
 }
 export interface PodPage {
     pods: Pod[];
     serviceAccounts: ServiceAccount[];
+    isListLoading: boolean;
 }
 export interface DeploymentPage {
     deployments: Deployment[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
+    isListLoading: boolean;
 }
 export interface GatewayPage {
     gateways: Gateway[];
+    isListLoading: boolean;
 }
 export interface LogBookPage {
     logBook: LogBook;
 }
 export interface ServiceAccountPage {
     serviceAccounts: ServiceAccount[];
+    isListLoading: boolean;
 }
 export interface SecretPage {
     secrets: Secret[];
+    isListLoading: boolean;
 }
 export interface VirtualServicePage {
     virtualServices: VirtualService[];
     gateways: Gateway[];
     services: Service[];
     deployments: Deployment[];
+    isListLoading: boolean;
 }
 export interface DestinationRulePage {
     selectedDestinationRule: SelectedDestinationRule;
     destinationRules: DestinationRule[];
     services: Service[];
     deployments: Deployment[];
+    isListLoading: boolean;
 }
 export interface ServiceEntryPage {
     serviceEntries: ServiceEntry[];
+    isListLoading: boolean;
 }
 export interface JobPage{
     jobs: Job[];
+    isListLoading: boolean;
 }
 /** Biz **/
 export interface ComponentStatus {

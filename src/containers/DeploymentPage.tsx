@@ -24,6 +24,7 @@ export interface IDeploymentPageProps {
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
@@ -40,7 +41,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                         refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.deployments}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.deployments}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <InputNumber size="small" min={1} max={10} defaultValue={item.replicas} onBlur={(value) => { this.props.scalePodReplicas({ namespace: item.namespace, name: item.name, replicas: value.target.value }); }} />,
@@ -84,6 +85,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
 
 const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => ({
     deployments: deploymentPage.deployments,
+    isListLoading: deploymentPage.isListLoading,
     serviceAccounts: deploymentPage.serviceAccounts,
     secrets: deploymentPage.secrets,
     namespaces: masterPage.namespaces,

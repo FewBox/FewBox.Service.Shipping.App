@@ -18,6 +18,7 @@ export interface IGatewayPageProps {
     createGateway: (any) => void;
     deleteGateway: (any) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class GatewayPage extends React.Component<IGatewayPageProps, any> {
@@ -33,7 +34,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
                         reload={this.props.initGatewayPage} create={this.props.createGateway} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.gateways}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.gateways}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteGateway({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -51,6 +52,7 @@ class GatewayPage extends React.Component<IGatewayPageProps, any> {
 
 const mapStateToProps = ({ gatewayPage, masterPage, settingPage }: Store) => ({
     gateways: gatewayPage.gateways,
+    isListLoading: gatewayPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

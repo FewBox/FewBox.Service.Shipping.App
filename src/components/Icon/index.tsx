@@ -27,6 +27,7 @@ import TrafficLightSvg from '../../../assets/images/traffic-light.svg';
 import WarehouseSvg from '../../../assets/images/warehouse.svg';
 import KubernetesSvg from '../../../assets/images/kubernetes.svg';
 import ShippingLaneSvg from '../../../assets/images/shipping-lane.svg';
+import ScheduleSvg from '../../../assets/images/schedule.svg';
 
 const fontSize = { fontSize: '20px' };
 export const KubernetesIcon = props => <Icon style={fontSize} component={KubernetesSvg} {...props} />;
@@ -54,6 +55,7 @@ export const SecretIcon = props => <Icon style={fontSize} component={CredentialS
 export const ServiceEntryIcon = props => <Icon style={fontSize} component={WarehouseSvg} {...props} />
 export const VirtualServiceIcon = props => <Icon style={fontSize} component={ForkliftSvg} {...props} />
 export const DestinationRuleIcon = props => <Icon style={fontSize} component={TrafficLightSvg} {...props} />
+export const JobIcon = props => <Icon style={fontSize} component={ScheduleSvg} {...props} />
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;

@@ -1,5 +1,5 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
@@ -19,8 +19,6 @@ const initGatewayPageEpic = (action$: ActionsObservable<any>, store$: StateObser
         map((payload) => {
             return loadGateway(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -39,8 +37,6 @@ const switchGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return loadGateway(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -54,8 +50,6 @@ const createGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return initGatewayPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -69,8 +63,6 @@ const deleteGatewayEpic = (action$: ActionsObservable<any>, store$: StateObserva
         map((payload) => {
             return initGatewayPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

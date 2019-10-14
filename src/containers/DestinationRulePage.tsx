@@ -26,6 +26,7 @@ export interface IDestinationRulePageProps {
     initDestinationRuleDeploymentDropdownList: (app: string) => void;
     selectDestinationRule: (namespaceName: string, name: string) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class DestinationRulePage extends React.Component<IDestinationRulePageProps, any> {
@@ -41,7 +42,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
                         deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} create={this.props.createDestinationRule} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.destinationRules}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.destinationRules}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDestinationRule({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -64,6 +65,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
 
 const mapStateToProps = ({ destinationRulePage, masterPage, settingPage }: Store) => ({
     destinationRules: destinationRulePage.destinationRules,
+    isListLoading: destinationRulePage.isListLoading,
     services: destinationRulePage.services,
     deployments: destinationRulePage.deployments,
     namespaces: masterPage.namespaces,

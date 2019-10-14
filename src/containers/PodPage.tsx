@@ -23,6 +23,7 @@ export interface IPodPageProps {
     createPod: (any) => void;
     initPodServiceAccountDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class PodPage extends React.Component<IPodPageProps, any> {
@@ -38,7 +39,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                         serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initPodServiceAccountDropdownList} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.pods}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.pods}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Dropdown disabled={item.phase != 'Running'} overlay={<Menu>
@@ -111,6 +112,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
 
 const mapStateToProps = ({ podPage, masterPage, settingPage }: Store) => ({
     pods: podPage.pods,
+    isListLoading: podPage.isListLoading,
     serviceAccounts: podPage.serviceAccounts,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp

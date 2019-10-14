@@ -16,6 +16,7 @@ export interface IServiceAccountPageProps {
     deleteServiceAccount: (any) => void;
     initNamespaceDropdownList: () => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> {
@@ -30,7 +31,7 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
                     <ServiceAccountCreation isHelp={this.props.isHelp} create={this.props.createServiceAccount} reload={this.props.initServiceAccountPage} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.serviceAccounts}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.serviceAccounts}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceAccount({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -51,6 +52,7 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
 
 const mapStateToProps = ({ serviceAccountPage, masterPage, settingPage }: Store) => ({
     serviceAccounts: serviceAccountPage.serviceAccounts,
+    isListLoading: serviceAccountPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

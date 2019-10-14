@@ -18,6 +18,7 @@ export interface IServicePageProps {
     createService: (any) => void;
     deleteService: (any) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class ServicePage extends React.Component<IServicePageProps, any> {
@@ -33,7 +34,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                         serviceOptions={ServiceOptions} sessionAffinityOptions={SessionAffinityOptions} namespaces={this.props.namespaces} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.services}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.services}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -60,6 +61,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
 
 const mapStateToProps = ({ servicePage, masterPage, settingPage }: Store) => ({
     services: servicePage.services,
+    isListLoading: servicePage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

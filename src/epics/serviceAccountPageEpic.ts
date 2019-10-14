@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, startWith, endWith, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initServiceAccountPage, loadServiceAccount, beginLoading, endLoading } from '../actions';
+import { initServiceAccountPage, loadServiceAccount } from '../actions';
 
 const initServiceAccountPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -19,8 +19,6 @@ const initServiceAccountPageEpic = (action$: ActionsObservable<any>, store$: Sta
         map((payload) => {
             return loadServiceAccount(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -35,8 +33,6 @@ const createServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return initServiceAccountPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -51,8 +47,6 @@ const deleteServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return initServiceAccountPage();
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })
@@ -72,8 +66,6 @@ const switchServiceAccountEpic = (action$: ActionsObservable<any>, store$: State
         map((payload) => {
             return loadServiceAccount(payload);
         }),
-        //startWith(beginLoading()),
-        endWith(endLoading()),
         catchError((errorAction) => {
             return errorAction;
         })

@@ -23,6 +23,7 @@ export interface IVirtualServicePageProps {
     initVirtualServiceServiceDropdownList: (namespaceName: string) => void;
     initVirtualServiceDeploymentDropdownList: (app: string) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> {
@@ -40,7 +41,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                         reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.virtualServices}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.virtualServices}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -79,6 +80,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
 
 const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store) => ({
     virtualServices: virtualServicePage.virtualServices,
+    isListLoading: virtualServicePage.isListLoading,
     gateways: virtualServicePage.gateways,
     services: virtualServicePage.services,
     deployments: virtualServicePage.deployments,

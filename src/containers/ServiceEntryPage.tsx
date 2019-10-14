@@ -18,6 +18,7 @@ export interface IServiceEntryPageProps {
     createServiceEntry: (any) => void;
     deleteServiceEntry: (any) => void;
     isHelp: boolean;
+    isListLoading: boolean;
 }
 
 class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
@@ -33,7 +34,7 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
                         reload={this.props.initServiceEntryPage} create={this.props.createServiceEntry} />
                 </Row>
                 <Row gutter={16}>
-                    <ResourcesCard resources={this.props.serviceEntries}
+                    <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.serviceEntries}
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteServiceEntry({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
@@ -62,6 +63,7 @@ class ServiceEntryPage extends React.Component<IServiceEntryPageProps, any> {
 
 const mapStateToProps = ({ serviceEntryPage, masterPage, settingPage }: Store) => ({
     serviceEntries: serviceEntryPage.serviceEntries,
+    isListLoading: serviceEntryPage.isListLoading,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });
