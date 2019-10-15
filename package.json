@@ -32,7 +32,7 @@
     "xterm": "^3.14.5"
   },
   "devDependencies": {
-    "@fewbox/antd-theme": "^0.0.1",
+    "@fewbox/antd-theme": "^0.0.2",
     "@svgr/webpack": "^4.3.2",
     "@types/node": "^11.13.5",
     "@types/react": "^16.8.14",

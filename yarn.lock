@@ -764,9 +764,9 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
 
-"@fewbox/antd-theme@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@fewbox/antd-theme/-/antd-theme-0.0.1.tgz#f0f9d169dcbba560241b8fea26824e97facebc06"
+"@fewbox/antd-theme@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@fewbox/antd-theme/-/antd-theme-0.0.2.tgz#a74013c62b1b3bf8b7b9d2d6c624aac5902201ba"
 
 "@fewbox/react-components@^0.0.1":
   version "0.0.1"
