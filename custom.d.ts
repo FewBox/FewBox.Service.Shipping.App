@@ -6,8 +6,3 @@ declare module "*.json" {
     const value: any;
     export default value;
 }
-declare module Rx {
-    export interface Observable{
-        debug: () => any;
-    }
-}

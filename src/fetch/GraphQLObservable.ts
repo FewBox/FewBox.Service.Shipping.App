@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { IGraphQLSetting } from './Fetch';
-import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from '../config';
+// @ts-ignore
+import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
 import { showMessage, redirect } from '../actions';
 import { MessageType } from '@fewbox/react-components';
 

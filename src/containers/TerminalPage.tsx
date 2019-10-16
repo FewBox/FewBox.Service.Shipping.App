@@ -6,7 +6,8 @@ import { autobind } from 'core-decorators';
 import { Row, PageHeader, Result } from 'antd';
 import { redirect } from '../actions';
 import { Store } from 'redux';
-import { HOST, PORT } from '../config';
+// @ts-ignore
+import { HOST, PORT } from 'appsettings';
 import XTerminalSimulator from '../components/XTerminalSimulator';
 
 export interface ITerminalPageProps {

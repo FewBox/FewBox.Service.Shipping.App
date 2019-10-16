@@ -4,7 +4,8 @@ import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import GraphQLObservable from '../fetch/GraphQLObservable';
 import { redirect, showMessage, hideLockWindow } from '../actions';
-import { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT } from '../config';
+// @ts-ignore
+import { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT } from 'appsettings';
 import { MessageType } from '@fewbox/react-components';
 
 const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
