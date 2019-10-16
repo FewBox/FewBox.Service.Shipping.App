@@ -9,7 +9,7 @@ import { MessageType } from '@fewbox/react-components';
 const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
     let headers;
     if (window.localStorage.getItem('token')) {
-        headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') };
+        headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` };
     }
     else {
         headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER) };

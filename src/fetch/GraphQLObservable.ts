@@ -11,7 +11,7 @@ const initGraphQLSetting = (graphQLSetting: IGraphQLSetting) => {
         url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'path': graphQLSetting.path }),
         body: graphQLSetting.body ? JSON.stringify(graphQLSetting.body) : undefined,
         crossDomain: graphQLSetting.crossDomain ? graphQLSetting.crossDomain : true,
-        headers: { ...(graphQLSetting.headers ? graphQLSetting.headers : HEADER), Authorization: window.localStorage.getItem('token') },
+        headers: { ...(graphQLSetting.headers ? graphQLSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` },
         method: String(graphQLSetting.method ? graphQLSetting.method : METHOD),
         responseType: graphQLSetting.responseType ? graphQLSetting.responseType : RESPONSETYPE,
         withCredentials: !!graphQLSetting.withCredentials
