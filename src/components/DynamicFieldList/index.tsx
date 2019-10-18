@@ -5,7 +5,7 @@ import { Row, List, Col, Button, Form, Input, Card, Icon } from 'antd';
 export interface IDynamicFieldListProps {
   fieldName: string;
   initialItems?: any[];
-  itemComponents: (k, i) => React.ReactNode[];
+  itemComponents: (index, item) => React.ReactNode[];
   form: any;
   addCaption: string | React.ReactNode;
 }
@@ -54,8 +54,8 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     }
     const fromItems = keys.map((k, index) => {
       let item;
-      if (this.props.initialItems && k <= this.props.initialItems.length) {
-        item = this.props.initialItems[k];
+      if (this.props.initialItems && index <= this.props.initialItems.length) {
+        item = this.props.initialItems[index];
       }
       return <Row gutter={16} key={'item' + index}>
         <Card>

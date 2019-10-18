@@ -176,5 +176,6 @@ export default {
     'Label.Done': 'Done',
     'Label.Protocol': 'Protocol',
     'Label.Job': 'Job',
-    'Label.ComingSoon': 'Coming Soon'
+    'Label.ComingSoon': 'Coming Soon',
+    'Label.VirtualService': 'Virtual Service'
 }

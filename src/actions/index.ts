@@ -174,6 +174,11 @@ export const createVirtualService = (virtualService): IAction<any> => ({
     value: virtualService
 });
 
+export const changeVirtualServiceHttp = (https): IAction<any> => ({
+    type: ActionTypes.CHANGE_VIRTUALSERVICE_HTTP,
+    value: https
+});
+
 export const deleteVirtualService = (virtualService): IAction<string> => ({
     type: ActionTypes.DELETE_VIRTUALSERVICE,
     value: virtualService
@@ -331,10 +336,10 @@ export const showMessage = (messageType: MessageType, messageIntlId: string, mes
 export const hideMessage = (): IEmptyAction => ({
     type: ActionTypes.HIDE_MESSAGE
 });
-export const showLockWindow = ()=>({
+export const showLockWindow = () => ({
     type: ActionTypes.SHOW_LOCKWINDOW
 });
-export const hideLockWindow = ()=>({
+export const hideLockWindow = () => ({
     type: ActionTypes.HIDE_LOCKWINDOW
 });
 export const showDrawer = (drawer: any): IAction<any> => ({
@@ -421,5 +426,21 @@ export const initVirtualServiceDeploymentDropdownList = (app: string): IAction<s
 });
 export const fillVirtualServiceDeploymentDropdownList = (payload): IPayloadAction<any> => ({
     type: ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
+    payload: payload
+});
+export const selectVirtualService = (namespace: string, name: string): IAction<any> => ({
+    type: ActionTypes.SELECT_VIRTUALSERVICE,
+    value: { namespace: namespace, name: name }
+});
+export const fillSelectedVirtualServiceServiceDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTED_VIRTUALSERVICE,
+    payload: payload
+});
+export const initSelectedVirtualServiceDeploymentDropdownList = (app: string): IAction<string> => ({
+    type: ActionTypes.INIT_SELECTEDVIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
+    value: app
+});
+export const fillSelectedVirtualServiceDeploymentDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTEDVIRTUALSERVICE_DEPLOYMENT,
     payload: payload
 });

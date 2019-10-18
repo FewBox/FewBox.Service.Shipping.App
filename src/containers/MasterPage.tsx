@@ -3,13 +3,16 @@ import { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Store, SelectedDestinationRule } from '../reducers/State';
+import { Store, SelectedDestinationRule, SelectedVirtualService } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result, Button } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
-import { hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset, showLockWindow, hideLockWindow } from '../actions';
+import {
+    hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset, changeVirtualServiceHttp,
+    showLockWindow, hideLockWindow, initSelectedVirtualServiceDeploymentDropdownList
+} from '../actions';
 const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
@@ -28,11 +31,13 @@ const DestinationRulePage = lazy(() => import('./DestinationRulePage'));
 const ServiceEntryPage = lazy(() => import('./ServiceEntryPage'));
 const JobPage = lazy(() => import('./JobPage'));
 const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDrawer'));
+const VirtualServiceDrawer = lazy(() => import('../components/VirtualServiceDrawer'));
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
 import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
+import { MatchOptions } from '../jsons';
 
 
 export interface IMasterPageProps {
@@ -58,8 +63,11 @@ export interface IMasterPageProps {
     switchHelp: (isHelp: boolean) => void;
     changePodVersion: (any) => void;
     changeDestinationRuleSubset: (any) => void;
+    changeVirtualServiceHttp: (any) => void;
+    initSelectedVirtualServiceDeploymentDropdownList: (app: string) => void;
     intl?: any;
     selectedDestinationRule: SelectedDestinationRule;
+    selectedVirtualService: SelectedVirtualService;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -92,6 +100,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     return <DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} images={this.props.drawer.images} changePodVersion={this.props.changePodVersion} />;
                 case 'DestinationRule':
                     return <DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} />;
+                case 'VirtualService':
+                    return <VirtualServiceDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedVirtualService={this.props.selectedVirtualService} changeVirtualServiceHttp={this.props.changeVirtualServiceHttp} refreshDeployments={this.props.initSelectedVirtualServiceDeploymentDropdownList} services={this.props.selectedVirtualService.services} deployments={this.props.selectedVirtualService.deployments} matchOptions={MatchOptions} isHelp={this.props.isHelp} />
                 default:
                     return <div></div>
             }
@@ -102,6 +112,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     return <FormattedMessage id="Label.Deployment" />;
                 case 'DestinationRule':
                     return <FormattedMessage id="Label.DestinationRule" />;
+                case 'VirtualService':
+                    return <FormattedMessage id="Label.VirtualService" />;
                 default:
                     return <FormattedMessage id="Label.None" />;
             }
@@ -255,7 +267,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage, destinationRulePage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtualServicePage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -267,6 +279,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage }: Store
     drawer: masterPage.drawer,
     redirectPath: masterPage.path,
     selectedDestinationRule: destinationRulePage.selectedDestinationRule,
+    selectedVirtualService: virtualServicePage.selectedVirtualService,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })
@@ -280,8 +293,10 @@ const mapDispatchToProps = {
     hideDrawer,
     changePodVersion,
     changeDestinationRuleSubset,
+    changeVirtualServiceHttp,
     hideLockWindow,
-    showLockWindow
+    showLockWindow,
+    initSelectedVirtualServiceDeploymentDropdownList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MasterPage);

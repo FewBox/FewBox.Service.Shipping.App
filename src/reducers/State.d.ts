@@ -84,6 +84,7 @@ export interface ServiceAccountPage extends ResourcePage<ServiceAccount> {
 export interface SecretPage extends ResourcePage<Secret> {
 }
 export interface VirtualServicePage extends ResourcePage<VirtualService> {
+    selectedVirtualService: SelectedVirtualService;
     gateways: Gateway[];
     services: Service[];
     deployments: Deployment[];
@@ -230,6 +231,11 @@ export interface VolumeMount {
 }
 export interface SelectedDestinationRule {
     subsets: Subset[];
+    deployments: Deployment[];
+}
+export interface SelectedVirtualService {
+    https: Http[];
+    services: Service[];
     deployments: Deployment[];
 }
 export interface DestinationRule {

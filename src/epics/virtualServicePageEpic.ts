@@ -1,9 +1,10 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
+import { zip } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList } from '../actions';
+import { initVirtualServicePage, loadVirtualService, fillVirtualServiceGatewayDropdownList, fillVirtualServiceServiceDropdownList, fillVirtualServiceDeploymentDropdownList, fillSelectedVirtualServiceServiceDropdownList, fillSelectedVirtualServiceDeploymentDropdownList } from '../actions';
 
 const initVirtualServicePageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -106,5 +107,45 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
             return errorAction;
         })
     );
+const selectVirtualServiceEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SELECT_VIRTUALSERVICE),
+        mergeMap((action) => {
+            return zip(new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/services', method: 'GET' }),
+                new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'GET' }));
+        }),
+        map((payloads) => {
+            return fillSelectedVirtualServiceServiceDropdownList({ services: payloads[0], https: payloads[1].https });
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+const initSelectedVirtualServiceDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_SELECTEDVIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
+        }),
+        map((payload) => {
+            return fillSelectedVirtualServiceDeploymentDropdownList(payload);
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+const changeVirtualServiceHttpEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.CHANGE_VIRTUALSERVICE_HTTP),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/http", "value": action.value.https }] });
+        }),
+        map((payload) => {
+            return initVirtualServicePage();
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
 
-export default [initVirtualServicePageEpic, createVirtualServicePageEpic, switchVirtualServiceEpic, deleteVirtualServicePageEpic, initGatewayDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic];
+export default [initVirtualServicePageEpic, createVirtualServicePageEpic, switchVirtualServiceEpic, deleteVirtualServicePageEpic, initGatewayDropdownListEpic, initServiceDropdownListEpic, initDeploymentDropdownListEpic, selectVirtualServiceEpic, initSelectedVirtualServiceDeploymentDropdownListEpic, changeVirtualServiceHttpEpic];
