@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
 import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList, initDeploymentSecretDropdownList } from '../actions';
-import { Store, Deployment, Namespace, ServiceAccount, Secret } from '../reducers/State';
+import { Store, Deployment, Namespace, ServiceAccount, Secret, Container } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { ImagePullPolicyOptions, ProtocolOptions } from '../jsons';
@@ -42,7 +42,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.deployments}
-                        renderActions={(item) => [
+                        renderActions={(item: Deployment) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <InputNumber size="small" min={1} max={10} defaultValue={item.replicas} onBlur={(value) => { this.props.scalePodReplicas({ namespace: item.namespace, name: item.name, replicas: value.target.value }); }} />,
                             <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name, images: item.images })} />]}
@@ -55,9 +55,10 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
                         </Descriptions>}
                         renderMore={(item) => <Descriptions size='small' column={1} bordered>
-                            {item.images.map((image, index) => {
-                                return <Descriptions.Item key={'image' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ImageItem" helpId="Help.Image" values={{ key: index + 1 }} />}>
-                                    <Popover title={<FormattedMessage id="Label.ImageItem" values={{ key: index + 1 }} />} trigger="click" content={image}>
+                            {item.containers.map((container: Container, index) => {
+                                return <Descriptions.Item key={'image' + index} label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ContainerItem" helpId="Help.Container" values={{ key: index + 1 }} />}>
+                                    <Tag color="lime">{container.imagePullPolicyType}</Tag>
+                                    <Popover title={<FormattedMessage id="Label.ContainerItem" values={{ key: index + 1 }} />} trigger="click" content={container.image}>
                                         <Button type="primary" icon='eye'></Button>
                                     </Popover>
                                 </Descriptions.Item>

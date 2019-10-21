@@ -41,7 +41,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                             <Icon type="ellipsis" />]}
                         renderBasic={(item) => <Descriptions size='small' column={1} bordered>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
-                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.Selector" />}>{item.selector}</Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.Selector" />}><Tag color="magenta">{item.selector}</Tag></Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ClusterIP" helpId="Help.ClusterIP" />}>{item.clusterIP}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.SessionAffinity" helpId="Help.SessionAffinity" />}>{item.sessionAffinity}</Descriptions.Item>

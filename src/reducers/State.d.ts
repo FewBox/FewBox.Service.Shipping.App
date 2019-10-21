@@ -166,8 +166,20 @@ export interface Deployment {
     replicas: number;
     images: string[];
     volumes: any[];
-    volumeMounts: VolumeMount[];
+    containers: Container[];
     age: string;
+}
+export interface Container {
+    name: string;
+    image: string;
+    imagePullPolicyType: ImagePullPolicyType;
+    containerPorts: ContainerPort[];
+    volumeMounts: VolumeMount[];
+}
+declare enum ImagePullPolicyType {
+    IfNotPresent = 0,
+    Always,
+    Never
 }
 export interface Service {
     namespace: string;
