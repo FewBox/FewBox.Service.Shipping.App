@@ -27,7 +27,7 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
             let body = {
                 query: graphql
             };
-            return new GraphQLObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, method: 'POST', path: '/graphql', body: body, prop: 'signin' });
+            return new GraphQLObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, method: 'POST', path: '/shipping/graphql', body: body, prop: 'signin' });
         }),
         map((payload) => {
             if (payload.isValid) {
