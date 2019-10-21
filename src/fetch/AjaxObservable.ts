@@ -3,7 +3,7 @@ import { Observable, of, empty } from 'rxjs';
 import { showMessage, showLockWindow } from '../actions';
 import { IAjaxSetting } from './Fetch';
 // @ts-ignore
-import { PROTOCOL, HOST, PORT, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
+import { PROTOCOL, HOST, PORT, PATH, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
 import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
@@ -15,7 +15,7 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
         headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER) };
     }
     return {
-        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'path': ajaxSetting.path }),
+        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'path': ajaxSetting.path?ajaxSetting.path: PATH }),
         body: ajaxSetting.body ? JSON.stringify(ajaxSetting.body) : undefined,
         crossDomain: ajaxSetting.crossDomain ? ajaxSetting.crossDomain : true,
         headers: headers,

@@ -42,7 +42,7 @@ const config = {
         new HtmlWebpackPlugin({ template: './src/index.tmpl.html', title: 'FewBox Shipping' })
     ],
     externals: {
-        'appsettings': JSON.stringify(require('./appsettings.json'))
+        'appsettings': JSON.stringify(env.production ? require('./appsettings.json') : require('./appsetting.dev.json'))
     }
 }
 module.exports = config;

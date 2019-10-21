@@ -176,7 +176,7 @@ export interface Container {
     containerPorts: ContainerPort[];
     volumeMounts: VolumeMount[];
 }
-declare enum ImagePullPolicyType {
+export enum ImagePullPolicyType {
     IfNotPresent = 0,
     Always,
     Never
