@@ -66,13 +66,13 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                     <DynamicFieldList fieldName='https' initialItems={this.props.selectedVirtualService.https} itemComponents={(index, item: Http) =>
                         [<Col offset={1} span={12} key={1}>
                             <Form.Item>
-                                <DynamicFieldList initialItems={item.uris} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
+                                {item.uris ? <DynamicFieldList initialItems={item.uris} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
                                                 {getFieldDecorator(`uriTypes[${index}][${uriIndex}]`, {
                                                     rules: [{ required: true, message: <FormattedMessage id='Message.TypeRequired' /> }],
-                                                    initialValue: Object.keys(uri)[0]
+                                                    initialValue: (uri ? Object.keys(uri)[0] : null)
                                                 })(
                                                     <Select showSearch placeholder="Type" optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                         {this.props.matchOptions ? this.props.matchOptions.map((item, index) => {
@@ -88,15 +88,15 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Uri' />}>
                                                 {getFieldDecorator(`uris[${index}][${uriIndex}]`, {
                                                     rules: [{ required: true, message: <FormattedMessage id='Message.InformationRequired' /> }],
-                                                    initialValue: uri[Object.keys(uri)[0]]
+                                                    initialValue: (uri ? uri[Object.keys(uri)[0]] : null)
                                                 })(
                                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Information" />
                                                 )}
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} />
-                                <DynamicFieldList initialItems={item.headers} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} /> : null}
+                                {item.headers ? <DynamicFieldList initialItems={item.headers} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Header' />}>
@@ -134,14 +134,14 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} />
-                                <DynamicFieldList initialItems={item.routes} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} /> : null}
+                                {item.routes ? <DynamicFieldList initialItems={item.routes} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
                                                 {getFieldDecorator(`routes[${index}][${routeIndex}]`, {
                                                     rules: [{ required: true, message: <FormattedMessage id='Message.RouteRequired' /> }],
-                                                    initialValue: route['host']
+                                                    initialValue: (route ? route['host'] : null)
                                                 })(
                                                     <Select showSearch onChange={this.changeDeployment} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                         {this.props.services ? this.props.services.map((item, index) => {
@@ -157,7 +157,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Port' />}>
                                                 {getFieldDecorator(`ports[${index}][${routeIndex}]`, {
                                                     rules: [{ required: false, message: <FormattedMessage id='Message.PortRequired' /> }],
-                                                    initialValue: route['port']
+                                                    initialValue: (route ? route['port'] : null)
                                                 })(
                                                     <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Port" />
                                                 )}
@@ -180,7 +180,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} /> : null}
                             </Form.Item>
                         </Col>]
                     } form={this.props.form} addCaption={<FormattedMessage id="Label.Http" />} />

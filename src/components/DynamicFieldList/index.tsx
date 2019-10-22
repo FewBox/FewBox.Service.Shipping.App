@@ -2,6 +2,9 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { Row, List, Col, Button, Form, Input, Card, Icon } from 'antd';
 
+export interface IDynamicFieldListState {
+}
+
 export interface IDynamicFieldListProps {
   fieldName: string;
   initialItems?: any[];
@@ -12,7 +15,7 @@ export interface IDynamicFieldListProps {
 
 let id = 0;
 
-export default class DynamicFieldList extends React.PureComponent<IDynamicFieldListProps> {
+export default class DynamicFieldList extends React.PureComponent<IDynamicFieldListProps, IDynamicFieldListState> {
   remove = k => {
     const { form } = this.props;
     const keys = form.getFieldValue(this.props.fieldName);
@@ -42,12 +45,16 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     form.setFieldsValue(fieldValue);
   };
   public render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
     // keys state to store dynamic key.
     getFieldDecorator(this.props.fieldName, { initialValue: [] });
+    getFieldDecorator(this.props.fieldName + '_Inited', { isInited: false });
     const keys = getFieldValue(this.props.fieldName);
-    if (this.props.initialItems && this.props.initialItems.length > 0 && keys.length == 0) {
+    let isInited = getFieldValue(this.props.fieldName + '_Inited');
+    if (this.props.initialItems && this.props.initialItems.length > 0 && keys.length == 0 && !isInited) {
       this.init(this.props.initialItems);
+      let fieldValue = JSON.parse(_.template('{"<%= keys %>":<%= values %>}')({ keys: this.props.fieldName + '_Inited', values: JSON.stringify({ isInited: true }) }));
+      setFieldsValue(fieldValue);
     }
     if (this.props.initialItems && this.props.initialItems.length == 0 && keys.length != 0) {
       this.clear();
