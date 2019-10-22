@@ -38,7 +38,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                         return { [name]: { [data.headerTypes[index][headerIndex]]: header } };
                     }) : null;
                     let routes = data.routes && data.routes[index] ? data.routes[index].map((route, routeIndex) => {
-                        return { destination: { host: route, port: { number: data.ports[index][routeIndex] }, subset: data.versions[index][routeIndex] } };
+                        return { destination: { host: route, port: { number: parseInt(data.ports[index][routeIndex]) }, subset: data.versions[index][routeIndex] } };
                     }) : null;
                     if (uris || headers) {
                         let match;
@@ -66,7 +66,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                     <DynamicFieldList fieldName='https' initialItems={this.props.selectedVirtualService.https} itemComponents={(index, item: Http) =>
                         [<Col offset={1} span={12} key={1}>
                             <Form.Item>
-                                <DynamicFieldList initialItems={item.uris} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
+                                <DynamicFieldList initialItems={item ? item.uris : null} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
@@ -96,7 +96,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                         </Form.Item>
                                     </Col>]
                                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} />
-                                <DynamicFieldList initialItems={item.headers} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
+                                <DynamicFieldList initialItems={item ? item.headers : null} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Header' />}>
@@ -138,12 +138,12 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Rewrite' />}>
                                     {getFieldDecorator(`rewrite[${index}]`, {
                                         rules: [{ required: false, message: <FormattedMessage id='Message.RewriteRequired' /> }],
-                                        initialValue: item.rewrite
+                                        initialValue: (item ? (item.rewrite ? item.rewrite.uri : null) : null)
                                     })(
                                         <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Rewrite" />
                                     )}
                                 </HelpComponent>
-                                <DynamicFieldList initialItems={item.routes} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
+                                <DynamicFieldList initialItems={item ? item.routes : null} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
@@ -177,7 +177,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Deployment' />}>
                                                 {getFieldDecorator(`versions[${index}][${routeIndex}]`, {
                                                     rules: [{ required: false, message: <FormattedMessage id='Message.DeploymentRequired' /> }],
-                                                    initialValue: route['subset']
+                                                    initialValue: (route ? route['subset'] : null)
                                                 })(
                                                     <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                                         {this.props.deployments ? this.props.deployments.map((item, index) => {
