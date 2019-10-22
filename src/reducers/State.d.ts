@@ -212,7 +212,11 @@ export interface VirtualService {
 export interface Http {
     uris: any[];
     headers: any[];
+    rewrite: Rewrite;
     routes: Route[];
+}
+export interface Rewrite {
+    uri: string;
 }
 export interface Route {
     host: string;

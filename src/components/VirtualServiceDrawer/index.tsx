@@ -48,7 +48,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                         else {
                             match = headers;
                         }
-                        return { match: match, route: routes };
+                        return { match: match, route: routes, rewrite: { uri: data.rewrite[index] } };
                     }
                     else {
                         return { route: routes };
@@ -66,7 +66,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                     <DynamicFieldList fieldName='https' initialItems={this.props.selectedVirtualService.https} itemComponents={(index, item: Http) =>
                         [<Col offset={1} span={12} key={1}>
                             <Form.Item>
-                                {item.uris ? <DynamicFieldList initialItems={item.uris} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
+                                <DynamicFieldList initialItems={item.uris} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Match' />}>
@@ -95,8 +95,8 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} /> : null}
-                                {item.headers ? <DynamicFieldList initialItems={item.headers} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Uri" />} />
+                                <DynamicFieldList initialItems={item.headers} fieldName={'header' + index} itemComponents={(headerIndex, header) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Header' />}>
@@ -134,8 +134,16 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} /> : null}
-                                {item.routes ? <DynamicFieldList initialItems={item.routes} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} />
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Rewrite' />}>
+                                    {getFieldDecorator(`rewrite[${index}]`, {
+                                        rules: [{ required: false, message: <FormattedMessage id='Message.RewriteRequired' /> }],
+                                        initialValue: item.rewrite
+                                    })(
+                                        <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Rewrite" />
+                                    )}
+                                </HelpComponent>
+                                <DynamicFieldList initialItems={item.routes} fieldName={'route' + index} itemComponents={(routeIndex, route) =>
                                     [<Col key={1}>
                                         <Form.Item>
                                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Service' />}>
@@ -180,7 +188,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                             </HelpComponent>
                                         </Form.Item>
                                     </Col>]
-                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} /> : null}
+                                } form={this.props.form} addCaption={<FormattedMessage id="Label.Route" />} />
                             </Form.Item>
                         </Col>]
                     } form={this.props.form} addCaption={<FormattedMessage id="Label.Http" />} />

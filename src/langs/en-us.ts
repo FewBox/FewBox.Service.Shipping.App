@@ -59,6 +59,7 @@ export default {
     'Help.Header': 'Header',
     'Help.Job': 'Job',
     'Help.Container': 'Container',
+    'Help.Rewrite': 'Rewrite E.G: \' \'',
     'Navigation.Landing': 'Landing',
     'Navigation.Kubernetes': 'Kubernetes',
     'Navigation.Istio': 'Istio',
@@ -178,5 +179,6 @@ export default {
     'Label.Protocol': 'Protocol',
     'Label.Job': 'Job',
     'Label.ComingSoon': 'Coming Soon',
-    'Label.VirtualService': 'Virtual Service'
+    'Label.VirtualService': 'Virtual Service',
+    'Label.Route': 'Route'
 }

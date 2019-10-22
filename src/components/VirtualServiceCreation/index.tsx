@@ -47,7 +47,8 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     let routes = data.routes && data.routes[index] ? data.routes[index].map((route, routeIndex) => {
                         return { host: route, port: data.ports[index][routeIndex], subset: data.versions[index][routeIndex] };
                     }) : null;
-                    return { uris: uris, headers: headers, routes: routes };
+                    let rewrite = { uri: data.rewrite[index] };
+                    return { uris: uris, headers: headers, rewrite: rewrite, routes: routes };
                 });
                 this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, gateways: values.gateways, https: https });
             }
@@ -173,6 +174,13 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                     </Form.Item>
                                 </Col>]
                             } form={this.props.form} addCaption={<FormattedMessage id="Label.Header" />} />
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Rewrite' />}>
+                                {getFieldDecorator(`rewrite[${k1}]`, {
+                                    rules: [{ required: false, message: <FormattedMessage id='Message.RewriteRequired' /> }],
+                                })(
+                                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Rewrite" />
+                                )}
+                            </HelpComponent>
                             <DynamicFieldList fieldName={'http' + k1} itemComponents={(k2) =>
                                 [<Col key={1}>
                                     <Form.Item>
@@ -215,7 +223,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                         </HelpComponent>
                                     </Form.Item>
                                 </Col>]
-                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Port" />} />
+                            } form={this.props.form} addCaption={<FormattedMessage id="Label.Route" />} />
                         </Form.Item>
                     </Col>]
                 } form={this.props.form} addCaption={<FormattedMessage id="Label.Http" />} />

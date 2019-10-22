@@ -70,6 +70,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                     {http.headers != null ? http.headers.map((header, index) => {
                                         return <p key={'header' + index}>{JSON.stringify(header)}</p>
                                     }) : null}
+                                    {http.rewrite ? <p>{http.rewrite.uri === ' ' ? <FormattedMessage id='Label.None' /> : null}</p> : null}
                                     {http.routes.map((route, index) => {
                                         return <p key={'route' + index}>{route.host} : {route.subset ? route.subset : route.port}</p>
                                     })}
