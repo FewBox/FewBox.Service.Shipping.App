@@ -11,6 +11,8 @@ export default (state: ServiceAccountPage = serviceAccountState, action: any): S
             return { ...state, isListLoading: true };
         case ActionTypes.LOAD_SERVICEACCOUNT:
             return { ...state, items: action.payload, isListLoading: false };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }

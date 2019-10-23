@@ -10,6 +10,8 @@ export default (state: SignInPage = signInState, action: IAction<boolean>): Sign
     switch (action.type) {
         case ActionTypes.SIGNIN:
             return { ...state, isSignInButtonLoading: true };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isSignInButtonLoading: false };
         case ActionTypes.SET_VALIDSTATUS:
             return { ...state, isUsernameAndPasswordValid: action.value, isSignInButtonLoading: false };
         default:

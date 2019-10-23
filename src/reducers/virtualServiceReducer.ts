@@ -25,6 +25,8 @@ export default (state: VirtualServicePage = virtualServiceState, action: any): V
             return { ...state, services: action.payload };
         case ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST:
             return { ...state, deployments: action.payload };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }

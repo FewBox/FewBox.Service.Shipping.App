@@ -14,6 +14,8 @@ export default (state: PodPage = podState, action: any): PodPage => {
             return { ...state, items: action.payload, isListLoading: false };
         case ActionTypes.FILL_POD_SERVICEACCOUNT_DROPDOWNLIST:
             return { ...state, serviceAccounts: action.payload };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }

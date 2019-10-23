@@ -17,6 +17,8 @@ export default (state: DeploymentPage = deploymentState, action: any): Deploymen
             return { ...state, serviceAccounts: action.payload };
         case ActionTypes.FILL_DEPLOYMENT_SECRET_DROPDOWNLIST:
             return { ...state, secrets: action.payload };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }

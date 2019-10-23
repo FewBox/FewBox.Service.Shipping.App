@@ -31,6 +31,8 @@ export default (state: NamespacePage = namespaceState, action: any): NamespacePa
                 }
             });
             return { ...state, items: namespaces };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }

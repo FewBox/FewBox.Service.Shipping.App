@@ -23,6 +23,8 @@ export default (state: DestinationRulePage = destinationRuleState, action: IPayl
             return { ...state, selectedDestinationRule: { subsets: [], deployments: [] } };
         case ActionTypes.FILL_DESTINATIONRULE_DEPLOYMENT_DROPDOWNLIST:
             return { ...state, deployments: action.payload };
+        case ActionTypes.SHOW_MESSAGE:
+            return { ...state, isListLoading: false };
         default:
             return state;
     }
