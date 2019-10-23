@@ -28,11 +28,14 @@ import WarehouseSvg from '../../../assets/images/warehouse.svg';
 import KubernetesSvg from '../../../assets/images/kubernetes.svg';
 import ShippingLaneSvg from '../../../assets/images/shipping-lane.svg';
 import ScheduleSvg from '../../../assets/images/schedule.svg';
+import ShippingMapSvg from '../../../assets/images/shipping-map.svg';
+import InstallSvg from '../../../assets/images/install.svg';
 
 const fontSize = { fontSize: '20px' };
 export const KubernetesIcon = props => <Icon style={fontSize} component={KubernetesSvg} {...props} />;
 export const IstioIcon = props => <Icon style={fontSize} component={IstioSvg} {...props} />;
 export const ShippingLaneIcon = props => <Icon style={fontSize} component={ShippingLaneSvg} {...props} />
+export const ShippingMapIcon = props => <Icon style={fontSize} component={ShippingMapSvg} {...props} />
 export const NamespaceIcon = props => <Icon style={fontSize} component={ShippingLineSvg} {...props} />;
 export const ServiceIcon = props => <Icon style={fontSize} component={QuayAreaSvg} {...props} />;
 export const DeploymentIcon = props => <Icon style={fontSize} component={ShipyardSvg} {...props} />;
@@ -56,6 +59,7 @@ export const ServiceEntryIcon = props => <Icon style={fontSize} component={Wareh
 export const VirtualServiceIcon = props => <Icon style={fontSize} component={ForkliftSvg} {...props} />
 export const DestinationRuleIcon = props => <Icon style={fontSize} component={TrafficLightSvg} {...props} />
 export const JobIcon = props => <Icon style={fontSize} component={ScheduleSvg} {...props} />
+export const InstallIcon = props => <Icon style={fontSize} component={InstallSvg} {...props} />
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;

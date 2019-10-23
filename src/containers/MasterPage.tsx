@@ -17,6 +17,7 @@ const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
 const AboutPage = lazy(() => import('./AboutPage'));
 const ShippingLanePage = lazy(() => import('./ShippingLanePage'));
+const ShippingMapPage = lazy(() => import('./ShippingMapPage'));
 const TerminalPage = lazy(() => import('./TerminalPage'));
 const NamespacePage = lazy(() => import('./NamespacePage'));
 const PodPage = lazy(() => import('./PodPage'));
@@ -35,7 +36,7 @@ const VirtualServiceDrawer = lazy(() => import('../components/VirtualServiceDraw
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
-import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
 import { MatchOptions } from '../jsons';
 
@@ -142,50 +143,54 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                 <Link to='/master/shippinglane'><ShippingLaneIcon />
                                     <FormattedMessage id="Navigation.ShippingLane" /></Link>
                             </Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to='/master/shippingmap'><ShippingMapIcon />
+                                    <FormattedMessage id="Navigation.ShippingMap" /></Link>
+                            </Menu.Item>
                             <Menu.SubMenu key='sub1' title={<span><KubernetesIcon /><FormattedMessage id="Navigation.Kubernetes" /></span>}>
-                                <Menu.Item key="2">
+                                <Menu.Item key="11">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Node" />}>
                                         <Link to='/master/node'><NodeIcon />
                                             <FormattedMessage id="Navigation.Node" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="3">
+                                <Menu.Item key="12">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Namespace" />}>
                                         <Link to='/master/namespace'><NamespaceIcon />
                                             <FormattedMessage id="Navigation.Namespace" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="4">
+                                <Menu.Item key="13">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceAccount" />}>
                                         <Link to='/master/serviceaccount'><ServiceAccountIcon />
                                             <FormattedMessage id="Navigation.ServiceAccount" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="5">
+                                <Menu.Item key="14">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
                                         <Link to='/master/secret'><SecretIcon />
                                             <FormattedMessage id="Navigation.Secret" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="6">
+                                <Menu.Item key="15">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Service" />}>
                                         <Link to='/master/service'><ServiceIcon />
                                             <FormattedMessage id="Navigation.Service" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="7">
+                                <Menu.Item key="16">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Deployment" />}>
                                         <Link to='/master/deployment'><DeploymentIcon />
                                             <FormattedMessage id="Navigation.Deployment" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="8">
+                                <Menu.Item key="17">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Pod" />}>
                                         <Link to='/master/pod'><PodIcon />
                                             <FormattedMessage id="Navigation.Pod" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="9">
+                                <Menu.Item key="18">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Job" />}>
                                         <Link to='/master/job'><JobIcon />
                                             <FormattedMessage id="Navigation.Job" /></Link>
@@ -193,32 +198,32 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                 </Menu.Item>
                             </Menu.SubMenu>
                             <Menu.SubMenu key='sub2' title={<span><IstioIcon /><FormattedMessage id="Navigation.Istio" /></span>}>
-                                <Menu.Item key="10">
+                                <Menu.Item key="21">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Gateway" />}>
                                         <Link to='/master/gateway'><GatewayIcon />
                                             <FormattedMessage id="Navigation.Gateway" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="11">
+                                <Menu.Item key="22">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.VirtualService" />}>
                                         <Link to='/master/virtualservice'><VirtualServiceIcon />
                                             <FormattedMessage id="Navigation.VirtualService" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="12">
+                                <Menu.Item key="23">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.DestinationRule" />}>
                                         <Link to='/master/destinationrule'><DestinationRuleIcon />
                                             <FormattedMessage id="Navigation.DestinationRule" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
-                                <Menu.Item key="13">
+                                <Menu.Item key="24">
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.ServiceEntry" />}>
                                         <Link to='/master/serviceentry'><ServiceEntryIcon />
                                             <FormattedMessage id="Navigation.ServiceEntry" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>
                             </Menu.SubMenu>
-                            <Menu.Item key="14">
+                            <Menu.Item key="3">
                                 <Link to='/master/about'><Icon type="info-circle" />
                                     <FormattedMessage id="Navigation.About" /></Link>
                             </Menu.Item>
@@ -240,6 +245,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                 <Switch>
                                     <Route path="/master/landing" render={props => <LandingPage {...props} />} />
                                     <Route path="/master/shippinglane" render={props => <ShippingLanePage {...props} />} />
+                                    <Route path="/master/shippingmap" render={props => <ShippingMapPage {...props} />} />
                                     <Route path="/master/node" render={props => <NodePage {...props} />} />
                                     <Route path="/master/namespace" render={props => <NamespacePage {...props} />} />
                                     <Route path="/master/serviceaccount" render={props => <ServiceAccountPage {...props} />} />

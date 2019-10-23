@@ -17,11 +17,12 @@ import virtualServicePage from './virtualServiceReducer';
 import destinationRulePage from './destinationRuleReducer';
 import serviceEntryPage from './serviceEntryReducer';
 import jobPage from './jobReducer';
+import shippingMapPage from './shippingMapReducer';
 
 const appReducer = combineReducers({
     masterPage, signinPage, landingPage, settingPage, nodePage, namespacePage, podPage, deploymentPage, servicePage,
     gatewayPage, logBookPage, serviceAccountPage, secretPage, virtualServicePage, destinationRulePage, serviceEntryPage,
-    jobPage, routing
+    jobPage, shippingMapPage, routing
 });
 export default (state: any, action: any) => {
     if (action.type === 'RESETSESSION') {

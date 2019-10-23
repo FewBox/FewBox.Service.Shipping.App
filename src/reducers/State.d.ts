@@ -30,6 +30,7 @@ export interface Store {
     destinationRulePage: DestinationRulePage;
     serviceEntryPage: ServiceEntryPage;
     jobPage: JobPage;
+    shippingMapPage: ShippingMapPage;
 }
 /** UI **/
 export interface ResourcePage<T> {
@@ -55,6 +56,10 @@ export interface MasterPage {
 }
 export interface LandingPage {
     componentStatuses: ComponentStatus[];
+}
+export interface ShippingMapPage{
+    shippingLanes: ShippingLane[];
+    isListLoading: boolean;
 }
 export interface SettingPage {
     lang: string;
@@ -141,6 +146,11 @@ export interface Namespace {
     description: string;
     status: string;
     age: string;
+}
+export interface ShippingLane{
+    name: string;
+    description: string;
+    logo: string;
 }
 export interface Pod {
     namespace: string;
