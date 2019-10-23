@@ -2,6 +2,7 @@ export interface IAjaxSetting {
     protocol?: string;
     host?: string;
     port?: number;
+    basePath?: string;
     path?: string;
     queryParams?: object;
     body?: object;
@@ -20,6 +21,7 @@ export interface IGraphQLSetting {
     protocol?: string;
     host?: string;
     port?: number;
+    basePath?: string;
     path?: string;
     queryParams?: object;
     body?: object;

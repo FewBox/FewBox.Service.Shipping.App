@@ -2,13 +2,13 @@ import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { IGraphQLSetting } from './Fetch';
 // @ts-ignore
-import { PROTOCOL, HOST, PORT, PATH, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
+import { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
 import { showMessage, redirect } from '../actions';
 import { MessageType } from '@fewbox/react-components';
 
 const initGraphQLSetting = (graphQLSetting: IGraphQLSetting) => {
     return {
-        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'path': graphQLSetting.path? graphQLSetting.path: PATH }),
+        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= basePath %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'basePath': graphQLSetting.basePath ? graphQLSetting.basePath : BASEPATH, 'path': graphQLSetting.path }),
         body: graphQLSetting.body ? JSON.stringify(graphQLSetting.body) : undefined,
         crossDomain: graphQLSetting.crossDomain ? graphQLSetting.crossDomain : true,
         headers: { ...(graphQLSetting.headers ? graphQLSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` },
@@ -31,7 +31,14 @@ class GraphQLObservable extends Observable<any>{
                     }
                 })
                 .then(result => {
-                    let response = result.data[`${graphQLSetting.prop}`][0];
+                    var response;
+                    if (result.data && result.data[`${graphQLSetting.prop}`]) {
+                        response = result.data[`${graphQLSetting.prop}`][0];
+
+                    }
+                    else {
+                        response = result;
+                    }
                     if (response.isSuccessful) {
                         subscriber.next(response.payload);
                     }
