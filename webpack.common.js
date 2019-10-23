@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
     target: 'web',
-    entry: path.resolve(__dirname, 'src/index.tsx'),
+    //entry: path.resolve(__dirname, 'src/index.tsx'),
     output: {
         publicPath: '/',
         path: path.resolve(__dirname, 'dist/release'),
@@ -40,9 +40,6 @@ const config = {
             { from: './assets', to: './assets' }
         ]),
         new HtmlWebpackPlugin({ template: './src/index.tmpl.html', title: 'FewBox Shipping' })
-    ],
-    externals: {
-        'appsettings': JSON.stringify(process.env.production ? require('./appsettings.json') : require('./appsettings.dev.json'))
-    }
+    ]
 }
 module.exports = config;

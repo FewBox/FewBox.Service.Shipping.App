@@ -56,5 +56,8 @@ module.exports = merge(common, {
             filename: '[name].[hash].css',
             chunkFilename: '[id].[hash].css',
         })
-    ]
+    ],
+    externals: {
+        'appsettings': JSON.stringify(require('./appsettings.json'))
+    }
 });

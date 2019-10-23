@@ -37,4 +37,7 @@ module.exports = merge(common, {
             }
         ]
     },
+    externals: {
+        'appsettings': JSON.stringify(require('./appsettings.dev.json'))
+    }
 });
