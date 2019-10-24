@@ -7,7 +7,7 @@ import { Row, PageHeader, Result } from 'antd';
 import { redirect } from '../actions';
 import { Store } from 'redux';
 // @ts-ignore
-import { HOST, PORT } from 'appsettings';
+// import { HOST, PORT } from 'appsettings';
 import XTerminalSimulator from '../components/XTerminalSimulator';
 
 export interface ITerminalPageProps {
@@ -20,6 +20,8 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
   constructor(props) {
     super(props);
     var websocketUrlCompiled = _.template('wss://${host}:${port}/xterminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=${command}&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
+    let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
+    const { HOST, PORT } = JSON.parse(appsettings ? appsettings : '{}');
     var websocketUrl = websocketUrlCompiled({
       'host': HOST,
       'port': PORT,

@@ -27,7 +27,8 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
             let body = {
                 query: graphql
             };
-            const { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT, AUTH_BASEPATH } = JSON.parse(window.localStorage.getItem(`${location.hostname}_shipping_appsettings`));
+            let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
+            const { AUTH_PROTOCOL, AUTH_HOST, AUTH_PORT, AUTH_BASEPATH } = JSON.parse(appsettings ? appsettings : '{}');
             return new GraphQLObservable({ protocol: AUTH_PROTOCOL, host: AUTH_HOST, port: AUTH_PORT, basePath: AUTH_BASEPATH, method: 'POST', body: body, prop: 'signin' });
         }),
         map((payload) => {
