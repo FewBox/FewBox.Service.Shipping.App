@@ -1,6 +1,5 @@
-import { join } from "path";
-
 const ActionTypes = {
+    INIT_APP: 'INIT_APP',
     // Common
     EMPTY: 'EMPTY',
     REDIRECT: 'REDIRECT',

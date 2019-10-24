@@ -3,12 +3,33 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import AjaxObservable from '../fetch/AjaxObservable';
 import { Store } from '../reducers/State';
-import { fillNamespaceDropdownList, endLoading, beginLoading, empty } from '../actions';
+import { fillNamespaceDropdownList, empty } from '../actions';
 import { message } from 'antd';
 import { MessageType } from '@fewbox/react-components';
 import { createIntlCache, createIntl } from 'react-intl';
 import langs from '../langs';
+import { of } from 'rxjs';
 
+const initAppEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_APP),
+        mergeMap((action) => {
+            let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
+            if (appsettings) {
+                return of();
+            }
+            else {
+                return new AjaxObservable({ isDirectly: true, url: `/appsettings.json`, method: 'GET' });
+            }
+        }),
+        map((payload) => {
+            window.localStorage.setItem(`${location.hostname}_shipping_appsettings`, JSON.stringify(payload))
+            return empty();
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
 const showMessageEpic = (action$: ActionsObservable<any>) =>
     action$.pipe(
         ofType(ActionTypes.SHOW_MESSAGE),
@@ -69,4 +90,4 @@ const initNamespaceDropdownListEpic = (action$: ActionsObservable<any>, store$: 
         })
     );
 
-export default [showMessageEpic, changeLanguageEpic, initNamespaceDropdownListEpic];
+export default [initAppEpic, showMessageEpic, changeLanguageEpic, initNamespaceDropdownListEpic];

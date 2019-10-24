@@ -2,11 +2,12 @@ import * as _ from 'lodash';
 import { Observable, of } from 'rxjs';
 import { IGraphQLSetting } from './Fetch';
 // @ts-ignore
-import { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
+// import { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } from 'appsettings';
 import { showMessage, redirect } from '../actions';
 import { MessageType } from '@fewbox/react-components';
 
 const initGraphQLSetting = (graphQLSetting: IGraphQLSetting) => {
+    const { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } = JSON.parse(window.localStorage.getItem(`${location.hostname}_shipping_appsettings`));
     return {
         url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= basePath %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'basePath': graphQLSetting.basePath ? graphQLSetting.basePath : BASEPATH, 'path': graphQLSetting.path }),
         body: graphQLSetting.body ? JSON.stringify(graphQLSetting.body) : undefined,

@@ -3,6 +3,9 @@ import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
 import { SelectedDestinationRule } from '../reducers/State';
 
+export const initApp = (): IEmptyAction => ({
+    type: ActionTypes.INIT_APP
+});
 // Common
 export const empty = (): IEmptyAction => ({
     type: ActionTypes.EMPTY

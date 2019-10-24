@@ -1,4 +1,5 @@
 export interface IAjaxSetting {
+    url?: string;
     protocol?: string;
     host?: string;
     port?: number;
@@ -12,6 +13,7 @@ export interface IAjaxSetting {
     crossDomain?: boolean;
     withCredentials?: boolean;
     responseType?: string;
+    isDirectly?: boolean;
 }
 export interface IJsonSetting {
     path: string;
