@@ -7,7 +7,8 @@ import { IAjaxSetting } from './Fetch';
 import { MessageType } from '@fewbox/react-components';
 
 const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
-    const { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } = JSON.parse(window.localStorage.getItem(`${location.hostname}_shipping_appsettings`));
+    let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
+    const { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } = JSON.parse(appsettings ? appsettings : '{}');
     let headers;
     if (window.localStorage.getItem('token')) {
         headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` };
