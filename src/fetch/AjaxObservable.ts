@@ -17,7 +17,7 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
         headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER) };
     }
     return {
-        url: ajaxSetting.url ? ajaxSetting.url : _.template('<%= protocol %>://<%= host %>:<%= port %><%= basePath %><%= path %>')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'basePath': ajaxSetting.basePath ? ajaxSetting.basePath : BASEPATH, 'path': ajaxSetting.path }),
+        url: ajaxSetting.url ? ajaxSetting.url : _.template('${protocol}://${host}:${port}${basePath}${path}')({ 'protocol': ajaxSetting.protocol ? ajaxSetting.protocol : PROTOCOL, 'host': ajaxSetting.host ? ajaxSetting.host : HOST, 'port': ajaxSetting.port ? ajaxSetting.port : PORT, 'basePath': ajaxSetting.basePath ? ajaxSetting.basePath : BASEPATH, 'path': ajaxSetting.path }),
         body: ajaxSetting.body ? JSON.stringify(ajaxSetting.body) : undefined,
         crossDomain: ajaxSetting.crossDomain ? ajaxSetting.crossDomain : true,
         headers: headers,

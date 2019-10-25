@@ -9,7 +9,7 @@ import { MessageType } from '@fewbox/react-components';
 const initGraphQLSetting = (graphQLSetting: IGraphQLSetting) => {
     const { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } = JSON.parse(window.localStorage.getItem(`${location.hostname}_shipping_appsettings`));
     return {
-        url: _.template('<%= protocol %>://<%= host %>:<%= port %><%= basePath %><%= path %>')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'basePath': graphQLSetting.basePath ? graphQLSetting.basePath : BASEPATH, 'path': graphQLSetting.path }),
+        url: _.template('${protocol}://${host}:${port}${basePath}${path}')({ 'protocol': graphQLSetting.protocol ? graphQLSetting.protocol : PROTOCOL, 'host': graphQLSetting.host ? graphQLSetting.host : HOST, 'port': graphQLSetting.port ? graphQLSetting.port : PORT, 'basePath': graphQLSetting.basePath ? graphQLSetting.basePath : BASEPATH, 'path': graphQLSetting.path }),
         body: graphQLSetting.body ? JSON.stringify(graphQLSetting.body) : undefined,
         crossDomain: graphQLSetting.crossDomain ? graphQLSetting.crossDomain : true,
         headers: { ...(graphQLSetting.headers ? graphQLSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` },

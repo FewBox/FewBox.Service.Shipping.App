@@ -19,17 +19,20 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
 
   constructor(props) {
     super(props);
-    var websocketUrlCompiled = _.template('wss://${host}:${port}/xterminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=${command}&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
+    var websocketUrlCompiled = _.template('wss://${host}:${port}${basePath}/xterminal/api/v1/namespaces/${namespace}/pods/${pod}/exec?command=${command}&stdin=true&stderr=true&stdout=true&tty=true&container=${container}');
     let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
-    const { HOST, PORT } = JSON.parse(appsettings ? appsettings : '{}');
+    const { HOST, PORT, BASEPATH } = JSON.parse(appsettings ? appsettings : '{}');
+    console.log(appsettings);
     var websocketUrl = websocketUrlCompiled({
       'host': HOST,
       'port': PORT,
+      'basePath': BASEPATH,
       'namespace': this.props.match.params.namespace,
       'pod': this.props.match.params.pod,
       'container': this.props.match.params.container,
       'command': atob(this.props.match.params.command)
     });
+    console.log(websocketUrl);
     this.state = { websocketUrl: websocketUrl };
   }
   render() {
@@ -42,9 +45,9 @@ class TerminalPage extends React.Component<ITerminalPageProps, any> {
           <XTerminalSimulator exit={() => this.props.redirect('/master/pod')} websocketUrl={this.state.websocketUrl} />
         </Row>
         {
-        //<Row>
+          //<Row>
           //<TerminalSimulator websocketUrl={this.state.websocketUrl} promptSymbol='#' msg='Wellcome to FewBox' />
-        //</Row>
+          //</Row>
         }
       </div>
     );

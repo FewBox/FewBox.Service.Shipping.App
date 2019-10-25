@@ -20,7 +20,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     const { form } = this.props;
     const keys = form.getFieldValue(this.props.fieldName);
     // can use data-binding to set
-    let fieldValue = JSON.parse(_.template('{"<%= keys %>":<%= values %>}')({ keys: this.props.fieldName, values: JSON.stringify(keys.filter(key => key !== k)) }));
+    let fieldValue = JSON.parse(_.template('{"${keys}":${values}')({ keys: this.props.fieldName, values: JSON.stringify(keys.filter(key => key !== k)) }));
     form.setFieldsValue(fieldValue);
   };
   add = () => {
@@ -30,7 +30,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     const nextKeys = keys.concat(id++);
     // can use data-binding to set
     // important! notify form to detect changes
-    let fieldValue = JSON.parse(_.template('{"<%= keys %>":<%= values %>}')({ keys: this.props.fieldName, values: JSON.stringify(nextKeys) }));
+    let fieldValue = JSON.parse(_.template('{"${keys}":${values}}')({ keys: this.props.fieldName, values: JSON.stringify(nextKeys) }));
     form.setFieldsValue(fieldValue);
   };
   init = (items: any[]) => {
@@ -41,7 +41,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
   clear = () => {
     id = 0;
     const { form } = this.props;
-    let fieldValue = JSON.parse(_.template('{"<%= keys %>":<%= values %>}')({ keys: this.props.fieldName, values: JSON.stringify([]) }));
+    let fieldValue = JSON.parse(_.template('{"${keys}":${values}}')({ keys: this.props.fieldName, values: JSON.stringify([]) }));
     form.setFieldsValue(fieldValue);
   };
   public render() {
@@ -53,7 +53,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     let isInited = getFieldValue(this.props.fieldName + '_Inited');
     if (this.props.initialItems && this.props.initialItems.length > 0 && keys.length == 0 && !isInited) {
       this.init(this.props.initialItems);
-      let fieldValue = JSON.parse(_.template('{"<%= keys %>":<%= values %>}')({ keys: this.props.fieldName + '_Inited', values: JSON.stringify({ isInited: true }) }));
+      let fieldValue = JSON.parse(_.template('{"${keys}":${values}}')({ keys: this.props.fieldName + '_Inited', values: JSON.stringify({ isInited: true }) }));
       setFieldsValue(fieldValue);
     }
     if (this.props.initialItems && this.props.initialItems.length == 0 && keys.length != 0) {

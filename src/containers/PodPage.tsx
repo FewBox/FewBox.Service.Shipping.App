@@ -46,10 +46,10 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                 {item.containers.map((container, index) => {
                                     return <SubMenu key={'contianer-shell' + index} title={container}>
                                         <Menu.Item>
-                                            <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.namespace, 'container': container, 'command': btoa('/bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
+                                            <Link to={_.template('/master/terminal/${namespace}/${pod}/${container}/${command}')({ 'pod': item.name, 'namespace': item.namespace, 'container': container, 'command': btoa('/bin/bash') })}>{<FormattedMessage id="Label.Bash" />}</Link>
                                         </Menu.Item>
                                         <Menu.Item>
-                                            <Link to={_.template('/master/terminal/<%= namespace %>/<%= pod %>/<%= container %>/<%= command %>')({ 'pod': item.name, 'namespace': item.namespace, 'container': container, 'command': btoa('/bin/sh') })}>{<FormattedMessage id="Label.Sh" />}</Link>
+                                            <Link to={_.template('/master/terminal/${namespace}/${pod}/${container}/${command}')({ 'pod': item.name, 'namespace': item.namespace, 'container': container, 'command': btoa('/bin/sh') })}>{<FormattedMessage id="Label.Sh" />}</Link>
                                         </Menu.Item>
                                     </SubMenu>
                                 })}
@@ -60,7 +60,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                 <SubMenu title='Log'>
                                     {item.containers.map((container, index) => {
                                         return <Menu.Item key={'contianer-log' + index}>
-                                            <Link to={_.template('/master/logbook/<%= namespace %>/<%= pod %>/<%= container %>')({ 'pod': item.name, 'namespace': item.namespace, 'container': container })}>{container}</Link>
+                                            <Link to={_.template('/master/logbook/${namespace}/${pod}/${container}')({ 'pod': item.name, 'namespace': item.namespace, 'container': container })}>{container}</Link>
                                         </Menu.Item>
                                     })}
                                 </SubMenu>
