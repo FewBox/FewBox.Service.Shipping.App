@@ -181,5 +181,8 @@ export default {
     'Label.Job': 'Job',
     'Label.ComingSoon': 'Coming Soon',
     'Label.VirtualService': 'Virtual Service',
-    'Label.Route': 'Route'
+    'Label.Route': 'Route',
+    'Label.ApiVersions': 'Api Versions',
+    'Label.ServerAddressByClientCIDR': 'ServerAddress By ClientCIDR',
+    'Label.ComponentStatus': 'Component Status'
 }

@@ -56,8 +56,9 @@ export interface MasterPage {
 }
 export interface LandingPage {
     componentStatuses: ComponentStatus[];
+    apiVersions: ApiVersions;
 }
-export interface ShippingMapPage{
+export interface ShippingMapPage {
     shippingLanes: ShippingLane[];
     isListLoading: boolean;
 }
@@ -108,6 +109,14 @@ export interface ComponentStatus {
     name: string;
     conditions: Condition[];
 }
+export interface ApiVersions {
+    versions: string[];
+    serverAddressByClientCIDRs: ServerAddressByClientCIDR[];
+}
+export interface ServerAddressByClientCIDR {
+    clientCIDR: string;
+    serverAddress: string;
+}
 export interface Condition {
     type: string;
     status: string;
@@ -147,7 +156,7 @@ export interface Namespace {
     status: string;
     age: string;
 }
-export interface ShippingLane{
+export interface ShippingLane {
     name: string;
     description: string;
     logo: string;

@@ -10,10 +10,10 @@ const initLandingPageEric = (action$: ActionsObservable<any>, store$: StateObser
     action$.pipe(
         ofType(ActionTypes.INIT_LANDING_PAGE),
         switchMap(() => {
-            return zip(new AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }), new AjaxObservable({ path: '/api/componentStatuses', method: 'GET' }));
+            return zip(new AjaxObservable({ path: '/api/componentstatuses', method: 'GET' }), new AjaxObservable({ path: '/api/apiversions', method: 'GET' }));
         }),
         map((payloads) => {
-            return loadLanding({ componentStatuses: payloads[0] });
+            return loadLanding({ componentStatuses: payloads[0], apiVersions: payloads[1] });
         }),
         catchError((errorAction) => {
             return errorAction;
