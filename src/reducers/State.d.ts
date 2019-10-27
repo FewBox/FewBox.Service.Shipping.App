@@ -57,6 +57,24 @@ export interface MasterPage {
 export interface LandingPage {
     componentStatuses: ComponentStatus[];
     apiVersions: ApiVersions;
+    healthz: Healthz;
+    healthzAutoRegisterCompletion: Healthz;
+    healthzEtcd: Healthz;
+    healthzLog: Healthz;
+    healthzPing: Healthz;
+    healthzPoststarthook_ApiserviceOpenapiController: Healthz;
+    healthzPoststarthook_ApiserviceRegistrationController: Healthz;
+    healthzPoststarthook_ApiserviceStatusAvailableController: Healthz;
+    healthzPoststarthook_BootstrapController: Healthz;
+    healthzPoststarthook_CARegistration: Healthz;
+    healthzPoststarthook_GenericApiserverStartInformers: Healthz;
+    healthzPoststarthook_KubeApiserverAutoregistration: Healthz;
+    healthzPoststarthook_Rbac_BootstrapRoles: Healthz;
+    healthzPoststarthook_Rbacscheduling_BootstrapSystemPriorityClasses: Healthz;
+    healthzPoststarthook_StartApiextensionsControllers: Healthz;
+    healthzPoststarthook_StartApiextensionsInformers: Healthz;
+    healthzPoststarthook_StartKubeAggregatorInformers: Healthz;
+    healthzPoststarthook_StartKubeApiserverAdmissionInitializer: Healthz;
 }
 export interface ShippingMapPage {
     shippingLanes: ShippingLane[];
@@ -105,6 +123,9 @@ export interface ServiceEntryPage extends ResourcePage<ServiceEntry> {
 export interface JobPage extends ResourcePage<Job> {
 }
 /** Biz **/
+export interface Healthz {
+    content: string;
+}
 export interface ComponentStatus {
     name: string;
     conditions: Condition[];
