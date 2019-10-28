@@ -74,7 +74,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}
-                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.App" />}><Tag color="magenta">{item.app}</Tag></Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}><Tag color="cyan">{item.version}</Tag></Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Phase" />}><Badge color={item.phase === 'Running' ? 'green' : 'red'} text={item.phase} /></Descriptions.Item>

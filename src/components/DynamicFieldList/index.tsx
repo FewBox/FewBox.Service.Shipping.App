@@ -20,7 +20,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     const { form } = this.props;
     const keys = form.getFieldValue(this.props.fieldName);
     // can use data-binding to set
-    let fieldValue = JSON.parse(_.template('{"${keys}":${values}')({ keys: this.props.fieldName, values: JSON.stringify(keys.filter(key => key !== k)) }));
+    let fieldValue = JSON.parse(_.template('{"${keys}":${values}}')({ keys: this.props.fieldName, values: JSON.stringify(keys.filter(key => key !== k)) }));
     form.setFieldsValue(fieldValue);
   };
   add = () => {

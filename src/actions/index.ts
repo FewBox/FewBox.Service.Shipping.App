@@ -263,6 +263,16 @@ export const deleteSecret = (dismission): IAction<any> => ({
     value: dismission
 });
 
+export const selectSecret = (namespace, name): IAction<any> => ({
+    type: ActionTypes.SELECT_SECRET,
+    value: { namespace: namespace, name: name }
+});
+
+export const fillSelectedSecret = (datas): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTED_SECRET,
+    payload: datas
+});
+
 export const initDestinationRulePage = (): IEmptyAction => ({
     type: ActionTypes.INIT_DESTINATIONRULE_PAGE
 });

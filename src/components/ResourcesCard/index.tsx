@@ -17,7 +17,7 @@ export default class ResourcesCard extends React.PureComponent<IResourcesCardPro
                 renderItem={(item: any) => (
                     <List.Item>
                         <Card hoverable actions={this.props.renderActions(item)}>
-                            <Card.Meta style={{ whiteSpace: 'nowrap' }} title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
+                            <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={['1']}>
                                 <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1'>
                                     {this.props.renderBasic(item)}
                                 </Collapse.Panel>

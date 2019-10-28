@@ -42,7 +42,7 @@ class NamespacePage extends React.Component<INamespacePagePageProps, any> {
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteNamespace(item.name); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Switch checkedChildren={<IstioIcon />} unCheckedChildren={<IstioIcon />} onChange={(checked) => { if (checked) { this.props.enableIstio(item.name); } else { this.props.disableIstio(item.name); } }} checked={item.isIstioInjected} />,
                             <Icon type="ellipsis" />]}
-                        renderBasic={(item) => <Descriptions title={item.name} size='small' column={1} bordered>
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<FormattedMessage id="Label.Status" />}><Badge color={item.status === 'Active' ? 'green' : 'red'} text={item.status} /></Descriptions.Item>
                             <Descriptions.Item label={<FormattedMessage id="Label.Age" />}>{item.age}</Descriptions.Item>
                         </Descriptions>}

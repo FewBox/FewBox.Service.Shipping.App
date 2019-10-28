@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Icon, Row, Popconfirm, List, Descriptions, Collapse, Popover, Button } from 'antd';
-import { initNamespaceDropdownList, initSecretPage, createSecret, deleteSecret } from '../actions';
+import { initNamespaceDropdownList, initSecretPage, createSecret, deleteSecret, selectSecret, showDrawer } from '../actions';
 import SecretCreation from '../components/SecretCreation';
 import { Store, Secret, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -15,6 +15,8 @@ export interface ISecretPageProps {
     createSecret: (any) => void;
     deleteSecret: (any) => void;
     initNamespaceDropdownList: () => void;
+    selectSecret: (namespaceName: string, name: string) => void;
+    showDrawer: (drawerType: any) => void;
     isHelp: boolean;
     isListLoading: boolean;
 }
@@ -35,8 +37,8 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                         renderActions={(item) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
-                            <Icon type="ellipsis" />]}
-                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                            <Icon type="ellipsis" onClick={() => { this.props.selectSecret(item.namespace, item.name); this.props.showDrawer({ type: 'Secret', namespace: item.namespace, name: item.name }); }} />]}
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Age" helpId="Help.Age" />}>{item.age}</Descriptions.Item>
@@ -68,7 +70,9 @@ const mapDispatchToProps = {
     initNamespaceDropdownList,
     initSecretPage,
     createSecret,
-    deleteSecret
+    deleteSecret,
+    selectSecret,
+    showDrawer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SecretPage);

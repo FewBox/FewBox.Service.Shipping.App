@@ -47,7 +47,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDestinationRule({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
                             <Icon type="ellipsis" onClick={() => { this.props.selectDestinationRule(item.namespace, item.name); this.props.showDrawer({ type: 'DestinationRule', namespace: item.namespace, name: item.name, subsets: item.subsets, deployments: this.props.deployments }); }} />]}
-                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                         </Descriptions>}

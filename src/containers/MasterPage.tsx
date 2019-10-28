@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Store, SelectedDestinationRule, SelectedVirtualService } from '../reducers/State';
+import { Store, SelectedDestinationRule, SelectedVirtualService, SelectedSecret } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result, Button } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
@@ -34,12 +34,12 @@ const JobPage = lazy(() => import('./JobPage'));
 const DestinationRuleDrawer = lazy(() => import('../components/DestinationRuleDrawer'));
 const VirtualServiceDrawer = lazy(() => import('../components/VirtualServiceDrawer'));
 const DeploymentDrawer = lazy(() => import('../components/DeploymentDrawer'));
+const SecretDrawer = lazy(() => import('../components/SecretDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import './MasterPage.scss';
 import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
 import { MatchOptions } from '../jsons';
-
 
 export interface IMasterPageProps {
     signOut: () => void;
@@ -65,10 +65,12 @@ export interface IMasterPageProps {
     changePodVersion: (any) => void;
     changeDestinationRuleSubset: (any) => void;
     changeVirtualServiceHttp: (any) => void;
+    changeSecretData: (any) => void;
     initSelectedVirtualServiceDeploymentDropdownList: (app: string) => void;
     intl?: any;
     selectedDestinationRule: SelectedDestinationRule;
     selectedVirtualService: SelectedVirtualService;
+    selectedSecret: SelectedSecret;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -103,6 +105,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     return <DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} />;
                 case 'VirtualService':
                     return <VirtualServiceDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedVirtualService={this.props.selectedVirtualService} changeVirtualServiceHttp={this.props.changeVirtualServiceHttp} refreshDeployments={this.props.initSelectedVirtualServiceDeploymentDropdownList} services={this.props.selectedVirtualService.services} deployments={this.props.selectedVirtualService.deployments} matchOptions={MatchOptions} isHelp={this.props.isHelp} />
+                case 'Secret':
+                    return <SecretDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedSecret={this.props.selectedSecret} changeSecretData={this.props.changeSecretData} isHelp={this.props.isHelp} />
                 default:
                     return <div></div>
             }
@@ -115,6 +119,8 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                     return <FormattedMessage id="Label.DestinationRule" />;
                 case 'VirtualService':
                     return <FormattedMessage id="Label.VirtualService" />;
+                case 'Secret':
+                    return <FormattedMessage id="Label.Secret" />;
                 default:
                     return <FormattedMessage id="Label.None" />;
             }
@@ -273,7 +279,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtualServicePage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtualServicePage, secretPage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -286,6 +292,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtual
     redirectPath: masterPage.path,
     selectedDestinationRule: destinationRulePage.selectedDestinationRule,
     selectedVirtualService: virtualServicePage.selectedVirtualService,
+    selectedSecret: secretPage.selectedSecret,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })

@@ -51,7 +51,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
                             <Icon type="ellipsis" onClick={() => { this.props.selectVirtualService(item.namespace, item.name); this.props.showDrawer({ type: 'VirtualService', namespace: item.namespace, name: item.name }); }} />]}
-                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>
                         </Descriptions>}

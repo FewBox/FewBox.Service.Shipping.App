@@ -3,7 +3,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { initSecretPage, loadSecret } from '../actions';
+import { initSecretPage, loadSecret, fillSelectedSecret } from '../actions';
 
 const initSecretPageEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -52,6 +52,23 @@ const deleteSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         })
     );
 
+const selectSecretEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SELECT_SECRET),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/secrets/' + action.value.namespace + '/' + action.value.name, method: 'GET' });
+        }),
+        map((payload) => {
+            let datas = Object.keys(payload.datas).map((key, index) => {
+                return { key: key, value: payload.datas[key] };
+            });
+            return fillSelectedSecret({ datas: datas });
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
 const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
@@ -71,4 +88,4 @@ const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         })
     );
 
-export default [initSecretPageEpic, createSecretEpic, deleteSecretEpic, switchSecretEpic];
+export default [initSecretPageEpic, createSecretEpic, deleteSecretEpic, selectSecretEpic, switchSecretEpic];

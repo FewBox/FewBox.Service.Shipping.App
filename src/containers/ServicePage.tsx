@@ -39,7 +39,7 @@ class ServicePage extends React.Component<IServicePageProps, any> {
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <Icon type="help" />,
                             <Icon type="ellipsis" />]}
-                        renderBasic={(item) => <Descriptions size='small' column={1} bordered>
+                        renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Selector" helpId="Help.Selector" />}><Tag color="magenta">{item.selector}</Tag></Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.ClusterIP" helpId="Help.ClusterIP" />}>{item.clusterIP}</Descriptions.Item>

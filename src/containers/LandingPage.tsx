@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Store, ComponentStatus, ApiVersions, Healthz } from '../reducers/State';
 import { initLandingPage } from '../actions';
-import { Row, Col, Statistic, Button, List, Card, Descriptions, Badge } from 'antd';
+import { Row, Col, Statistic, Button, List, Card, Descriptions, Badge, Progress } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 export interface ILandingPageProps {
@@ -27,6 +27,7 @@ export interface ILandingPageProps {
   healthzPoststarthook_StartApiextensionsInformers: Healthz;
   healthzPoststarthook_StartKubeAggregatorInformers: Healthz;
   healthzPoststarthook_StartKubeApiserverAdmissionInitializer: Healthz;
+  isDashboardLoading: boolean;
 }
 
 class LandingPage extends React.Component<ILandingPageProps, any> {
@@ -36,6 +37,7 @@ class LandingPage extends React.Component<ILandingPageProps, any> {
   render() {
     return (
       <div>
+        {/*<Progress percent={100} size="small" status="active" showInfo={false} />*/}
         <Row gutter={16}>
           <Descriptions title={<FormattedMessage id='Label.ApiVersions' />}>
             <Descriptions.Item label={<FormattedMessage id='Label.Version' />}>{this.props.apiVersions.versions.map((version, index) => {
@@ -102,7 +104,8 @@ const mapStateToProps = ({ landingPage }: Store) => ({
   healthzPoststarthook_StartApiextensionsControllers: landingPage.healthzPoststarthook_StartApiextensionsControllers,
   healthzPoststarthook_StartApiextensionsInformers: landingPage.healthzPoststarthook_StartApiextensionsInformers,
   healthzPoststarthook_StartKubeAggregatorInformers: landingPage.healthzPoststarthook_StartKubeAggregatorInformers,
-  healthzPoststarthook_StartKubeApiserverAdmissionInitializer: landingPage.healthzPoststarthook_StartKubeApiserverAdmissionInitializer
+  healthzPoststarthook_StartKubeApiserverAdmissionInitializer: landingPage.healthzPoststarthook_StartKubeApiserverAdmissionInitializer,
+  isDashboardLoading: landingPage.isDashboardLoading
 });
 
 const mapDispatchToProps = {

@@ -75,6 +75,7 @@ export interface LandingPage {
     healthzPoststarthook_StartApiextensionsInformers: Healthz;
     healthzPoststarthook_StartKubeAggregatorInformers: Healthz;
     healthzPoststarthook_StartKubeApiserverAdmissionInitializer: Healthz;
+    isDashboardLoading: boolean;
 }
 export interface ShippingMapPage {
     shippingLanes: ShippingLane[];
@@ -106,6 +107,7 @@ export interface LogBookPage {
 export interface ServiceAccountPage extends ResourcePage<ServiceAccount> {
 }
 export interface SecretPage extends ResourcePage<Secret> {
+    selectedSecret: SelectedSecret;
 }
 export interface VirtualServicePage extends ResourcePage<VirtualService> {
     selectedVirtualService: SelectedVirtualService;
@@ -293,6 +295,9 @@ export interface SelectedVirtualService {
     https: Http[];
     services: Service[];
     deployments: Deployment[];
+}
+export interface SelectedSecret{
+    datas: any[];
 }
 export interface DestinationRule {
     namespace: string;

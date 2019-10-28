@@ -22,7 +22,8 @@ const landingState = {
     healthzPoststarthook_StartApiextensionsControllers: { content: '' },
     healthzPoststarthook_StartApiextensionsInformers: { content: '' },
     healthzPoststarthook_StartKubeAggregatorInformers: { content: '' },
-    healthzPoststarthook_StartKubeApiserverAdmissionInitializer: { content: '' }
+    healthzPoststarthook_StartKubeApiserverAdmissionInitializer: { content: '' },
+    isDashboardLoading: false
 };
 export default (state: LandingPage = landingState, action: IPayloadAction<any>): LandingPage => {
     switch (action.type) {
