@@ -112,10 +112,11 @@ const selectVirtualServiceEpic = (action$: ActionsObservable<any>, store$: State
         ofType(ActionTypes.SELECT_VIRTUALSERVICE),
         mergeMap((action) => {
             return zip(new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/services', method: 'GET' }),
-                new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'GET' }));
+                new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'GET' }),
+                new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/gateways', method: 'GET' }));
         }),
         map((payloads) => {
-            return fillSelectedVirtualServiceServiceDropdownList({ services: payloads[0], https: payloads[1].https });
+            return fillSelectedVirtualServiceServiceDropdownList({ allServices: payloads[0], https: payloads[1].https, hosts: payloads[1].hosts, gateways: payloads[1].gateways, allGateways: payloads[2] });
         }),
         catchError((errorAction) => {
             return errorAction;
@@ -138,7 +139,12 @@ const changeVirtualServiceHttpEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.CHANGE_VIRTUALSERVICE_HTTP),
         mergeMap((action) => {
-            return new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/spec/http", "value": action.value.https }] });
+            return new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'PATCH',
+             body: [
+                 { "op": "replace", "path": "/spec/http", "value": action.value.https },
+                 { "op": "replace", "path": "/spec/hosts", "value": action.value.hosts },
+                 { "op": "replace", "path": "/spec/gateways", "value": action.value.gateways }
+            ] });
         }),
         map((payload) => {
             return initVirtualServicePage();

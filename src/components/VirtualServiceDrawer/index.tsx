@@ -3,14 +3,12 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { BrandIcon } from '../Icon';
-import { SelectedVirtualService, Http, Option, Service, Deployment } from '../../reducers/State';
+import { SelectedVirtualService, Http, Option, Service, Deployment, Gateway } from '../../reducers/State';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 
 export interface IVirtualServiceDrawerProps {
     selectedVirtualService: SelectedVirtualService;
-    services: Service[];
-    deployments: Deployment[];
     matchOptions: Option[];
     changeVirtualServiceHttp: (any) => void;
     refreshDeployments: (app: string) => void;
@@ -29,7 +27,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let data = values;
-                let https = values.https.map((http, index) => {
+                let https = values.selectedhttps.map((http, index) => {
                     let uris = data.uris && data.uris[index] ? data.uris[index].map((uri, uriIndex) => {
                         return { uri: { [data.uriTypes[index][uriIndex]]: uri } };
                     }) : null;
@@ -54,7 +52,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                         return { route: routes };
                     }
                 });
-                this.props.changeVirtualServiceHttp({ namespace: this.props.namespace, name: this.props.name, https: https });
+                this.props.changeVirtualServiceHttp({ namespace: this.props.namespace, name: this.props.name, https: https, hosts: values.hosts, gateways: values.gateways });
             }
         });
     };
@@ -63,7 +61,39 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    <DynamicFieldList fieldName='https' initialItems={this.props.selectedVirtualService.https} itemComponents={(index, item: Http) =>
+                    <DynamicFieldList fieldName='selectedhosts' initialItems={this.props.selectedVirtualService.hosts} itemComponents={(index, host: string) =>
+                        [<Col offset={1} span={12} key={1}>
+                            <Form.Item>
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
+                                    {getFieldDecorator(`hosts[${index}]`, {
+                                        rules: [{ required: true, message: <FormattedMessage id='Message.HostRequired' /> }],
+                                        initialValue: host
+                                    })(
+                                        <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Host" />
+                                    )}
+                                </HelpComponent>
+                            </Form.Item>
+                        </Col>]
+                    } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
+                    <DynamicFieldList fieldName='selectedgateway' initialItems={this.props.selectedVirtualService.gateways} itemComponents={(index, item: string) =>
+                        [<Col offset={1} span={12} key={1}>
+                            <Form.Item>
+                                <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
+                                    {getFieldDecorator(`gateways[${index}]`, {
+                                        rules: [{ required: true, message: <FormattedMessage id='Message.GatewayRequired' /> }],
+                                        initialValue: item
+                                    })(
+                                        <Select showSearch placeholder={<FormattedMessage id='Label.Gateway' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
+                                            {this.props.selectedVirtualService.allGateways ? this.props.selectedVirtualService.allGateways.map((gateway: Gateway, index) => {
+                                                return <Select.Option key={'gateway' + index} value={gateway.name}>{gateway.name}</Select.Option>
+                                            }) : null}
+                                        </Select>
+                                    )}
+                                </HelpComponent>
+                            </Form.Item>
+                        </Col>]
+                    } form={this.props.form} addCaption={<FormattedMessage id="Label.Gateway" />} />
+                    <DynamicFieldList fieldName='selectedhttps' initialItems={this.props.selectedVirtualService.https} itemComponents={(index, item: Http) =>
                         [<Col offset={1} span={12} key={1}>
                             <Form.Item>
                                 <DynamicFieldList initialItems={item ? item.uris : null} fieldName={'uri' + index} itemComponents={(uriIndex, uri) =>
@@ -152,7 +182,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                                     initialValue: (route ? route['host'] : null)
                                                 })(
                                                     <Select showSearch onChange={this.changeDeployment} placeholder={<FormattedMessage id='Label.Service' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                        {this.props.services ? this.props.services.map((item, index) => {
+                                                        {this.props.selectedVirtualService.allServices ? this.props.selectedVirtualService.allServices.map((item, index) => {
                                                             return <Select.Option key={'route' + index} value={item.name}>{item.name}</Select.Option>
                                                         }) : null}
                                                     </Select>
@@ -180,7 +210,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                                     initialValue: (route ? route['subset'] : null)
                                                 })(
                                                     <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                        {this.props.deployments ? this.props.deployments.map((item, index) => {
+                                                        {this.props.selectedVirtualService.serviceAllDeployments ? this.props.selectedVirtualService.serviceAllDeployments.map((item, index) => {
                                                             return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
                                                         }) : null}
                                                     </Select>

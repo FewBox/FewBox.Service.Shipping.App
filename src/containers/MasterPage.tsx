@@ -105,7 +105,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                 case 'DestinationRule':
                     return <DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} />;
                 case 'VirtualService':
-                    return <VirtualServiceDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedVirtualService={this.props.selectedVirtualService} changeVirtualServiceHttp={this.props.changeVirtualServiceHttp} refreshDeployments={this.props.initSelectedVirtualServiceDeploymentDropdownList} services={this.props.selectedVirtualService.services} deployments={this.props.selectedVirtualService.deployments} matchOptions={MatchOptions} isHelp={this.props.isHelp} />
+                    return <VirtualServiceDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedVirtualService={this.props.selectedVirtualService} changeVirtualServiceHttp={this.props.changeVirtualServiceHttp} refreshDeployments={this.props.initSelectedVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions} isHelp={this.props.isHelp} />
                 case 'Secret':
                     return <SecretDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedSecret={this.props.selectedSecret} changeSecretData={this.props.changeSecretData} isHelp={this.props.isHelp} />
                 default:

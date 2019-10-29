@@ -3,7 +3,7 @@ import { VirtualServicePage } from './State';
 
 const virtualServiceState = {
     items: [],
-    selectedVirtualService: { services: [], https: [], deployments: [] },
+    selectedVirtualService: { hosts: [], gateways: [], https: [], serviceAllDeployments: [], allGateways: [], allServices: [] },
     gateways: [],
     services: [],
     deployments: [],
@@ -16,9 +16,9 @@ export default (state: VirtualServicePage = virtualServiceState, action: any): V
         case ActionTypes.LOAD_VIRTUALSERVICE:
             return { ...state, items: action.payload, isListLoading: false };
         case ActionTypes.FILL_SELECTED_VIRTUALSERVICE:
-            return { ...state, selectedVirtualService: { services: action.payload.services, https: action.payload.https, deployments: [] } };
+            return { ...state, selectedVirtualService: { hosts: action.payload.hosts, gateways: action.payload.gateways, allServices: action.payload.services, https: action.payload.https, serviceAllDeployments: [], allGateways: action.payload.allGateways } };
         case ActionTypes.FILL_SELECTEDVIRTUALSERVICE_DEPLOYMENT:
-            return { ...state, selectedVirtualService: { ...(state.selectedVirtualService), deployments: action.payload } };
+            return { ...state, selectedVirtualService: { ...(state.selectedVirtualService), serviceAllDeployments: action.payload } };
         case ActionTypes.FILL_VIRTUALSERVICE_GATEWAY_DROPDOWNLIST:
             return { ...state, gateways: action.payload };
         case ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST:

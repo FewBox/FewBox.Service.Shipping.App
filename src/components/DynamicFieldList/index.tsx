@@ -59,7 +59,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     if (this.props.initialItems && this.props.initialItems.length == 0 && keys.length != 0) {
       this.clear();
     }
-    const fromItems = keys.map((k, index) => {
+    const fromItems = keys && keys.map ? keys.map((k, index) => {
       let item;
       if (this.props.initialItems && index <= this.props.initialItems.length) {
         item = this.props.initialItems[index];
@@ -70,7 +70,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
           {this.props.itemComponents(index, item)}
         </Card>
       </Row>
-    });
+    }) : null;
     return (
       <Row>
         {fromItems}

@@ -296,9 +296,12 @@ export interface SelectedDestinationRule {
     deployments: Deployment[];
 }
 export interface SelectedVirtualService {
+    allServices: Service[];
+    serviceAllDeployments: Deployment[];
+    allGateways: Gateway[];
+    hosts: string[];
+    gateways: string[];
     https: Http[];
-    services: Service[];
-    deployments: Deployment[];
 }
 export interface SelectedSecret {
     datas: any[];

@@ -47,7 +47,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                     let routes = data.routes && data.routes[index] ? data.routes[index].map((route, routeIndex) => {
                         return { host: route, port: data.ports[index][routeIndex], subset: data.versions[index][routeIndex] };
                     }) : null;
-                    let rewrite = { uri: data.rewrite[index] };
+                    let rewrite = data.rewrite && data.rewrite[index] ? { uri: data.rewrite[index] } : null;
                     return { uris: uris, headers: headers, rewrite: rewrite, routes: routes };
                 });
                 this.props.create({ namespace: values.namespace, name: values.name, hosts: values.hosts, gateways: values.gateways, https: https });
@@ -74,7 +74,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                         </Form.Item>
                     </Col>
                 </Row>
-                <DynamicFieldList fieldName='alias' itemComponents={(k) =>
+                <DynamicFieldList fieldName='host' itemComponents={(k) =>
                     [<Col span={6} key={1}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Host' />}>
