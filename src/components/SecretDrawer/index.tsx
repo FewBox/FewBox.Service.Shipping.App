@@ -39,6 +39,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                             <Col span={12}>
                                 <Form.Item>
                                     <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id="Help.Secret" />}>
+                                        {console.log(data)}
                                         {getFieldDecorator(`dataKeys[${index}]`, {
                                             rules: [{ required: true, message: <FormattedMessage id='Message.KeyRequired' /> }],
                                             initialValue: (data ? data.key : null)

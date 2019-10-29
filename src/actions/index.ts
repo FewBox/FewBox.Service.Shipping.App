@@ -268,6 +268,11 @@ export const selectSecret = (namespace, name): IAction<any> => ({
     value: { namespace: namespace, name: name }
 });
 
+export const changeSecretData = (datas): IAction<any> => ({
+    type: ActionTypes.CHANGE_SECRET_DATA,
+    value: datas
+});
+
 export const fillSelectedSecret = (datas): IPayloadAction<any> => ({
     type: ActionTypes.FILL_SELECTED_SECRET,
     payload: datas

@@ -11,7 +11,7 @@ import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
 import {
     hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset, changeVirtualServiceHttp,
-    showLockWindow, hideLockWindow, initSelectedVirtualServiceDeploymentDropdownList
+    changeSecretData, showLockWindow, hideLockWindow, initSelectedVirtualServiceDeploymentDropdownList
 } from '../actions';
 const NodePage = lazy(() => import('./NodePage'));
 const LandingPage = lazy(() => import('./LandingPage'));
@@ -307,6 +307,7 @@ const mapDispatchToProps = {
     changePodVersion,
     changeDestinationRuleSubset,
     changeVirtualServiceHttp,
+    changeSecretData,
     hideLockWindow,
     showLockWindow,
     initSelectedVirtualServiceDeploymentDropdownList

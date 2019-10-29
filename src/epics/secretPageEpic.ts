@@ -69,6 +69,20 @@ const selectSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         })
     );
 
+const changeSecretDataEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.CHANGE_SECRET_DATA),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/secrets/' + action.value.namespace + '/' + action.value.name, method: 'PATCH', body: [{ "op": "replace", "path": "/data", "value": action.value.datas }] });
+        }),
+        map((payload) => {
+            return initSecretPage();
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
 const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.SWITCH_FEWBOXDELIVERY),
@@ -88,4 +102,4 @@ const switchSecretEpic = (action$: ActionsObservable<any>, store$: StateObservab
         })
     );
 
-export default [initSecretPageEpic, createSecretEpic, deleteSecretEpic, selectSecretEpic, switchSecretEpic];
+export default [initSecretPageEpic, createSecretEpic, deleteSecretEpic, selectSecretEpic, changeSecretDataEpic, switchSecretEpic];
