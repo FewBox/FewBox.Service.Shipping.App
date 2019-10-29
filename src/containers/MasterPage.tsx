@@ -3,7 +3,7 @@ import { Suspense, lazy } from 'react';
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Store, SelectedDestinationRule, SelectedVirtualService, SelectedSecret } from '../reducers/State';
+import { Store, SelectedDestinationRule, SelectedVirtualService, SelectedSecret, SelectedDeployment } from '../reducers/State';
 import { Layout, Menu, Icon, Dropdown, Avatar, Skeleton, Switch as ANTD_Switch, message, Drawer, Result, Button } from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 import { Route, Link, Switch } from 'react-router-dom';
@@ -71,6 +71,7 @@ export interface IMasterPageProps {
     selectedDestinationRule: SelectedDestinationRule;
     selectedVirtualService: SelectedVirtualService;
     selectedSecret: SelectedSecret;
+    selectedDeployment: SelectedDeployment;
 }
 
 class MasterPage extends React.Component<IMasterPageProps, any> {
@@ -100,7 +101,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
         let drawer = () => {
             switch (this.props.drawer.type) {
                 case 'Deployment':
-                    return <DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} images={this.props.drawer.images} changePodVersion={this.props.changePodVersion} />;
+                    return <DeploymentDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDeployment={this.props.selectedDeployment} changePodVersion={this.props.changePodVersion} />;
                 case 'DestinationRule':
                     return <DestinationRuleDrawer namespace={this.props.drawer.namespace} name={this.props.drawer.name} selectedDestinationRule={this.props.selectedDestinationRule} changeDestinationRuleSubset={this.props.changeDestinationRuleSubset} />;
                 case 'VirtualService':
@@ -279,7 +280,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
 }
 
-const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtualServicePage, secretPage }: Store) => ({
+const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtualServicePage, secretPage, deploymentPage }: Store) => ({
     messageType: masterPage.messageType,
     messageIntlId: masterPage.messageIntlId,
     messageValues: masterPage.messageValues,
@@ -293,6 +294,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtual
     selectedDestinationRule: destinationRulePage.selectedDestinationRule,
     selectedVirtualService: virtualServicePage.selectedVirtualService,
     selectedSecret: secretPage.selectedSecret,
+    selectedDeployment: deploymentPage.selectedDeployment,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
     isHelp: settingPage.isHelp
 })

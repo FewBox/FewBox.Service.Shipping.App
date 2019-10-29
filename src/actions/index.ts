@@ -129,6 +129,16 @@ export const deleteDeployment = (deployment): IAction<any> => ({
     value: deployment
 });
 
+export const selectDeployment = (namespace, name): IAction<any> => ({
+    type: ActionTypes.SELECT_DEPLOYMENT,
+    value: { namespace: namespace, name: name }
+});
+
+export const fillSelectedDeployment = (images): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELECTED_DEPLOYMENT,
+    payload: images
+});
+
 export const deletePod = (pod): IAction<any> => ({
     type: ActionTypes.DELETE_POD,
     value: pod

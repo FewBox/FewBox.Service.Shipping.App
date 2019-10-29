@@ -3,9 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Input, Button } from 'antd';
 import { ImageIcon } from '../Icon';
+import { SelectedDeployment } from '../../reducers/State';
 
 export interface IDeploymentDrawerProps {
-    images: string[];
+    selectedDeployment: SelectedDeployment;
     namespace: string;
     name: string;
     changePodVersion: (any) => void;
@@ -26,7 +27,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                    {this.props.images.map((image, index) => {
+                    {this.props.selectedDeployment.images ? this.props.selectedDeployment.images.map((image, index) => {
                         return <Row gutter={16} key={'imageRow' + index}>
                             <Col span={24}>
                                 <Form.Item>
@@ -39,7 +40,7 @@ class DeploymentDrawer extends React.PureComponent<IDeploymentDrawerProps> {
                                 </Form.Item>
                             </Col>
                         </Row>;
-                    })}
+                    }) : null}
                     <Row gutter={16}>
                         <Col span={6}>
                             <Form.Item>

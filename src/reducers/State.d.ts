@@ -96,6 +96,7 @@ export interface PodPage extends ResourcePage<Pod> {
     serviceAccounts: ServiceAccount[];
 }
 export interface DeploymentPage extends ResourcePage<Deployment> {
+    selectedDeployment: SelectedDeployment;
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
 }
@@ -287,6 +288,9 @@ export interface VolumeMount {
     mountSubPath: string;
     isReadOnly: boolean;
 }
+export interface SelectedDeployment {
+    images: string[];
+}
 export interface SelectedDestinationRule {
     subsets: Subset[];
     deployments: Deployment[];
@@ -296,7 +300,7 @@ export interface SelectedVirtualService {
     services: Service[];
     deployments: Deployment[];
 }
-export interface SelectedSecret{
+export interface SelectedSecret {
     datas: any[];
 }
 export interface DestinationRule {

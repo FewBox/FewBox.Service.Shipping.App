@@ -3,7 +3,8 @@ import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList, initDeploymentSecretDropdownList } from '../actions';
+import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList,
+    initDeploymentSecretDropdownList, selectDeployment } from '../actions';
 import { Store, Deployment, Namespace, ServiceAccount, Secret, Container } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
@@ -21,6 +22,7 @@ export interface IDeploymentPageProps {
     createDeployment: (any) => void;
     deleteDeployment: (any) => void;
     showDrawer: (drawerType: any) => void;
+    selectDeployment: (namespaceName: string, name: string) => void;
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
@@ -45,7 +47,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
                         renderActions={(item: Deployment) => [
                             <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
                             <InputNumber size="small" min={1} max={10} defaultValue={item.replicas} onBlur={(value) => { this.props.scalePodReplicas({ namespace: item.namespace, name: item.name, replicas: value.target.value }); }} />,
-                            <Icon type="ellipsis" onClick={() => this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name, images: item.images })} />]}
+                            <Icon type="ellipsis" onClick={() => { this.props.selectDeployment(item.namespace, item.name); this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name }); }} />]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.App" helpId="Help.App" />}>{item.app}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Version" helpId="Help.Version" />}>{item.version}</Descriptions.Item>
@@ -101,7 +103,8 @@ const mapDispatchToProps = {
     deleteDeployment,
     showDrawer,
     initDeploymentServiceAccountDropdownList,
-    initDeploymentSecretDropdownList
+    initDeploymentSecretDropdownList,
+    selectDeployment
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeploymentPage);

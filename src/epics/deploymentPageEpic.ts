@@ -3,7 +3,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading } from '../actions';
+import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading, fillSelectedDeployment } from '../actions';
 
 const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -100,6 +100,23 @@ const deleteDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
             return errorAction;
         })
     );
+
+const selectDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.SELECT_DEPLOYMENT),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'GET' });
+        }),
+        map((payload) => {
+            let images = payload.containers.map((container, index)=>{
+                return container.image;
+            });
+            return fillSelectedDeployment({ images: images });
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
 const initServiceAccountDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
         ofType(ActionTypes.INIT_DEPLOYMENT_SERVICEACCOUNT_DROPDOWNLIST),
@@ -127,4 +144,4 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
-export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];
+export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic, selectDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];
