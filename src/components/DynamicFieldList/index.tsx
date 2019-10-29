@@ -16,21 +16,6 @@ export interface IDynamicFieldListProps {
 let id = 0;
 
 export default class DynamicFieldList extends React.PureComponent<IDynamicFieldListProps, IDynamicFieldListState> {
-  componentDidMount() {
-    this.init(this.props.initialItems);
-  }
-  componentDidUpdate() {
-    this.init(this.props.initialItems);
-  }
-  componentWillMount() {
-    this.init(this.props.initialItems);
-  }
-  componentWillReceiveProps() {
-  }
-  componentWillUnmount() {
-  }
-  componentWillUpdate() {
-  }
   remove = k => {
     const { form } = this.props;
     const keys = form.getFieldValue(this.props.fieldName);
@@ -49,14 +34,9 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
     form.setFieldsValue(fieldValue);
   };
   init = (items: any[]) => {
-    id = 0;
-    var keys = [];
-    if (items) {
-      keys = items.map((item, index) => {
-        return index;
-      });
-    }
-    this.props.form.getFieldDecorator(this.props.fieldName, { initialValue: keys });
+    items.map((item, index) => {
+      this.add();
+    });
   };
   clear = () => {
     id = 0;
@@ -67,15 +47,19 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
   public render() {
     const { getFieldDecorator, getFieldValue, setFieldsValue } = this.props.form;
     // keys state to store dynamic key.
+    getFieldDecorator(this.props.fieldName, { initialValue: [] });
     getFieldDecorator(this.props.fieldName + '_Inited', { isInited: false });
+    const keys = getFieldValue(this.props.fieldName);
     let isInited = getFieldValue(this.props.fieldName + '_Inited');
-    if (!isInited) {
+    if (this.props.initialItems && this.props.initialItems.length > 0 && keys.length == 0 && !isInited) {
       this.init(this.props.initialItems);
       let fieldValue = JSON.parse(_.template('{"${keys}":${values}}')({ keys: this.props.fieldName + '_Inited', values: JSON.stringify({ isInited: true }) }));
       setFieldsValue(fieldValue);
     }
-    const keys = getFieldValue(this.props.fieldName);
-    const fromItems = keys ? keys.map((k, index) => {
+    if (this.props.initialItems && this.props.initialItems.length == 0 && keys.length != 0) {
+      this.clear();
+    }
+    const fromItems = keys.map((k, index) => {
       let item;
       if (this.props.initialItems && index <= this.props.initialItems.length) {
         item = this.props.initialItems[index];
@@ -86,7 +70,7 @@ export default class DynamicFieldList extends React.PureComponent<IDynamicFieldL
           {this.props.itemComponents(index, item)}
         </Card>
       </Row>
-    }) : null;
+    });
     return (
       <Row>
         {fromItems}
