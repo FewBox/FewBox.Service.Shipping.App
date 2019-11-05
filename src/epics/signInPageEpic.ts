@@ -21,6 +21,7 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
                   payload {
                     isValid
                     token
+                    authorizedModules
                   }
                 }
               }`;
@@ -34,6 +35,7 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
         map((payload) => {
             if (payload.isValid) {
                 window.localStorage.setItem('token', payload.token);
+                window.localStorage.setItem('modules', JSON.stringify(payload.authorizedModules));
                 return redirect('/master/landing');
             }
             else {
@@ -57,6 +59,7 @@ const reSignInEpic = (action$: ActionsObservable<any>, store$: StateObservable<S
                   payload {
                     isValid
                     token
+                    authorizedModules
                   }
                 }
               }`;
@@ -69,6 +72,7 @@ const reSignInEpic = (action$: ActionsObservable<any>, store$: StateObservable<S
         map((payload) => {
             if (payload.isValid) {
                 window.localStorage.setItem('token', payload.token);
+                window.localStorage.setItem('modules', JSON.stringify(payload.authorizedModules));
                 return hideLockWindow();
             }
             else {
