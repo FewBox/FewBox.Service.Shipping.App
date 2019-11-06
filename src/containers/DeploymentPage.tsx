@@ -2,14 +2,17 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge } from 'antd';
-import { initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList,
-    initDeploymentSecretDropdownList, selectDeployment } from '../actions';
+import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge, Dropdown, Menu } from 'antd';
+import {
+    initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList,
+    initDeploymentSecretDropdownList, selectDeployment
+} from '../actions';
 import { Store, Deployment, Namespace, ServiceAccount, Secret, Container } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { ImagePullPolicyOptions, ProtocolOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
+import ShowModule from '../util/ShowModule';
 
 export interface IDeploymentPageProps {
     deployments: Deployment[];
@@ -38,16 +41,24 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <DeploymentCreation isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
+                    {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <DeploymentCreation isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
                         namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
-                        refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />
+                        refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.deployments}
                         renderActions={(item: Deployment) => [
-                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDeployment({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <Icon type="delete" />}</Popconfirm>,
                             <InputNumber size="small" min={1} max={10} defaultValue={item.replicas} onBlur={(value) => { this.props.scalePodReplicas({ namespace: item.namespace, name: item.name, replicas: value.target.value }); }} />,
-                            <Icon type="ellipsis" onClick={() => { this.props.selectDeployment(item.namespace, item.name); this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name }); }} />]}
+                            <Dropdown overlay={<Menu>
+                                {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <Menu.Item>
+                                    <Button type="link" icon="setting" onClick={() => { this.props.selectDeployment(item.namespace, item.name); this.props.showDrawer({ type: 'Deployment', namespace: item.namespace, name: item.name }); }}></Button>
+                                </Menu.Item>}
+                            </Menu>}>
+                                <a className="ant-dropdown-link" href="#">
+                                    <Icon type="ellipsis" />
+                                </a>
+                            </Dropdown>]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.App" helpId="Help.App" />}>{item.app}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Version" helpId="Help.Version" />}>{item.version}</Descriptions.Item>

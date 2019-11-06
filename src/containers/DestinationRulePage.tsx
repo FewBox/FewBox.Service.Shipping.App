@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions, Dropdown, Menu, Button } from 'antd';
 import {
     initDestinationRulePage, initNamespaceDropdownList, createDestinationRule, deleteDestinationRule, initDestinationRuleServiceDropdownList, initDestinationRuleDeploymentDropdownList,
     showDrawer, selectDestinationRule
@@ -11,6 +11,7 @@ import DestinationRuleCreation from '../components/DestinationRuleCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { TLSModeOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
+import ShowModule from '../util/ShowModule';
 
 export interface IDestinationRulePageProps {
     namespaces: Namespace[];
@@ -38,15 +39,23 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
         return (
             <div>
                 <Row gutter={16}>
-                    <DestinationRuleCreation isHelp={this.props.isHelp} tlsModeOptions={TLSModeOptions} namespaces={this.props.namespaces} services={this.props.services} refreshServices={this.props.initDestinationRuleServiceDropdownList}
-                        deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} create={this.props.createDestinationRule} />
+                    {ShowModule('M_Shipping_MODULEDESTINATIONRULE_CUD') && <DestinationRuleCreation isHelp={this.props.isHelp} tlsModeOptions={TLSModeOptions} namespaces={this.props.namespaces} services={this.props.services} refreshServices={this.props.initDestinationRuleServiceDropdownList}
+                        deployments={this.props.deployments} refreshDeployments={this.props.initDestinationRuleDeploymentDropdownList} reload={this.props.initDestinationRulePage} create={this.props.createDestinationRule} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.destinationRules}
                         renderActions={(item) => [
-                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDestinationRule({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteDestinationRule({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEDESTINATIONRULE_CUD') && <Icon type="delete" />}</Popconfirm>,
                             <Icon type="help" />,
-                            <Icon type="ellipsis" onClick={() => { this.props.selectDestinationRule(item.namespace, item.name); this.props.showDrawer({ type: 'DestinationRule', namespace: item.namespace, name: item.name, subsets: item.subsets, deployments: this.props.deployments }); }} />]}
+                            <Dropdown overlay={<Menu>
+                                {ShowModule('M_Shipping_MODULEDESTINATIONRULE_CUD') && <Menu.Item>
+                                    <Button type="link" icon="setting" onClick={() => { this.props.selectDestinationRule(item.namespace, item.name); this.props.showDrawer({ type: 'DestinationRule', namespace: item.namespace, name: item.name, subsets: item.subsets, deployments: this.props.deployments }); }}></Button>
+                                </Menu.Item>}
+                            </Menu>}>
+                                <a className="ant-dropdown-link" href="#">
+                                    <Icon type="ellipsis" />
+                                </a>
+                            </Dropdown>]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>

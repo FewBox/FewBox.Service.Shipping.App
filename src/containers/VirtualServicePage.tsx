@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions } from 'antd';
+import { Card, Icon, Row, Col, Popconfirm, Switch, List, Layout, Tooltip, Tag, Collapse, Descriptions, Dropdown, Menu, Button } from 'antd';
 import {
     initVirtualServicePage, initNamespaceDropdownList, createVirtualService, deleteVirtualService, initVirtualServiceGatewayDropdownList,
     initVirtualServiceServiceDropdownList, initVirtualServiceDeploymentDropdownList, selectVirtualService, showDrawer
@@ -11,6 +11,7 @@ import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { MatchOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
+import ShowModule from '../util/ShowModule';
 
 export interface IVirtualServicePageProps {
     namespaces: Namespace[];
@@ -40,17 +41,25 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
         return (
             <div>
                 <Row gutter={16}>
-                    <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateways={this.props.gateways} services={this.props.services}
+                    {ShowModule('M_Shipping_MODULEVIRTUALSERVICE_CUD') && <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateways={this.props.gateways} services={this.props.services}
                         deployments={this.props.deployments} refreshDeployments={this.props.initVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions}
                         refreshGateways={this.props.initVirtualServiceGatewayDropdownList} refreshServices={this.props.initVirtualServiceServiceDropdownList}
-                        reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />
+                        reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.virtualServices}
                         renderActions={(item) => [
-                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteVirtualService({ namespace: item.namespace, name: item.name }); }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEVIRTUALSERVICE_CUD') && <Icon type="delete" />}</Popconfirm>,
                             <Icon type="help" />,
-                            <Icon type="ellipsis" onClick={() => { this.props.selectVirtualService(item.namespace, item.name); this.props.showDrawer({ type: 'VirtualService', namespace: item.namespace, name: item.name }); }} />]}
+                            <Dropdown overlay={<Menu>
+                                {ShowModule('M_Shipping_MODULEVIRTUALSERVICE_CUD') && <Menu.Item>
+                                    <Button type="link" icon="setting" onClick={() => { this.props.selectVirtualService(item.namespace, item.name); this.props.showDrawer({ type: 'VirtualService', namespace: item.namespace, name: item.name }); }}></Button>
+                                </Menu.Item>}
+                            </Menu>}>
+                                <a className="ant-dropdown-link" href="#">
+                                    <Icon type="ellipsis" />
+                                </a>
+                            </Dropdown>]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Age' id="Label.Age" />}>{item.age}</Descriptions.Item>

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Card, Icon, Row, Popconfirm, List, Descriptions, Collapse, Popover, Button } from 'antd';
+import { Card, Icon, Row, Popconfirm, List, Descriptions, Collapse, Popover, Button, Dropdown, Menu } from 'antd';
 import { initNamespaceDropdownList, initSecretPage, createSecret, deleteSecret, selectSecret, showDrawer } from '../actions';
 import SecretCreation from '../components/SecretCreation';
 import { Store, Secret, Namespace } from '../reducers/State';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import ResourcesCard from '../components/ResourcesCard';
+import ShowModule from '../util/ShowModule';
 
 export interface ISecretPageProps {
     namespaces: Namespace[];
@@ -30,14 +31,22 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <SecretCreation isHelp={this.props.isHelp} create={this.props.createSecret} reload={this.props.initSecretPage} namespaces={this.props.namespaces} />
+                    {ShowModule('M_Shipping_MODULESECRET_CUD') && <SecretCreation isHelp={this.props.isHelp} create={this.props.createSecret} reload={this.props.initSecretPage} namespaces={this.props.namespaces} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.secrets}
                         renderActions={(item) => [
-                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deleteSecret({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULESECRET_CUD') && <Icon type="delete" />}</Popconfirm>,
                             <Icon type="help" />,
-                            <Icon type="ellipsis" onClick={() => { this.props.selectSecret(item.namespace, item.name); this.props.showDrawer({ type: 'Secret', namespace: item.namespace, name: item.name }); }} />]}
+                            <Dropdown overlay={<Menu>
+                                {ShowModule('M_Shipping_MODULESECRET_CUD') && <Menu.Item>
+                                    <Button type="link" icon="setting" onClick={() => { this.props.selectSecret(item.namespace, item.name); this.props.showDrawer({ type: 'Secret', namespace: item.namespace, name: item.name }); }}></Button>
+                                </Menu.Item>}
+                            </Menu>}>
+                                <a className="ant-dropdown-link" href="#">
+                                    <Icon type="ellipsis" />
+                                </a>
+                            </Dropdown>]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Namespace" helpId="Help.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} id="Label.Type" helpId="Help.Type" />}>{item.type}</Descriptions.Item>

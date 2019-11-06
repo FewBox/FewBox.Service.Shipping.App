@@ -6,11 +6,12 @@ import { Card, Icon, Row, List, Layout, Tooltip, Menu, Dropdown, Tag, Popconfirm
 import { initPodPage, deletePod, createPod, initNamespaceDropdownList, showDrawer, initPodServiceAccountDropdownList } from '../actions';
 import { Store, Pod, Namespace, ServiceAccount } from '../reducers/State';
 import { Link } from 'react-router-dom';
-import ShipBuilding from '../components/PodCreation';
+import PodCreation from '../components/PodCreation';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { ImagePullPolicyOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
+import ShowModule from '../util/ShowModule';
 
 export interface IPodPageProps {
     namespaces: Namespace[];
@@ -35,13 +36,13 @@ class PodPage extends React.Component<IPodPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    <ShipBuilding isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} create={this.props.createPod} reload={this.props.initPodPage}
-                        serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initPodServiceAccountDropdownList} namespaces={this.props.namespaces} />
+                    {ShowModule('M_Shipping_MODULEPOD_CUD') && <PodCreation isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} create={this.props.createPod} reload={this.props.initPodPage}
+                        serviceAccounts={this.props.serviceAccounts} refreshServiceAccounts={this.props.initPodServiceAccountDropdownList} namespaces={this.props.namespaces} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.pods}
                         renderActions={(item) => [
-                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}><Icon type="delete" /></Popconfirm>,
+                        <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEPOD_CUD')&&<Icon type="delete" />}</Popconfirm>,
                             <Dropdown disabled={item.phase != 'Running'} overlay={<Menu>
                                 {item.containers.map((container, index) => {
                                     return <SubMenu key={'contianer-shell' + index} title={container}>
@@ -64,11 +65,9 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                         </Menu.Item>
                                     })}
                                 </SubMenu>
-                                <SubMenu title='Normal'>
-                                    <Menu.Item>
-                                        <Button icon="more">Detail</Button>
-                                    </Menu.Item>
-                                </SubMenu>
+                                {ShowModule('M_Shipping_MODULEPOD_CUD') && <Menu.Item>
+                                    <Button type="link" icon="setting"></Button>
+                                </Menu.Item>}
                             </Menu>}>
                                 <a className="ant-dropdown-link" href="#">
                                     <Icon type="ellipsis" />
