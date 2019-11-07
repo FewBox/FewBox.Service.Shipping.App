@@ -31,10 +31,13 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
-        if (value.indexOf(':') != -1) {
-            callback('Please remove the version.')
+        if (value.indexOf(':') != -1 && value.indexOf(':5000') != -1) {
+            callback();
         }
-        callback()
+        else if (value.indexOf(':') == -1) {
+            callback();
+        }
+        callback('Please remove the version.');
     }
     handleSubmit = e => {
         e.preventDefault();
