@@ -57,7 +57,7 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
         });
     };
     public render() {
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched, getFieldValue } = this.props.form;
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
@@ -75,13 +75,13 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                             </Form.Item>
                         </Col>]
                     } form={this.props.form} addCaption={<FormattedMessage id="Label.Host" />} />
-                    <DynamicFieldList fieldName='selectedgateway' initialItems={this.props.selectedVirtualService.gateways} itemComponents={(index, item: string) =>
+                    <DynamicFieldList fieldName='selectedgateway' initialItems={this.props.selectedVirtualService.gateways} itemComponents={(index, gateway: string) =>
                         [<Col offset={1} span={12} key={1}>
                             <Form.Item>
                                 <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Gateway' />}>
                                     {getFieldDecorator(`gateways[${index}]`, {
                                         rules: [{ required: true, message: <FormattedMessage id='Message.GatewayRequired' /> }],
-                                        initialValue: item
+                                        initialValue: gateway
                                     })(
                                         <Select showSearch placeholder={<FormattedMessage id='Label.Gateway' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
                                             {this.props.selectedVirtualService.allGateways ? this.props.selectedVirtualService.allGateways.map((gateway: Gateway, index) => {
@@ -210,7 +210,8 @@ class VirtualServiceDrawer extends React.PureComponent<IVirtualServiceDrawerProp
                                                     initialValue: (route ? route['subset'] : null)
                                                 })(
                                                     <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                        {this.props.selectedVirtualService.serviceAllDeployments ? this.props.selectedVirtualService.serviceAllDeployments.map((item, index) => {
+                                                        {(this.props.selectedVirtualService.serviceDeploymentses && this.props.selectedVirtualService.serviceDeploymentses.find((serviceDeployments) => { return serviceDeployments.service == getFieldValue(`routes[${index}][${routeIndex}]`) })) ?
+                                                        this.props.selectedVirtualService.serviceDeploymentses.find((serviceDeployments) => { return serviceDeployments.service == getFieldValue(`routes[${index}][${routeIndex}]`) }).deployments.map((item, index) => {
                                                             return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
                                                         }) : null}
                                                     </Select>

@@ -41,7 +41,7 @@ class JobPage extends React.Component<ISecretPageProps, any> {
                                     <Button type="link" icon="setting" onClick={() => { }}></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}

@@ -56,7 +56,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
                                     <Button type="link" icon="setting" onClick={() => { this.props.selectVirtualService(item.namespace, item.name); this.props.showDrawer({ type: 'VirtualService', namespace: item.namespace, name: item.name }); }}></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}

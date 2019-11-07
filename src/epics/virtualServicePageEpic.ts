@@ -101,7 +101,6 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
             return (new AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' }))
                 .pipe(
                     map((payload) => {
-                        debugger;
                         let deployments = { service: action.value, deployments: payload };
                         return fillVirtualServiceDeploymentDropdownList(deployments);
                     }));
@@ -115,11 +114,11 @@ const selectVirtualServiceEpic = (action$: ActionsObservable<any>, store$: State
         ofType(ActionTypes.SELECT_VIRTUALSERVICE),
         mergeMap((action) => {
             return zip(new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/services', method: 'GET' }),
-                new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'GET' }),
-                new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/gateways', method: 'GET' }));
+                new AjaxObservable({ path: '/api/namespaces/' + action.value.namespace + '/gateways', method: 'GET' }),
+                new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'GET' }));
         }),
         map((payloads) => {
-            return fillSelectedVirtualServiceServiceDropdownList({ allServices: payloads[0], https: payloads[1].https, hosts: payloads[1].hosts, gateways: payloads[1].gateways, allGateways: payloads[2] });
+            return fillSelectedVirtualServiceServiceDropdownList({ allServices: payloads[0], allGateways: payloads[1], hosts: payloads[2].hosts, gateways: payloads[2].gateways, https: payloads[2].https  });
         }),
         catchError((errorAction) => {
             return errorAction;

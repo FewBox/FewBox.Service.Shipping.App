@@ -41,7 +41,7 @@ class ServiceAccountPage extends React.Component<IServiceAccountPageProps, any> 
                                     <Button type="link" icon="setting" onClick={() => { }}></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}

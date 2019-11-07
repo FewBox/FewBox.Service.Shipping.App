@@ -242,7 +242,7 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                             <Icon className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} />
                             <ANTD_Switch checkedChildren={<BrandIcon />} checked={this.props.isFewBoxDelivery} unCheckedChildren={<BrandIcon />} defaultChecked onChange={(isFewBox) => { this.props.switchFewBoxDelivery(isFewBox); }} />
                             <Dropdown overlay={menu}>
-                                <a className="ant-dropdown-link" href="#" style={{ float: 'right', marginRight: '20px' }}>
+                                <a className="ant-dropdown-link" style={{ float: 'right', marginRight: '20px' }}>
                                     <Avatar icon="user" style={{ marginRight: '5px' }} />
                                     <Icon type="down" />
                                 </a>

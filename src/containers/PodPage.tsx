@@ -69,7 +69,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                     <Button type="link" icon="setting"></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}

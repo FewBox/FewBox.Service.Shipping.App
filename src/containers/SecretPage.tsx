@@ -43,7 +43,7 @@ class SecretPage extends React.Component<ISecretPageProps, any> {
                                     <Button type="link" icon="setting" onClick={() => { this.props.selectSecret(item.namespace, item.name); this.props.showDrawer({ type: 'Secret', namespace: item.namespace, name: item.name }); }}></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}

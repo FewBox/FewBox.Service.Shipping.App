@@ -126,7 +126,7 @@ export interface ServiceEntryPage extends ResourcePage<ServiceEntry> {
 export interface JobPage extends ResourcePage<Job> {
 }
 /** Biz **/
-export interface ServiceDeployments{
+export interface ServiceDeployments {
     service: string;
     deployments: Deployment[];
 }
@@ -301,8 +301,8 @@ export interface SelectedDestinationRule {
 }
 export interface SelectedVirtualService {
     allServices: Service[];
-    serviceAllDeployments: Deployment[];
     allGateways: Gateway[];
+    serviceDeploymentses: ServiceDeployments[]
     hosts: string[];
     gateways: string[];
     https: Http[];

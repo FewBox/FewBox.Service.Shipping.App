@@ -52,7 +52,7 @@ class DestinationRulePage extends React.Component<IDestinationRulePageProps, any
                                     <Button type="link" icon="setting" onClick={() => { this.props.selectDestinationRule(item.namespace, item.name); this.props.showDrawer({ type: 'DestinationRule', namespace: item.namespace, name: item.name, subsets: item.subsets, deployments: this.props.deployments }); }}></Button>
                                 </Menu.Item>}
                             </Menu>}>
-                                <a className="ant-dropdown-link" href="#">
+                                <a className="ant-dropdown-link">
                                     <Icon type="ellipsis" />
                                 </a>
                             </Dropdown>]}
