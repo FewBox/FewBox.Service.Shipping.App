@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Form, Row, Col, Select, Input, Button } from 'antd';
-import { Namespace, Gateway, Service, Deployment, Option } from '../../reducers/State';
+import { Namespace, Gateway, Service, Deployment, Option, ServiceDeployments } from '../../reducers/State';
 import { BrandIcon } from '../Icon';
 import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
@@ -12,7 +12,7 @@ export interface IVirtualServiceCreationProps {
     namespaces: Namespace[];
     gateways: Gateway[];
     services: Service[];
-    deployments: Deployment[];
+    serviceDeploymentses: ServiceDeployments[];
     matchOptions: Option[];
     refreshGateways: (namespaceName: string) => void;
     refreshServices: (namespaceName: string) => void;
@@ -55,7 +55,7 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
         });
     };
     public render() {
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched, getFieldValue } = this.props.form;
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row gutter={16}>
@@ -215,9 +215,10 @@ class VirtualServiceCreation extends React.PureComponent<IVirtualServiceCreation
                                                 rules: [{ required: false, message: <FormattedMessage id='Message.DeploymentRequired' /> }],
                                             })(
                                                 <Select showSearch placeholder={<FormattedMessage id='Label.Deployment' />} optionFilterProp="children" suffixIcon={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />}>
-                                                    {this.props.deployments ? this.props.deployments.map((item, index) => {
-                                                        return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
-                                                    }) : null}
+                                                    {(this.props.serviceDeploymentses && this.props.serviceDeploymentses.find((serviceDeployments) => { return serviceDeployments.service == getFieldValue(`routes[${k1}][${k2}]`) })) ?
+                                                        this.props.serviceDeploymentses.find((serviceDeployments) => { return serviceDeployments.service == getFieldValue(`routes[${k1}][${k2}]`) }).deployments.map((item, index) => {
+                                                            return <Select.Option key={'deployment' + index} value={item.version}>{item.name}</Select.Option>
+                                                        }) : null}
                                                 </Select>
                                             )}
                                         </HelpComponent>

@@ -6,7 +6,7 @@ const virtualServiceState = {
     selectedVirtualService: { hosts: [], gateways: [], https: [], serviceAllDeployments: [], allGateways: [], allServices: [] },
     gateways: [],
     services: [],
-    deployments: [],
+    serviceDeploymentses: [],
     isListLoading: false
 };
 export default (state: VirtualServicePage = virtualServiceState, action: any): VirtualServicePage => {
@@ -24,7 +24,8 @@ export default (state: VirtualServicePage = virtualServiceState, action: any): V
         case ActionTypes.FILL_VIRTUALSERVICE_SERVICE_DROPDOWNLIST:
             return { ...state, services: action.payload };
         case ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST:
-            return { ...state, deployments: action.payload };
+            let serviceDeployments = [...state.serviceDeploymentses, action.payload];
+            return { ...state, serviceDeploymentses: serviceDeployments };
         case ActionTypes.SHOW_MESSAGE:
             return { ...state, isListLoading: false };
         default:

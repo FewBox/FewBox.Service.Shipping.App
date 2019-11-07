@@ -452,9 +452,9 @@ export const initVirtualServiceDeploymentDropdownList = (app: string): IAction<s
     type: ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
     value: app
 });
-export const fillVirtualServiceDeploymentDropdownList = (payload): IPayloadAction<any> => ({
+export const fillVirtualServiceDeploymentDropdownList = (serviceDeployments): IPayloadAction<any> => ({
     type: ActionTypes.FILL_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST,
-    payload: payload
+    payload: serviceDeployments
 });
 export const selectVirtualService = (namespace: string, name: string): IAction<any> => ({
     type: ActionTypes.SELECT_VIRTUALSERVICE,

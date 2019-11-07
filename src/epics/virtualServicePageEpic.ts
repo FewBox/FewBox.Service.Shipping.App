@@ -98,10 +98,13 @@ const initDeploymentDropdownListEpic = (action$: ActionsObservable<any>, store$:
     action$.pipe(
         ofType(ActionTypes.INIT_VIRTUALSERVICE_DEPLOYMENT_DROPDOWNLIST),
         mergeMap((action) => {
-            return new AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' });
-        }),
-        map((payload) => {
-            return fillVirtualServiceDeploymentDropdownList(payload);
+            return (new AjaxObservable({ path: '/api/deployments?labels=app=' + action.value, method: 'GET' }))
+                .pipe(
+                    map((payload) => {
+                        debugger;
+                        let deployments = { service: action.value, deployments: payload };
+                        return fillVirtualServiceDeploymentDropdownList(deployments);
+                    }));
         }),
         catchError((errorAction) => {
             return errorAction;
@@ -139,12 +142,14 @@ const changeVirtualServiceHttpEpic = (action$: ActionsObservable<any>, store$: S
     action$.pipe(
         ofType(ActionTypes.CHANGE_VIRTUALSERVICE_HTTP),
         mergeMap((action) => {
-            return new AjaxObservable({ path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'PATCH',
-             body: [
-                 { "op": "replace", "path": "/spec/http", "value": action.value.https },
-                 { "op": "replace", "path": "/spec/hosts", "value": action.value.hosts },
-                 { "op": "replace", "path": "/spec/gateways", "value": action.value.gateways }
-            ] });
+            return new AjaxObservable({
+                path: '/api/virtualservices/' + action.value.namespace + '/' + action.value.name, method: 'PATCH',
+                body: [
+                    { "op": "replace", "path": "/spec/http", "value": action.value.https },
+                    { "op": "replace", "path": "/spec/hosts", "value": action.value.hosts },
+                    { "op": "replace", "path": "/spec/gateways", "value": action.value.gateways }
+                ]
+            });
         }),
         map((payload) => {
             return initVirtualServicePage();

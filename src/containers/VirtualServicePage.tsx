@@ -6,7 +6,7 @@ import {
     initVirtualServicePage, initNamespaceDropdownList, createVirtualService, deleteVirtualService, initVirtualServiceGatewayDropdownList,
     initVirtualServiceServiceDropdownList, initVirtualServiceDeploymentDropdownList, selectVirtualService, showDrawer
 } from '../actions';
-import { VirtualService, Store, Namespace, Gateway, Service, Deployment } from '../reducers/State';
+import { VirtualService, Store, Namespace, Gateway, Service, Deployment, ServiceDeployments } from '../reducers/State';
 import VirtualServiceCreation from '../components/VirtualServiceCreation';
 import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { MatchOptions } from '../jsons';
@@ -18,7 +18,7 @@ export interface IVirtualServicePageProps {
     virtualServices: VirtualService[];
     gateways: Gateway[];
     services: Service[];
-    deployments: Deployment[];
+    serviceDeploymentses: ServiceDeployments[];
     initVirtualServicePage: () => void;
     initNamespaceDropdownList: () => void;
     createVirtualService: (any) => void;
@@ -42,7 +42,7 @@ class VirtualServicePage extends React.Component<IVirtualServicePageProps, any> 
             <div>
                 <Row gutter={16}>
                     {ShowModule('M_Shipping_MODULEVIRTUALSERVICE_CUD') && <VirtualServiceCreation isHelp={this.props.isHelp} namespaces={this.props.namespaces} gateways={this.props.gateways} services={this.props.services}
-                        deployments={this.props.deployments} refreshDeployments={this.props.initVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions}
+                        serviceDeploymentses={this.props.serviceDeploymentses} refreshDeployments={this.props.initVirtualServiceDeploymentDropdownList} matchOptions={MatchOptions}
                         refreshGateways={this.props.initVirtualServiceGatewayDropdownList} refreshServices={this.props.initVirtualServiceServiceDropdownList}
                         reload={this.props.initVirtualServicePage} create={this.props.createVirtualService} />}
                 </Row>
@@ -98,7 +98,7 @@ const mapStateToProps = ({ virtualServicePage, masterPage, settingPage }: Store)
     isListLoading: virtualServicePage.isListLoading,
     gateways: virtualServicePage.gateways,
     services: virtualServicePage.services,
-    deployments: virtualServicePage.deployments,
+    serviceDeploymentses: virtualServicePage.serviceDeploymentses,
     namespaces: masterPage.namespaces,
     isHelp: settingPage.isHelp
 });

@@ -114,7 +114,7 @@ export interface VirtualServicePage extends ResourcePage<VirtualService> {
     selectedVirtualService: SelectedVirtualService;
     gateways: Gateway[];
     services: Service[];
-    deployments: Deployment[];
+    serviceDeploymentses: ServiceDeployments[];
 }
 export interface DestinationRulePage extends ResourcePage<DestinationRule> {
     selectedDestinationRule: SelectedDestinationRule;
@@ -126,6 +126,10 @@ export interface ServiceEntryPage extends ResourcePage<ServiceEntry> {
 export interface JobPage extends ResourcePage<Job> {
 }
 /** Biz **/
+export interface ServiceDeployments{
+    service: string;
+    deployments: Deployment[];
+}
 export interface Healthz {
     content: string;
 }
