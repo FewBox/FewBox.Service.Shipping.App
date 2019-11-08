@@ -18,16 +18,23 @@ export interface IDeploymentCreationProps {
     secrets: Secret[];
     refreshServiceAccounts: (namespaceName: string) => void;
     refreshSecrets: (namespaceName: string) => void;
+    refreshVersions: (image: string) => void;
     create: (any) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
+    isEnableDockerRegistry: boolean;
+    images: string[];
+    versions: string[];
 }
 
 class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     changeNamespace = (namespaceName: string) => {
         this.props.refreshServiceAccounts(namespaceName);
         this.props.refreshSecrets(namespaceName);
+    };
+    changeImage = (image: string) => {
+        this.props.refreshVersions(image);
     };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
@@ -74,6 +81,27 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     };
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        let imageComponent;
+        if (this.props.isEnableDockerRegistry) {
+            imageComponent = getFieldDecorator('image', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
+            })(<Select showSearch placeholder={<FormattedMessage id='Label.Image' />} optionFilterProp="children" onChange={this.changeImage}
+                filterOption={(input, option) =>
+                    option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+            >
+                {this.props.images.map((image, index) => {
+                    return <Select.Option key={`image${index}`} value={image}>{image}</Select.Option>
+                })}
+            </Select>);
+        }
+        else {
+            imageComponent = getFieldDecorator('image', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
+            })(
+                <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
+            );
+        }
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row gutter={16}>
@@ -106,11 +134,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Image' />}>
-                                {getFieldDecorator('image', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
-                                })(
-                                    <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
-                                )}
+                                {imageComponent}
                             </HelpComponent>
                         </Form.Item>
                     </Col>

@@ -29,6 +29,7 @@ export interface IDeploymentPageProps {
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
     isHelp: boolean;
+    isEnableDockerRegistry: boolean;
     isListLoading: boolean;
 }
 
@@ -41,8 +42,8 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <DeploymentCreation isHelp={this.props.isHelp} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
-                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets}
+                    {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <DeploymentCreation isHelp={this.props.isHelp} isEnableDockerRegistry={this.props.isEnableDockerRegistry} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
+                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets} images={["1", "2"]}
                         refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} />}
                 </Row>
                 <Row gutter={16}>
@@ -103,7 +104,8 @@ const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => 
     serviceAccounts: deploymentPage.serviceAccounts,
     secrets: deploymentPage.secrets,
     namespaces: masterPage.namespaces,
-    isHelp: settingPage.isHelp
+    isHelp: settingPage.isHelp,
+    isEnableDockerRegistry: settingPage.isEnableDockerRegistry
 });
 
 const mapDispatchToProps = {

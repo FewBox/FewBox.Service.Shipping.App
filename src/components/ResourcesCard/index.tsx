@@ -7,6 +7,7 @@ export interface IResourcesCardProps {
     resources: any[];
     renderActions: (item) => React.ReactNode[];
     renderBasic: (item) => React.ReactNode;
+    renderTitle?: (item) => React.ReactNode;
     renderMore?: (item) => React.ReactNode;
 }
 
@@ -24,7 +25,7 @@ export default class ResourcesCard extends React.PureComponent<IResourcesCardPro
                 renderItem={(item: any) => (
                     <List.Item>
                         <Card hoverable actions={this.props.renderActions(item)}>
-                            <Card.Meta title={item.name} description={<Collapse bordered={false} defaultActiveKey={[]} expandIconPosition='right'
+                            <Card.Meta title={this.props.renderTitle ? this.props.renderTitle(item) : item.name} description={<Collapse bordered={false} defaultActiveKey={[]} expandIconPosition='right'
                                 expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}>
                                 <Collapse.Panel header={<FormattedMessage id="Label.Basic" />} key='1' style={customPanelStyle}>
                                     {this.props.renderBasic(item)}

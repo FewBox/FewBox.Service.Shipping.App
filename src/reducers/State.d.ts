@@ -85,6 +85,7 @@ export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
+    isEnableDockerRegistry: boolean;
 }
 export interface NodePage extends ResourcePage<Node> {
 }

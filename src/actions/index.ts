@@ -114,6 +114,11 @@ export const switchHelp = (isHelp): IAction<boolean> => ({
     value: isHelp
 });
 
+export const switchEnableDockerRegistry = (isEnableDockerRegistry): IAction<boolean> => ({
+    type: ActionTypes.SWITCH_ENABLE_DOCKERREGISTRY,
+    value: isEnableDockerRegistry
+});
+
 export const createDeployment = (deployment): IAction<any> => ({
     type: ActionTypes.CREATE_DEPLOYMENT,
     value: deployment

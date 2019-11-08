@@ -30,6 +30,7 @@ import ShippingLaneSvg from '../../../assets/images/shipping-lane.svg';
 import ScheduleSvg from '../../../assets/images/schedule.svg';
 import ShippingMapSvg from '../../../assets/images/shipping-map.svg';
 import InstallSvg from '../../../assets/images/install.svg';
+import DockerRegistrySvg from '../../../assets/images/docker-registry.svg';
 
 const fontSize = { fontSize: '20px' };
 export const KubernetesIcon = props => <Icon style={fontSize} component={KubernetesSvg} {...props} />;
@@ -60,6 +61,7 @@ export const VirtualServiceIcon = props => <Icon style={fontSize} component={For
 export const DestinationRuleIcon = props => <Icon style={fontSize} component={TrafficLightSvg} {...props} />
 export const JobIcon = props => <Icon style={fontSize} component={ScheduleSvg} {...props} />
 export const InstallIcon = props => <Icon style={fontSize} component={InstallSvg} {...props} />
+export const DockerRegistryIcon = props => <Icon style={fontSize} component={DockerRegistrySvg} {...props} />
 // None style
 export const ReefIcon = props => <Icon component={ReefSvg} {...props} />;
 export const CrashIcon = props => <Icon component={CrashSvg} {...props} />;

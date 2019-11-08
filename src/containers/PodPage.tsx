@@ -41,8 +41,9 @@ class PodPage extends React.Component<IPodPageProps, any> {
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.pods}
+                        renderTitle={(item) => (<div><Badge color={item.phase === 'Running' ? 'green' : 'red'} text={<Tag>{item.name}</Tag>} /><Tag color="magenta">{item.app}</Tag><Tag color="cyan">{item.version}</Tag></div>)}
                         renderActions={(item) => [
-                        <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEPOD_CUD')&&<Icon type="delete" />}</Popconfirm>,
+                            <Popconfirm title={<FormattedMessage id="Confirm.Delete" values={{ name: item.name }} />} onConfirm={() => { this.props.deletePod({ namespace: item.namespace, name: item.name }) }} okText={<FormattedMessage id="Label.OK" />} cancelText={<FormattedMessage id="Label.Cancel" />}>{ShowModule('M_Shipping_MODULEPOD_CUD') && <Icon type="delete" />}</Popconfirm>,
                             <Dropdown disabled={item.phase != 'Running'} overlay={<Menu>
                                 {item.containers.map((container, index) => {
                                     return <SubMenu key={'contianer-shell' + index} title={container}>
@@ -74,9 +75,7 @@ class PodPage extends React.Component<IPodPageProps, any> {
                                 </a>
                             </Dropdown>]}
                         renderBasic={(item) => <Descriptions size='small' column={1}>
-                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.App' id="Label.App" />}><Tag color="magenta">{item.app}</Tag></Descriptions.Item>
-                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Version' id="Label.Version" />}><Tag color="cyan">{item.version}</Tag></Descriptions.Item>
-                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Phase" />}><Badge color={item.phase === 'Running' ? 'green' : 'red'} text={item.phase} /></Descriptions.Item>
+                            <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Phase' id="Label.Phase" />}>{item.phase}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Namespace' id="Label.Namespace" />}>{item.namespace}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.ServiceAccount' id="Label.ServiceAccount" />}>{item.serviceAccount}</Descriptions.Item>
                             <Descriptions.Item label={<HelpFormattedMessage isHelp={this.props.isHelp} helpId='Help.Node' id="Label.Node" />}>{item.node}</Descriptions.Item>

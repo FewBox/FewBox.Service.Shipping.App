@@ -10,7 +10,7 @@ import { Route, Link, Switch } from 'react-router-dom';
 import { Redirect, MessageBox, MessageType } from '@fewbox/react-components';
 import Loading from '../components/Loading';
 import {
-    hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, hideDrawer, changePodVersion, changeDestinationRuleSubset, changeVirtualServiceHttp,
+    hideMessage, signOut, clearPath, switchFewBoxDelivery, switchHelp, switchEnableDockerRegistry, hideDrawer, changePodVersion, changeDestinationRuleSubset, changeVirtualServiceHttp,
     changeSecretData, showLockWindow, hideLockWindow, initSelectedVirtualServiceDeploymentDropdownList
 } from '../actions';
 const NodePage = lazy(() => import('./NodePage'));
@@ -38,7 +38,7 @@ const SecretDrawer = lazy(() => import('../components/SecretDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import ShowModule from '../util/ShowModule';
 import './MasterPage.scss';
-import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon, DockerRegistryIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
 import { MatchOptions } from '../jsons';
 
@@ -57,12 +57,14 @@ export interface IMasterPageProps {
     drawer: any;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
+    isEnableDockerRegistry: boolean;
     hideMessage: () => void;
     hideDrawer: () => void;
     signIn: (username, password) => void;
     hideLockWindow: () => void;
     switchFewBoxDelivery: (isFewBox: boolean) => void;
     switchHelp: (isHelp: boolean) => void;
+    switchEnableDockerRegistry: (isEnableDockerRegistry: boolean) => void;
     changePodVersion: (any) => void;
     changeDestinationRuleSubset: (any) => void;
     changeVirtualServiceHttp: (any) => void;
@@ -93,6 +95,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
             <Menu>
                 <Menu.Item>
                     <Button type='link' onClick={this.props.signOut}><FormattedMessage id="Label.SignOut" /></Button>
+                </Menu.Item>
+                <Menu.Item>
+                    <ANTD_Switch checkedChildren={<DockerRegistryIcon />} checked={this.props.isEnableDockerRegistry} unCheckedChildren={<DockerRegistryIcon />} defaultChecked onChange={(isHelp) => { this.props.switchEnableDockerRegistry(isHelp); }} />
                 </Menu.Item>
                 <Menu.Item>
                     <ANTD_Switch checkedChildren={<Icon type="question-circle" />} checked={this.props.isHelp} unCheckedChildren={<Icon type="question-circle" />} defaultChecked onChange={(isHelp) => { this.props.switchHelp(isHelp); }} />
@@ -297,7 +302,8 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtual
     selectedSecret: secretPage.selectedSecret,
     selectedDeployment: deploymentPage.selectedDeployment,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
-    isHelp: settingPage.isHelp
+    isHelp: settingPage.isHelp,
+    isEnableDockerRegistry: settingPage.isEnableDockerRegistry
 })
 
 const mapDispatchToProps = {
@@ -306,6 +312,7 @@ const mapDispatchToProps = {
     clearPath,
     switchFewBoxDelivery,
     switchHelp,
+    switchEnableDockerRegistry,
     hideDrawer,
     changePodVersion,
     changeDestinationRuleSubset,
