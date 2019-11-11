@@ -53,6 +53,8 @@ export interface MasterPage {
     drawer: any;
     path?: string;
     namespaces: Namespace[];
+    images?: string[];
+    versions?: string[];
 }
 export interface LandingPage {
     componentStatuses: ComponentStatus[];

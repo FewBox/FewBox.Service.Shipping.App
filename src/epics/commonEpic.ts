@@ -35,7 +35,7 @@ const showMessageEpic = (action$: ActionsObservable<any>) =>
         ofType(ActionTypes.SHOW_MESSAGE),
         map((action) => {
             const cache = createIntlCache();
-            let messages = langs(window.localStorage.getItem('lang') ? window.localStorage.getItem('lang') : 'en-us');
+            let messages = langs(window.localStorage.getItem(`${location.hostname}_lang`) ? window.localStorage.getItem(`${location.hostname}_lang`) : 'en-us');
             const intl = createIntl({
                 locale: 'en',
                 messages: messages
@@ -66,7 +66,7 @@ const changeLanguageEpic = (action$: ActionsObservable<any>) =>
     action$.pipe(
         ofType(ActionTypes.CHANGE_LANGUAGE),
         map((action) => {
-            window.localStorage.setItem('lang', action.lang);
+            window.localStorage.setItem(`${location.hostname}_lang`, action.lang);
             return empty();
         })
     );

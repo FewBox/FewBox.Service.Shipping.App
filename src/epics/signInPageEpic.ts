@@ -34,8 +34,8 @@ const signInEpic = (action$: ActionsObservable<any>, store$: StateObservable<Sto
         }),
         map((payload) => {
             if (payload.isValid) {
-                window.localStorage.setItem('token', payload.token);
-                window.localStorage.setItem('modules', JSON.stringify(payload.authorizedModules));
+                window.localStorage.setItem(`${location.hostname}_token`, payload.token);
+                window.localStorage.setItem(`${location.hostname}_modules`, JSON.stringify(payload.authorizedModules));
                 return redirect('/master/landing');
             }
             else {
@@ -71,8 +71,8 @@ const reSignInEpic = (action$: ActionsObservable<any>, store$: StateObservable<S
         }),
         map((payload) => {
             if (payload.isValid) {
-                window.localStorage.setItem('token', payload.token);
-                window.localStorage.setItem('modules', JSON.stringify(payload.authorizedModules));
+                window.localStorage.setItem(`${location.hostname}_token`, payload.token);
+                window.localStorage.setItem(`${location.hostname}_modules`, JSON.stringify(payload.authorizedModules));
                 return hideLockWindow();
             }
             else {
@@ -88,7 +88,7 @@ const signOutEpic = (action$: ActionsObservable<any>, store$: StateObservable<St
     action$.pipe(
         ofType(ActionTypes.SIGNOUT),
         map(() => {
-            window.localStorage.removeItem('token');
+            window.localStorage.removeItem(`${location.hostname}_token`);
             return redirect('/');
         }),
         catchError((errorAction) => {

@@ -10,10 +10,10 @@ export default (state: SettingPage = settingState, action: IAction<any>): Settin
         case ActionTypes.SWITCH_FEWBOXDELIVERY:
             return { ...state, isFewBoxDelivery: action.value };
         case ActionTypes.SWITCH_HELP:
-            window.localStorage.setItem('isHelp', action.value);
+            window.localStorage.setItem(`${location.hostname}_isHelp`, action.value);
             return { ...state, isHelp: action.value };
         case ActionTypes.SWITCH_ENABLE_DOCKERREGISTRY:
-            window.localStorage.setItem('isEnableDockerRegistry', action.value);
+            window.localStorage.setItem(`${location.hostname}_isEnableDockerRegistry`, action.value);
             return { ...state, isEnableDockerRegistry: action.value };
         default:
             return state;

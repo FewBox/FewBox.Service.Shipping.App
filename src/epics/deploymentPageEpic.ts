@@ -3,7 +3,7 @@ import { mergeMap, map, catchError } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading, fillSelectedDeployment } from '../actions';
+import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading, fillSelectedDeployment, fillImageDropdownList, fillDeploymentImageVersionDropdownList } from '../actions';
 
 const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -108,7 +108,7 @@ const selectDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObse
             return new AjaxObservable({ path: '/api/deployments/' + action.value.namespace + '/' + action.value.name, method: 'GET' });
         }),
         map((payload) => {
-            let images = payload.containers.map((container, index)=>{
+            let images = payload.containers.map((container, index) => {
                 return container.image;
             });
             return fillSelectedDeployment({ images: images });
@@ -144,4 +144,33 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
-export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic, selectDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic];
+const initImageDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_IMAGE_DROPDOWNLIST),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: '/api/repositories', method: 'GET' });
+        }),
+        map((payload) => {
+            return fillImageDropdownList(payload);
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
+const initDeploymentImageVersionDropdownList = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: `/api/repositories/${encodeURIComponent(action.value)}`, method: 'GET' });
+        }),
+        map((payload) => {
+            return fillDeploymentImageVersionDropdownList(payload);
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
+export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic,
+    selectDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic, initImageDropdownListEpic, initDeploymentImageVersionDropdownList];

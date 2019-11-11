@@ -10,8 +10,8 @@ const initAjaxSetting = (ajaxSetting: IAjaxSetting) => {
     let appsettings = window.localStorage.getItem(`${location.hostname}_shipping_appsettings`);
     const { PROTOCOL, HOST, PORT, BASEPATH, HEADER, METHOD, RESPONSETYPE } = JSON.parse(appsettings ? appsettings : '{}');
     let headers;
-    if (window.localStorage.getItem('token')) {
-        headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem('token')}` };
+    if (window.localStorage.getItem(`${location.hostname}_token`)) {
+        headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER), Authorization: `Bearer ${window.localStorage.getItem(`${location.hostname}_token`)}` };
     }
     else {
         headers = { ...(ajaxSetting.headers ? ajaxSetting.headers : HEADER) };

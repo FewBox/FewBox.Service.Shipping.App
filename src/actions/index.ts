@@ -477,3 +477,18 @@ export const fillSelectedVirtualServiceDeploymentDropdownList = (payload): IPayl
     type: ActionTypes.FILL_SELECTEDVIRTUALSERVICE_DEPLOYMENT,
     payload: payload
 });
+export const initImageDropdownList = (): IEmptyAction => ({
+    type: ActionTypes.INIT_IMAGE_DROPDOWNLIST
+});
+export const fillImageDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_IMAGE_DROPDOWNLIST,
+    payload: payload
+});
+export const initDeploymentImageVersionDropdownList = (repository: string): IAction<string> => ({
+    type: ActionTypes.INIT_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST,
+    value: repository
+});
+export const fillDeploymentImageVersionDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST,
+    payload: payload
+});

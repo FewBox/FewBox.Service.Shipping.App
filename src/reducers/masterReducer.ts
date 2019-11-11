@@ -23,6 +23,10 @@ export default (state: MasterPage = master, action: any): MasterPage => {
             return { ...state, path: undefined };
         case ActionTypes.FILL_NAMESPACE_DROPDOWNLIST:
             return { ...state, namespaces: action.payload };
+        case ActionTypes.FILL_IMAGE_DROPDOWNLIST:
+            return { ...state, images: action.payload };
+        case ActionTypes.FILL_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST:
+            return { ...state, versions: action.payload };
         default:
             return state;
     }

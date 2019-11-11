@@ -82,6 +82,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         let imageComponent;
+        let versionComponent;
         if (this.props.isEnableDockerRegistry) {
             imageComponent = getFieldDecorator('image', {
                 rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
@@ -90,9 +91,20 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
             >
-                {this.props.images.map((image, index) => {
+                {this.props.images ? this.props.images.map((image, index) => {
                     return <Select.Option key={`image${index}`} value={image}>{image}</Select.Option>
-                })}
+                }) : null}
+            </Select>);
+            versionComponent = getFieldDecorator('version', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
+            })(<Select showSearch placeholder={<FormattedMessage id='Label.Version' />} optionFilterProp="children"
+                filterOption={(input, option) =>
+                    option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+            >
+                {this.props.versions ? this.props.versions.map((version, index) => {
+                    return <Select.Option key={`version${index}`} value={version}>{version}</Select.Option>
+                }) : null}
             </Select>);
         }
         else {
@@ -100,6 +112,12 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
             })(
                 <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
+            );
+            versionComponent = getFieldDecorator('version', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
+                initialValue: 'latest'
+            })(
+                <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
             );
         }
         return (
@@ -122,12 +140,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
-                                {getFieldDecorator('version', {
-                                    rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
-                                    initialValue: 'latest'
-                                })(
-                                    <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
-                                )}
+                                {versionComponent}
                             </HelpComponent>
                         </Form.Item>
                     </Col>
