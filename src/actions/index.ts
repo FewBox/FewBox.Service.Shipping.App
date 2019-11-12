@@ -2,6 +2,7 @@ import { IPayloadAction, IEmptyAction, IAction } from './Action';
 import ActionTypes from './ActionTypes';
 import { MessageType } from '@fewbox/react-components';
 import { SelectedDestinationRule } from '../reducers/State';
+import { RegistryType } from '../reducers/RegistryType';
 
 export const initApp = (): IEmptyAction => ({
     type: ActionTypes.INIT_APP
@@ -477,18 +478,38 @@ export const fillSelectedVirtualServiceDeploymentDropdownList = (payload): IPayl
     type: ActionTypes.FILL_SELECTEDVIRTUALSERVICE_DEPLOYMENT,
     payload: payload
 });
-export const initImageDropdownList = (): IEmptyAction => ({
-    type: ActionTypes.INIT_IMAGE_DROPDOWNLIST
+export const initSelfImageDropdownList = (): IEmptyAction => ({
+    type: ActionTypes.INIT_SELFIMAGE_DROPDOWNLIST
 });
-export const fillImageDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_IMAGE_DROPDOWNLIST,
+export const fillSelfImageDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_SELFIMAGE_DROPDOWNLIST,
     payload: payload
 });
-export const initDeploymentImageVersionDropdownList = (repository: string): IAction<string> => ({
-    type: ActionTypes.INIT_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST,
+export const initHubImageDropdownList = (hubNamespace: string): IAction<string> => ({
+    type: ActionTypes.INIT_HUBIMAGE_DROPDOWNLIST,
+    value: hubNamespace
+});
+export const fillHubImageDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_HUBIMAGE_DROPDOWNLIST,
+    payload: payload
+});
+export const switchDockerRegistry = (registryType: RegistryType): IAction<RegistryType> => ({
+    type: ActionTypes.SWITCH_DOCKERREGISTRY,
+    value: registryType
+});
+export const initDeploymentSelfImageVersionDropdownList = (repository: string): IAction<string> => ({
+    type: ActionTypes.INIT_DEPLOYMENT_SELFREGISTRY_IMAGEVERSION_DROPDOWNLIST,
     value: repository
 });
-export const fillDeploymentImageVersionDropdownList = (payload): IPayloadAction<any> => ({
-    type: ActionTypes.FILL_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST,
+export const fillDeploymentSelfImageVersionDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DEPLOYMENT_SELFREGISTRY_IMAGEVERSION_DROPDOWNLIST,
+    payload: payload
+});
+export const initDeploymentHubImageVersionDropdownList = (repository: string): IAction<string> => ({
+    type: ActionTypes.INIT_DEPLOYMENT_HUBREGISTRY_IMAGEVERSION_DROPDOWNLIST,
+    value: repository
+});
+export const fillDeploymentHubImageVersionDropdownList = (payload): IPayloadAction<any> => ({
+    type: ActionTypes.FILL_DEPLOYMENT_HUBREGISTRY_IMAGEVERSION_DROPDOWNLIST,
     payload: payload
 });

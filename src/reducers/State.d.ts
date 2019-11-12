@@ -1,4 +1,6 @@
 import { MessageType } from "@fewbox/react-components";
+import { RegistryType } from "./RegistryType";
+import { ImagePullPolicyType } from "./ImagePullPolicyType";
 
 /** Common **/
 export interface List<T> {
@@ -53,8 +55,6 @@ export interface MasterPage {
     drawer: any;
     path?: string;
     namespaces: Namespace[];
-    images?: string[];
-    versions?: string[];
 }
 export interface LandingPage {
     componentStatuses: ComponentStatus[];
@@ -87,7 +87,6 @@ export interface SettingPage {
     lang: string;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
-    isEnableDockerRegistry: boolean;
 }
 export interface NodePage extends ResourcePage<Node> {
 }
@@ -102,6 +101,9 @@ export interface DeploymentPage extends ResourcePage<Deployment> {
     selectedDeployment: SelectedDeployment;
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
+    registryType: RegistryType;
+    images?: string[];
+    versions?: string[];
 }
 export interface GatewayPage extends ResourcePage<Gateway> {
 }
@@ -225,11 +227,6 @@ export interface Container {
     imagePullPolicyType: ImagePullPolicyType;
     containerPorts: ContainerPort[];
     volumeMounts: VolumeMount[];
-}
-export enum ImagePullPolicyType {
-    IfNotPresent = 0,
-    Always,
-    Never
 }
 export interface Service {
     namespace: string;

@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { Card, Row, List, Tooltip, Popconfirm, Icon, Tag, InputNumber, Descriptions, Popover, Button, Collapse, Badge, Dropdown, Menu } from 'antd';
 import {
     initDeploymentPage, createDeployment, scalePodReplicas, deleteDeployment, initNamespaceDropdownList, showDrawer, initDeploymentServiceAccountDropdownList,
-    initDeploymentSecretDropdownList, selectDeployment, initImageDropdownList, initDeploymentImageVersionDropdownList
+    initDeploymentSecretDropdownList, selectDeployment, initHubImageDropdownList, initSelfImageDropdownList, switchDockerRegistry, initDeploymentSelfImageVersionDropdownList,
+    initDeploymentHubImageVersionDropdownList
 } from '../actions';
 import { Store, Deployment, Namespace, ServiceAccount, Secret, Container } from '../reducers/State';
 import DeploymentCreation from '../components/DeploymentCreation';
@@ -13,6 +14,7 @@ import HelpFormattedMessage from '../components/HelpFormattedMessage';
 import { ImagePullPolicyOptions, ProtocolOptions } from '../jsons';
 import ResourcesCard from '../components/ResourcesCard';
 import ShowModule from '../util/ShowModule';
+import { RegistryType } from '../reducers/RegistryType';
 
 export interface IDeploymentPageProps {
     deployments: Deployment[];
@@ -21,6 +23,7 @@ export interface IDeploymentPageProps {
     versions: string[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
+    registryType: RegistryType;
     initDeploymentPage: () => void;
     initNamespaceDropdownList: () => void;
     scalePodReplicas: (any) => void;
@@ -31,9 +34,12 @@ export interface IDeploymentPageProps {
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
     initImageDropdownList: () => void;
-    initDeploymentImageVersionDropdownList: (repository: string) => void;
+    initSelfImageDropdownList: () => void;
+    initHubImageDropdownList: (hubNamesapce: string) => void;
+    initDeploymentSelfImageVersionDropdownList: (repository: string) => void;
+    initDeploymentHubImageVersionDropdownList: (repository: string) => void;
+    switchDockerRegistry: (registryType: string) => void;
     isHelp: boolean;
-    isEnableDockerRegistry: boolean;
     isListLoading: boolean;
 }
 
@@ -41,7 +47,7 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
         this.props.initDeploymentPage();
-        if (this.props.isEnableDockerRegistry) {
+        if (this.props.registryType == RegistryType.Self) {
             this.props.initImageDropdownList();
         }
     }
@@ -49,9 +55,10 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
         return (
             <div>
                 <Row gutter={16}>
-                    {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <DeploymentCreation isHelp={this.props.isHelp} isEnableDockerRegistry={this.props.isEnableDockerRegistry} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
-                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets} images={this.props.images} versions={this.props.versions}
-                        refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} refreshVersions={this.props.initDeploymentImageVersionDropdownList} />}
+                    {ShowModule('M_Shipping_MODULEDEPLOYMENT_CUD') && <DeploymentCreation isHelp={this.props.isHelp} registryType={this.props.registryType} imagePullPolicyOptions={ImagePullPolicyOptions} protocolOptions={ProtocolOptions} create={this.props.createDeployment} reload={this.props.initDeploymentPage}
+                        namespaces={this.props.namespaces} serviceAccounts={this.props.serviceAccounts} secrets={this.props.secrets} images={this.props.images} versions={this.props.versions} switchDockerRegistry={this.props.switchDockerRegistry}
+                        refreshServiceAccounts={this.props.initDeploymentServiceAccountDropdownList} refreshSecrets={this.props.initDeploymentSecretDropdownList} refreshSelfVersions={this.props.initDeploymentSelfImageVersionDropdownList}
+                        refreshHubVersions={this.props.initDeploymentHubImageVersionDropdownList} refreshSelfImages={this.props.initSelfImageDropdownList} refreshHubImages={this.props.initHubImageDropdownList} />}
                 </Row>
                 <Row gutter={16}>
                     <ResourcesCard isLoading={this.props.isListLoading} resources={this.props.deployments}
@@ -110,11 +117,11 @@ const mapStateToProps = ({ deploymentPage, masterPage, settingPage }: Store) => 
     isListLoading: deploymentPage.isListLoading,
     serviceAccounts: deploymentPage.serviceAccounts,
     secrets: deploymentPage.secrets,
+    registryType: deploymentPage.registryType,
+    images: deploymentPage.images,
+    versions: deploymentPage.versions,
     namespaces: masterPage.namespaces,
-    images: masterPage.images,
-    versions: masterPage.versions,
-    isHelp: settingPage.isHelp,
-    isEnableDockerRegistry: settingPage.isEnableDockerRegistry
+    isHelp: settingPage.isHelp
 });
 
 const mapDispatchToProps = {
@@ -127,8 +134,11 @@ const mapDispatchToProps = {
     initDeploymentServiceAccountDropdownList,
     initDeploymentSecretDropdownList,
     selectDeployment,
-    initImageDropdownList,
-    initDeploymentImageVersionDropdownList
+    switchDockerRegistry,
+    initSelfImageDropdownList,
+    initHubImageDropdownList,
+    initDeploymentSelfImageVersionDropdownList,
+    initDeploymentHubImageVersionDropdownList
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeploymentPage);

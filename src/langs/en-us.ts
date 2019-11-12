@@ -202,5 +202,9 @@ export default {
     'Label.Poststarthook_StartApiextensionsControllers': 'PostStartHook Start Api Extensions Controllers',
     'Label.Poststarthook_StartApiextensionsInformers': 'PostStartHook Start Api Extensions Informers',
     'Label.Poststarthook_StartKubeAggregatorInformers': 'PostStartHook Start Kube Aggregator Informers',
-    'Label.Poststarthook_StartKubeApiserverAdmissionInitializer': 'PostStartHook Start Kube Api Server Admission Initializer'
+    'Label.Poststarthook_StartKubeApiserverAdmissionInitializer': 'PostStartHook Start Kube Api Server Admission Initializer',
+    'Label.DockerRegistryType': 'Docker Registry',
+    'Label.DockerRegistryType_None': 'None',
+    'Label.DockerRegistryType_Hub': 'Hub',
+    'Label.DockerRegistryType_Self': 'Self'
 }

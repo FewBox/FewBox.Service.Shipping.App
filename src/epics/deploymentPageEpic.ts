@@ -1,9 +1,9 @@
 import { ActionsObservable, StateObservable, ofType } from 'redux-observable';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, retry } from 'rxjs/operators';
 import ActionTypes from '../actions/ActionTypes';
 import { Store } from '../reducers/State';
 import AjaxObservable from '../fetch/AjaxObservable';
-import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading, fillSelectedDeployment, fillImageDropdownList, fillDeploymentImageVersionDropdownList } from '../actions';
+import { loadDeployment, initDeploymentPage, fillDeploymentServiceAccountDropdownList, fillDeploymentSecretDropdownList, endLoading, beginLoading, fillSelectedDeployment, fillSelfImageDropdownList, fillDeploymentSelfImageVersionDropdownList, fillDeploymentHubImageVersionDropdownList, fillHubImageDropdownList } from '../actions';
 
 const initDeploymentEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
@@ -144,28 +144,58 @@ const initSecretDropdownListEpic = (action$: ActionsObservable<any>, store$: Sta
         })
     );
 
-const initImageDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initSelfImageDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_IMAGE_DROPDOWNLIST),
+        ofType(ActionTypes.INIT_SELFIMAGE_DROPDOWNLIST),
         mergeMap((action) => {
             return new AjaxObservable({ path: '/api/repositories', method: 'GET' });
         }),
         map((payload) => {
-            return fillImageDropdownList(payload);
+            return fillSelfImageDropdownList(payload);
         }),
         catchError((errorAction) => {
             return errorAction;
         })
     );
 
-const initDeploymentImageVersionDropdownList = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+const initHubImageDropdownListEpic = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
     action$.pipe(
-        ofType(ActionTypes.INIT_DEPLOYMENT_IMAGEVERSION_DROPDOWNLIST),
+        ofType(ActionTypes.INIT_HUBIMAGE_DROPDOWNLIST),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: `/api/hub/${action.value}`, method: 'GET' });
+        }),
+        retry(3),
+        map((payload) => {
+            return fillHubImageDropdownList(payload);
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
+const initDeploymentSelfImageVersionDropdownList = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_DEPLOYMENT_SELFREGISTRY_IMAGEVERSION_DROPDOWNLIST),
         mergeMap((action) => {
             return new AjaxObservable({ path: `/api/repositories/${encodeURIComponent(action.value)}`, method: 'GET' });
         }),
         map((payload) => {
-            return fillDeploymentImageVersionDropdownList(payload);
+            return fillDeploymentSelfImageVersionDropdownList(payload);
+        }),
+        catchError((errorAction) => {
+            return errorAction;
+        })
+    );
+
+const initDeploymentHubImageVersionDropdownList = (action$: ActionsObservable<any>, store$: StateObservable<Store>) =>
+    action$.pipe(
+        ofType(ActionTypes.INIT_DEPLOYMENT_HUBREGISTRY_IMAGEVERSION_DROPDOWNLIST),
+        mergeMap((action) => {
+            return new AjaxObservable({ path: `/api/hub/${encodeURIComponent(action.value)}`, method: 'GET' });
+        }),
+        retry(3),
+        map((payload) => {
+            return fillDeploymentHubImageVersionDropdownList(payload);
         }),
         catchError((errorAction) => {
             return errorAction;
@@ -173,4 +203,5 @@ const initDeploymentImageVersionDropdownList = (action$: ActionsObservable<any>,
     );
 
 export default [initDeploymentEpic, switchDeploymentEpic, changeDeploymentVersionEpic, createDeploymentEpic, scaleDeploymentReplicasEpic, deleteDeploymentEpic,
-    selectDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic, initImageDropdownListEpic, initDeploymentImageVersionDropdownList];
+    selectDeploymentEpic, initServiceAccountDropdownListEpic, initSecretDropdownListEpic, initSelfImageDropdownListEpic, initDeploymentSelfImageVersionDropdownList,
+    initHubImageDropdownListEpic, initDeploymentHubImageVersionDropdownList];

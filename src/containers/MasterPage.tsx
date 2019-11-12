@@ -57,7 +57,6 @@ export interface IMasterPageProps {
     drawer: any;
     isFewBoxDelivery: boolean;
     isHelp: boolean;
-    isEnableDockerRegistry: boolean;
     hideMessage: () => void;
     hideDrawer: () => void;
     signIn: (username, password) => void;
@@ -96,9 +95,6 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
             <Menu>
                 <Menu.Item>
                     <Button type='link' onClick={this.props.signOut}><FormattedMessage id="Label.SignOut" /></Button>
-                </Menu.Item>
-                <Menu.Item>
-                    <ANTD_Switch checkedChildren={<DockerRegistryIcon />} checked={this.props.isEnableDockerRegistry} unCheckedChildren={<DockerRegistryIcon />} defaultChecked onChange={(isHelp) => { this.props.switchEnableDockerRegistry(isHelp); }} />
                 </Menu.Item>
                 <Menu.Item>
                     <ANTD_Switch checkedChildren={<Icon type="question-circle" />} checked={this.props.isHelp} unCheckedChildren={<Icon type="question-circle" />} defaultChecked onChange={(isHelp) => { this.props.switchHelp(isHelp); }} />
@@ -303,8 +299,7 @@ const mapStateToProps = ({ masterPage, settingPage, destinationRulePage, virtual
     selectedSecret: secretPage.selectedSecret,
     selectedDeployment: deploymentPage.selectedDeployment,
     isFewBoxDelivery: settingPage.isFewBoxDelivery,
-    isHelp: settingPage.isHelp,
-    isEnableDockerRegistry: settingPage.isEnableDockerRegistry
+    isHelp: settingPage.isHelp
 })
 
 const mapDispatchToProps = {

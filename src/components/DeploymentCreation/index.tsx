@@ -9,6 +9,7 @@ import DynamicFieldList from '../DynamicFieldList';
 import HelpComponent from '../HelpComponent';
 import NamespaceDropdownList from '../NamespaceDropdownList';
 import ServiceAccountDropdownList from '../ServiceAccountDropdownList';
+import { RegistryType } from '../../reducers/RegistryType';
 
 export interface IDeploymentCreationProps {
     protocolOptions: Option[];
@@ -16,25 +17,41 @@ export interface IDeploymentCreationProps {
     namespaces: Namespace[];
     serviceAccounts: ServiceAccount[];
     secrets: Secret[];
+    switchDockerRegistry: (registryType: string) => void;
     refreshServiceAccounts: (namespaceName: string) => void;
     refreshSecrets: (namespaceName: string) => void;
-    refreshVersions: (image: string) => void;
+    refreshSelfImages: () => void;
+    refreshHubImages: (hubNamespace: string) => void;
+    refreshSelfVersions: (image: string) => void;
+    refreshHubVersions: (image: string) => void;
     create: (any) => void;
     reload: () => void;
     form: any;
     isHelp: boolean;
-    isEnableDockerRegistry: boolean;
+    registryType: RegistryType;
     images: string[];
     versions: string[];
 }
 
 class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
-    changeNamespace = (namespaceName: string) => {
+    changeRegistry = (registryType) => {
+        this.props.switchDockerRegistry(registryType);
+        if (registryType == RegistryType.Self) {
+            this.props.refreshSelfImages();
+        }
+    };
+    changeNamespace = (namespaceName) => {
         this.props.refreshServiceAccounts(namespaceName);
         this.props.refreshSecrets(namespaceName);
     };
-    changeImage = (image: string) => {
-        this.props.refreshVersions(image);
+    changeHubNamespace = (e) => {
+        this.props.refreshHubImages(e.target.value);
+    };
+    changeSelfImage = (image: string) => {
+        this.props.refreshSelfVersions(image);
+    };
+    changeHubImage = (image: string) => {
+        this.props.refreshHubVersions(image);
     };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
@@ -81,12 +98,42 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     };
     public render() {
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        let namespaceComponent;
         let imageComponent;
         let versionComponent;
-        if (this.props.isEnableDockerRegistry) {
+        if (this.props.registryType == RegistryType.Self) {
             imageComponent = getFieldDecorator('image', {
                 rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
-            })(<Select showSearch placeholder={<FormattedMessage id='Label.Image' />} optionFilterProp="children" onChange={this.changeImage}
+            })(<Select showSearch placeholder={<FormattedMessage id='Label.Image' />} optionFilterProp="children" onChange={this.changeSelfImage}
+                filterOption={(input, option) =>
+                    option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+            >
+                {this.props.images ? this.props.images.map((image, index) => {
+                    return <Select.Option key={`image${index}`} value={image}>{image}</Select.Option>
+                }) : null}
+            </Select>);
+            versionComponent = getFieldDecorator('version', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
+            })(<Select showSearch placeholder={<FormattedMessage id='Label.Version' />} optionFilterProp="children"
+                filterOption={(input, option) =>
+                    option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+            >
+                {this.props.versions ? this.props.versions.map((version, index) => {
+                    return <Select.Option key={`version${index}`} value={version}>{version}</Select.Option>
+                }) : null}
+            </Select>);
+        }
+        else if (this.props.registryType == RegistryType.Hub) {
+            namespaceComponent = <Col span={3}>
+                <Form.Item>
+                    <Input prefix={<BrandIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Namespace" onPressEnter={this.changeHubNamespace} />
+                </Form.Item>
+            </Col>;
+            imageComponent = getFieldDecorator('image', {
+                rules: [{ required: true, message: <FormattedMessage id='Message.ImageRequired' /> }, { validator: this.validateNumbering }],
+            })(<Select showSearch placeholder={<FormattedMessage id='Label.Image' />} optionFilterProp="children" onChange={this.changeHubImage}
                 filterOption={(input, option) =>
                     option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
@@ -128,7 +175,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             <NamespaceDropdownList onChange={this.changeNamespace} isHelp={this.props.isHelp} form={this.props.form} namespaces={this.props.namespaces} />
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={3}>
                         <Form.Item>
                             {getFieldDecorator('name', {
                                 rules: [{ required: true, message: <FormattedMessage id='Message.NameRequired' /> }],
@@ -137,17 +184,27 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                             )}
                         </Form.Item>
                     </Col>
-                    <Col span={6}>
+                    <Col span={3}>
                         <Form.Item>
-                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
-                                {versionComponent}
-                            </HelpComponent>
+                            <Select placeholder={<FormattedMessage id='Label.DockerRegistryType' />} onChange={this.changeRegistry} defaultValue={this.props.registryType} >
+                                <Select.Option value={1}><FormattedMessage id='Label.DockerRegistryType_Hub' /></Select.Option>
+                                <Select.Option value={2}><FormattedMessage id='Label.DockerRegistryType_Self' /></Select.Option>
+                                <Select.Option value={3}><FormattedMessage id='Label.DockerRegistryType_None' /></Select.Option>
+                            </Select>
                         </Form.Item>
                     </Col>
+                    {namespaceComponent}
                     <Col span={6}>
                         <Form.Item>
                             <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Image' />}>
                                 {imageComponent}
+                            </HelpComponent>
+                        </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                        <Form.Item>
+                            <HelpComponent isHelp={this.props.isHelp} helpContent={<FormattedMessage id='Help.Version' />}>
+                                {versionComponent}
                             </HelpComponent>
                         </Form.Item>
                     </Col>
