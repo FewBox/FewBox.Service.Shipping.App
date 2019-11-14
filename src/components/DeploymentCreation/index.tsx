@@ -55,7 +55,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
     };
     validateNumbering = (rule, value, callback) => {
         const { getFieldValue } = this.props.form
-        if (value.indexOf(':') != -1 && value.indexOf(':5000') != -1) {
+        if (!value || (value.indexOf(':') != -1 && value.indexOf(':5000') != -1)) {
             callback();
         }
         else if (value.indexOf(':') == -1) {
@@ -161,8 +161,7 @@ class DeploymentCreation extends React.PureComponent<IDeploymentCreationProps> {
                 <Input prefix={<ContainerIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Image" />
             );
             versionComponent = getFieldDecorator('version', {
-                rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }],
-                initialValue: 'latest'
+                rules: [{ required: true, message: <FormattedMessage id='Message.VersionRequired' /> }]
             })(
                 <Input prefix={<VersionIcon style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Numbering" />
             );

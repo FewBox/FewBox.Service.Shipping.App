@@ -29,7 +29,7 @@ export default (state: DeploymentPage = deploymentState, action: any): Deploymen
             return { ...state, images: action.payload };
         case ActionTypes.FILL_HUBIMAGE_DROPDOWNLIST:
             let images = action.payload.results.map((result, index) => {
-                return result.name;
+                return `${result.namespace}/${result.name}`;
             });
             return { ...state, images: images };
         case ActionTypes.FILL_DEPLOYMENT_SELFREGISTRY_IMAGEVERSION_DROPDOWNLIST:

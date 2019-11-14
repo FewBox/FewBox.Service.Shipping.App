@@ -191,7 +191,7 @@ const initDeploymentHubImageVersionDropdownList = (action$: ActionsObservable<an
     action$.pipe(
         ofType(ActionTypes.INIT_DEPLOYMENT_HUBREGISTRY_IMAGEVERSION_DROPDOWNLIST),
         mergeMap((action) => {
-            return new AjaxObservable({ path: `/api/hub/${encodeURIComponent(action.value)}`, method: 'GET' });
+            return new AjaxObservable({ path: `/api/hub/${action.value}`, method: 'GET' });
         }),
         retry(3),
         map((payload) => {
