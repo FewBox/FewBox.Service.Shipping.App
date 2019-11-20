@@ -177,7 +177,8 @@ const initDeploymentSelfImageVersionDropdownList = (action$: ActionsObservable<a
     action$.pipe(
         ofType(ActionTypes.INIT_DEPLOYMENT_SELFREGISTRY_IMAGEVERSION_DROPDOWNLIST),
         mergeMap((action) => {
-            return new AjaxObservable({ path: `/api/repositories/${encodeURIComponent(action.value)}`, method: 'GET' });
+            var repository = action.value.substring(action.value.indexOf('/') + 1);
+            return new AjaxObservable({ path: `/api/repositories/${encodeURIComponent(repository)}`, method: 'GET' });
         }),
         map((payload) => {
             return fillDeploymentSelfImageVersionDropdownList(payload);

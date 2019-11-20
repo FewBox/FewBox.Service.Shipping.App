@@ -33,7 +33,6 @@ export interface IDeploymentPageProps {
     selectDeployment: (namespaceName: string, name: string) => void;
     initDeploymentServiceAccountDropdownList: (namespaceName: string) => void;
     initDeploymentSecretDropdownList: (namespaceName: string) => void;
-    initImageDropdownList: () => void;
     initSelfImageDropdownList: () => void;
     initHubImageDropdownList: (hubNamesapce: string) => void;
     initDeploymentSelfImageVersionDropdownList: (repository: string) => void;
@@ -47,9 +46,6 @@ class DeploymentPage extends React.Component<IDeploymentPageProps, any> {
     componentDidMount() {
         this.props.initNamespaceDropdownList();
         this.props.initDeploymentPage();
-        if (this.props.registryType == RegistryType.Self) {
-            this.props.initImageDropdownList();
-        }
     }
     render() {
         return (

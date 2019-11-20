@@ -1,7 +1,6 @@
 import ActionTypes from '../actions/ActionTypes';
 import { DeploymentPage } from './State';
 import { RegistryType } from './RegistryType';
-import { stat } from 'fs';
 
 const deploymentState = {
     selectedDeployment: { images: [] },
@@ -28,7 +27,7 @@ export default (state: DeploymentPage = deploymentState, action: any): Deploymen
         case ActionTypes.FILL_SELFIMAGE_DROPDOWNLIST:
             return { ...state, images: action.payload };
         case ActionTypes.FILL_HUBIMAGE_DROPDOWNLIST:
-            let images = action.payload.results.map((result, index) => {
+            var images = action.payload.results.map((result, index) => {
                 return `${result.namespace}/${result.name}`;
             });
             return { ...state, images: images };

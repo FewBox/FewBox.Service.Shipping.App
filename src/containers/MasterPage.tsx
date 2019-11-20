@@ -69,7 +69,6 @@ export interface IMasterPageProps {
     changeVirtualServiceHttp: (any) => void;
     changeSecretData: (any) => void;
     initSelectedVirtualServiceDeploymentDropdownList: (app: string) => void;
-    initImageDropdownList: () => void;
     intl?: any;
     selectedDestinationRule: SelectedDestinationRule;
     selectedVirtualService: SelectedVirtualService;
