@@ -79,6 +79,7 @@ export default {
     'Navigation.DestinationRule': 'DestinationRule',
     'Navigation.Gateway': 'Gateway',
     'Navigation.ServiceEntry': 'ServiceEntry',
+    'Navigation.Extension': 'Extension',
     'Message.UsernameOrPasswordIsNotValid': 'The username or password is not valid!',
     'Message.NetworkException': 'Network Exception: {errorMessage}',
     'Message.SystemException': 'System Exception: {errorMessage}',

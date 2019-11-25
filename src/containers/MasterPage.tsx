@@ -38,7 +38,7 @@ const SecretDrawer = lazy(() => import('../components/SecretDrawer'));
 import HelpComponent from '../components/HelpComponent';
 import ShowModule from '../util/ShowModule';
 import './MasterPage.scss';
-import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon, DockerRegistryIcon } from '../components/Icon';
+import { NamespaceIcon, ServiceIcon, DeploymentIcon, PodIcon, GatewayIcon, LandingIcon, NodeIcon, ReefIcon, BrandIcon, ServiceAccountIcon, SecretIcon, VirtualServiceIcon, DestinationRuleIcon, ServiceEntryIcon, IstioIcon, KubernetesIcon, ShippingLaneIcon, JobIcon, ShippingMapIcon, DockerRegistryIcon, ExtensionIcon } from '../components/Icon';
 import LockWindow from '../components/LockWindow';
 import { MatchOptions } from '../jsons';
 
@@ -90,6 +90,18 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
     }
     public render() {
         message.config({ maxCount: 3 });
+        const { Extensions } = JSON.parse(window.localStorage.getItem(`${location.hostname}_shipping_appsettings`));
+        var extensions;
+        if (Extensions) {
+            extensions = Extensions.map((extension, index) => {
+                return <Menu.Item key={`3${index}`}>
+                    <a target="_blank" href={extension.Url}>
+                        <Icon type="link" />
+                        <span>{extension.Caption}</span>
+                    </a>
+                </Menu.Item>
+            });
+        }
         const menu = (
             <Menu>
                 <Menu.Item>
@@ -231,6 +243,9 @@ class MasterPage extends React.Component<IMasterPageProps, any> {
                                             <FormattedMessage id="Navigation.ServiceEntry" /></Link>
                                     </HelpComponent>
                                 </Menu.Item>}
+                            </Menu.SubMenu>
+                            <Menu.SubMenu key='sub3' title={<span><ExtensionIcon /><FormattedMessage id="Navigation.Extension" /></span>}>
+                                {extensions}
                             </Menu.SubMenu>
                             <Menu.Item key="3">
                                 <Link to='/master/about'><Icon type="info-circle" />
